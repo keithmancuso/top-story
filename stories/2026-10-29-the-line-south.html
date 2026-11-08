@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Line South</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one fixed 432x768 (9:16) stage, scaled to fit. Content stays inside the social safe box,
+   x 26-380 / y 108-600 in stage px (x 65-950 / y 270-1500 at 1080x1920). A mourning piece, not a
+   reconstruction: the route is schematic, nothing moves toward anything, the toll appears once and
+   never counts. Every figure lives in the DATA block so it can be swapped if the toll changes. */
+:root {
+  --ground: #111214;
+  --edge: #2a2c30;
+  --head: #edeae4;
+  --soft: #c4c0b8;
+  --muted: #8a8d91;
+  --stone: #c9c2b6;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+/* One night design in both themes; tokens are restated so either theme lands here. */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ground: #111214; } }
+:root[data-theme="dark"] { --ground: #111214; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--ground); color: var(--head); overflow: hidden; }
+#wrap { position: fixed; inset: 0; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+#stage::before {
+  content: ""; position: absolute; inset: -400px; pointer-events: none;
+  background: radial-gradient(380px 460px at 50% 48%, #18191c 0%, transparent 72%);
+}
+
+.eyebrow {
+  position: absolute; left: 30px; right: 56px; top: 112px; display: flex; justify-content: space-between;
+  font: 500 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+}
+.eyebrow b { color: var(--stone); font-weight: 500; }
+h1 { position: absolute; left: 30px; right: 56px; top: 128px; margin: 0; font: 400 27px/1.1 var(--serif); color: var(--head); }
+.sub { position: absolute; left: 30px; top: 162px; font: 400 12px/1 var(--sans); color: var(--muted); }
+
+svg#g { position: absolute; left: 0; top: 0; width: 432px; height: 768px; overflow: visible; pointer-events: none; }
+.stn { font: 500 11px var(--sans); fill: var(--soft); }
+.stn.s { fill: var(--muted); font-size: 10px; }
+.urda { font: 600 12px var(--sans); fill: var(--head); }
+.urda2 { font: 400 10.5px var(--sans); fill: var(--muted); }
+.ill { font: 400 9.5px var(--sans); font-style: italic; fill: var(--muted); }
+.car { font: 500 9.5px var(--sans); fill: var(--soft); }
+.susp { font: 500 10.5px var(--sans); fill: var(--stone); }
+
+#toll { position: absolute; left: 30px; top: 196px; width: 346px; height: 250px; opacity: 0; }
+#toll .n { position: absolute; left: 0; top: 0; font: 300 118px/1 var(--serif); letter-spacing: -.02em; color: var(--head); font-variant-numeric: lining-nums; }
+#toll .l { position: absolute; left: 4px; top: 124px; font: 400 21px/1 var(--serif); color: var(--soft); }
+#toll .asof { position: absolute; left: 4px; top: 156px; width: 330px; font: 400 11px/1.4 var(--sans); color: var(--muted); }
+#dots { position: absolute; left: 212px; top: 22px; width: 130px; height: 90px; }
+#stats { position: absolute; left: 4px; top: 204px; display: flex; gap: 22px; opacity: 0; }
+#stats div { font: 400 10.5px/1.25 var(--sans); color: var(--muted); }
+#stats b { display: block; font: 400 26px/1 var(--serif); color: var(--head); margin-bottom: 3px; }
+
+#mourn { position: absolute; left: 30px; top: 262px; width: 346px; text-align: center; opacity: 0; }
+#mourn .k { font: 500 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+#mourn p { margin: 14px 0 0; font: 400 30px/1.15 var(--serif); color: var(--head); }
+#mourn .d { margin-top: 12px; font: 400 15px/1.3 var(--sans); color: var(--soft); }
+
+#cap { position: absolute; left: 30px; right: 56px; top: 516px; height: 76px; font: 400 16px/1.32 var(--serif); color: var(--soft); }
+#cap p { position: absolute; inset: 0; margin: 0; opacity: 0; }
+#cap b { color: var(--head); font-weight: 600; }
+
+#end {
+  position: absolute; left: 30px; top: 196px; width: 346px; height: 398px; box-sizing: border-box; padding: 16px 16px 14px;
+  background: #0d0e10; border: 1px solid var(--edge); border-radius: 4px; opacity: 0;
+}
+#end .k { font: 500 10px/1 var(--mono); letter-spacing: .16em; color: var(--stone); text-transform: uppercase; }
+#end .t { margin: 10px 0 0; font: 400 17px/1.3 var(--serif); color: var(--head); }
+#end .note { margin: 8px 0 0; font: 400 12px/1.4 var(--sans); color: var(--muted); }
+#end hr { border: 0; border-top: 1px solid var(--edge); margin: 14px 0 10px; }
+.src { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; }
+.src li { font: 400 11.5px/1.35 var(--sans); color: var(--muted); padding: 9px 0; }
+.src a { color: var(--soft); text-decoration: underline; text-decoration-color: #4b4e53; text-underline-offset: 3px; pointer-events: auto; display: inline-block; padding: 9px 0; margin: -9px 0; }
+.src a:focus-visible, #replay:focus-visible { outline: 2px solid var(--stone); outline-offset: 2px; }
+#end .by { margin-top: 12px; font: 500 9.5px/1 var(--mono); letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+
+#replay {
+  position: absolute; right: 72px; top: 552px; padding: 8px 12px; border: 1px solid var(--muted); border-radius: 3px;
+  background: var(--ground); color: var(--head); font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+</style>
+
+<div id="wrap"><div id="stage">
+  <div class="eyebrow"><span><b>Top Story</b> &middot; Thu 29 Oct 2026</span><span>Spain</span></div>
+  <h1>Urda, 28 October</h1>
+  <div class="sub">Madrid&ndash;Seville high-speed line</div>
+
+  <svg id="g" viewBox="0 0 432 768" aria-hidden="true">
+    <g id="map">
+      <path id="route" fill="none" stroke="#8a8d91" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path id="routeS" fill="none" stroke="#c9c2b6" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 5" opacity="0"/>
+      <g id="stations"></g>
+      <g id="mark" data-key opacity="0">
+        <circle id="halo" cx="250" cy="294" r="9" fill="none" stroke="#c9c2b6" stroke-width="1"/>
+        <circle cx="250" cy="294" r="5.5" fill="#111214" stroke="#edeae4" stroke-width="1.6"/>
+        <text x="266" y="291" class="urda">near Urda, Toledo</text>
+        <text x="266" y="305" class="urda2">shortly before 9am</text>
+      </g>
+      <g id="inset" data-key opacity="0">
+        <line x1="262" x2="376" y1="362" y2="362" stroke="#5a5d62" stroke-width="1"/>
+        <rect x="266" y="355" width="44" height="10" rx="2" fill="none" stroke="#c4c0b8" stroke-width="1.2"/>
+        <rect x="322" y="355" width="44" height="10" rx="2" fill="#2a2c30" stroke="#c4c0b8" stroke-width="1.2"/>
+        <text x="288" y="381" text-anchor="middle" class="car">Renfe AVE</text>
+        <text x="344" y="381" text-anchor="middle" class="car">Iryo, stopped</text>
+        <text x="264" y="333" class="ill">Illustrative. Both trains</text>
+        <text x="264" y="345" class="ill">bound for Seville &rarr;</text>
+      </g>
+      <text id="suspT" x="236" y="408" class="susp" opacity="0">Madrid&ndash;Andalusia</text>
+      <text id="suspT2" x="236" y="421" class="susp" opacity="0">service suspended</text>
+      <text id="schem" x="376" y="496" text-anchor="end" class="ill">Schematic map, not to scale</text>
+    </g>
+  </svg>
+
+  <div id="toll">
+    <div class="n" id="tollN"></div>
+    <svg id="dots" viewBox="0 0 130 90" data-key></svg>
+    <div class="l">people killed</div>
+    <div class="asof" id="tollAsof"></div>
+    <div id="stats">
+      <div><b id="sPax"></b>aboard the<br>two trains</div>
+      <div><b id="sHosp"></b>still in hospital,<br>Castilla-La Mancha</div>
+      <div><b id="sCrit"></b>in critical<br>condition</div>
+    </div>
+  </div>
+
+  <div id="mourn">
+    <div class="k">State mourning</div>
+    <p>Three days of national mourning</p>
+    <div class="d">29 to 31 October</div>
+  </div>
+
+  <div id="cap">
+    <p data-in="0" data-out="3.3">Wednesday morning on the high-speed line from <b>Madrid to Seville</b>.</p>
+    <p data-in="3.3" data-out="6.9">Shortly before 9am, a Renfe AVE ran into the back of an <b>Iryo train stopped on the same track</b>.</p>
+    <p data-in="6.9" data-out="10.4">At least <b>69 people</b> were killed. The toll is provisional while victims are identified.</p>
+    <p data-in="10.4" data-out="13.3">There were <b>544 people</b> on board. About <b>50</b> remain in hospital in Castilla-La Mancha, 15 critical.</p>
+    <p data-in="13.3" data-out="15.9">Spain&rsquo;s deadliest rail crash since 2013. The cause is <b>under judicial investigation</b>.</p>
+  </div>
+
+  <div id="end">
+    <div class="k">Urda, Toledo &middot; 28 Oct 2026</div>
+    <p class="t">At least 69 dead after a high-speed train hit a stopped train near Urda.</p>
+    <p class="note" id="endNote"></p>
+    <hr>
+    <ul class="src">
+      <li><a href="https://www.eldiario.es/castilla-la-mancha/accidente-tren-urda-ultima-hora-directo-servicios-emergencia-siguen-zona-accidente-53-heridos-hospitalizados_133_13623403.html" target="_blank" rel="noopener">elDiario.es</a>, toll and hospital figures (regional government)</li>
+      <li><a href="https://www.cbsnews.com/news/spain-train-crash-toledo-urda/" target="_blank" rel="noopener">CBS News / AP</a>, trains, passengers, time</li>
+      <li><a href="https://www.telecinco.es/noticias/sociedad/20261029/secuencia-accidente-ferroviario-urda-toledo-incognitas-choque-tren-ave-iryo-fallo-sistema-lzb_18_020567882.html" target="_blank" rel="noopener">Telecinco</a>, location and sequence</li>
+      <li><a href="https://www.publico.es/sociedad/ultima-hora-accidente-trenes-toledo-directo.html" target="_blank" rel="noopener">P&uacute;blico</a>, state mourning (BOE), Orgaz court inquiry</li>
+      <li><a href="https://www.aljazeera.com/news/2026/10/28/injuries-reported-after-two-trains-collide-in-spain" target="_blank" rel="noopener">Al Jazeera</a>, service suspension</li>
+    </ul>
+    <div class="by">Animated by Claude</div>
+  </div>
+
+  <button id="replay" type="button" hidden>Replay</button>
+</div></div>
+
+<script>
+(() => {
+  // Every figure on screen, in one place. Re-check before export if the toll changes.
+  const DATA = {
+    toll: 69,
+    tollAsOf: "Provisional toll, as of 10:43 CET, 29 Oct (Castilla-La Mancha regional government). Identification continues.",
+    pax: 544,
+    hosp: "\u224850",
+    crit: 15,
+    endNote: "Figures as of 29 Oct, morning CET. Cause under judicial investigation; no official findings yet.",
+  };
+  const $ = (id) => document.getElementById(id);
+  const END = 19.4;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  const ramp = (t, at, d) => (reduce ? (t >= at ? 1 : 0) : ease(clamp((t - at) / d)));
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; };
+
+  // Stations placed from real latitude/longitude (88 px per degree of latitude, 68 per degree of longitude
+  // around 39N), then simplified. The route between them is a straight-segment schematic.
+  const ST = [
+    { n: "Madrid", x: 250, y: 206, lx: 262, ly: 210 },
+    { n: "Urda", x: 250, y: 294, skip: true },
+    { n: "Ciudad Real", x: 234, y: 331, lx: 220, ly: 335, end: true, s: true },
+    { n: "Puertollano", x: 223, y: 357, lx: 209, ly: 361, end: true, s: true },
+    { n: "Córdoba", x: 177, y: 428, lx: 163, ly: 432, end: true },
+    { n: "Sevilla", x: 95, y: 471, lx: 95, ly: 489, mid: true },
+  ];
+  const d = "M" + ST.map((s) => `${s.x} ${s.y}`).join(" L");
+  const route = $("route"), routeS = $("routeS");
+  route.setAttribute("d", d);
+  const LEN = route.getTotalLength();
+  route.setAttribute("stroke-dasharray", `${LEN} ${LEN}`);
+  // The suspended stretch: everything south of Urda redrawn dashed in stone.
+  routeS.setAttribute("d", "M" + ST.slice(1).map((s) => `${s.x} ${s.y}`).join(" L"));
+  const stG = $("stations");
+  const stations = ST.filter((s) => !s.skip).map((s) => {
+    const g = el("g", { opacity: 0 }, stG);
+    el("circle", { cx: s.x, cy: s.y, r: 2.6, fill: "#8a8d91" }, g);
+    const tx = el("text", { x: s.lx, y: s.ly, class: "stn" + (s.s ? " s" : ""), "text-anchor": s.end ? "end" : s.mid ? "middle" : "start" }, g);
+    tx.textContent = s.n;
+    let acc = 0;
+    for (let i = 1; i < ST.length && ST[i - 1] !== s; i++) acc += Math.hypot(ST[i].x - ST[i - 1].x, ST[i].y - ST[i - 1].y);
+    return { g, at: acc / LEN };
+  });
+
+  // Toll: one dot per life in a still 10-column grid that fades in all at once (never counts).
+  const dots = $("dots");
+  for (let i = 0; i < DATA.toll; i++) el("circle", { cx: 6 + (i % 10) * 13, cy: 6 + Math.floor(i / 10) * 13, r: 3.6, fill: "#edeae4", opacity: 0.85 }, dots);
+  $("tollN").textContent = DATA.toll;
+  $("tollAsof").textContent = DATA.tollAsOf;
+  $("sPax").textContent = DATA.pax;
+  $("sHosp").textContent = DATA.hosp;
+  $("sCrit").textContent = DATA.crit;
+  $("endNote").textContent = DATA.endNote;
+
+  const map = $("map"), mark = $("mark"), halo = $("halo"), inset = $("inset");
+  const tollEl = $("toll"), stats = $("stats"), mourn = $("mourn"), endEl = $("end");
+  const caps = [...document.querySelectorAll("#cap p")];
+  const fade = (e, o, dy = 0) => { e.style.opacity = o.toFixed(3); e.style.translate = `0 ${dy.toFixed(1)}px`; };
+
+  let last = 0;
+  function render(t) {
+    last = t;
+    // 1. The line draws south from Madrid; stations appear as it passes them.
+    const draw = ramp(t, 0.3, 2.6);
+    route.setAttribute("stroke-dashoffset", (LEN * (1 - draw)).toFixed(1));
+    stations.forEach((s) => s.g.setAttribute("opacity", ramp(t, 0.3 + 2.6 * s.at, 0.4).toFixed(2)));
+    // 2. The place, then the static illustration of the two trains. One slow halo, no flash.
+    mark.setAttribute("opacity", ramp(t, 3.2, 0.6).toFixed(2));
+    const hk = reduce ? 0 : clamp((t - 3.6) / 2.2);
+    halo.setAttribute("r", (9 + 10 * hk).toFixed(2));
+    halo.setAttribute("opacity", (hk > 0 && hk < 1 ? 0.7 * (1 - hk) : 0).toFixed(2));
+    inset.setAttribute("opacity", (ramp(t, 4.3, 0.6) * (1 - ramp(t, 6.8, 0.5))).toFixed(2));
+    // 3-4. The map dims under the toll, then returns for the suspension beat, then leaves for mourning.
+    const dim = ramp(t, 6.8, 0.6) * (1 - ramp(t, 13.4, 0.6));
+    const gone = ramp(t, 15.5, 0.45);
+    map.setAttribute("opacity", ((1 - dim) * (1 - gone)).toFixed(3));
+    const tk = ramp(t, 7.2, 0.7) * (1 - ramp(t, 12.9, 0.4));
+    fade(tollEl, tk, (1 - ramp(t, 7.2, 0.7)) * 6);
+    fade(stats, ramp(t, 10.5, 0.6), (1 - ramp(t, 10.5, 0.6)) * 4);
+    // 5. Service south of the crash suspended: the line beyond Urda turns dashed.
+    const sk = ramp(t, 13.7, 0.6);
+    routeS.setAttribute("opacity", sk.toFixed(2));
+    route.style.opacity = (1 - 0.75 * sk).toFixed(2);
+    $("suspT").setAttribute("opacity", ramp(t, 14.0, 0.5).toFixed(2));
+    $("suspT2").setAttribute("opacity", ramp(t, 14.0, 0.5).toFixed(2));
+    // 6. Mourning, then sources.
+    const mk = ramp(t, 16.0, 0.7) * (1 - ramp(t, 17.6, 0.4));
+    fade(mourn, mk, (1 - ramp(t, 16.0, 0.7)) * 5);
+    for (const p of caps) {
+      const a = Number(p.dataset.in), z = Number(p.dataset.out);
+      const inn = a <= 0 ? ramp(t, 0.3, 0.5) : ramp(t, a, 0.4), out = ramp(t, z - 0.3, 0.3);
+      const o = reduce ? (t >= a && t < z ? 1 : 0) : inn * (1 - out);
+      fade(p, o, (1 - inn) * 4);
+    }
+    const ek = ramp(t, 17.9, 0.5);
+    fade(endEl, ek, (1 - ek) * 8);
+    endEl.style.pointerEvents = ek > 0.5 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(t); }, play };
+  document.fonts?.ready.then(() => render(last));
+  render(0); play();
+})();
+</script>
+</body>
+</html>

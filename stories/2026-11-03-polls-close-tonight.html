@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Polls Close Tonight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Election night as a map of lights: each state's tile switches on (neutral amber, never party
+   color) when its polls close, as an ET clock runs 6pm to 1am. Split-time-zone states light
+   in two steps (a half tile, then full). Then the Senate as 100 dots and the flip math.
+   Opener: fixed 432x768 stage, all text and key graphics inside x 26-380 / y 108-600
+   (= x 65-950 / y 270-1500 at 1080x1920). Below it, the explorable page. */
+:root {
+  --bg: #0f1216;
+  --panel: #161a20;
+  --ink: #f2eee6;
+  --soft: #c2bdb3;
+  --muted: #8a877f;
+  --rule: #2c3138;
+  --tile: #1d232b;
+  --tileink: #6d7480;
+  --lit: #f4b13e;
+  --litink: #231a08;
+  --rep: #b65b52;
+  --dem: #5b7fae;
+  --ind: #9aa0a8;
+  --sans: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+:root[data-theme="light"], :root[data-theme="dark"] { --bg: #0f1216; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg: #0f1216; } }
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+#hero { position: relative; width: 100%; height: min(100svh, calc(100vw * 16 / 9)); min-height: 360px; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+#stage::before { content: ""; position: absolute; inset: -600px; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 38%, rgba(244,177,62,.06), transparent 55%); }
+
+.eyebrow { display: flex; justify-content: space-between; font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#head { position: absolute; left: 30px; width: 346px; top: 112px; }
+#title { position: absolute; left: 30px; width: 346px; top: 134px; }
+#title h1 { margin: 0; font: 700 52px/.92 var(--sans); letter-spacing: -.01em; color: var(--ink); }
+#title h1 em { font-style: normal; color: var(--lit); }
+#stats { position: absolute; left: 30px; width: 346px; top: 290px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+#stats .n { font: 700 50px/1 var(--sans); color: var(--ink); font-variant-numeric: tabular-nums; }
+#stats .l { margin-top: 6px; font: 500 12px/1.3 var(--mono); letter-spacing: .04em; color: var(--soft); text-transform: uppercase; }
+#stats > div { border-top: 2px solid var(--lit); padding-top: 10px; }
+#intro2 { position: absolute; left: 30px; width: 346px; top: 420px; font: 500 17px/1.35 var(--sans); color: var(--soft); }
+
+#clock { position: absolute; left: 30px; width: 346px; top: 128px; }
+#clock .t { font: 600 50px/1 var(--mono); color: var(--lit); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+#clock .t small { font-size: 20px; color: var(--soft); margin-left: 6px; letter-spacing: .02em; }
+#bar { position: absolute; left: 30px; width: 346px; top: 192px; height: 3px; background: var(--rule); border-radius: 2px; }
+#bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--lit); border-radius: 2px; }
+#barl { position: absolute; left: 30px; width: 346px; top: 200px; display: flex; justify-content: space-between; font: 500 9.5px/1 var(--mono); color: var(--muted); letter-spacing: .06em; }
+
+svg.map { overflow: visible; }
+svg.map .tb { fill: var(--tile); }
+svg.map .tl { fill: var(--lit); }
+svg.map text { font: 600 9.5px var(--mono); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+#stage svg.map { position: absolute; left: 38px; top: 222px; }
+
+#cap { position: absolute; left: 30px; width: 346px; top: 480px; height: 88px; }
+#cap .k { font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--lit); }
+#cap .x { margin-top: 7px; font: 600 19px/1.22 var(--sans); color: var(--ink); text-wrap: balance; }
+#legend { position: absolute; left: 30px; width: 346px; top: 578px; display: flex; gap: 14px; align-items: center; font: 500 10px/1 var(--mono); letter-spacing: .04em; color: var(--soft); }
+#legend i { display: inline-block; width: 11px; height: 11px; border-radius: 2px; vertical-align: -2px; margin-right: 5px; }
+#legend .a { background: var(--lit); }
+#legend .h { background: linear-gradient(135deg, var(--lit) 50%, var(--tile) 50%); }
+
+#sen { position: absolute; left: 0; top: 0; width: 432px; height: 768px; opacity: 0; }
+#sen h2 { position: absolute; left: 30px; top: 128px; margin: 0; font: 700 34px/1 var(--sans); color: var(--ink); }
+#sen svg { position: absolute; left: 0; top: 0; width: 432px; height: 768px; overflow: visible; }
+#sen .dl { font: 600 12px var(--mono); letter-spacing: .04em; }
+#scap { position: absolute; left: 30px; width: 346px; top: 470px; height: 120px; }
+#scap p { position: absolute; left: 0; top: 0; margin: 0; width: 346px; font: 600 19px/1.25 var(--sans); color: var(--ink); opacity: 0; text-wrap: balance; }
+#scap b { color: var(--lit); }
+
+#end { position: absolute; left: 30px; width: 346px; top: 136px; opacity: 0; pointer-events: none; }
+#end .big { font: 700 40px/.98 var(--sans); color: var(--ink); }
+#end .big em { font-style: normal; color: var(--lit); }
+#end .row { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--rule); }
+#end .row .k { font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--lit); }
+#end .row .x { margin-top: 6px; font: 500 15.5px/1.32 var(--sans); color: var(--ink); }
+#end .src { margin-top: 16px; font: 400 11px/1.45 var(--sans); color: var(--soft); }
+#end .src b { color: var(--ink); font-weight: 600; }
+#end .by { margin-top: 10px; font: 500 10px/1 var(--mono); letter-spacing: .08em; color: var(--muted); }
+#end .hint { margin-top: 12px; font: 600 12px/1 var(--mono); color: var(--lit); letter-spacing: .06em; }
+
+#replay { position: absolute; left: 30px; top: 552px; padding: 12px 20px; border: 1.5px solid var(--ink); border-radius: 999px;
+  background: var(--bg); color: var(--ink); font: 600 14px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay:focus-visible { outline: 2px solid var(--lit); outline-offset: 2px; }
+
+/* ---------- Explore ---------- */
+main { max-width: 520px; margin: 0 auto; padding: 28px 16px 64px; }
+main section { padding: 26px 0 8px; border-top: 1px solid var(--rule); }
+main section:first-child { border-top: 0; padding-top: 6px; }
+main h2 { margin: 0 0 6px; font: 700 26px/1.05 var(--sans); }
+main .lede { margin: 0 0 16px; font: 400 15.5px/1.45 var(--sans); color: var(--soft); }
+main .k { font: 500 10.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--lit); }
+button { -webkit-tap-highlight-color: transparent; font-family: inherit; }
+.chips { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 10px; scrollbar-width: none; scroll-snap-type: x proximity; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex: 0 0 auto; scroll-snap-align: start; min-height: 40px; padding: 0 13px; border-radius: 999px; border: 1px solid var(--rule); background: var(--panel);
+  color: var(--soft); font: 600 13px/1 var(--mono); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--lit); border-color: var(--lit); color: var(--litink); }
+#emap { display: block; width: 100%; height: auto; margin: 8px 0 10px; }
+#hp { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 14px 12px; }
+#hp .when { font: 700 22px/1.1 var(--sans); }
+#hp .st { margin-top: 6px; font: 400 14.5px/1.45 var(--sans); color: var(--soft); }
+#hp .st b { color: var(--ink); font-weight: 600; }
+#hp ul { list-style: none; margin: 12px 0 0; padding: 0; }
+#hp li { padding: 9px 0; border-top: 1px solid var(--rule); font: 500 15px/1.35 var(--sans); }
+#hp li .ty { display: inline-block; min-width: 74px; font: 500 10.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+#hp .none { margin-top: 10px; font: 400 14px/1.4 var(--sans); color: var(--muted); }
+#hp .tally { margin-top: 10px; font: 500 12px/1.4 var(--mono); color: var(--muted); }
+.legend2 { display: flex; gap: 16px; flex-wrap: wrap; font: 500 11.5px/1 var(--mono); color: var(--soft); margin: 0 0 4px; }
+.legend2 i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -2px; margin-right: 6px; }
+
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 4px 0 12px; }
+.seg button { min-height: 42px; border-radius: 8px; border: 1px solid var(--rule); background: var(--panel); color: var(--soft); font: 600 13.5px/1.1 var(--sans); cursor: pointer; padding: 4px 6px; }
+.seg button[aria-pressed="true"] { border-color: var(--lit); color: var(--ink); box-shadow: inset 0 -3px 0 var(--lit); }
+#sdots { display: block; width: 100%; max-width: 400px; height: auto; margin: 0 auto; }
+#snote { min-height: 64px; margin: 10px 0 16px; font: 500 15.5px/1.4 var(--sans); color: var(--ink); }
+#snote b { color: var(--lit); }
+.races { list-style: none; margin: 0; padding: 0; }
+.races li { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center; padding: 11px 0; border-top: 1px solid var(--rule); }
+.races .s { font: 700 16px/1.2 var(--sans); }
+.races .s small { font: 500 10.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-left: 6px; }
+.races .m { grid-column: 1; font: 400 14px/1.35 var(--sans); color: var(--soft); }
+.races button { grid-row: 1 / span 2; grid-column: 2; min-height: 40px; min-width: 76px; border-radius: 999px; border: 1px solid var(--rule); background: var(--panel); color: var(--lit); font: 600 12.5px/1 var(--mono); cursor: pointer; }
+.hr { display: grid; gap: 10px; margin-top: 4px; }
+.hr div { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; }
+.hr b { display: block; font: 700 16px/1.2 var(--sans); margin-bottom: 4px; }
+.hr span { font: 400 14.5px/1.42 var(--sans); color: var(--soft); }
+.house { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 6px 0 4px; }
+.house div { border-top: 2px solid var(--rule); padding-top: 8px; }
+.house .n { font: 700 28px/1 var(--sans); font-variant-numeric: tabular-nums; }
+.house .l { margin-top: 4px; font: 500 11px/1.3 var(--mono); color: var(--soft); }
+.fine { font: 400 13px/1.45 var(--sans); color: var(--muted); }
+#sources ol { margin: 8px 0 0; padding-left: 20px; }
+#sources li { margin: 7px 0; font: 400 14px/1.45 var(--sans); color: var(--soft); }
+#sources a { color: var(--ink); text-decoration-color: #5a5e66; text-underline-offset: 2px; }
+#sources a:focus-visible, .chip:focus-visible, .seg button:focus-visible, .races button:focus-visible { outline: 2px solid var(--lit); outline-offset: 2px; }
+.by2 { margin-top: 20px; font: 500 11px/1 var(--mono); letter-spacing: .08em; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<div id="hero">
+<div id="stage" role="img" aria-label="Animated explainer: on Election Day, Tuesday November 3, 2026, all 435 House seats, 35 Senate seats and 36 governorships are on the ballot. A tile map of the states lights up as polls close, on a clock from 6pm to 1am Eastern: parts of Indiana and Kentucky at 6, Georgia at 7, North Carolina and Ohio at 7:30, the biggest wave at 8 including Maine, New Hampshire and most of Michigan, Texas and Kansas, Arkansas at 8:30, Iowa, Minnesota and Wisconsin at 9, Nevada at 10, California at 11, Alaska and Hawaii at midnight and Alaska's Aleutians at 1am. Then the Senate as 100 dots: 53 Republicans, 45 Democrats and 2 independents who caucus with Democrats. 35 seats are on the ballot, 22 held by Republicans and 13 by Democrats. Democrats need 51 seats, a net gain of 4, because Vice President Vance breaks a 50-50 tie. In the House, 218 is a majority; today it is 218 Republicans, 214 Democrats, 1 independent and 2 vacancies. Polls closing is not results.">
+  <div id="head" class="eyebrow"><span id="eyl">Election Day</span><span>Tue, Nov 3, 2026</span></div>
+
+  <div id="title"><h1>Tonight the<br>lights come on<br><em>state by state.</em></h1></div>
+  <div id="stats">
+    <div><div class="n">435</div><div class="l">House seats</div></div>
+    <div><div class="n">35</div><div class="l">Senate seats</div></div>
+    <div><div class="n">36</div><div class="l">Governors</div></div>
+  </div>
+  <div id="intro2">Each tile lights up when that state's polls close. Times are Eastern.</div>
+
+  <div id="clock"><div class="t" id="clt">6:00<small>PM ET</small></div></div>
+  <div id="bar"><i></i></div>
+  <div id="barl"><span>6PM</span><span>8</span><span>10</span><span>12</span><span>1AM</span></div>
+  <svg class="map" id="smap" width="330" height="240" viewBox="0 0 330 240" data-key></svg>
+  <div id="cap"><div class="k" id="capk">Polls close</div><div class="x" id="capx"></div></div>
+  <div id="legend"><span><i class="a"></i>Polls closed</span><span><i class="h"></i>Part of state</span><span>Not results</span></div>
+
+  <div id="sen">
+    <h2>The Senate math</h2>
+    <svg id="ssvg" viewBox="0 0 432 768"></svg>
+    <div id="scap">
+      <p data-in="12.95" data-out="14.2">Today: <b>53</b> Republicans, <b>45</b> Democrats, <b>2</b> independents who caucus with Democrats.</p>
+      <p data-in="14.2" data-out="15.45"><b>35</b> seats are on the ballot: 22 held by Republicans, 13 by Democrats.</p>
+      <p data-in="15.45" data-out="17.0">Democrats need <b>51</b>, a net gain of <b>4</b>. At 50-50, Vice President Vance breaks ties.</p>
+    </div>
+  </div>
+
+  <div id="end">
+    <div class="big">Polls closing<br>is <em>not</em> results.</div>
+    <div class="row"><div class="k">The House</div><div class="x">All 435 seats are up; 218 is a majority. Today: 218 R, 214 D, 1 independent, 2 vacant.</div></div>
+    <div class="row"><div class="k">Slow counts</div><div class="x">Georgia goes to a December runoff if no one tops 50%. Alaska's ranked-choice tally is Nov 18. Maine may need a ranked-choice round.</div></div>
+    <div class="src"><b>Sources:</b> 270toWin poll closing times; CBS News; Wikipedia (2026 Senate and House elections); NPR via WAMC; Alaska Public Media; FairVote; Ballotpedia. As of Nov 3, before results.</div>
+    <div class="by">Animated by Claude · Nov 3, 2026</div>
+    <div class="hint web-only">Explore tonight, hour by hour ↓</div>
+  </div>
+
+  <button id="replay" type="button" hidden>Replay</button>
+</div>
+</div>
+
+<main>
+  <section id="hours">
+    <div class="k">All times Eastern</div>
+    <h2>Tonight, hour by hour</h2>
+    <p class="lede">More than 54 million ballots were cast before today, a midterm record (2022: about 46 million). Tap an hour to see where polls have closed and which races to watch.</p>
+    <div class="chips" id="chips" role="group" aria-label="Choose an hour"></div>
+    <div class="legend2"><span><i style="background:var(--lit)"></i>Closed</span><span><i style="background:linear-gradient(135deg,var(--lit) 50%,var(--tile) 50%)"></i>Partly closed</span><span><i style="background:var(--tile)"></i>Still voting</span></div>
+    <svg class="map" id="emap" viewBox="-2 -2 334 244" role="img" aria-label="Tile map of states, lit where polls have closed by the selected hour"></svg>
+    <div id="hp" aria-live="polite"></div>
+  </section>
+
+  <section id="senate">
+    <div class="k">Pre-results baseline</div>
+    <h2>The Senate math</h2>
+    <p class="lede">100 seats, one dot each. Party colors are muted on purpose; nothing here is a result.</p>
+    <div class="seg" role="group" aria-label="Senate view">
+      <button type="button" data-v="0" aria-pressed="true">Today</button>
+      <button type="button" data-v="1" aria-pressed="false">On the ballot</button>
+      <button type="button" data-v="2" aria-pressed="false">What it takes</button>
+    </div>
+    <svg id="sdots" viewBox="0 0 300 300" role="img" aria-label="Senate dot chart"></svg>
+    <div id="snote" aria-live="polite"></div>
+    <div class="k" style="margin-top:8px">Eleven Senate races to watch</div>
+    <p class="lede" style="margin-top:8px">CBS News counts 11 battleground Senate races, and all of these are on NPR's list of races to watch. Tap a time to jump the map.</p>
+    <ul class="races" id="races"></ul>
+  </section>
+
+  <section>
+    <div class="k">218 for a majority</div>
+    <h2>The House</h2>
+    <p class="lede">All 435 seats are on the ballot, several on maps redrawn since 2024.</p>
+    <div class="house">
+      <div style="border-color:var(--rep)"><div class="n">218</div><div class="l">Republicans</div></div>
+      <div style="border-color:var(--dem)"><div class="n">214</div><div class="l">Democrats</div></div>
+      <div style="border-color:var(--ind)"><div class="n">1</div><div class="l">Independent (Kiley, sits with GOP)</div></div>
+      <div><div class="n">2</div><div class="l">Vacant (FL-20, TX-23)</div></div>
+    </div>
+    <p class="fine">Outlets describe the margin differently depending on how they count the independent and the vacancies, so we show the raw count.</p>
+  </section>
+
+  <section>
+    <div class="k">Polls closing is not results</div>
+    <h2>Where it could take a while</h2>
+    <div class="hr">
+      <div><b>Georgia</b><span>If no candidate tops 50%, the race goes to a runoff in December.</span></div>
+      <div><b>Alaska</b><span>First results around 12:45 to 1 a.m. ET. Ranked-choice tabulation, only where no one tops 50%, is Nov 18; certification is targeted for Nov 25.</span></div>
+      <div><b>Maine</b><span>The Senate race uses ranked choice. If a second round is needed, expect roughly 10 days.</span></div>
+      <div><b>Pennsylvania, California, Washington, Oregon</b><span>Mail-heavy counts. Pennsylvania can't open mail ballots until Election Day morning; the West Coast states keep counting for days.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="k">Also on the ballot</div>
+    <h2>Ballot measures to watch</h2>
+    <div class="hr">
+      <div><b>California Prop 40</b><span>A one-time 5% tax on billionaires living in the state, for health care, food assistance and education. Props 41 and 42 are rival measures.</span></div>
+      <div><b>Missouri</b><span>Whether to repeal the abortion-rights amendment voters passed in 2024. Separately, Prop A: Yes keeps the 2025 congressional map, No repeals it. Today's House races use the 2022 map either way.</span></div>
+      <div><b>Alaska Ballot Measure 2</b><span>Would repeal top-four primaries and ranked-choice general elections.</span></div>
+      <div><b>Maryland Question 3</b><span>Would remove the state constitution's compactness and contiguity rules for congressional districts, giving lawmakers more room to redraw the map.</span></div>
+      <div><b>Voter ID</b><span>Stricter ID rules on the ballot in California, Arizona, Colorado and Nevada.</span></div>
+    </div>
+  </section>
+
+  <section id="sources">
+    <div class="k">Sources</div>
+    <ol>
+      <li><a href="https://www.270towin.com/poll-closing-times" target="_blank" rel="noopener">270toWin: poll closing times</a>, all times on this page</li>
+      <li><a href="https://www.cbsnews.com/news/what-us-voting-on-november-2026-elections/" target="_blank" rel="noopener">CBS News: what the U.S. is voting on today</a>, Nov 3</li>
+      <li><a href="https://www.cbsnews.com/live-updates/2026-elections-monday-november-2/" target="_blank" rel="noopener">CBS News live updates, Nov 2</a>, early vote total (UF Election Lab); <a href="https://voz.us/en/politics/261030/1000205/early-voting-midterms-2026-breaks-the-record.html" target="_blank" rel="noopener">Voz</a>, midterm record</li>
+      <li><a href="https://en.wikipedia.org/wiki/2026_United_States_Senate_elections" target="_blank" rel="noopener">Wikipedia: 2026 Senate elections</a> and <a href="https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections" target="_blank" rel="noopener">House elections</a>, chamber counts</li>
+      <li><a href="https://www.wamc.org/2026-10-30/here-are-the-senate-races-to-watch-ahead-of-election-day" target="_blank" rel="noopener">NPR via WAMC: Senate races to watch</a>, Oct 30</li>
+      <li><a href="https://alaskapublic.org/news/politics/elections/2026-10-05/what-to-know-about-alaskas-general-election" target="_blank" rel="noopener">Alaska Public Media: Alaska's count timeline</a></li>
+      <li><a href="https://fairvote.org/which-maine-elections-will-use-ranked-choice-voting-this-november/" target="_blank" rel="noopener">FairVote: ranked choice in Maine</a></li>
+      <li><a href="https://ballotpedia.org/Missouri_Congressional_Map_Referendum_(2026)" target="_blank" rel="noopener">Ballotpedia: Missouri Prop A</a></li>
+    </ol>
+    <div class="by2">Built by Claude · Nov 3, 2026 · before results</div>
+  </section>
+</main>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const NS = "http://www.w3.org/2000/svg";
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const ramp = (t, a, d) => ease(clamp((t - a) / d, 0, 1));
+  const fade = (el, o, dy = 0) => { el.style.opacity = o.toFixed(3); el.style.transform = dy ? `translateY(${dy.toFixed(1)}px)` : ""; };
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+
+  // ---- Data. Closing hours as decimal ET hours past noon (6 = 6pm, 12 = midnight, 13 = 1am).
+  // [abbr, name, col, row, firstClose, fullClose]  (first < full for split-time-zone states)
+  const S = [
+    ["AK","Alaska",0,0,12,13], ["ME","Maine",10,0,8,8],
+    ["WI","Wisconsin",5,1,9,9], ["VT","Vermont",9,1,7,7], ["NH","New Hampshire",10,1,8,8],
+    ["WA","Washington",0,2,11,11], ["ID","Idaho",1,2,10,11], ["MT","Montana",2,2,10,10], ["ND","North Dakota",3,2,8,9], ["MN","Minnesota",4,2,9,9],
+    ["IL","Illinois",5,2,8,8], ["MI","Michigan",6,2,8,9], ["NY","New York",8,2,9,9], ["MA","Massachusetts",9,2,8,8],
+    ["OR","Oregon",0,3,10,11], ["NV","Nevada",1,3,10,10], ["WY","Wyoming",2,3,9,9], ["SD","South Dakota",3,3,8,9], ["IA","Iowa",4,3,9,9],
+    ["IN","Indiana",5,3,6,7], ["OH","Ohio",6,3,7.5,7.5], ["PA","Pennsylvania",7,3,8,8], ["NJ","New Jersey",8,3,8,8], ["CT","Connecticut",9,3,8,8], ["RI","Rhode Island",10,3,8,8],
+    ["CA","California",0,4,11,11], ["UT","Utah",1,4,10,10], ["CO","Colorado",2,4,9,9], ["NE","Nebraska",3,4,9,9], ["MO","Missouri",4,4,8,8],
+    ["KY","Kentucky",5,4,6,7], ["WV","West Virginia",6,4,7.5,7.5], ["VA","Virginia",7,4,7,7], ["MD","Maryland",8,4,8,8], ["DE","Delaware",9,4,8,8],
+    ["AZ","Arizona",1,5,9,9], ["NM","New Mexico",2,5,9,9], ["KS","Kansas",3,5,8,9], ["AR","Arkansas",4,5,8.5,8.5], ["TN","Tennessee",5,5,8,8],
+    ["NC","North Carolina",6,5,7.5,7.5], ["SC","South Carolina",7,5,7,7], ["DC","D.C.",8,5,8,8],
+    ["OK","Oklahoma",3,6,8,8], ["LA","Louisiana",4,6,9,9], ["MS","Mississippi",5,6,8,8], ["AL","Alabama",6,6,8,8], ["GA","Georgia",7,6,7,7],
+    ["HI","Hawaii",0,7,12,12], ["TX","Texas",3,7,8,9], ["FL","Florida",8,7,7,8],
+  ];
+  const HOURS = [6, 7, 7.5, 8, 8.5, 9, 10, 11, 12, 13];
+  const hl = (h) => h === 13 ? "1:00 AM" : h === 12 ? "12:00 AM" : `${Math.floor(h)}:${h % 1 ? "30" : "00"} PM`;
+  const hs = (h) => h === 13 ? "1am" : h === 12 ? "12am" : `${Math.floor(h)}${h % 1 ? ":30" : ""}pm`;
+  // Short captions for the opener, one per wave.
+  const WAVE = {
+    6: "First polls close in parts of Indiana and Kentucky.",
+    7: "Georgia: Senate and governor. Also South Carolina, Virginia, most of Florida.",
+    7.5: "North Carolina Senate. Ohio: Senate special and governor.",
+    8: "The big wave. Senate: Maine, New Hampshire, and most of Michigan, Texas, Kansas.",
+    8.5: "Arkansas.",
+    9: "Iowa Senate and governor. Minnesota Senate. Wisconsin governor.",
+    10: "Nevada, Montana, Utah.",
+    11: "California and Washington.",
+    12: "Alaska Senate. Hawaii.",
+    13: "Last polls close, in Alaska's Aleutians.",
+  };
+  // Races to watch by closing hour (Senate battlegrounds + CBS's key governor races).
+  const RACES = [
+    { st: "GA", h: 7, ty: "Senate", held: "D", m: "Ossoff (D, incumbent) vs. Mike Collins (R)" },
+    { st: "NC", h: 7.5, ty: "Senate", held: "R", open: true, m: "Roy Cooper (D) vs. Michael Whatley (R)" },
+    { st: "OH", h: 7.5, ty: "Senate", held: "R", m: "Husted (R, appointed) vs. Sherrod Brown (D), special election" },
+    { st: "ME", h: 8, ty: "Senate", held: "R", m: "Susan Collins (R, incumbent) vs. Troy Jackson (D)" },
+    { st: "MI", h: 8, ty: "Senate", held: "D", open: true, m: "Abdul El-Sayed (D) vs. Mike Rogers (R)" },
+    { st: "NH", h: 8, ty: "Senate", held: "D", open: true, m: "Chris Pappas (D) vs. John E. Sununu (R)" },
+    { st: "TX", h: 8, ty: "Senate", held: "R", open: true, m: "James Talarico (D) vs. Ken Paxton (R)" },
+    { st: "KS", h: 8, ty: "Senate", held: "R", m: "Roger Marshall (R, incumbent) vs. Adam Hamilton (D)" },
+    { st: "IA", h: 9, ty: "Senate", held: "R", open: true, m: "Josh Turek (D) vs. Ashley Hinson (R)" },
+    { st: "MN", h: 9, ty: "Senate", held: "D", open: true, m: "Peggy Flanagan (D) vs. Michele Tafoya (R)" },
+    { st: "AK", h: 12, ty: "Senate", held: "R", m: "Dan Sullivan (R, incumbent) vs. Mary Peltola (D)" },
+  ];
+  const GOVS = [
+    { st: "GA", h: 7, m: "Keisha Lance Bottoms (D) vs. Rick Jackson (R)" },
+    { st: "OH", h: 7.5, m: "Vivek Ramaswamy (R) vs. Amy Acton (D)" },
+    { st: "MI", h: 8, m: "Jocelyn Benson (D) vs. John James (R)" },
+    { st: "WI", h: 9, m: "David Crowley (D) vs. Tom Tiffany (R)" },
+    { st: "IA", h: 9, m: "Rob Sand (D) vs. Zach Lahn (R)" },
+  ];
+  const NAME = Object.fromEntries(S.map((s) => [s[0], s[1]]));
+
+  // ---- Tile map builder (used by the opener and the explorer)
+  const T = 28, G = 2;
+  function buildMap(svg) {
+    const tiles = S.map(([ab, , c, r, f, full]) => {
+      const x = c * (T + G), y = r * (T + G);
+      const g = mk("g", {}, svg);
+      mk("rect", { x, y, width: T, height: T, rx: 3, class: "tb" }, g);
+      const half = mk("path", { d: `M${x + 3},${y} H${x + T - 3} Q${x + T},${y} ${x + T},${y + 3} L${x},${y + T} Z`, class: "tl", opacity: 0 }, g);
+      // half: the upper-left triangle (rounded corner approximation)
+      half.setAttribute("d", `M${x},${y + 3} Q${x},${y} ${x + 3},${y} H${x + T} L${x},${y + T} Z`);
+      const full_ = mk("rect", { x, y, width: T, height: T, rx: 3, class: "tl", opacity: 0 }, g);
+      const tx = mk("text", { x: x + T / 2, y: y + T / 2 + .5, fill: "#6d7480" }, g); tx.textContent = ab;
+      return { ab, f, full, half, full_, tx };
+    });
+    return tiles;
+  }
+  // kHalf: 0..1 lit amount for first stage, kFull: 0..1 for full
+  function paintTile(tl, kHalf, kFull) {
+    const split = tl.f < tl.full;
+    if (split) { tl.half.setAttribute("opacity", (kHalf * (1 - kFull)).toFixed(3)); }
+    else { kFull = Math.max(kFull, kHalf); }
+    tl.full_.setAttribute("opacity", kFull.toFixed(3));
+    const on = Math.max(kFull, split ? 0 : kHalf);
+    tl.tx.setAttribute("fill", on > .5 ? "#231a08" : (split && kHalf > .5 ? "#f2eee6" : "#6d7480"));
+  }
+
+  // ================= OPENER =================
+  const END = 19.4;
+  const smap = $("smap");
+  const stiles = buildMap(smap);
+  // wave start times on the opener timeline
+  const WT = { 6: 2.9, 7: 3.8, 7.5: 5.3, 8: 6.5, 8.5: 8.1, 9: 8.6, 10: 10.0, 11: 10.6, 12: 11.2, 13: 11.8 };
+  const MAP_OUT = 12.55;
+  const title = $("title"), stats = $("stats"), intro2 = $("intro2"), clock = $("clock"), clt = $("clt"), bar = $("bar"), barI = bar.querySelector("i"), barl = $("barl");
+  const cap = $("cap"), capx = $("capx"), capk = $("capk"), legend = $("legend"), eyl = $("eyl");
+  const statEls = [...stats.children];
+
+  // Senate dots on the stage: 10 x 10, row-major from top-left: 45 D, 2 I, 53 R.
+  const ssvg = $("ssvg");
+  const DOT_R = 9.5, SP = 25, OX = 216 - SP * 4.5, OY = 222;
+  // Seats up: 13 of the D seats, 22 of the R seats (abstract positions, not states).
+  const kind = (i) => i < 45 ? "D" : i < 47 ? "I" : "R";
+  const upIdx = new Set([...Array(13).keys()].map((k) => 32 + k).concat([...Array(22).keys()].map((k) => 47 + k)));
+  const needIdx = new Set([47, 48, 49, 50]);
+  const COL = { D: "#5b7fae", I: "#9aa0a8", R: "#b65b52" };
+  function buildDots(svg, ox, oy, r, sp) {
+    const dots = [];
+    for (let i = 0; i < 100; i++) {
+      const cx = ox + (i % 10) * sp, cy = oy + Math.floor(i / 10) * sp;
+      const k = kind(i);
+      const c = mk("circle", { cx, cy, r, fill: COL[k] }, svg);
+      const ring = mk("circle", { cx, cy, r: r + 2.6, fill: "none", stroke: "#f4b13e", "stroke-width": 2.2, opacity: 0 }, svg);
+      dots.push({ i, k, c, ring, cx, cy });
+    }
+    // threshold path between seat 51 and 52: dots 0..50 are "51 seats"
+    const x0 = ox - sp / 2, y5 = oy + 5 * sp - sp / 2, xs = ox + sp / 2, y6 = y5 + sp, x1 = ox + 9 * sp + sp / 2;
+    const th = mk("path", { d: `M${x1},${y5} H${xs} V${y6} H${x0}`, fill: "none", stroke: "#f4b13e", "stroke-width": 2.5, "stroke-linecap": "round", opacity: 0 }, svg);
+    return { dots, th };
+  }
+  const sd = buildDots(ssvg, OX, OY, DOT_R, SP);
+  const leg = mk("g", {}, ssvg);
+  [["D", "45 D", 30], ["I", "2 I", 128], ["R", "53 R", 210]].forEach(([k, l, x]) => {
+    mk("circle", { cx: x + 6, cy: 186, r: 6, fill: COL[k] }, leg);
+    const t = mk("text", { x: x + 18, y: 190, class: "dl", fill: "#c2bdb3" }, leg); t.textContent = l;
+  });
+  const thl = mk("text", { x: OX + 9 * SP + SP / 2 + 6, y: OY + 4.5 * SP + 4, class: "dl", fill: "#f4b13e", opacity: 0 }, ssvg);
+  thl.textContent = "51";
+  const sen = $("sen"), scaps = [...document.querySelectorAll("#scap p")], endEl = $("end");
+
+  function renderOpener(t) {
+    // Title beat
+    const tOut = ramp(t, 2.2, 0.35);
+    fade(title, ramp(t, 0.05, 0.4) * (1 - tOut), (1 - ramp(t, 0.05, 0.4)) * 8);
+    statEls.forEach((e, i) => fade(e, ramp(t, 0.5 + i * 0.28, 0.35) * (1 - tOut), (1 - ramp(t, 0.5 + i * 0.28, 0.35)) * 10));
+    fade(intro2, ramp(t, 1.35, 0.35) * (1 - tOut));
+    eyl.textContent = t < 12.6 ? (t < 2.4 ? "Election Day" : "Polls close, ET") : (t < 17 ? "Before results" : "Election Day");
+
+    // Map beat
+    const mIn = ramp(t, 2.35, 0.45), mOut = ramp(t, MAP_OUT, 0.3);
+    const mk_ = mIn * (1 - mOut);
+    [clock, bar, barl, legend].forEach((e) => fade(e, mk_));
+    smap.style.opacity = mk_.toFixed(3);
+    stiles.forEach((tl, i) => {
+      const kh = ramp(t, WT[tl.f] + (i % 7) * 0.025, 0.28);
+      const kf = ramp(t, WT[tl.full] + (i % 7) * 0.025, 0.28);
+      paintTile(tl, kh, kf);
+    });
+    // clock + caption follow the latest wave
+    let cur = null;
+    for (const h of HOURS) if (t >= WT[h]) cur = h;
+    clt.firstChild.nodeValue = (cur ? hl(cur) : "6:00 PM").replace(/ (AM|PM)$/, "");
+    clt.querySelector("small").textContent = (cur ? hl(cur) : "6:00 PM").slice(-2) + " ET";
+    const bk = cur ? (cur - 6) / 7 : 0;
+    const nxt = HOURS[HOURS.indexOf(cur) + 1];
+    let bw = bk;
+    barI.style.width = (clamp(bw, 0, 1) * 100).toFixed(1) + "%";
+    fade(cap, mk_);
+    if (cur) {
+      capx.textContent = WAVE[cur];
+      const ck = ramp(t, WT[cur], 0.25);
+      capx.style.opacity = ck.toFixed(3);
+      capx.style.transform = `translateY(${((1 - ck) * 5).toFixed(1)}px)`;
+      capk.textContent = cur === 13 ? "1:00 AM ET" : `${hl(cur)} ET`;
+    } else { capx.textContent = ""; }
+
+    // Senate beat
+    const sIn = ramp(t, 12.75, 0.35), sOut = ramp(t, 16.85, 0.3);
+    sen.style.opacity = (sIn * (1 - sOut)).toFixed(3);
+    const kUp = ramp(t, 14.25, 0.5), kNeed = ramp(t, 15.5, 0.45);
+    sd.dots.forEach((d) => {
+      const pop = ramp(t, 12.85 + d.i * 0.006, 0.3);
+      const up = upIdx.has(d.i);
+      d.c.setAttribute("r", (DOT_R * pop).toFixed(2));
+      const dim = up ? 1 : 1 - 0.72 * kUp * (1 - kNeed * 0.4);
+      d.c.setAttribute("opacity", dim.toFixed(3));
+      d.ring.setAttribute("opacity", (needIdx.has(d.i) ? kNeed : 0).toFixed(3));
+    });
+    leg.setAttribute("opacity", ramp(t, 13.1, 0.3).toFixed(3));
+    sd.th.setAttribute("opacity", kNeed.toFixed(3));
+    thl.setAttribute("opacity", kNeed.toFixed(3));
+    scaps.forEach((p) => {
+      const a = +p.dataset.in, z = +p.dataset.out;
+      const o = ramp(t, a, 0.3) * (1 - ramp(t, z - 0.25, 0.25));
+      fade(p, o, (1 - ramp(t, a, 0.3)) * 5);
+    });
+
+    // End
+    const ek = ramp(t, 17.0, 0.4);
+    fade(endEl, ek, (1 - ek) * 6);
+    endEl.style.pointerEvents = ek > .5 ? "auto" : "none";
+  }
+
+  const stage = $("stage"), hero = $("hero");
+  function fit() { const r = hero.getBoundingClientRect(); stage.style.transform = `translate(-50%, -50%) scale(${Math.min(r.width / 432, r.height / 768)})`; }
+  addEventListener("resize", fit); fit();
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    renderOpener(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); renderOpener(clamp(t, 0, END)); }, play };
+
+  // ================= EXPLORER =================
+  const emap = $("emap"), etiles = buildMap(emap), chips = $("chips"), hp = $("hp");
+  etiles.forEach((tl) => { tl.half.style.transition = tl.full_.style.transition = "opacity .25s"; });
+  let selH = 8;
+  HOURS.forEach((h) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.textContent = hs(h); b.dataset.h = h;
+    b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", () => setHour(h));
+    chips.appendChild(b);
+  });
+  function setHour(h) {
+    selH = h;
+    [...chips.children].forEach((b) => { const on = +b.dataset.h === h; b.setAttribute("aria-pressed", String(on)); if (on) chips.scrollLeft = Math.max(0, b.offsetLeft - chips.offsetLeft - 40); });
+    etiles.forEach((tl) => paintTile(tl, h >= tl.f ? 1 : 0, h >= tl.full ? 1 : 0));
+    const full = S.filter((s) => s[5] === h && s[4] === h).map((s) => s[1]);
+    const first = S.filter((s) => s[4] === h && s[5] > h).map((s) => s[1]);
+    const rest = S.filter((s) => s[5] === h && s[4] < h).map((s) => s[1]);
+    const closed = S.filter((s) => s[5] <= h).length, part = S.filter((s) => s[4] <= h && s[5] > h).length;
+    const join = (a) => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
+    let st = "";
+    if (full.length) st += `<b>Closing:</b> ${join(full)}. `;
+    if (first.length) st += `<b>Most of:</b> ${join(first)}. `;
+    if (rest.length) st += `<b>Rest of:</b> ${join(rest)}. `;
+    if (h === 6) st = `<b>First closings:</b> the Eastern-time parts of Indiana and Kentucky.`;
+    if (h === 10) st = `<b>Closing:</b> Montana, Nevada and Utah. <b>Most of:</b> Idaho. <b>Part of:</b> Oregon (Mountain-time Malheur County).`;
+    if (h === 12) st = `<b>Closing:</b> Hawaii and most of Alaska. Alaska's first results usually come around 12:45 to 1 a.m. ET.`;
+    if (h === 13) st = `<b>Rest of:</b> Alaska (the Aleutian Islands). The last polls in the country close.`;
+    const rs = RACES.filter((r) => r.h === h).map((r) => `<li><span class="ty">${NAME[r.st]} Sen.</span> ${r.m}</li>`)
+      .concat(GOVS.filter((g) => g.h === h).map((g) => `<li><span class="ty">${NAME[g.st]} Gov.</span> ${g.m}</li>`));
+    hp.innerHTML = `<div class="when">${hl(h)} ET</div><div class="st">${st}</div>` +
+      (rs.length ? `<ul>${rs.join("")}</ul>` : `<div class="none">No Senate battleground or key governor race closes at this hour.</div>`) +
+      `<div class="tally">${closed} of 51 fully closed${part ? `, ${part} partly` : ""} (50 states + D.C.)</div>`;
+  }
+  setHour(8);
+
+  // Senate dots explorer
+  const sdots = $("sdots");
+  const ed = buildDots(sdots, 28.5, 28.5, 10.5, 27);
+  const snote = $("snote");
+  const NOTES = [
+    "Today: <b>53</b> Republicans, <b>45</b> Democrats and <b>2</b> independents (Angus King and Bernie Sanders) who caucus with Democrats.",
+    "<b>35</b> seats are on the ballot: <b>22</b> held by Republicans, <b>13</b> by Democrats, including special elections in Ohio and Florida. Positions are illustrative, not states.",
+    "Democrats need <b>51</b> seats, a net gain of <b>4</b>. A 50-50 Senate stays Republican because Vice President JD Vance breaks ties. The four ringed seats are illustrative.",
+  ];
+  function setView(v) {
+    document.querySelectorAll(".seg button").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.v === v)));
+    ed.dots.forEach((d) => {
+      const up = upIdx.has(d.i);
+      d.c.style.transition = d.ring.style.transition = "opacity .3s";
+      d.c.setAttribute("opacity", v === 0 ? 1 : (up ? 1 : (v === 2 ? .45 : .28)));
+      d.ring.setAttribute("opacity", v === 2 && needIdx.has(d.i) ? 1 : 0);
+    });
+    ed.th.style.transition = "opacity .3s"; ed.th.setAttribute("opacity", v === 2 ? 1 : 0);
+    snote.innerHTML = NOTES[v];
+  }
+  document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => setView(+b.dataset.v)));
+  setView(0);
+
+  // Battleground list
+  const races = $("races");
+  RACES.forEach((r) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<div class="s">${NAME[r.st]}<small>${r.held === "R" ? "R-held" : "D-held"}${r.open ? ", open" : ""}</small></div><div class="m">${r.m}</div>`;
+    const b = document.createElement("button"); b.type = "button"; b.textContent = hs(r.h);
+    b.setAttribute("aria-label", `Show the map at ${hl(r.h)} ET`);
+    b.addEventListener("click", () => { setHour(r.h); $("hours").scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); });
+    li.appendChild(b); races.appendChild(li);
+  });
+
+  renderOpener(0);
+  if (reduce) { renderOpener(END); replay.hidden = false; } else play();
+})();
+</script>
+</body>
+</html>

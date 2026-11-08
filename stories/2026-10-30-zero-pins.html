@@ -1,0 +1,357 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Zero Pins</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one fixed 432x768 (9:16) stage, scaled to fit. Content stays inside the social safe box,
+   x 26-380 / y 108-600 in stage px (x 65-950 / y 270-1500 at 1080x1920).
+   The device: a night chart of the strait. Only what has a reported position goes on the water.
+   Iran's claims gave no names, flags or positions, so they sit in a tray above the chart and never
+   touch it. Three channels, each coded by stroke as well as colour: amber dashed = Iran claims,
+   steel blue band = US says, solid off-white = confirmed by UKMTO. No red, no fire, no glow. */
+:root {
+  --ground: #0a121d;
+  --sea: #0e1a29;
+  --land: #1b2431;
+  --coast: #3b4a5e;
+  --edge: #24324a;
+  --head: #eef0ec;
+  --soft: #c3cad3;
+  --muted: #8693a3;
+  --amber: #e2a641;
+  --blue: #7aa6d8;
+  --white: #f3f1ea;
+  --cond: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --sans: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+/* One night-chart design in both themes; tokens are restated so either theme lands here. */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ground: #0a121d; } }
+:root[data-theme="dark"] { --ground: #0a121d; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--ground); color: var(--head); overflow: hidden; }
+#wrap { position: fixed; inset: 0; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+#stage::before {
+  content: ""; position: absolute; inset: -400px; pointer-events: none;
+  background: radial-gradient(400px 480px at 50% 46%, #0f1a28 0%, transparent 72%);
+}
+
+.eyebrow {
+  position: absolute; left: 30px; right: 56px; top: 112px; display: flex; justify-content: space-between;
+  font: 500 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+}
+.eyebrow b { color: var(--soft); font-weight: 500; }
+h1 { position: absolute; left: 30px; right: 56px; top: 128px; margin: 0; font: 600 27px/1.05 var(--cond); color: var(--head); letter-spacing: -.005em; }
+h1 em { font-style: normal; color: var(--amber); }
+.sub { position: absolute; left: 30px; top: 160px; font: 400 12.5px/1 var(--sans); color: var(--soft); }
+
+/* Tray: Iran's four claims, held above the chart because none came with a position. */
+#tray { position: absolute; left: 30px; top: 178px; width: 350px; height: 76px; }
+#tray .grp { position: absolute; top: 0; }
+#tray .k { font: 500 9.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--amber); white-space: nowrap; }
+#tray .q { margin-top: 4px; font: 400 10.5px/1 var(--sans); color: var(--soft); white-space: nowrap; }
+#tray .ft { position: absolute; font: 400 9px/1.15 var(--sans); color: var(--muted); }
+
+svg#g { position: absolute; left: 0; top: 0; width: 432px; height: 768px; overflow: visible; pointer-events: none; }
+.pl { font: 500 10.5px var(--sans); fill: var(--soft); }
+.cn { font: 500 9.5px var(--mono); letter-spacing: .16em; fill: #5d6b7e; }
+.nt { font: 400 9.5px var(--sans); font-style: italic; fill: var(--muted); }
+.rq { font: 500 11px var(--mono); fill: var(--amber); }
+.fld { font: 400 9px var(--mono); fill: var(--muted); }
+.pk { font: 600 12px var(--cond); letter-spacing: .06em; fill: var(--white); }
+.pd { font: 400 10px var(--sans); fill: var(--soft); }
+.ps { font: 400 11px var(--cond); fill: var(--soft); }
+.bl { font: 500 9.5px var(--mono); letter-spacing: .06em; fill: var(--blue); }
+
+#tally { position: absolute; left: 30px; top: 272px; width: 350px; height: 226px; opacity: 0; }
+#tally .box { position: absolute; top: 0; width: 166px; height: 150px; box-sizing: border-box; padding: 12px 14px; border-radius: 4px; }
+#tally .a { left: 0; border: 1.5px dashed var(--amber); }
+#tally .b { left: 182px; border: 1.5px solid var(--white); background: #111c2b; }
+#tally .n { font: 500 76px/1 var(--cond); letter-spacing: -.02em; }
+#tally .a .n { color: var(--amber); }
+#tally .b .n { color: var(--white); }
+#tally .l { margin-top: 6px; font: 400 12.5px/1.25 var(--sans); color: var(--soft); }
+#tally .note { position: absolute; left: 0; top: 166px; width: 346px; font: 400 14px/1.35 var(--sans); color: var(--soft); }
+#tally .note b { color: var(--head); font-weight: 500; }
+
+#cap { position: absolute; left: 30px; right: 56px; top: 512px; height: 86px; font: 400 15px/1.32 var(--sans); color: var(--soft); }
+#cap p { position: absolute; inset: 0; margin: 0; opacity: 0; }
+#cap b { color: var(--head); font-weight: 600; }
+#cap .am { color: var(--amber); }
+#cap .bu { color: var(--blue); }
+#cap .wh { color: var(--white); }
+#cap .chip { display: block; margin-top: 7px; font: 500 9.5px/1.3 var(--mono); letter-spacing: .04em; color: var(--muted); }
+
+#end {
+  position: absolute; left: 30px; top: 180px; width: 346px; height: 416px; box-sizing: border-box; padding: 14px 16px 12px;
+  background: #08101a; border: 1px solid var(--edge); border-radius: 4px; opacity: 0;
+}
+#end .k { font: 500 10px/1 var(--mono); letter-spacing: .16em; color: var(--soft); text-transform: uppercase; }
+#end .t { margin: 9px 0 0; font: 500 16px/1.28 var(--sans); color: var(--head); }
+#end .note { margin: 7px 0 0; font: 400 11px/1.4 var(--sans); color: var(--muted); }
+#end hr { border: 0; border-top: 1px solid var(--edge); margin: 11px 0 3px; }
+.src { margin: 0; padding: 0; list-style: none; }
+.src li { font: 400 11px/1.3 var(--sans); color: var(--muted); padding: 5px 0; }
+.src a { color: var(--soft); text-decoration: underline; text-decoration-color: #4a586b; text-underline-offset: 3px; pointer-events: auto; display: inline-block; padding: 6px 0; margin: -6px 0; }
+.src a:focus-visible, #replay:focus-visible { outline: 2px solid var(--soft); outline-offset: 2px; }
+#end .by { position: absolute; left: 16px; bottom: 14px; font: 500 9.5px/1 var(--mono); letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+
+#replay {
+  position: absolute; right: 68px; top: 558px; padding: 8px 12px; border: 1px solid var(--muted); border-radius: 3px;
+  background: var(--ground); color: var(--head); font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+</style>
+
+<div id="wrap"><div id="stage">
+  <div class="eyebrow"><span><b>Top Story</b> &middot; Fri 30 Oct 2026</span><span>Strait of Hormuz</span></div>
+  <h1><em>Iran says</em> 4 tankers hit mines.</h1>
+  <div class="sub">None was named. What can actually go on the map?</div>
+
+  <div id="tray">
+    <div class="grp" style="left:0"><div class="k">IRGC claims &middot; 3 tankers</div><div class="q">&ldquo;unauthorized southern route&rdquo;, near Oman</div></div>
+    <div class="grp" style="left:250px"><div class="k">Army claims &middot; 1</div><div class="q">east of the strait</div></div>
+    <div class="ft" id="trayFt" style="left:284px; top:56px">may repeat its<br>27 Oct claim</div>
+  </div>
+
+  <svg id="g" viewBox="0 0 432 768" aria-hidden="true">
+    <defs>
+      <clipPath id="panel"><rect x="30" y="260" width="346" height="240" rx="4"/></clipPath>
+    </defs>
+    <g id="rings"></g>
+    <g id="map">
+      <rect id="seaR" x="30" y="260" width="346" height="240" rx="4" fill="#0e1a29" stroke="#24324a" stroke-width="1"/>
+      <g clip-path="url(#panel)">
+        <g id="land"></g>
+        <path id="band" fill="none" stroke="#7aa6d8" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
+        <path id="bandE" fill="none" stroke="#7aa6d8" stroke-width="1" stroke-dasharray="2 3" stroke-linecap="round" opacity="0"/>
+      </g>
+      <g id="places"></g>
+      <text id="cnIran" class="cn" x="300" y="290">IRAN</text>
+      <text id="cnOman" class="cn" x="205" y="464" text-anchor="middle">OMAN</text>
+      <text class="nt" x="38" y="290">Narrowest point: 21 nautical miles (39 km)</text>
+      <text class="nt" x="370" y="492" text-anchor="end">Coastline schematic</text>
+      <text id="bandT" class="bl" x="38" y="394" opacity="0">PRIMARY ROUTES (CENTCOM) &middot; SCHEMATIC</text>
+      <g id="pin1" opacity="0">
+        <circle id="h1" fill="none" stroke="#f3f1ea" stroke-width="1"/>
+        <circle id="p1" r="4.6" fill="#f3f1ea"/>
+        <text id="p1old" class="ps" text-anchor="end">tanker?</text>
+        <line id="p1strike" stroke="#c3cad3" stroke-width="1.1"/>
+        <text id="p1k" class="pk" text-anchor="end">DHOW</text>
+        <text id="p1d" class="pd" text-anchor="end">~9nm N of Khasab</text>
+      </g>
+      <g id="pin2" opacity="0">
+        <circle id="h2" fill="none" stroke="#f3f1ea" stroke-width="1"/>
+        <circle id="p2" r="4.6" fill="#f3f1ea"/>
+        <text id="p2k" class="pk">TANKER</text>
+        <text id="p2d" class="pd">~25nm NE of Khasab</text>
+      </g>
+    </g>
+  </svg>
+
+  <div id="tally">
+    <div class="box a"><div class="n">4</div><div class="l">mine strikes<br>claimed by Iran</div></div>
+    <div class="box b"><div class="n">0</div><div class="l">mine strikes<br>independently confirmed</div></div>
+    <div class="note"><b>UKMTO confirmed at least two incidents.</b> Neither has been shown to be a mine strike, and no attacker has been named.</div>
+  </div>
+
+  <div id="cap">
+    <p data-in="0" data-out="2.3">About <b>a fifth of the world&rsquo;s oil</b> passed through this strait before the war (EIA, 2024).</p>
+    <p data-in="2.3" data-out="5.7"><b class="am">Iran&rsquo;s claim:</b> four tankers struck mines. No names, flags or casualties given. Nothing to put on the map.</p>
+    <p data-in="5.7" data-out="9.3"><b class="bu">US says</b> (CENTCOM, 28 Oct): primary routes &ldquo;cleared of sea mines by US forces and remain so.&rdquo; Iran&rsquo;s earlier reports: &ldquo;FALSE.&rdquo;<span class="chip">27 OCT army &middot; 28 OCT CENTCOM &middot; 29 OCT IRGC + army</span></p>
+    <p data-in="9.3" data-out="12.4"><b class="wh">Confirmed</b> by UKMTO, 29 Oct: other early reports said a tanker. It was a <b>dhow</b>. It caught fire and sank; crew evacuated.</p>
+    <p data-in="12.4" data-out="15.5"><b class="wh">Confirmed</b> by UKMTO: late 29 Oct, a small boat attached <b>two explosive devices</b> to a tanker. Fire out, crew safe.</p>
+    <p data-in="15.5" data-out="17.6">Brent crude: <b>$116.08</b> a barrel early Friday (Dec contract, 03:23 GMT, Reuters).</p>
+  </div>
+
+  <div id="end">
+    <div class="k">Strait of Hormuz &middot; 30 Oct 2026</div>
+    <p class="t">Iran claims four tanker mine strikes. None has been independently confirmed.</p>
+    <p class="note">Pin positions are approximate, from UKMTO&rsquo;s distances off Khasab. Coastline and routes are schematic.</p>
+    <hr>
+    <ul class="src">
+      <li><a href="https://www.cnbcafrica.com/2026/iran-claims-four-tankers-struck-mines-in-hormuz-as-strike-fears-grow-after-u-s-midterms" target="_blank" rel="noopener">CNBC Africa</a>, IRGC and army claims</li>
+      <li><a href="https://www.arabnews.com/middle-east/iran-claims-four-tankers-hit-mines-in-hormuz-as-dhow-crew-rescued-3008795" target="_blank" rel="noopener">Arab News / AFP</a>, no names or flags given</li>
+      <li><a href="https://www.thestandard.com.hk/world/article/346698/Iran-army-says-oil-tanker-on-fire-after-hitting-mines-in-Hormuz" target="_blank" rel="noopener">The Standard / IRNA</a>, army&rsquo;s 27 Oct claim</li>
+      <li><a href="https://www.middleeasteye.net/live-blog/live-blog-update/us-centcom-rejects-iranian-reports-vessels-hitting-hormuz-sea-mines" target="_blank" rel="noopener">Middle East Eye</a>, CENTCOM statement</li>
+      <li><a href="https://www.rivieramm.com/news-content-hub/reports-at-least-one-vessel-sunk-in-hormuz-as-competing-claims-cloud-clarity-90422" target="_blank" rel="noopener">Riviera Maritime Media</a>, UKMTO dhow report</li>
+      <li><a href="https://www.arabnews.com/middle-east/fire-hit-tanker-continues-journey-after-being-attacked-in-strait-of-hormuz-ukmto-says-3008930" target="_blank" rel="noopener">Arab News / Reuters</a>, UKMTO tanker report</li>
+      <li><a href="https://finance.yahoo.com/news/oil-rises-supply-concerns-houthis-022725347.html" target="_blank" rel="noopener">Reuters via Yahoo Finance</a>, Brent price</li>
+      <li><a href="https://www.eia.gov/todayinenergy/detail.php?id=65504" target="_blank" rel="noopener">US EIA</a>, oil share; <a href="https://en.wikipedia.org/wiki/Strait_of_Hormuz" target="_blank" rel="noopener">Wikipedia</a>, strait width</li>
+      <li><a href="https://en.wikipedia.org/wiki/Khasab" target="_blank" rel="noopener">Wikipedia</a>, Khasab; <a href="https://en.wikipedia.org/wiki/Larak_Island" target="_blank" rel="noopener">Larak</a>, places</li>
+    </ul>
+    <div class="by">Animated by Claude</div>
+  </div>
+
+  <button id="replay" type="button" hidden>Replay</button>
+</div></div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const END = 19.6;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  const ramp = (t, at, d) => (reduce ? (t >= at ? 1 : 0) : ease(clamp((t - at) / d)));
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; };
+
+  // One linear projection for everything on the chart: 140 px per degree of longitude,
+  // 157 per degree of latitude (cos 26.6N), window 55.0-57.47E / 25.75-27.28N.
+  const P = (lon, lat) => [30 + (lon - 55.0) * 140, 258 + (27.28 - lat) * 157];
+  const path = (pts, close) => "M" + pts.map(([lo, la]) => P(lo, la).map((v) => v.toFixed(1)).join(" ")).join(" L") + (close ? " Z" : "");
+
+  // Schematic coastlines, simplified by hand. Places below are plotted from Wikipedia coordinates.
+  const IRAN = [[54.7, 26.65], [55.1, 26.8], [55.45, 26.9], [55.6, 26.96], [55.85, 27.02], [56.05, 27.1], [56.2, 27.17], [56.29, 27.19], [56.45, 27.17], [56.65, 27.13], [56.82, 27.05], [56.95, 26.92], [57.05, 26.75], [57.1, 26.55], [57.17, 26.35], [57.25, 26.15], [57.3, 25.9], [57.35, 25.6], [57.9, 25.6], [57.9, 27.7], [54.7, 27.7]];
+  const QESHM = [[55.27, 26.62], [55.5, 26.64], [55.75, 26.71], [55.95, 26.78], [56.15, 26.88], [56.28, 26.95], [56.22, 27.0], [56.0, 26.98], [55.8, 26.91], [55.6, 26.82], [55.4, 26.75], [55.25, 26.69]];
+  const MUSANDAM = [[54.7, 25.3], [55.2, 25.45], [55.55, 25.56], [55.8, 25.7], [55.95, 25.8], [56.08, 26.0], [56.15, 26.1], [56.22, 26.17], [56.27, 26.23], [56.31, 26.29], [56.36, 26.34], [56.42, 26.37], [56.47, 26.39], [56.53, 26.36], [56.5, 26.28], [56.45, 26.2], [56.42, 26.1], [56.38, 25.95], [56.33, 25.75], [56.27, 25.62], [56.33, 25.3]];
+  const land = $("land");
+  const lattr = { fill: "#1b2431", stroke: "#3b4a5e", "stroke-width": 1, "stroke-linejoin": "round" };
+  [IRAN, QESHM, MUSANDAM].forEach((pts) => el("path", { d: path(pts, true), ...lattr }, land));
+  const [hx, hy] = P(56.46, 27.06); el("ellipse", { cx: hx, cy: hy, rx: 5, ry: 5, ...lattr }, land);
+  const [lx, ly] = P(56.356, 26.853); el("ellipse", { cx: lx, cy: ly, rx: 4.5, ry: 2.6, ...lattr }, land);
+
+  const places = $("places");
+  const PL = [
+    { n: "Bandar Abbas", lon: 56.288, lat: 27.196, dx: 8, dy: 4 },
+    { n: "Larak", lon: 56.356, lat: 26.853, dx: 9, dy: 4 },
+    { n: "Khasab", lon: 56.25, lat: 26.183, dx: -7, dy: 4, end: true },
+  ];
+  PL.forEach((p) => {
+    const [x, y] = P(p.lon, p.lat);
+    el("circle", { cx: x, cy: y, r: 2.4, fill: "#8693a3" }, places);
+    const t = el("text", { x: x + p.dx, y: y + p.dy, class: "pl", "text-anchor": p.end ? "end" : "start" }, places);
+    t.textContent = p.n;
+  });
+
+  // CENTCOM's "primary transit routes": drawn as a loose band through the channel, not to real lane coordinates.
+  const BAND = [[54.95, 26.3], [55.4, 26.36], [55.85, 26.44], [56.3, 26.56], [56.65, 26.55], [56.9, 26.38], [57.08, 26.05], [57.15, 25.75]];
+  const band = $("band"), bandE = $("bandE");
+  band.setAttribute("d", path(BAND)); bandE.setAttribute("d", path(BAND));
+  const BLEN = band.getTotalLength();
+  band.setAttribute("stroke-dasharray", `${BLEN} ${BLEN}`);
+
+  // UKMTO positions, projected from its distances off Khasab: 9nm N, and 25nm NE (bearing 045).
+  const nm = 1 / 60;
+  const K = [56.25, 26.183];
+  const p1 = P(K[0], K[1] + 9 * nm);
+  const d2 = 25 * nm * Math.SQRT1_2;
+  const p2 = P(K[0] + d2 / Math.cos((26.4 * Math.PI) / 180), K[1] + d2);
+  const setXY = (id, x, y) => { const e = $(id); e.setAttribute("x", x.toFixed(1)); e.setAttribute("y", y.toFixed(1)); return e; };
+  ["p1", "h1"].forEach((id) => { $(id).setAttribute("cx", p1[0].toFixed(1)); $(id).setAttribute("cy", p1[1].toFixed(1)); });
+  ["p2", "h2"].forEach((id) => { $(id).setAttribute("cx", p2[0].toFixed(1)); $(id).setAttribute("cy", p2[1].toFixed(1)); });
+  const old = setXY("p1old", p1[0] - 11, p1[1] - 16);
+  setXY("p1k", p1[0] - 11, p1[1] - 2);
+  setXY("p1d", p1[0] - 11, p1[1] + 11);
+  setXY("p2k", p2[0] + 11, p2[1] - 2);
+  setXY("p2d", p2[0] + 11, p2[1] + 11);
+  const strike = $("p1strike");
+  let strikeW = 34;
+  function placeStrike() {
+    try { strikeW = old.getComputedTextLength() || strikeW; } catch (e) {}
+    strike.setAttribute("x1", (p1[0] - 11 - strikeW - 1).toFixed(1));
+    strike.setAttribute("y1", (p1[1] - 19.5).toFixed(1));
+    strike.setAttribute("y2", (p1[1] - 19.5).toFixed(1));
+  }
+  placeStrike();
+  if (document.fonts) document.fonts.ready.then(() => { placeStrike(); render(last); });
+
+  // The tray: hollow dashed rings, one per claimed tanker, each with blank fields.
+  const rings = $("rings");
+  const RX = [48, 124, 200, 296];
+  const trayRings = RX.map((cx, i) => {
+    const g = el("g", { opacity: 0 }, rings);
+    el("circle", { cx, cy: 220, r: 12, fill: "none", stroke: "#e2a641", "stroke-width": 1.4, "stroke-dasharray": "3 3" }, g);
+    const q = el("text", { x: cx, y: 224, class: "rq", "text-anchor": "middle" }, g); q.textContent = "?";
+    const f1 = el("text", { x: cx + 18, y: 217, class: "fld" }, g); f1.textContent = "name —";
+    const f2 = el("text", { x: cx + 18, y: 228, class: "fld" }, g); f2.textContent = "flag —";
+    return g;
+  });
+
+  const tray = $("tray"), grps = [...tray.querySelectorAll(".grp")], trayFt = $("trayFt");
+  const map = $("map"), pin1 = $("pin1"), pin2 = $("pin2"), h1 = $("h1"), h2 = $("h2");
+  const tally = $("tally"), endEl = $("end"), bandT = $("bandT");
+  const sub = document.querySelector(".sub");
+  const caps = [...document.querySelectorAll("#cap p")];
+  const fade = (e, o, dy = 0) => { e.style.opacity = o.toFixed(3); e.style.translate = `0 ${dy.toFixed(1)}px`; };
+  const halo = (c, t, at) => {
+    const k = reduce ? 0 : clamp((t - at) / 1.6);
+    c.setAttribute("r", (5 + 13 * k).toFixed(2));
+    c.setAttribute("opacity", (k > 0 && k < 1 ? 0.6 * (1 - k) : 0).toFixed(2));
+  };
+
+  let last = 0;
+  function render(t) {
+    last = t;
+    // 1. Hook: the chart settles in; headline and question.
+    const mk = ramp(t, 0.1, 0.9);
+    const out = ramp(t, 15.4, 0.5); // chart leaves fully under the tally
+    map.setAttribute("opacity", (mk * (1 - out)).toFixed(3));
+    fade(sub, ramp(t, 0.5, 0.5));
+    // 2. Iran's claims: rings arrive in the tray, one by one, and stay off the water.
+    grps.forEach((g, i) => fade(g, ramp(t, 2.3 + (i ? 0.9 : 0), 0.4)));
+    trayRings.forEach((g, i) => g.setAttribute("opacity", ramp(t, 2.5 + i * 0.3, 0.35).toFixed(2)));
+    fade(trayFt, ramp(t, 3.7, 0.4));
+    const trayOut = ramp(t, 17.5, 0.4);
+    tray.style.opacity = (1 - trayOut).toFixed(3);
+    rings.setAttribute("opacity", (1 - trayOut).toFixed(3));
+    // 3. US says: the schematic band draws through the channel, then settles to a dashed trace.
+    const bk = ramp(t, 5.8, 1.2);
+    const bdim = ramp(t, 9.2, 0.5);
+    band.setAttribute("stroke-dashoffset", (BLEN * (1 - bk)).toFixed(1));
+    band.setAttribute("opacity", (bk > 0 ? 0.38 * (1 - bdim) : 0).toFixed(3));
+    bandE.setAttribute("opacity", (0.7 * bdim).toFixed(3));
+    bandT.setAttribute("opacity", (ramp(t, 6.6, 0.4) * (1 - bdim)).toFixed(2));
+    // 4. Confirmed, pin 1: the early "tanker?" is struck out and corrected to DHOW.
+    pin1.setAttribute("opacity", ramp(t, 9.4, 0.4).toFixed(2));
+    halo(h1, t, 9.5);
+    const sk = ramp(t, 10.3, 0.4);
+    strike.setAttribute("x2", (p1[0] - 11 - (strikeW + 1) * (1 - sk)).toFixed(1));
+    strike.setAttribute("opacity", sk > 0 ? 1 : 0);
+    old.setAttribute("opacity", (1 - 0.45 * sk).toFixed(2));
+    const kk = ramp(t, 10.6, 0.4);
+    $("p1k").setAttribute("opacity", kk.toFixed(2));
+    $("p1d").setAttribute("opacity", ramp(t, 9.6, 0.4).toFixed(2));
+    // 5. Confirmed, pin 2: the attached-explosives tanker.
+    pin2.setAttribute("opacity", ramp(t, 12.5, 0.4).toFixed(2));
+    halo(h2, t, 12.6);
+    // 6. Tally over a cleared stage, then sources.
+    const tk = ramp(t, 15.7, 0.5) * (1 - ramp(t, 17.4, 0.35));
+    fade(tally, tk, (1 - ramp(t, 15.7, 0.5)) * 6);
+    for (const p of caps) {
+      const a = Number(p.dataset.in), z = Number(p.dataset.out);
+      const inn = a <= 0 ? ramp(t, 0.3, 0.5) : ramp(t, a, 0.4), o2 = ramp(t, z - 0.3, 0.3);
+      const o = reduce ? (t >= a && t < z ? 1 : 0) : inn * (1 - o2);
+      fade(p, o, (1 - inn) * 4);
+    }
+    const ek = ramp(t, 17.7, 0.5);
+    fade(endEl, ek, (1 - ek) * 8);
+    endEl.style.pointerEvents = ek > 0.5 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(clamp(t, 0, END)); }, play };
+  render(0);
+  if (reduce) { render(END); replay.hidden = false; } else play();
+})();
+</script>

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Past the Line</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* One fixed 432x768 (9:16) stage, scaled to fit. Everything readable stays inside the social
+   safe box, x 26-380 / y 108-600 in stage px (x 65-950 / y 270-1500 at 1080x1920).
+   The device: a stack of paper ballots, one slip per million, climbing past the etched marks of
+   earlier midterms. Ballot-paper look, deliberately not red or blue: the story is how many voted
+   early, not for whom. Light palette set explicitly for both host themes. */
+:root {
+  --paper: #f1ede3;
+  --slip: #fbf9f3;
+  --ink: #17212b;
+  --soft: #3f4a54;
+  --muted: #6d7680;
+  --rule: #c7c1b2;
+  --stamp: #c4501c;
+  --stampfill: #e0703a;
+  --old: #8f9aa3;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+html, body { height: 100%; margin: 0; }
+body { background: var(--paper); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+#stage::before {
+  content: ""; position: absolute; inset: -600px; pointer-events: none;
+  background: radial-gradient(rgba(23,33,43,.06) 1px, transparent 1.2px) 0 0 / 12px 12px;
+}
+
+.eyebrow { position: absolute; left: 30px; right: 56px; top: 112px; display: flex; justify-content: space-between;
+  font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h1 { position: absolute; left: 30px; right: 56px; top: 128px; margin: 0;
+  font: 800 34px/1 var(--display); font-stretch: 76%; letter-spacing: -.01em; color: var(--ink); }
+.sub { position: absolute; left: 30px; right: 56px; top: 166px; margin: 0; font: 400 13px/1.3 var(--display); color: var(--soft); }
+
+svg#g { position: absolute; left: 0; top: 0; width: 432px; height: 768px; overflow: visible; pointer-events: none; }
+.mk { font: 500 10px var(--mono); letter-spacing: .04em; fill: var(--muted); }
+.mkb { font: 700 12px var(--display); font-stretch: 85%; fill: var(--soft); }
+.rd { font: 800 30px var(--display); font-stretch: 72%; fill: var(--ink); font-variant-numeric: tabular-nums; }
+.rdd { font: 500 10px var(--mono); letter-spacing: .1em; fill: var(--muted); }
+.unit { font: 500 9px var(--mono); letter-spacing: .06em; fill: var(--muted); }
+
+#stampEl { position: absolute; left: 150px; top: 440px; padding: 7px 12px 6px; border: 3px solid var(--stamp); border-radius: 4px;
+  color: var(--stamp); font: 800 19px/1 var(--display); font-stretch: 80%; letter-spacing: .06em; text-transform: uppercase;
+  transform-origin: 50% 50%; opacity: 0; text-align: center; }
+#stampEl small { display: block; margin-top: 3px; font: 500 9px/1 var(--mono); letter-spacing: .1em; }
+
+#cap { position: absolute; left: 30px; width: 346px; top: 560px; height: 40px; }
+#cap p { position: absolute; left: 0; top: 0; margin: 0; width: 346px; font: 500 14.5px/1.3 var(--display); color: var(--ink); text-wrap: balance; }
+#cap b { font-weight: 700; color: var(--stamp); }
+
+.panel { position: absolute; left: 30px; width: 346px; top: 206px; opacity: 0; }
+.panel .k { font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.panel .h { margin-top: 8px; font: 700 23px/1.1 var(--display); font-stretch: 82%; color: var(--ink); }
+.bar { margin-top: 14px; }
+.bar .lab { display: flex; justify-content: space-between; align-items: baseline; font: 500 11px/1 var(--mono); color: var(--soft); }
+.bar .lab b { font: 800 22px/1 var(--display); font-stretch: 75%; color: var(--ink); font-variant-numeric: tabular-nums; }
+.bar .track { margin-top: 6px; height: 16px; background: rgba(23,33,43,.06); border-radius: 2px; overflow: hidden; }
+.bar .fill { height: 100%; width: 0; background: var(--old); border-radius: 2px; }
+.bar.now .fill { background: var(--stampfill); }
+.bar.now .lab b { color: var(--stamp); }
+.states { margin-top: 20px; display: grid; gap: 0; }
+.st { display: grid; grid-template-columns: 82px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--rule); }
+.st .nm { font: 700 15px/1.1 var(--display); font-stretch: 85%; color: var(--ink); }
+.st .v { font: 800 22px/1 var(--display); font-stretch: 75%; color: var(--stamp); font-variant-numeric: tabular-nums; }
+.st .t { margin-top: 3px; font: 400 12px/1.3 var(--display); color: var(--soft); }
+.note { margin-top: 18px; padding-top: 12px; border-top: 1.5px solid var(--ink); font: 500 14px/1.32 var(--display); color: var(--ink); }
+.note span { display: block; margin-top: 6px; font: 400 12px/1.35 var(--display); color: var(--soft); }
+
+#end { position: absolute; left: 30px; width: 346px; top: 112px; height: 486px; opacity: 0; pointer-events: none; }
+#end .n { font: 800 76px/.9 var(--display); font-stretch: 70%; color: var(--stamp); }
+#end .l { margin-top: 8px; font: 600 17px/1.25 var(--display); color: var(--ink); }
+#end .sm { margin-top: 12px; font: 400 12.5px/1.38 var(--display); color: var(--soft); }
+#end h2 { margin: 22px 0 6px; font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#end ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; font: 400 11.5px/1.3 var(--display); color: var(--soft); }
+#end li b { color: var(--ink); font-weight: 600; }
+#end a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 2px; }
+#end .by { margin-top: 12px; font: 500 9.5px/1 var(--mono); letter-spacing: .08em; color: var(--muted); }
+
+#replay { position: absolute; right: 56px; top: 556px; padding: 8px 14px; border: 1.5px solid var(--ink); border-radius: 999px;
+  background: var(--paper); color: var(--ink); font: 600 12px/1 var(--display); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#end a:focus-visible, #replay:focus-visible { outline: 2px solid var(--stamp); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div id="wrap">
+<div id="stage" role="img" aria-label="Animated chart: more than 51.3 million ballots were cast before Election Day in the 2026 US midterms as of midday Saturday October 31, passing the 2022 midterm record of 45.9 million. More than 28 million were cast in person, against about 20.5 million in 2022. The share of ballots cast before Election Day has risen from about 40 percent in 2016 to about 60 percent in 2024, so part of the record is a shift in when people vote.">
+  <div id="head">
+    <div class="eyebrow"><span>US midterms · Nov 3</span><span id="asof">Early vote</span></div>
+    <h1>Past the line</h1>
+    <p class="sub" id="subl">Ballots cast before Election Day, 2026, against past midterms</p>
+  </div>
+
+  <svg id="g" viewBox="0 0 432 768" aria-hidden="true"></svg>
+  <div id="stampEl">Midterm record<small>OCT 30 · MIDDAY</small></div>
+
+  <div id="cap">
+    <p data-in="0.3" data-out="2.6"><b>51.3 million</b> ballots in by midday Saturday. Here's how fast.</p>
+    <p data-in="2.8" data-out="8.4">One slip = one million early ballots. <b>Oct 26 to Oct 31.</b></p>
+  </div>
+
+  <div class="panel" id="p2">
+    <div class="k">Not just mail</div>
+    <div class="h">In-person early voting jumped too</div>
+    <div class="bar"><div class="lab"><span>2022 midterm, in person</span><b>~20.5M</b></div><div class="track"><div class="fill"></div></div></div>
+    <div class="bar now"><div class="lab"><span>2026, in person, so far</span><b>28M+</b></div><div class="track"><div class="fill"></div></div></div>
+    <div class="states">
+      <div class="st"><div class="nm">Georgia</div><div><div class="v">2.81M</div><div class="t">early ballots, a state midterm record (2022: 2.5M)</div></div></div>
+      <div class="st"><div class="nm">Texas</div><div><div class="v">7.41M</div><div class="t">early votes, in person and mail, a state midterm record (2022: ~5.5M)</div></div></div>
+    </div>
+  </div>
+
+  <div class="panel" id="p3">
+    <div class="k">Read it carefully</div>
+    <div class="h">Part of the record is a shift in when people vote</div>
+    <div class="bar"><div class="lab"><span>2016, presidential</span><b>~40%</b></div><div class="track"><div class="fill"></div></div></div>
+    <div class="bar"><div class="lab"><span>2022, midterm</span><b>~50%</b></div><div class="track"><div class="fill"></div></div></div>
+    <div class="bar now"><div class="lab"><span>2024, presidential</span><b>~60%</b></div><div class="track"><div class="fill"></div></div></div>
+    <div class="unit" style="margin-top:8px;font:500 9.5px/1.3 var(--mono);color:var(--muted)">SHARE OF ALL BALLOTS CAST BEFORE ELECTION DAY</div>
+    <div class="note">Early totals show who voted, not for whom.<span>Election Day votes tend to lean Republican, so early numbers don't predict Tuesday's results.</span></div>
+  </div>
+
+  <div id="end">
+    <div class="n">51.3M+</div>
+    <div class="l">ballots cast before Election Day in the 2026 midterms, as of midday Sat Oct 31. The 2022 record was 45.9M.</div>
+    <div class="sm">Totals from the University of Florida Election Lab, which keeps rising as states report. It is an early-vote record, not a turnout record. Election Day is Tue Nov 3.</div>
+    <h2>Sources</h2>
+    <ol>
+      <li><b>Scripps News</b> (UF Election Lab data): <a href="https://www.scrippsnews.com/politics/america-votes/in-person-early-voting-hits-record-pace-for-midterms" target="_blank" rel="noopener">In-person early voting hits record pace for midterms</a>, Oct 31</li>
+      <li><b>AFP via Yahoo:</b> <a href="https://www.yahoo.com/news/politics/articles/us-midterm-early-voting-hits-172158307.html" target="_blank" rel="noopener">record passed at 47.9M, Oct 30</a> · <b>Independent Center:</b> <a href="https://www.independentcenter.org/resources/how-many-people-have-voted-early-2026-midterms" target="_blank" rel="noopener">30.3M, Oct 26</a></li>
+      <li><b>States:</b> <a href="https://www.atlantanewsfirst.com/2026/10/31/early-voting-wraps-georgia-with-record-28m-ballots-what-happens-next/" target="_blank" rel="noopener">Atlanta News First</a> (Georgia), <a href="https://www.cbsnews.com/texas/news/texas-early-voting-record-10-31-2026/" target="_blank" rel="noopener">CBS Texas</a> (Texas)</li>
+      <li><b>Context:</b> <a href="https://nolabels.org/the-latest/early-voting-breaks-the-midterm-record-what-46-million-ballots-tell-us-about-2026/" target="_blank" rel="noopener">No Labels</a> (MIT/CEIR early share), <a href="https://time.com/article/2026/10/27/midterm-elections-early-voting-data-democrats-republicans-hispanic-voters/" target="_blank" rel="noopener">TIME</a> (Michael McDonald), <a href="https://lavocedinewyork.com/en/news/2026/10/31/midterms-2026-early-voting-surge-reaches-record-48-million-ballots/" target="_blank" rel="noopener">La Voce di New York</a> (2014, 2018)</li>
+    </ol>
+    <div class="by">Animated by Claude · Nov 1, 2026</div>
+  </div>
+
+  <button id="replay" type="button" hidden>Replay</button>
+</div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const NS = "http://www.w3.org/2000/svg";
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const END = 19.0;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const ramp = (t, a, d) => ease(clamp((t - a) / d, 0, 1));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const fade = (el, o, dy = 0) => { el.style.opacity = o.toFixed(3); el.style.transform = dy ? `translateY(${dy.toFixed(1)}px)` : ""; };
+  const mk = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+
+  // Scale: millions of pre-election ballots. Zero at y 548, 55M at y 230.
+  const svg = $("g");
+  const Z = 548, S = (548 - 232) / 55;
+  const yOf = (m) => Z - m * S;
+  const CX = 40, CW = 72;           // the stack
+  const chart = mk("g", {});
+  mk("line", { x1: 30, x2: 376, y1: Z + 0.5, y2: Z + 0.5, stroke: "#17212b", "stroke-width": 1.4 }, chart);
+  const zl = mk("text", { x: 376, y: Z - 6, "text-anchor": "end", class: "unit" }, chart); zl.textContent = "0";
+
+  // Etched marks for past midterms (UF Election Lab, via La Voce di New York).
+  const MARKS = [
+    { y: "2014", m: 27.3, txt: "~27.3M" },
+    { y: "2018", m: 39.1, txt: "39.1M" },
+    { y: "2022", m: 45.9, txt: "45.9M", rec: true },
+  ];
+  const marks = MARKS.map((d) => {
+    const g = mk("g", {}, chart);
+    const yy = yOf(d.m);
+    mk("line", { x1: CX - 6, x2: 376, y1: yy, y2: yy, stroke: d.rec ? "#17212b" : "#8f9aa3", "stroke-width": d.rec ? 1.6 : 1, "stroke-dasharray": d.rec ? "none" : "3 3" }, g);
+    const a = mk("text", { x: 376, y: yy - 5, "text-anchor": "end", class: "mkb" }, g); a.textContent = d.y + " midterm";
+    const b = mk("text", { x: 376, y: yy + 13, "text-anchor": "end", class: "mk" }, g); b.textContent = d.txt + (d.rec ? " · old record" : "");
+    return { ...d, g };
+  });
+
+  // Slips: one per million. Jitter is seeded so every seek is identical.
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const slips = [];
+  for (let i = 0; i < 52; i++) {
+    const r = mk("rect", { x: (CX + (rnd() - .5) * 4).toFixed(1), y: (yOf(i + 1) + .6).toFixed(1), width: CW, height: (S - 1.2).toFixed(2), rx: .6,
+      fill: "#fbf9f3", stroke: "#17212b", "stroke-width": .8, transform: `rotate(${((rnd() - .5) * 1.6).toFixed(2)} ${CX + CW / 2} ${yOf(i + .5).toFixed(1)})` }, chart);
+    slips.push(r);
+  }
+  // readout next to the top of the stack
+  const rg = mk("g", {}, chart);
+  const rbg = mk("rect", { x: CX + CW + 10, width: 128, height: 46, fill: "#f1ede3" }, rg);
+  const rdd = mk("text", { x: CX + CW + 14, class: "rdd" }, rg);
+  const rd = mk("text", { x: CX + CW + 14, class: "rd" }, rg);
+
+  // Timeline of the count (UF Election Lab snapshots): climb, hold on each dated snapshot.
+  function countAt(t) {
+    if (t < 2.4) return 51.3;                                          // open on the payoff
+    if (t < 2.9) return lerp(51.3, 30.3, ramp(t, 2.4, 0.5));           // quick rewind to Oct 26
+    if (t < 3.3) return 30.3;
+    if (t < 5.4) return lerp(30.3, 47.9, ramp(t, 3.3, 2.1));           // Oct 26 -> Oct 30 midday
+    if (t < 6.2) return 47.9;
+    return lerp(47.9, 51.3, ramp(t, 6.2, 1.0));                         // -> Oct 31 midday
+  }
+  function dateAt(t) {
+    if (t < 2.4) return "OCT 31 · MIDDAY";
+    if (t < 2.9) return "REWIND";
+    if (t < 3.3) return "OCT 26";
+    if (t < 5.4) return "OCT 26 → OCT 30";
+    if (t < 6.2) return "OCT 30 · MIDDAY";
+    if (t < 7.2) return "OCT 30 → OCT 31";
+    return "OCT 31 · MIDDAY";
+  }
+
+  const caps = [...document.querySelectorAll("#cap p")];
+  const stampEl = $("stampEl"), p2 = $("p2"), p3 = $("p3"), endEl = $("end"), head = $("head");
+  const p2bars = [...p2.querySelectorAll(".fill")], p2w = [20.5 / 30, 28 / 30];
+  const p2rows = [...p2.querySelectorAll(".st")];
+  const p3bars = [...p3.querySelectorAll(".fill")], p3w = [.4, .5, .6];
+  const note = p3.querySelector(".note");
+
+  function render(t) {
+    fade(head, 1 - ramp(t, 16.2, 0.4));
+    const chartOut = ramp(t, 8.6, 0.5);
+    chart.setAttribute("opacity", (1 - chartOut).toFixed(3));
+    $("subl").style.opacity = (1 - chartOut).toFixed(3);
+    const c = countAt(t);
+    slips.forEach((r, i) => {
+      const k = clamp(c - i, 0, 1);
+      r.setAttribute("opacity", k.toFixed(3));
+      const over = i + 1 > 45.9;
+      r.setAttribute("fill", over ? "#e0703a" : "#fbf9f3");
+      r.setAttribute("stroke", over ? "#c4501c" : "#17212b");
+    });
+    // readout floats with the top of the stack, but never closer than 18px under the top mark area
+    const ty = clamp(yOf(c) - 4, 240, 520);
+    rbg.setAttribute("y", (ty - 30).toFixed(1));
+    rdd.setAttribute("y", (ty - 18).toFixed(1)); rdd.textContent = dateAt(t);
+    rd.setAttribute("y", (ty + 10).toFixed(1));
+    rd.textContent = (c >= 51.29 ? "51.3M+" : c.toFixed(1) + "M");
+    rd.setAttribute("fill", c > 45.9 ? "#c4501c" : "#17212b");
+    // the record stamp lands when the stack passes 45.9M
+    const sk = ramp(t, 4.75, 0.22) * (1 - ramp(t, 8.4, 0.3));
+    stampEl.style.opacity = sk.toFixed(3);
+    stampEl.style.transform = `rotate(-7deg) scale(${(1.6 - 0.6 * ramp(t, 4.75, 0.22)).toFixed(3)})`;
+    // 2. in person
+    const k2 = ramp(t, 8.9, 0.45) * (1 - ramp(t, 12.4, 0.35));
+    fade(p2, k2, (1 - ramp(t, 8.9, 0.45)) * 8);
+    p2bars.forEach((b, i) => b.style.width = (100 * p2w[i] * ramp(t, 9.2 + i * 0.35, 0.8)).toFixed(1) + "%");
+    p2rows.forEach((r, i) => fade(r, ramp(t, 10.2 + i * 0.5, 0.4), (1 - ramp(t, 10.2 + i * 0.5, 0.4)) * 6));
+    // 3. the shift
+    const k3 = ramp(t, 12.7, 0.45) * (1 - ramp(t, 16.1, 0.35));
+    fade(p3, k3, (1 - ramp(t, 12.7, 0.45)) * 8);
+    p3bars.forEach((b, i) => b.style.width = (100 * p3w[i] * ramp(t, 13.0 + i * 0.3, 0.7)).toFixed(1) + "%");
+    fade(note, ramp(t, 14.2, 0.4), (1 - ramp(t, 14.2, 0.4)) * 6);
+    // captions
+    for (const p of caps) {
+      const a = +p.dataset.in, z = +p.dataset.out;
+      const o = (a < 0.5 ? 1 : ramp(t, a, 0.35)) * (1 - ramp(t, z - 0.3, 0.3));
+      fade(p, o, a < 0.5 ? 0 : (1 - ramp(t, a, 0.35)) * 4);
+    }
+    // 4. sources
+    const ek = ramp(t, 16.4, 0.5);
+    fade(endEl, ek, (1 - ek) * 8);
+    endEl.style.pointerEvents = ek > 0.5 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(clamp(t, 0, END)); }, play };
+  render(0);
+  if (reduce) { render(END); replay.hidden = false; } else play();
+})();
+</script>
+</body>
+</html>

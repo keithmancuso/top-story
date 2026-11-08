@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Count to 61</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Israel votes Oct 27, 2026. Opening: a fixed 432x768 (9:16) stage, scaled to fit, all content inside the
+   social safe box x 26-380 / y 108-600 (x 65-950 / y 270-1500 at 1080x1920). The 120-seat Knesset fills
+   bloc by bloc from the Channel 13 final poll and neither camp reaches the 61 line. Below the stage the
+   viewer can switch polls, build their own coalition, and read what happens after the polls close.
+   Bloc colours are neutral hues (amber / teal / violet), never party or flag colours. */
+:root {
+  --ground: #0f1622;
+  --panel: #172131;
+  --line: #2a3850;
+  --head: #eef2f7;
+  --body: #c3ccd8;
+  --muted: #8291a6;
+  --empty: #33425a;
+  --gov: #e8a33d;   /* Netanyahu's bloc */
+  --opp: #3fb8a8;   /* Eisenkot's change bloc */
+  --arab: #a98be0;  /* Arab-led parties */
+  --other: #8c96a3;
+  --goal: #f4f1e8;
+  --sans: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --text: "Inter", system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
+}
+/* One night-blue design in both themes; tokens restated so either theme lands here. */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ground: #0f1622; } }
+:root[data-theme="dark"] { --ground: #0f1622; }
+html, body { margin: 0; }
+button { -webkit-tap-highlight-color: transparent; }
+button:focus-visible { outline: 2px solid var(--goal); outline-offset: 2px; }
+body { background: var(--ground); color: var(--body); font: 400 15px/1.5 var(--text); -webkit-font-smoothing: antialiased; }
+
+/* ---------- Stage ---------- */
+#wrap { position: relative; width: 100%; height: 100svh; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+#stage::before { content: ""; position: absolute; inset: -400px; pointer-events: none;
+  background: radial-gradient(420px 460px at 50% 50%, #1a2638 0%, transparent 72%); }
+.abs { position: absolute; }
+#kicker { left: 30px; top: 112px; right: 52px; display: flex; justify-content: space-between;
+  font: 600 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#kicker b { color: var(--goal); font-weight: 600; }
+#title { left: 28px; top: 128px; margin: 0; font: 700 54px/1 var(--sans); color: var(--head); letter-spacing: -.005em; }
+#title span { color: var(--goal); }
+#sub { left: 30px; top: 186px; width: 340px; font: 500 15px/1.3 var(--text); color: var(--body); }
+#arc { left: 26px; top: 228px; width: 354px; height: 200px; overflow: visible; }
+#center { left: 113px; top: 360px; width: 180px; text-align: center; }
+#cnum { font: 700 44px/1 var(--sans); color: var(--goal); }
+#clab { font: 600 10px/1.2 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+
+.bloc { left: 30px; width: 346px; height: 36px; }
+.bloc .lab { display: flex; justify-content: space-between; align-items: baseline; font: 600 14px/1 var(--sans); letter-spacing: .02em; color: var(--head); }
+.bloc .lab i { font-style: normal; font: 600 11px/1 var(--mono); color: var(--muted); }
+.bloc .lab .n { font: 700 17px/1 var(--sans); }
+.bar { position: relative; height: 10px; margin-top: 6px; background: #1d2a3d; border-radius: 2px; }
+.bar .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 2px; }
+#b1 { top: 440px; } #b2 { top: 478px; } #b3 { top: 516px; }
+#goal { display: none; }
+.bar .tick { position: absolute; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: var(--goal); }
+#goallab { top: 428px; font: 600 9px/1 var(--mono); letter-spacing: .1em; color: var(--goal); transform: translateX(-50%); }
+#cap { left: 30px; top: 556px; width: 346px; font: 500 12.5px/1.3 var(--text); color: var(--body); }
+#cap b { color: var(--head); font-weight: 600; }
+#src { left: 30px; top: 589px; width: 346px; font: 500 8.5px/1.1 var(--mono); color: var(--muted); letter-spacing: .02em; }
+
+#ctl { position: absolute; left: 0; right: 0; bottom: max(14px, env(safe-area-inset-bottom)); display: flex; justify-content: center; gap: 10px; z-index: 5; }
+#ctl button { font: 600 13px/1 var(--text); color: var(--head); background: #ffffff14; border: 1px solid #ffffff2a; border-radius: 999px; padding: 10px 16px; cursor: pointer; }
+#ctl button.go { background: var(--goal); color: #10151d; border-color: var(--goal); }
+
+/* ---------- Explore ---------- */
+main { max-width: 560px; margin: 0 auto; padding: 8px 16px 64px; }
+section { margin-top: 40px; }
+h2 { font: 700 30px/1.05 var(--sans); color: var(--head); margin: 0 0 6px; }
+.lede { margin: 0 0 16px; color: var(--body); }
+.eyebrow { font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.tabs button { flex: 1; min-width: 92px; font: 600 13px/1.2 var(--text); color: var(--body); background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 9px 6px; cursor: pointer; }
+.tabs button[aria-pressed="true"] { background: var(--goal); color: #10151d; border-color: var(--goal); }
+.tabs small { display: block; font: 500 10.5px/1.2 var(--mono); opacity: .75; margin-top: 2px; }
+.meter { position: sticky; top: 0; z-index: 3; background: var(--ground); padding: 10px 0 12px; }
+.mtop { display: flex; justify-content: space-between; align-items: baseline; }
+#total { font: 700 40px/1 var(--sans); color: var(--head); }
+#verdict { font: 600 14px/1.2 var(--text); color: var(--muted); text-align: right; }
+#verdict.win { color: var(--goal); }
+.mbar { position: relative; height: 16px; background: #1d2a3d; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+.mbar .seg { position: absolute; top: 0; bottom: 0; transition: left .25s, width .25s; }
+.mbar .g61 { position: absolute; top: -2px; bottom: -2px; width: 0; border-left: 2px solid var(--goal); }
+.mscale { display: flex; justify-content: space-between; font: 500 10.5px/1 var(--mono); color: var(--muted); margin-top: 5px; }
+.presets { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0 12px; }
+.presets button { font: 500 12.5px/1 var(--text); color: var(--body); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; cursor: pointer; }
+.parties { display: grid; gap: 6px; }
+.party { display: grid; grid-template-columns: 6px 1fr auto; gap: 12px; align-items: center; width: 100%; text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; color: var(--body); font: inherit; }
+.party .sw { width: 6px; height: 30px; border-radius: 3px; }
+.party .nm { font: 600 15px/1.2 var(--text); color: var(--head); }
+.party .who { font: 400 12px/1.3 var(--text); color: var(--muted); }
+.party .seats { font: 700 24px/1 var(--sans); color: var(--muted); min-width: 30px; text-align: right; }
+.party[aria-pressed="true"] { border-color: var(--goal); background: #22304a; }
+.party[aria-pressed="true"] .seats { color: var(--head); }
+.party.out { opacity: .5; }
+.note { font-size: 13.5px; color: var(--muted); margin: 14px 0 0; }
+.note b { color: var(--body); }
+.tl { list-style: none; margin: 0; padding: 0; }
+.tl li { position: relative; padding: 0 0 18px 26px; }
+.tl li::before { content: ""; position: absolute; left: 5px; top: 7px; width: 10px; height: 10px; border-radius: 50%; background: var(--goal); }
+.tl li::after { content: ""; position: absolute; left: 9.5px; top: 20px; bottom: 0; width: 1px; background: var(--line); }
+.tl li:last-child::after { display: none; }
+.tl .when { font: 600 12px/1.3 var(--mono); color: var(--goal); letter-spacing: .04em; }
+.tl .what { color: var(--body); }
+.tl .what b { color: var(--head); font-weight: 600; }
+.src { font-size: 13px; color: var(--muted); padding-left: 18px; }
+.src li { margin-bottom: 6px; }
+.src a { color: var(--body); }
+footer { margin-top: 32px; font: 500 11px/1.4 var(--mono); color: var(--muted); }
+</style>
+
+<div id="wrap">
+  <div id="stage">
+    <div id="kicker" class="abs"><span><b>Israel votes</b> · Tue Oct 27, 2026</span><span>Knesset</span></div>
+    <h1 id="title" class="abs">Count to <span>61</span></h1>
+    <div id="sub" class="abs">120 seats. A government needs 61. The last polls say nobody gets there.</div>
+    <svg id="arc" class="abs" viewBox="0 0 354 200"></svg>
+    <div id="center" class="abs"><div id="cnum">61</div><div id="clab">seats to govern</div></div>
+    <div id="goal" class="abs"></div>
+    <div id="goallab" class="abs">61</div>
+    <div id="b1" class="abs bloc"><div class="lab"><span>Netanyahu's bloc</span><span><i id="b1s"></i> <span class="n" id="b1n">0</span></span></div><div class="bar"><div class="fill" style="background:var(--gov)"></div></div></div>
+    <div id="b2" class="abs bloc"><div class="lab"><span>Eisenkot's change bloc</span><span><i id="b2s"></i> <span class="n" id="b2n">0</span></span></div><div class="bar"><div class="fill" style="background:var(--opp)"></div></div></div>
+    <div id="b3" class="abs bloc"><div class="lab"><span>Arab-led parties</span><span><i id="b3s"></i> <span class="n" id="b3n">0</span></span></div><div class="bar"><div class="fill" style="background:var(--arab)"></div></div></div>
+    <div id="cap" class="abs"></div>
+    <div id="src" class="abs">Seats: Channel 13 final poll, Oct 23. Sources below.</div>
+  </div>
+  <div id="ctl"><button id="replay" type="button">Replay</button><button id="explore" class="go" type="button">Build a coalition ↓</button></div>
+</div>
+
+<main>
+  <section id="build">
+    <div class="eyebrow">Your turn</div>
+    <h2>Build a coalition</h2>
+    <p class="lede">Tap parties to add them. Pick a poll first: the three TV networks' final polls, all published Oct 23, disagree by a few seats, and a few seats is the whole game.</p>
+    <div class="tabs" id="polls" role="group" aria-label="Choose a poll"></div>
+    <div class="meter">
+      <div class="mtop"><div id="total">0</div><div id="verdict">Tap a party to start</div></div>
+      <div class="mbar" id="mbar"><div class="g61" style="left:calc(61/120*100%)"></div></div>
+      <div class="mscale"><span>0</span><span style="margin-left:auto;margin-right:calc(59/120*100% - 1.5em)">61</span><span>120</span></div>
+    </div>
+    <div class="presets">
+      <button type="button" data-preset="gov">Netanyahu's bloc</button>
+      <button type="button" data-preset="opp">Change bloc</button>
+      <button type="button" data-preset="clear">Clear</button>
+    </div>
+    <div class="parties" id="parties"></div>
+    <p class="note"><b>The catch:</b> both camps have so far ruled out working with Arab-led parties (TIME). The change bloc's other route is a minority government that survives only if those parties vote for it or abstain (CBS News).</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">After tonight</div>
+    <h2>What happens next</h2>
+    <ul class="tl">
+      <li><div class="when">TUE OCT 27 · 10 PM ISRAEL / 4 PM ET</div><div class="what"><b>Polls close, exit polls air.</b> About 7.3 million Israelis are eligible to vote. There is no general absentee ballot, so they vote in person.</div></li>
+      <li><div class="when">BY FRI OCT 30</div><div class="what"><b>Final tally expected.</b> Any party under 3.25% of the vote gets zero seats, which is why parties polling near that line can swing the math.</div></li>
+      <li><div class="when">WED NOV 4</div><div class="what"><b>Official results published.</b></div></li>
+      <li><div class="when">THEN</div><div class="what"><b>President Herzog consults party leaders</b> and picks the candidate with the best shot at forming a government. That nominee gets up to 42 days.</div></li>
+      <li><div class="when">IF NOBODY GETS 61</div><div class="what"><b>Netanyahu's current government stays on as caretaker</b>, and if every attempt fails, Israel votes again. It held five elections between 2019 and 2022.</div></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">Why it matters</div>
+    <h2>The first vote since Oct 7</h2>
+    <p class="lede">This is Israel's first election since the Hamas attack of Oct. 7, 2023, and it comes almost eight months into the U.S.-Israeli war on Iran. Netanyahu, Israel's longest-serving prime minister, has Trump's endorsement. Gadi Eisenkot, a former military chief who left Netanyahu's war cabinet in 2024, is promising a state inquiry into the Oct. 7 failure, which Netanyahu has blocked.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">Sources</div>
+    <ol class="src">
+      <li><a href="https://www.ynetnews.com/article/s1wppltnme" target="_blank" rel="noopener">Ynet: Final Israel election polls (Kan 11, Channel 12, Channel 13 seat tables, Oct 23)</a></li>
+      <li><a href="https://www.aljazeera.com/news/2026/10/27/israel-election-results-2026-when-will-we-know-who-won-and-whats-next" target="_blank" rel="noopener">Al Jazeera: When will we know who won? (timing, 7.3M voters, 42 days, caretaker)</a></li>
+      <li><a href="https://time.com/article/2026/10/27/israel-netanyahu-eisenkot-knesset-election-explainer/" target="_blank" rel="noopener">TIME: Israel heads to the polls (blocs, Bennett-Lapid ticket, Arab parties, Oct 30 and Nov 4 dates)</a></li>
+      <li><a href="https://www.cbsnews.com/news/israel-election-benjamin-netanyahu-political-fate-key-factors/" target="_blank" rel="noopener">CBS News: Factors that could decide Netanyahu's fate (minority-government route, Iran war, inquiry pledge, five elections in 2019-22)</a></li>
+    </ol>
+    <footer>Built by Claude on Oct 27, 2026, before polls closed. Seat numbers are polls, not results.</footer>
+  </section>
+</main>
+
+<script>
+(() => {
+  // Final TV polls, Oct 23, 2026, per Ynet. Each set sums to 120.
+  const PARTIES = [
+    { id: "yashar", nm: "Yashar", who: "Gadi Eisenkot", bloc: "opp" },
+    { id: "together", nm: "Together (B'Yachad)", who: "Naftali Bennett & Yair Lapid", bloc: "opp" },
+    { id: "dem", nm: "The Democrats", who: "Yair Golan", bloc: "opp" },
+    { id: "yb", nm: "Yisrael Beytenu", who: "Avigdor Liberman", bloc: "opp" },
+    { id: "likud", nm: "Likud", who: "Benjamin Netanyahu", bloc: "gov" },
+    { id: "otzma", nm: "Otzma Yehudit", who: "Itamar Ben-Gvir", bloc: "gov" },
+    { id: "utj", nm: "United Torah Judaism", who: "Ultra-Orthodox", bloc: "gov" },
+    { id: "shas", nm: "Shas", who: "Ultra-Orthodox", bloc: "gov" },
+    { id: "rz", nm: "Religious Zionism-Zehut", who: "Bezalel Smotrich", bloc: "gov" },
+    { id: "joint", nm: "Joint List", who: "Arab-led", bloc: "arab" },
+    { id: "raam", nm: "Ra'am", who: "Arab-led", bloc: "arab" },
+    { id: "res", nm: "Reservists-Economic", who: "Neither bloc", bloc: "other" },
+  ];
+  const POLLS = {
+    c13: { nm: "Channel 13", s: { yashar: 22, together: 14, dem: 10, yb: 8, likud: 19, otzma: 8, utj: 8, shas: 7, rz: 8, joint: 9, raam: 7, res: 0 } },
+    c12: { nm: "Channel 12", s: { yashar: 23, together: 15, dem: 10, yb: 8, likud: 21, otzma: 8, utj: 7, shas: 8, rz: 6, joint: 9, raam: 5, res: 0 } },
+    kan: { nm: "Kan 11", s: { yashar: 22, together: 14, dem: 8, yb: 8, likud: 20, otzma: 8, utj: 8, shas: 7, rz: 7, joint: 9, raam: 5, res: 4 } },
+  };
+  const COL = { gov: "var(--gov)", opp: "var(--opp)", arab: "var(--arab)", other: "var(--other)" };
+  const BLOCS = { gov: 50, opp: 54, arab: 16 }; // Channel 13
+
+  // ---------- Hemicycle geometry (120 seats, 6 rows), ordered left to right ----------
+  const svg = document.getElementById("arc");
+  const NS = "http://www.w3.org/2000/svg";
+  const CX = 177, CY = 190, rows = [];
+  for (let i = 0; i < 6; i++) rows.push(78 + i * 18.5);
+  const rsum = rows.reduce((a, b) => a + b, 0);
+  let counts = rows.map(r => Math.round(120 * r / rsum));
+  counts[5] += 120 - counts.reduce((a, b) => a + b, 0);
+  const seats = [];
+  rows.forEach((r, i) => {
+    const n = counts[i];
+    for (let k = 0; k < n; k++) {
+      const a = Math.PI - (k / (n - 1)) * Math.PI;
+      seats.push({ a, x: CX + r * Math.cos(a), y: CY - r * Math.sin(a) });
+    }
+  });
+  seats.sort((p, q) => q.a - p.a || p.y - q.y);
+  // Left: Netanyahu's bloc, middle: Arab-led parties, right: change bloc.
+  const order = [...Array(BLOCS.gov).fill("gov"), ...Array(BLOCS.arab).fill("arab"), ...Array(BLOCS.opp).fill("opp")];
+  const dots = seats.map((s, i) => {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", s.x.toFixed(1)); c.setAttribute("cy", s.y.toFixed(1)); c.setAttribute("r", "6.2");
+    svg.appendChild(c);
+    return { el: c, bloc: order[i] };
+  });
+  // Fill timing: gov from the left, opp from the right, arab in the middle.
+  const idx = { gov: [], opp: [], arab: [] };
+  dots.forEach((d, i) => idx[d.bloc].push(i));
+  idx.opp.reverse();
+  const WIN = { gov: [6.0, 8.6], opp: [9.6, 12.2], arab: [13.2, 14.6] };
+  dots.forEach(d => { d.t = 0; });
+  for (const b in idx) idx[b].forEach((i, k) => { const [a, z] = WIN[b]; dots[i].t = a + (k / idx[b].length) * (z - a); });
+  dots.forEach((d, i) => { d.appear = 2.4 + (i / 120) * 2.2; });
+
+  // ---------- Timeline (19.0 s) ----------
+  const DUR = 19.0;
+  const $ = id => document.getElementById(id);
+  const clamp = v => Math.max(0, Math.min(1, v));
+  const ease = v => { v = clamp(v); return v < .5 ? 2 * v * v : 1 - Math.pow(-2 * v + 2, 2) / 2; };
+  const fade = (t, a, d = .5) => ease((t - a) / d);
+  const W = 346, SCALE = W / 70; // bar px per seat (0..70)
+  document.querySelectorAll(".bar").forEach(b => { const k = document.createElement("i"); k.className = "tick"; k.style.left = (61 * SCALE) + "px"; b.appendChild(k); });
+  $("goallab").style.left = (30 + 61 * SCALE) + "px";
+  const CAPS = [
+    [0, ""],
+    [2.6, "Israelis vote for a party. Seats are shared out by vote, so <b>no party has ever won 61 alone.</b>"],
+    [6.0, "<b>Netanyahu's camp:</b> Likud plus far-right and ultra-Orthodox parties."],
+    [9.6, "<b>The change bloc:</b> Eisenkot, Bennett-Lapid, Golan and Liberman, united against Netanyahu."],
+    [13.2, "<b>Arab-led parties:</b> both camps have so far ruled out governing with them."],
+    [16.0, "<b>Polls close 10 pm Israel time (4 pm ET).</b> Exit polls follow."],
+  ];
+  let lastCap = -1;
+  function bar(id, n, t0, t1, t) {
+    const p = ease((t - t0) / (t1 - t0));
+    const v = Math.round(n * p);
+    $(id).querySelector(".fill").style.width = (v * SCALE) + "px";
+    $(id + "n").textContent = v;
+    return p;
+  }
+  function render(t) {
+    t = Math.max(0, Math.min(DUR, t));
+    $("kicker").style.opacity = fade(t, 0.1);
+    $("title").style.opacity = fade(t, 0.3, .6);
+    $("title").style.transform = `translateY(${(1 - fade(t, 0.3, .6)) * 10}px)`;
+    $("sub").style.opacity = fade(t, 1.0, .6);
+    dots.forEach(d => {
+      const vis = fade(t, d.appear, .3);
+      const on = t >= d.t;
+      d.el.setAttribute("fill", on ? COL[d.bloc] : "var(--empty)");
+      d.el.setAttribute("opacity", vis.toFixed(2));
+    });
+    $("center").style.opacity = fade(t, 4.4, .6);
+    // Centre counter: 61 until a bloc fills, then that bloc's running count.
+    let num = "61", lab = "seats to govern", col = "var(--goal)";
+    if (t >= 6.0 && t < 9.6) { num = Math.round(50 * clamp((t - 6) / 2.6)); lab = "Netanyahu's bloc"; col = "var(--gov)"; }
+    else if (t >= 9.6 && t < 13.2) { num = Math.round(54 * clamp((t - 9.6) / 2.6)); lab = "change bloc"; col = "var(--opp)"; }
+    else if (t >= 13.2 && t < 16) { num = Math.round(16 * clamp((t - 13.2) / 1.4)); lab = "Arab-led parties"; col = "var(--arab)"; }
+    else if (t >= 16) { num = "61"; lab = "nobody has it yet"; col = "var(--goal)"; }
+    $("cnum").textContent = num; $("cnum").style.color = col; $("clab").textContent = lab;
+    for (const id of ["b1", "b2", "b3"]) $(id).style.opacity = fade(t, 5.2, .6);
+    $("goallab").style.opacity = fade(t, 5.2, .6);
+    const p1 = bar("b1", 50, 6.0, 8.6, t);
+    const p2 = bar("b2", 54, 9.6, 12.2, t);
+    const p3 = bar("b3", 16, 13.2, 14.6, t);
+    $("b1s").textContent = p1 >= 1 ? "11 short ·" : "";
+    $("b2s").textContent = p2 >= 1 ? "7 short ·" : "";
+    $("b3s").textContent = "";
+    let ci = 0; CAPS.forEach((c, i) => { if (t >= c[0]) ci = i; });
+    if (ci !== lastCap) { $("cap").innerHTML = CAPS[ci][1]; lastCap = ci; }
+    $("cap").style.opacity = ci ? fade(t, CAPS[ci][0], .4) : 0;
+    $("src").style.opacity = fade(t, 16.4, .5);
+  }
+
+  // ---------- Playback ----------
+  let start = null, raf = null, seeking = false;
+  function loop(now) {
+    if (start === null) start = now;
+    const t = (now - start) / 1000;
+    render(t);
+    if (t < DUR && !seeking) raf = requestAnimationFrame(loop);
+  }
+  function play() { cancelAnimationFrame(raf); seeking = false; start = null; raf = requestAnimationFrame(loop); }
+  window.__story = { duration: DUR, seek(t) { seeking = true; cancelAnimationFrame(raf); render(t); } };
+  $("replay").onclick = play;
+  $("explore").onclick = () => document.getElementById("build").scrollIntoView({ behavior: "smooth" });
+
+  function fit() {
+    const s = Math.min(innerWidth / 432, $("wrap").clientHeight / 768);
+    $("stage").style.transform = `translate(-50%, -50%) scale(${s})`;
+  }
+  addEventListener("resize", fit); fit();
+  render(0); play();
+
+  // ---------- Coalition builder ----------
+  let poll = "c13";
+  const picked = new Set();
+  const pollsEl = $("polls"), partiesEl = $("parties"), mbar = $("mbar");
+  for (const k of ["c13", "c12", "kan"]) {
+    const b = document.createElement("button");
+    b.type = "button"; b.dataset.poll = k;
+    const P = POLLS[k].s;
+    const g = PARTIES.filter(p => p.bloc === "gov").reduce((a, p) => a + P[p.id], 0);
+    const o = PARTIES.filter(p => p.bloc === "opp").reduce((a, p) => a + P[p.id], 0);
+    b.innerHTML = `${POLLS[k].nm}<small>${g} vs ${o}</small>`;
+    b.onclick = () => { poll = k; draw(); };
+    pollsEl.appendChild(b);
+  }
+  const btns = {};
+  PARTIES.forEach(p => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "party";
+    b.innerHTML = `<span class="sw" style="background:${COL[p.bloc]}"></span><span><span class="nm">${p.nm}</span><br><span class="who">${p.who}</span></span><span class="seats"></span>`;
+    b.onclick = () => { if (!POLLS[poll].s[p.id]) return; picked.has(p.id) ? picked.delete(p.id) : picked.add(p.id); draw(); };
+    partiesEl.appendChild(b); btns[p.id] = b;
+  });
+  document.querySelectorAll("[data-preset]").forEach(b => b.onclick = () => {
+    picked.clear();
+    const k = b.dataset.preset;
+    if (k !== "clear") PARTIES.filter(p => p.bloc === k).forEach(p => picked.add(p.id));
+    draw();
+  });
+  function draw() {
+    const S = POLLS[poll].s;
+    pollsEl.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.poll === poll));
+    let total = 0, x = 0;
+    mbar.querySelectorAll(".seg").forEach(e => e.remove());
+    PARTIES.forEach(p => {
+      const n = S[p.id], b = btns[p.id];
+      if (!n) picked.delete(p.id);
+      b.classList.toggle("out", !n);
+      b.querySelector(".seats").textContent = n || "–";
+      b.setAttribute("aria-pressed", picked.has(p.id));
+      if (picked.has(p.id)) {
+        const seg = document.createElement("div");
+        seg.className = "seg"; seg.style.background = COL[p.bloc];
+        seg.style.left = (x / 120 * 100) + "%"; seg.style.width = `calc(${n / 120 * 100}% - 1px)`;
+        mbar.insertBefore(seg, mbar.firstChild);
+        x += n; total += n;
+      }
+    });
+    $("total").textContent = total;
+    const v = $("verdict");
+    v.className = total >= 61 ? "win" : "";
+    v.textContent = total === 0 ? "Tap a party to start" : total >= 61 ? `Majority, ${total - 61 ? (total - 61) + " to spare" : "with nothing to spare"}` : `${61 - total} short of 61`;
+  }
+  draw();
+})();
+</script>
+</body>
+</html>

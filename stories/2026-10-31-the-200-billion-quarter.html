@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The $200 Billion Quarter</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one fixed 432x768 (9:16) stage, scaled to fit. Everything readable stays inside the social
+   safe box, x 26-380 / y 108-600 in stage px (x 65-950 / y 270-1500 at 1080x1920).
+   The device: a cash-flow statement come to life. Each company's quarter is one column on a shared
+   dollar scale. Operating cash fills it (green ink), then purchases of property and equipment drain it.
+   Where the drain goes past zero, the shortfall hangs below the line in vermilion. Line items use the
+   wording of the filings. Single light "statement paper" look, set explicitly for both host themes. */
+:root {
+  --paper: #e9ede8;
+  --paper2: #dfe5df;
+  --ink: #12181a;
+  --soft: #3d4a4c;
+  --muted: #6b7779;
+  --rule: #b9c3bd;
+  --cash: #1d7a52;
+  --cashfill: #2f9a6a;
+  --spend: #d4462a;
+  --spendfill: #e8664a;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+html, body { height: 100%; margin: 0; }
+body { background: var(--paper); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+#stage::before {
+  content: ""; position: absolute; inset: -600px; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0 23px, rgba(29,122,82,.07) 23px 24px);
+}
+.deco { pointer-events: none; }
+
+.eyebrow { position: absolute; left: 30px; right: 54px; top: 112px; display: flex; justify-content: space-between;
+  font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h1 { position: absolute; left: 30px; right: 54px; top: 128px; margin: 0;
+  font: 800 31px/1 var(--display); font-stretch: 78%; letter-spacing: -.01em; color: var(--ink); }
+.sub { position: absolute; left: 30px; right: 54px; top: 164px; margin: 0; font: 400 12.5px/1.3 var(--display); color: var(--soft); }
+
+.legend { position: absolute; left: 30px; right: 54px; top: 198px; display: flex; gap: 14px; font: 400 9.5px/1.25 var(--mono); color: var(--soft); }
+.legend span { display: flex; gap: 6px; align-items: flex-start; }
+.legend i { flex: none; width: 9px; height: 9px; margin-top: 1px; border-radius: 1px; }
+.legend .a i { background: var(--cashfill); }
+.legend .b i { background: var(--spendfill); }
+
+svg#g { position: absolute; left: 0; top: 0; width: 432px; height: 768px; overflow: visible; pointer-events: none; }
+.zl { font: 500 9.5px var(--mono); letter-spacing: .08em; fill: var(--muted); }
+.nm { font: 700 13px var(--display); font-stretch: 85%; fill: var(--ink); }
+.in { font: 500 10.5px var(--mono); fill: var(--cash); }
+.out { font: 500 10.5px var(--mono); fill: var(--spend); }
+.fcf { font: 800 17px var(--display); font-stretch: 80%; }
+.fl { font: 500 8.5px var(--mono); letter-spacing: .06em; fill: var(--muted); }
+
+#cap { position: absolute; left: 30px; width: 346px; top: 536px; height: 60px; }
+#cap p { position: absolute; left: 0; top: 0; margin: 0; width: 346px; font: 500 15px/1.32 var(--display); color: var(--ink); text-wrap: balance; }
+#cap b { font-weight: 700; color: var(--spend); }
+
+#big { position: absolute; left: 30px; width: 346px; top: 200px; height: 320px; opacity: 0; }
+#big .k { font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#big .n { margin-top: 10px; font: 800 106px/.86 var(--display); font-stretch: 70%; letter-spacing: -.02em; color: var(--spend); font-variant-numeric: tabular-nums; }
+#big .l { margin-top: 10px; font: 600 19px/1.2 var(--display); color: var(--ink); }
+#big .s { margin-top: 12px; font: 400 13px/1.38 var(--display); color: var(--soft); max-width: 330px; }
+#big .split { margin-top: 16px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font: 500 10px/1.3 var(--mono); color: var(--soft); }
+#big .split div { border-top: 2px solid var(--spend); padding-top: 5px; }
+#big .split b { display: block; font: 700 16px/1.1 var(--display); font-stretch: 85%; color: var(--ink); }
+
+#tape { position: absolute; left: 30px; width: 346px; top: 200px; opacity: 0; }
+#tape .k { font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#tape .h { margin-top: 8px; font: 700 22px/1.12 var(--display); font-stretch: 85%; color: var(--ink); }
+#tape .row { display: grid; grid-template-columns: 74px 1fr; gap: 12px; align-items: baseline; padding: 11px 0; border-top: 1px solid var(--rule); }
+#tape .row:first-of-type { margin-top: 14px; }
+#tape .d { font: 500 10px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+#tape .v { font: 800 30px/1 var(--display); font-stretch: 75%; color: var(--spend); font-variant-numeric: tabular-nums; }
+#tape .t { margin-top: 4px; font: 400 12.5px/1.3 var(--display); color: var(--soft); }
+#tape .t b { color: var(--ink); font-weight: 600; }
+
+#end { position: absolute; left: 30px; width: 346px; top: 112px; height: 486px; opacity: 0; pointer-events: none; }
+#end .n { font: 800 64px/.9 var(--display); font-stretch: 70%; color: var(--spend); }
+#end .l { margin-top: 6px; font: 600 15px/1.25 var(--display); color: var(--ink); }
+#end .note { margin-top: 10px; font: 400 11.5px/1.38 var(--display); color: var(--soft); }
+#end h2 { margin: 18px 0 6px; font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#end ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font: 400 10.5px/1.3 var(--display); color: var(--soft); }
+#end li b { color: var(--ink); font-weight: 600; }
+#end a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 2px; }
+#end .by { margin-top: 12px; font: 500 9.5px/1 var(--mono); letter-spacing: .08em; color: var(--muted); }
+
+#replay { position: absolute; right: 56px; top: 560px; padding: 8px 14px; border: 1.5px solid var(--ink); border-radius: 999px;
+  background: var(--paper); color: var(--ink); font: 600 12px/1 var(--display); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.src a:focus-visible, #replay:focus-visible { outline: 2px solid var(--cash); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div id="wrap">
+<div id="stage" role="img" aria-label="Animated chart: in July to September 2026, Amazon, Alphabet, Microsoft and Meta spent about 200 billion dollars on property and equipment. Amazon, Alphabet and Meta spent more on property and equipment than their operations brought in. On Friday October 30, Intel fell 28.6 percent and the Nasdaq fell 2.86 percent.">
+  <div id="head">
+    <div class="eyebrow"><span>Q3 2026 · Jul–Sep</span><span>Cash flow, $B</span></div>
+    <h1>The $200 billion quarter</h1>
+    <p class="sub" id="subl">Big Tech's cash in, and its bill for data centers and servers</p>
+    <div class="legend" id="leg">
+      <span class="a"><i></i>Net cash provided by operating activities</span>
+      <span class="b"><i></i>Purchases of property and equipment</span>
+    </div>
+  </div>
+
+  <svg id="g" viewBox="0 0 432 768" aria-hidden="true"></svg>
+
+  <div id="cap">
+    <p data-in="0.6" data-out="4.6">Each column starts with the cash the business brought in from July to September.</p>
+    <p data-in="4.6" data-out="9.4">Then the build-out bill. <b>Three of the four</b> spent more on it than their operations brought in.</p>
+  </div>
+
+  <div id="big">
+    <div class="k">Spent on property and equipment, Q3</div>
+    <div class="n" id="bign">$200.6B</div>
+    <div class="l">in one quarter, by four companies</div>
+    <div class="s">Largely AI data centers and servers. More than double a year earlier ($96.4B). All four are still profitable; what went negative is free cash flow.</div>
+    <div class="split">
+      <div>Amazon<b>$75.9B</b></div><div>Alphabet<b>$51.4B</b></div><div>Meta<b>$33.9B</b></div><div>Microsoft<b>$39.4B</b></div>
+    </div>
+  </div>
+
+  <div id="tape">
+    <div class="k">Wall Street's answer</div>
+    <div class="h">"AI cash burn fears spark tech selloff"</div>
+    <div class="t" style="margin-top:4px">Reuters headline, Oct 30</div>
+    <div class="row"><div class="d">Thu<br>Oct 29</div><div><div class="v">Alphabet</div><div class="t">Worst day on record for the stock, down more than 12% (AP), after a cash outflow as AI spending more than doubled</div></div></div>
+    <div class="row"><div class="d">Fri<br>Oct 30</div><div><div class="v">Intel −28.6%</div><div class="t">After a weak forecast for October to December. <b>Worst drop since 1974</b> (AP)</div></div></div>
+    <div class="row"><div class="d">Fri<br>Oct 30</div><div><div class="v">Nasdaq −2.86%</div><div class="t">Biggest one-day fall since June 5. Down more than 5% in October</div></div></div>
+  </div>
+
+  <div id="end">
+    <div class="n">$200.6B</div>
+    <div class="l">Big Tech's Q3 cash bill for property and equipment. Amazon, Alphabet and Meta spent more on it than their operations brought in.</div>
+    <div class="note">Free cash flow here = operating cash flow minus purchases of property and equipment, from each company's Q3 report (Amazon net of proceeds; Microsoft cash paid, excluding finance leases). Meta: $32.79B − $33.94B = −$1.2B; it reports −$2.1B including finance-lease principal.</div>
+    <h2>Sources</h2>
+    <ol class="src">
+      <li><b>Company Q3 reports:</b> <a href="https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/" target="_blank" rel="noopener">Amazon</a>, <a href="https://s206.q4cdn.com/479360582/files/doc_financials/2026/q3/2026q3-alphabet-earnings-release.pdf" target="_blank" rel="noopener">Alphabet</a>, <a href="https://www.microsoft.com/en-us/investor/events/fy-2027/earnings-fy-2027-q1" target="_blank" rel="noopener">Microsoft</a>, <a href="https://www.sec.gov/Archives/edgar/data/0001326801/000162828026066700/meta-09302026xexhibit991.htm" target="_blank" rel="noopener">Meta</a></li>
+      <li><b>Reuters:</b> <a href="https://www.investing.com/news/stock-market-news/nasdaq-futures-tumble-as-amazon-intel-results-deepen-ai-spending-woes-4986163" target="_blank" rel="noopener">Wall Street closes sharply lower as AI cash burn fears spark tech selloff</a>, Oct 30</li>
+      <li><b>AP:</b> <a href="https://www.journal-news.com/nation-world/the-worsening-sell-off-for-tech-stocks-drags-the-nasdaq-composite-down-3-toward-its/article_2d4ec380-eedf-5ccf-be4e-029434934cbe.html" target="_blank" rel="noopener">Wall Street drops to its worst day since June after the sell-off for tech stocks deepens</a>, Oct 30; Alphabet record drop, Oct 29</li>
+    </ol>
+    <div class="by">Animated by Claude · Oct 31, 2026</div>
+  </div>
+
+  <button id="replay" type="button" hidden>Replay</button>
+</div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const NS = "http://www.w3.org/2000/svg";
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const END = 19.4;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const ramp = (t, a, d) => ease(clamp((t - a) / d, 0, 1));
+  const fade = (el, o, dy = 0) => { el.style.opacity = o.toFixed(3); el.style.transform = dy ? `translateY(${dy.toFixed(1)}px)` : ""; };
+  const mk = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+
+  // Cash basis, $B, Q3 2026. FCF = operating cash flow - purchases of property and equipment.
+  const CO = [
+    { name: "Amazon",    ocf: 42.4, capex: 75.9 },
+    { name: "Alphabet",  ocf: 42.3, capex: 51.4 },
+    { name: "Meta",      ocf: 32.8, capex: 33.9, fcfx: -1.2 },
+    { name: "Microsoft", ocf: 58.0, capex: 39.4 },
+  ];
+  const svg = $("g");
+  const S = 2.2;            // px per $B
+  const Z = 232 + 58 * S;    // zero line y (Microsoft's 58.0 tops out at y 232)
+  const W = 44, X0 = 34, STEP = 86;
+
+  const chart = mk("g", {});
+  const zero = mk("line", { x1: 30, x2: 376, y1: Z, y2: Z, stroke: "#12181a", "stroke-width": 1.2 }, chart);
+  const zl = mk("text", { x: 376, y: Z - 5, "text-anchor": "end", class: "zl" }, chart); zl.textContent = "$0";
+  const below = mk("text", { x: 30, y: Z + 13, class: "fl" }, chart); below.textContent = "BELOW ZERO = CASH SHORTFALL";
+
+  const cols = CO.map((c, i) => {
+    const x = X0 + i * STEP, cx = x + W / 2;
+    const g = mk("g", {}, chart);
+    const fill = mk("rect", { x, width: W, y: Z, height: 0, fill: "var(--cashfill)" }, g);
+    const short = mk("rect", { x, width: W, y: Z, height: 0, fill: "var(--spendfill)" }, g);
+    // the bill: a vermilion bracket alongside, drawn from the top of the cash column downward
+    const br = mk("line", { x1: x + W + 6, x2: x + W + 6, y1: Z, y2: Z, stroke: "var(--spend)", "stroke-width": 3 }, g);
+    const brT = mk("line", { x1: x + W + 2, x2: x + W + 10, y1: Z, y2: Z, stroke: "var(--spend)", "stroke-width": 1.5 }, g);
+    const brB = mk("line", { x1: x + W + 2, x2: x + W + 10, y1: Z, y2: Z, stroke: "var(--spend)", "stroke-width": 1.5 }, g);
+    const fcf = c.fcfx ?? (c.ocf - c.capex);
+    const val = mk("text", { x: cx, "text-anchor": "middle", class: "fcf" }, g);
+    val.textContent = (c.approx ? "≈ " : "") + (fcf < 0 ? "−" : "+") + "$" + (c.approx ? Math.round(-fcf) : Math.abs(fcf).toFixed(1)) + "B";
+    val.setAttribute("fill", fcf < 0 ? "var(--spend)" : "var(--cash)");
+    const nm = mk("text", { x: cx, y: 486, "text-anchor": "middle", class: "nm" }, g); nm.textContent = c.name;
+    const tin = mk("text", { x: cx, y: 502, "text-anchor": "middle", class: "in" }, g); tin.textContent = "+" + c.ocf.toFixed(1) + " in";
+    const tout = mk("text", { x: cx, y: 516, "text-anchor": "middle", class: "out" }, g); tout.textContent = "−" + c.capex.toFixed(1) + " out";
+    const fl = mk("text", { x: cx, "text-anchor": "middle", class: "fl" }, g); fl.textContent = "FREE CASH";
+    return { ...c, x, fcf, fill, short, br, brT, brB, val, nm, tin, tout, fl };
+  });
+
+  const caps = [...document.querySelectorAll("#cap p")];
+  const head = $("head"), big = $("big"), bign = $("bign"), tape = $("tape"), endEl = $("end");
+  const rows = [...tape.querySelectorAll(".row")];
+
+  function render(t) {
+    // 1. Cash in: columns fill, staggered.
+    const headOut = ramp(t, 18.6, 0.4);
+    fade(head, (1 - headOut));
+    const chartOut = ramp(t, 9.6, 0.5);
+    chart.setAttribute("opacity", (1 - chartOut).toFixed(3));
+    fade($("leg"), 1 - chartOut); fade($("subl"), 1 - chartOut);
+    below.setAttribute("opacity", (1 - ramp(t, 4.6, 0.3)).toFixed(3));
+    for (const [i, c] of cols.entries()) {
+      const fIn = ramp(t, 0.9 + i * 0.35, 1.0);
+      const drain = ramp(t, 4.9 + i * 0.55, 1.6);
+      const spent = c.capex * drain;
+      const level = c.ocf - spent;                 // where the column's top sits now
+      const pos = Math.max(level, 0) * fIn;
+      c.fill.setAttribute("y", (Z - pos * S).toFixed(1));
+      c.fill.setAttribute("height", (pos * S).toFixed(1));
+      const neg = Math.max(-level, 0);
+      c.short.setAttribute("height", (neg * S).toFixed(1));
+      // bracket from the original cash top down to the current level
+      const top = Z - c.ocf * S, cur = Z - level * S;
+      const on = drain > 0.001;
+      c.br.setAttribute("y1", top.toFixed(1)); c.br.setAttribute("y2", cur.toFixed(1));
+      c.brT.setAttribute("y1", top.toFixed(1)); c.brT.setAttribute("y2", top.toFixed(1));
+      c.brB.setAttribute("y1", cur.toFixed(1)); c.brB.setAttribute("y2", cur.toFixed(1));
+      const brOut = ramp(t, 6.3 + i * 0.55, 0.35);
+      for (const e of [c.br, c.brT, c.brB]) e.setAttribute("opacity", on ? (1 - brOut).toFixed(3) : 0);
+      c.nm.setAttribute("opacity", ramp(t, 0.5 + i * 0.35, 0.4).toFixed(2));
+      c.tin.setAttribute("opacity", ramp(t, 1.5 + i * 0.35, 0.4).toFixed(2));
+      c.tout.setAttribute("opacity", ramp(t, 5.0 + i * 0.55, 0.4).toFixed(2));
+      // result label settles after the drain
+      const vk = ramp(t, 6.4 + i * 0.55, 0.4);
+      const vy = c.fcf < 0 ? Z - c.fcf * S + 19 : Z - c.fcf * S - 18;
+      c.val.setAttribute("y", vy.toFixed(1));
+      c.val.setAttribute("opacity", vk.toFixed(2));
+      c.fl.setAttribute("y", (c.fcf < 0 ? vy + 11 : vy - 19).toFixed(1));
+      c.fl.setAttribute("opacity", vk.toFixed(2));
+    }
+    // 2. The total, held.
+    const bk = ramp(t, 9.9, 0.5) * (1 - ramp(t, 13.5, 0.4));
+    fade(big, bk, (1 - ramp(t, 9.9, 0.5)) * 8);
+    const cnt = ramp(t, 10.0, 1.4);
+    bign.textContent = "$" + (200.6 * cnt).toFixed(1) + "B";
+    // 3. The market's answer.
+    const tk = ramp(t, 14.0, 0.45) * (1 - ramp(t, 18.3, 0.35));
+    fade(tape, tk, (1 - ramp(t, 14.0, 0.45)) * 8);
+    rows.forEach((r, i) => fade(r, ramp(t, 14.4 + i * 0.9, 0.4), (1 - ramp(t, 14.4 + i * 0.9, 0.4)) * 6));
+    // captions
+    for (const p of caps) {
+      const a = +p.dataset.in, z = +p.dataset.out;
+      const o = ramp(t, a, 0.4) * (1 - ramp(t, z - 0.3, 0.3));
+      fade(p, o, (1 - ramp(t, a, 0.4)) * 4);
+    }
+    // 4. Sources.
+    const ek = ramp(t, 18.7, 0.5);
+    fade(endEl, ek, (1 - ek) * 8);
+    endEl.style.pointerEvents = ek > 0.5 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(clamp(t, 0, END)); }, play };
+  render(0);
+  if (reduce) { render(END); replay.hidden = false; } else play();
+})();
+</script>
+</body>
+</html>

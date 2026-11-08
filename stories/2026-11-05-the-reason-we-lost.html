@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Reason We Lost</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter+Tight:wght@400;500;600;700&display=swap">
+<style>
+/* The Reason We Lost. After the Nov 3 midterms, Vance's one-line verdict on X set as an
+   editorial pull quote, Trump's reply in the same type, what House voters told ABC's poll,
+   and what comes next. Fixed 432x768 stage scaled to fit. All readable content stays in the
+   social safe box x 26-380 / y 108-600 (stage px) = x 65-950 / y 270-1500 at 1080x1920.
+   No red or blue: one ochre accent, used only for strokes, never for text. */
+:root {
+  --paper: #f4f1ea;
+  --paper2: #ebe6db;
+  --ink: #1c1b19;
+  --soft: #4a4740;
+  --muted: #6b675e;
+  --rule: #cfc8b8;
+  --ochre: #c08a2b;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Inter Tight", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --paper: #f4f1ea; } }
+:root[data-theme="dark"] { --paper: #f4f1ea; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--paper); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: radial-gradient(120% 80% at 50% 38%, var(--paper), var(--paper2)); }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+.deco { position: absolute; pointer-events: none; }
+#grain { inset: -600px; background: repeating-linear-gradient(90deg, rgba(0,0,0,.012) 0 1px, transparent 1px 4px); }
+.layer { position: absolute; left: 26px; width: 354px; }
+.k { font: 600 11.5px/1.25 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.chip { font: 500 12px/1.3 var(--sans); color: var(--muted); }
+.chip b { font-weight: 600; color: var(--soft); }
+
+/* beat 1: hero quote */
+#ctx { top: 128px; }
+#ctx .k + .k { margin-top: 4px; }
+#hero { top: 222px; transform-origin: 0 0; }
+#hero h1 { margin: 0; font: 500 50px/1.04 var(--serif); letter-spacing: -.012em; }
+#hero h1 .w { display: inline-block; }
+#hero h1 .uw { position: relative; display: inline-block; }
+#uline { position: absolute; left: 0; right: 0; bottom: 2px; height: 5px; background: var(--ochre); border-radius: 3px; transform-origin: left; }
+#sub { top: 362px; font: 400 22px/1.3 var(--serif); color: var(--soft); }
+#hchip { top: 436px; padding-top: 11px; border-top: 1px solid var(--rule); }
+#mini { top: 112px; }
+#mini .k { margin-bottom: 4px; }
+
+/* beat 2: Trump reply */
+#tr { top: 196px; }
+#tr .big { margin: 10px 0 0; font: 500 50px/1 var(--serif); letter-spacing: -.012em; }
+#tr .big .u { position: relative; display: inline-block; }
+#tline { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--ochre); border-radius: 3px; transform-origin: left; }
+#tr .q { margin: 14px 0 0; font: 400 20px/1.32 var(--serif); color: var(--ink); }
+#tr .q + .q { margin-top: 8px; }
+#tr .chip { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--rule); }
+#tr .fine { margin-top: 12px; font: 400 16px/1.3 var(--serif); color: var(--soft); }
+
+/* beat 3: House voters dot grid */
+#vt { top: 120px; }
+#vt h2 { margin: 6px 0 0; font: 500 23px/1.12 var(--serif); }
+#grid { position: absolute; left: 26px; top: 214px; width: 207px; height: 207px; }
+.dot { position: absolute; width: 16px; height: 16px; border-radius: 50%; box-sizing: border-box; }
+.dot.on { background: var(--ink); }
+.dot.off { border: 1.6px solid var(--muted); }
+#legend { position: absolute; left: 258px; top: 220px; width: 112px; }
+.lg b { display: block; font: 600 40px/1 var(--sans); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.lg span { display: block; margin-top: 4px; font: 500 13px/1.25 var(--sans); color: var(--soft); }
+.lg .sw { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; box-sizing: border-box; }
+.lg + .lg { margin-top: 22px; }
+#crucial { top: 440px; }
+#crucial .rows { margin-top: 7px; }
+.cr { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0; border-bottom: 1px solid var(--rule); font: 500 15px/1.2 var(--sans); }
+.cr b { font: 600 15px var(--sans); font-variant-numeric: tabular-nums; }
+.cr.war { box-shadow: inset 3px 0 0 var(--ochre); padding-left: 9px; }
+#vfoot { top: 552px; }
+
+/* beat 4: next */
+#nx { top: 116px; }
+#tl { position: absolute; left: 26px; top: 146px; width: 354px; height: 46px; }
+#tl .bar { position: absolute; left: 4px; right: 4px; top: 7px; height: 2px; background: var(--ink); transform-origin: left; }
+#tl .pt { position: absolute; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); box-sizing: border-box; }
+#tl .lab { position: absolute; top: 20px; font: 500 12px/1.3 var(--sans); color: var(--soft); }
+#tl .lab b { color: var(--ink); font-weight: 600; }
+#sch { top: 218px; }
+#sch .qq { margin: 6px 0 0; font: 500 30px/1.1 var(--serif); }
+#sch p, #heg p { margin: 7px 0 0; font: 400 16px/1.32 var(--serif); color: var(--ink); }
+#sch .chip, #heg .chip { margin-top: 7px; }
+#heg { top: 372px; padding-top: 14px; border-top: 1px solid var(--rule); }
+
+/* beat 5: sources */
+#end { top: 116px; }
+#end h2 { margin: 6px 0 14px; font: 500 28px/1.1 var(--serif); }
+#end ol { margin: 0; padding: 0; list-style: none; }
+#end li { padding: 7px 0; border-top: 1px solid var(--rule); font: 500 12.5px/1.35 var(--sans); color: var(--soft); }
+#end li b { color: var(--ink); font-weight: 600; }
+#end a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 2px; }
+#end .note { margin-top: 12px; font: 400 12px/1.4 var(--sans); color: var(--muted); }
+
+#replay { position: absolute; left: 26px; top: 540px; min-height: 44px; padding: 0 22px; border: 1.5px solid var(--ink); border-radius: 999px;
+  background: var(--paper); color: var(--ink); font: 600 15px var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay:focus-visible, #end a:focus-visible { outline: 2px solid var(--ochre); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage" aria-label="Animated story: Vance blames the Iran war for the Republican midterm losses">
+  <div class="deco" id="grain"></div>
+
+  <div class="layer" id="ctx">
+    <div class="k">After Democrats won the House and Senate</div>
+    <div class="k">Vice President JD Vance, on X &middot; Nov 4</div>
+  </div>
+  <div class="layer" id="hero"><h1 id="h1"></h1></div>
+  <div class="layer" id="sub">&ldquo;The president himself said so last night.&rdquo;</div>
+  <div class="layer chip" id="hchip"><b>JD Vance</b>, post on X, Nov 4 &middot; via CBS News<br>The same post also cited cost of living, &ldquo;America First&rdquo; and ties with Israel.</div>
+
+  <div class="layer" id="tr">
+    <div class="k">President Trump, to reporters &middot; Nov 4</div>
+    <div class="big">&ldquo;<span class="u">largely true<span id="tline"></span></span>&rdquo;</div>
+    <p class="q" id="tq1">&ldquo;&hellip;because it drove the gasoline up a little bit, short term&rdquo;</p>
+    <p class="q" id="tq2">&ldquo;&hellip;if I had it to do again, I&rsquo;d have to do it again because long term, it&rsquo;s the only answer&rdquo;</p>
+    <div class="chip" id="tchip"><b>Donald Trump</b>, Nov 4 &middot; via ABC News</div>
+    <div class="fine" id="tfine">On Vance&rsquo;s post: &ldquo;I think it was fine.&rdquo;</div>
+  </div>
+
+  <div class="layer" id="vt">
+    <div class="k">ABC News National Voter Poll &middot; House voters</div>
+    <h2>Right or wrong decision to take military action against Iran?</h2>
+  </div>
+  <div id="grid" aria-hidden="true"></div>
+  <div id="legend">
+    <div class="lg" id="lgw"><b id="nw">0%</b><span><i class="sw" style="background:var(--ink)"></i>wrong decision</span></div>
+    <div class="lg" id="lgr"><b id="nr">0%</b><span><i class="sw" style="border:1.6px solid var(--muted)"></i>right decision</span></div>
+  </div>
+  <div class="layer" id="crucial">
+    <div class="k">Called it crucial to their vote</div>
+    <div class="rows">
+      <div class="cr" id="c1"><span>Government corruption</span><b>55%</b></div>
+      <div class="cr" id="c2"><span>Cost of living</span><b>49%</b></div>
+      <div class="cr war" id="c3"><span>The Iran war</span><b>34%</b></div>
+    </div>
+  </div>
+  <div class="layer chip" id="vfoot">n=39,938. Voters&rsquo; views, not proof of what decided the election.</div>
+
+  <div class="layer" id="nx"><div class="k">What comes next</div></div>
+  <div id="tl">
+    <div class="bar" id="tlbar"></div>
+    <div class="pt" style="left:0"></div>
+    <div class="pt" style="right:0"></div>
+    <div class="lab" style="left:0"><b>Feb 28, 2026</b><br>war began</div>
+    <div class="lab" style="right:0;text-align:right"><b>Jan 3, 2027</b><br>Democratic majorities take office</div>
+  </div>
+  <div class="layer" id="sch">
+    <div class="k">Chuck Schumer, Senate Democratic leader</div>
+    <div class="qq">&ldquo;This war must end.&rdquo;</div>
+    <p>He said the Senate can use the power of the purse.</p>
+    <div class="chip">Nov 4 &middot; via Times of Israel / AFP</div>
+  </div>
+  <div class="layer" id="heg">
+    <div class="k">Defense Secretary Pete Hegseth</div>
+    <p>CBS News, citing unnamed sources, says Trump is asking advisers whether Hegseth should stay. The White House says Trump has &ldquo;full confidence&rdquo; in him. Trump: &ldquo;doing a very good job.&rdquo;</p>
+    <div class="chip">Nov 4 &middot; via CBS News, Reuters</div>
+  </div>
+
+  <div class="layer" id="end">
+    <div class="k">The Reason We Lost &middot; Nov 5, 2026</div>
+    <h2>Sources</h2>
+    <ol>
+      <li><b>CBS News</b>: <a href="https://www.cbsnews.com/news/jd-vance-2026-midterms-iran/" target="_blank" rel="noopener">Vance&rsquo;s post</a>; <a href="https://www.cbsnews.com/news/trump-hegseth-midterm-election-losses/" target="_blank" rel="noopener">Hegseth report</a></li>
+      <li><b>ABC News</b>: <a href="https://abc30.com/live-updates/election-night-2026-tracking-local-statewide-national-races-midterm-elections/20008318/entry/20015689/" target="_blank" rel="noopener">Trump&rsquo;s remarks (abc30 live)</a>; <a href="https://abcnews.com/Politics/vance-blames-iran-war-republicans-midterms-defeat-trump/story?id=137849295" target="_blank" rel="noopener">&ldquo;fine&rdquo;</a>; <a href="https://abcnews.com/Elections/polls-2026-us-house-election-results-analysis" target="_blank" rel="noopener">National Voter Poll: House</a></li>
+      <li><b>Times of Israel / AFP</b>: <a href="https://www.timesofisrael.com/liveblog_entry/schumer-says-senate-can-use-power-of-the-purse-to-stop-iran-war/" target="_blank" rel="noopener">Schumer</a></li>
+      <li><b>Reuters via Yahoo</b>: <a href="https://www.yahoo.com/news/politics/articles/trump-says-hegseth-doing-very-230601680.html" target="_blank" rel="noopener">Trump on Hegseth</a></li>
+      <li><b>Al Jazeera</b>: <a href="https://www.aljazeera.com/news/2026/10/29/pentagon-says-iran-war-has-cost-us-taxpayers-47bn-what-that-means" target="_blank" rel="noopener">war start date</a></li>
+    </ol>
+    <div class="note">Quotes abridged where marked &hellip;<br>Poll figures are House voters, not all Americans.<br>Compiled Nov 5, 2026 &middot; Animated by Claude</div>
+  </div>
+
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const ramp = (t, s, d) => ease(clamp((t - s) / d, 0, 1));
+  const fade = (el, k, dy = 0) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${dy.toFixed(1)}px)`; };
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // hero sentence, word by word; "the war." carries the ochre underline
+  const h1 = $("h1");
+  const words = ["The", "reason", "we", "lost", "is"];
+  const W = [];
+  h1.append("“");
+  words.forEach((w) => { const s = document.createElement("span"); s.className = "w"; s.textContent = w; h1.append(s, " "); W.push(s); });
+  const uw = document.createElement("span"); uw.className = "uw w"; uw.innerHTML = 'the war.<span id="uline"></span>'; h1.append(uw, "”"); W.push(uw);
+  const uline = $("uline");
+
+  // 10 x 10 grid, 63 filled (wrong decision) then 37 outlined (right decision)
+  const grid = $("grid"), D = [];
+  for (let i = 0; i < 100; i++) {
+    const d = document.createElement("div");
+    d.className = "dot " + (i < 63 ? "on" : "off");
+    d.style.left = (i % 10) * 21 + "px"; d.style.top = Math.floor(i / 10) * 21 + "px";
+    grid.appendChild(d); D.push(d);
+  }
+
+  const B1 = 0, B2 = 3.9, B3 = 8.7, B4 = 13.6, B5 = 17.6, END = 19.8;
+  const ctx = $("ctx"), hero = $("hero"), sub = $("sub"), hchip = $("hchip"),
+        tr = $("tr"), tline = $("tline"), tk = [...tr.children],
+        vt = $("vt"), legend = $("legend"), lgw = $("lgw"), lgr = $("lgr"), nw = $("nw"), nr = $("nr"),
+        crucial = $("crucial"), crow = [$("c1"), $("c2"), $("c3")], ck = crucial.querySelector(".k"), vfoot = $("vfoot"),
+        nx = $("nx"), tl = $("tl"), tlbar = $("tlbar"), sch = $("sch"), heg = $("heg"), endEl = $("end");
+  const endKids = [...endEl.children];
+
+  function render(t) {
+    // beat 1: context, then the sentence lands fast (whole line readable by ~1.1s)
+    const out2 = 1 - ramp(t, B3 - 0.35, 0.3);
+    fade(ctx, ramp(t, 0, 0.35) * (1 - ramp(t, B2, 0.3)));
+    W.forEach((w, i) => { const k = ramp(t, 0.2 + i * 0.13, 0.32); w.style.opacity = k.toFixed(3); w.style.transform = `translateY(${((1 - k) * 12).toFixed(1)}px)`; });
+    uline.style.transform = `scaleX(${ramp(t, 1.15, 0.5).toFixed(3)})`;
+    fade(sub, ramp(t, 1.5, 0.4) * (1 - ramp(t, B2, 0.3)), (1 - ramp(t, 1.5, 0.4)) * 8);
+    fade(hchip, ramp(t, 2.0, 0.4) * (1 - ramp(t, B2, 0.3)), (1 - ramp(t, 2.0, 0.4)) * 8);
+    // hero shrinks into a header for beat 2, then leaves with it
+    const s = ramp(t, B2, 0.6);
+    hero.style.transform = `translateY(${(-106 * s).toFixed(1)}px) scale(${(1 - 0.5 * s).toFixed(3)})`;
+    hero.style.opacity = (out2).toFixed(3);
+
+    // beat 2: Trump's reply in the same type
+    tr.style.opacity = out2.toFixed(3);
+    const tt = [B2 + 0.45, B2 + 0.8, B2 + 1.45, B2 + 2.25, B2 + 3.0, B2 + 3.4];
+    tk.forEach((el, i) => { const k = ramp(t, tt[i], 0.4); el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${((1 - k) * 8).toFixed(1)}px)`; });
+    tline.style.transform = `scaleX(${ramp(t, B2 + 1.1, 0.5).toFixed(3)})`;
+    if (t < B2 + 0.3) tr.style.opacity = "0";
+
+    // beat 3: House voters
+    const out3 = 1 - ramp(t, B4 - 0.35, 0.3);
+    fade(vt, ramp(t, B3, 0.35) * out3, (1 - ramp(t, B3, 0.35)) * 8);
+    const fillK = clamp((t - (B3 + 0.35)) / 1.3, 0, 1);
+    D.forEach((d, i) => { const k = ramp(t, B3 + 0.35 + (i / 100) * 1.3, 0.18); d.style.opacity = (k * out3).toFixed(3); d.style.transform = `scale(${(0.4 + 0.6 * k).toFixed(3)})`; });
+    legend.style.opacity = out3.toFixed(3);
+    fade(lgw, ramp(t, B3 + 0.4, 0.3)); fade(lgr, ramp(t, B3 + 1.2, 0.3));
+    nw.textContent = Math.round(63 * clamp(fillK / 0.63, 0, 1)) + "%";
+    nr.textContent = Math.round(37 * clamp((fillK - 0.63) / 0.37, 0, 1)) + "%";
+    crucial.style.opacity = out3.toFixed(3);
+    fade(ck, ramp(t, B3 + 1.9, 0.35));
+    crow.forEach((r, i) => fade(r, ramp(t, B3 + 2.1 + i * 0.3, 0.35), (1 - ramp(t, B3 + 2.1 + i * 0.3, 0.35)) * 6));
+    fade(vfoot, ramp(t, B3 + 3.0, 0.35) * out3);
+
+    // beat 4: what comes next
+    const out4 = 1 - ramp(t, B5 - 0.3, 0.3);
+    fade(nx, ramp(t, B4, 0.35) * out4);
+    tl.style.opacity = (ramp(t, B4 + 0.15, 0.35) * out4).toFixed(3);
+    tlbar.style.transform = `scaleX(${ramp(t, B4 + 0.2, 0.7).toFixed(3)})`;
+    fade(sch, ramp(t, B4 + 0.5, 0.4) * out4, (1 - ramp(t, B4 + 0.5, 0.4)) * 8);
+    fade(heg, ramp(t, B4 + 1.1, 0.4) * out4, (1 - ramp(t, B4 + 1.1, 0.4)) * 8);
+
+    // beat 5: sources
+    endEl.style.opacity = t >= B5 ? "1" : "0";
+    endKids.forEach((el, i) => { const k = ramp(t, B5 + i * 0.2, 0.35); fade(el, k, (1 - k) * 6); });
+    endEl.style.pointerEvents = t > B5 + 0.5 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(clamp(t, 0, END)); }, play };
+  render(0);
+  if (reduce) { render(END); replay.hidden = false; } else play();
+})();
+</script>
+</body>
+</html>

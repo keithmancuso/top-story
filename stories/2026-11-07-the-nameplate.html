@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Nameplate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* The Nameplate. Nov 6, 2026: Trump names Stephen Miller White House chief of staff; Susie Wiles leaves the
+   job and moves to the Trump political operation. One object: the brass plate on the door. The title stays,
+   the name changes. Walnut, brass, ivory; no party colors. Fixed 432x768 stage scaled to fit.
+   All readable content stays in the social safe box x 26-380 / y 108-600 stage px (x 65-950 / y 270-1500 at 1080x1920). */
+:root {
+  --bg: #20140c;
+  --ink: #f1e9da;
+  --soft: #d6cbb8;
+  --muted: #b3a690;
+  --rule: rgba(241,233,218,.18);
+  --brass: #d9b45f;
+  --brass-hi: #f6e3a6;
+  --brass-lo: #9a7430;
+  --etch: #3b2a12;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --cap: "Cinzel", "Trajan Pro", Georgia, serif;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #20140c; } }
+:root[data-theme="dark"] { --bg: #20140c; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #1b110a; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; }
+
+/* walnut door: decoration only, may run into the margins */
+.deco { position: absolute; pointer-events: none; }
+#wood { inset: 0; }
+#wood svg { width: 100%; height: 100%; display: block; }
+#panel { left: 18px; right: 18px; top: 40px; bottom: 40px; border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.45), inset 0 0 0 7px rgba(255,220,170,.035), inset 0 0 0 8px rgba(0,0,0,.35), inset 0 0 60px rgba(0,0,0,.55); }
+#vig { inset: 0; background: radial-gradient(90% 70% at 50% 38%, rgba(0,0,0,0) 0%, rgba(0,0,0,.28) 60%, rgba(0,0,0,.62) 100%); }
+#light { inset: 0; background: linear-gradient(100deg, rgba(255,214,150,.10), rgba(0,0,0,0) 45%); }
+#dim { inset: 0; background: rgba(16,10,5,.82); opacity: 0; }
+
+/* the plate */
+#plateWrap { position: absolute; left: 26px; top: 146px; width: 354px; height: 140px; transform-origin: 50% 0; }
+.plate { position: absolute; border-radius: 4px; overflow: hidden;
+  background: linear-gradient(180deg, #e8c877 0%, #d2a957 38%, #b58b3d 72%, #cfa654 100%);
+  box-shadow: 0 10px 22px rgba(0,0,0,.55), 0 2px 4px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,246,210,.75), inset 0 -2px 0 rgba(90,60,20,.55); }
+.plate::before { content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, rgba(0,0,0,.03) 1px 3px); }
+.plate .bevel { position: absolute; inset: 6px; border: 1px solid rgba(80,52,16,.55); border-radius: 2px; box-shadow: 0 1px 0 rgba(255,240,200,.45); }
+.plate .sheen { position: absolute; top: -20%; bottom: -20%; width: 34%; left: -40%;
+  background: linear-gradient(100deg, rgba(255,255,255,0), rgba(255,250,225,.55), rgba(255,255,255,0)); mix-blend-mode: soft-light; }
+.screw { position: absolute; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fbecc0, #b8903f 55%, #6e4f1c 100%); box-shadow: 0 1px 1.5px rgba(0,0,0,.6), inset 0 0 0 1px rgba(70,45,10,.5); }
+.screw i { position: absolute; left: 1.5px; right: 1.5px; top: 6px; height: 2px; background: rgba(60,38,10,.85); box-shadow: 0 1px 0 rgba(255,236,190,.4); }
+.etch { color: var(--etch); text-shadow: 0 1px 0 rgba(255,241,205,.55), 0 -1px 0 rgba(60,38,12,.25); text-align: center; white-space: nowrap; }
+#main { left: 0; top: 0; width: 354px; height: 140px; }
+#main .t { position: absolute; left: 0; right: 0; top: 26px; font: 600 14px/1 var(--cap); letter-spacing: .26em; }
+#main .rl { position: absolute; left: 70px; right: 70px; top: 52px; height: 1px; background: rgba(70,46,14,.55); box-shadow: 0 1px 0 rgba(255,240,200,.45); }
+#main .nm { position: absolute; left: 0; right: 0; top: 70px; height: 40px; font: 600 29px/40px var(--cap); letter-spacing: .1em; }
+#nmOld, #nmNew { position: absolute; left: 0; right: 0; top: 0; }
+#scar { position: absolute; left: 48px; right: 48px; top: 74px; height: 32px; border-radius: 2px; opacity: 0;
+  background: linear-gradient(180deg, rgba(120,84,30,.0), rgba(120,84,30,.28), rgba(120,84,30,0)); }
+#pen { position: absolute; top: 72px; width: 2px; height: 36px; background: #fff3cf; box-shadow: 0 0 8px 2px rgba(255,236,170,.9); opacity: 0; }
+
+/* the two smaller plates (beat 6) */
+.sub { left: 0; width: 354px; height: 82px; }
+.sub .t { position: absolute; left: 0; right: 0; top: 16px; font: 600 12.5px/1.25 var(--cap); letter-spacing: .18em; }
+.sub .dash { position: absolute; left: 132px; right: 132px; top: 63px; height: 2px; background: rgba(60,38,12,.6); box-shadow: 0 1px 0 rgba(255,240,200,.5); }
+#subs { position: absolute; left: 26px; top: 262px; width: 354px; height: 180px; }
+#s1 { top: 0; } #s2 { top: 94px; }
+.sub .screw { width: 11px; height: 11px; margin-top: -5.5px; } .sub .screw i { top: 4.5px; }
+
+/* captions */
+.layer { position: absolute; left: 26px; width: 354px; }
+.stamp { display: inline-block; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #1d130a;
+  background: var(--brass); padding: 6px 9px 5px; border-radius: 2px; }
+.k { font: 600 12px/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+.cap { margin: 12px 0 0; font: 400 21px/1.3 var(--serif); color: var(--ink); }
+.cap q { quotes: "\201C" "\201D"; }
+.sm { margin: 10px 0 0; font: 400 13px/1.42 var(--sans); color: var(--soft); }
+.sm b { color: var(--ink); font-weight: 600; }
+
+#b1 { top: 322px; }
+#b1 h1 { margin: 10px 0 0; font: 500 34px/1.06 var(--serif); letter-spacing: -.01em; }
+#b1 p { margin: 12px 0 0; font: 400 17px/1.36 var(--serif); color: var(--soft); }
+#b2, #b3, #b4 { top: 322px; }
+#b6 { top: 466px; }
+
+/* beat 5: days served */
+#b5 { top: 300px; }
+#b5 h2 { margin: 10px 0 0; font: 500 26px/1.1 var(--serif); }
+#b5 h2 b { font-weight: 500; color: var(--brass-hi); }
+#bars { margin-top: 14px; }
+.br { display: grid; grid-template-columns: 82px 1fr; align-items: center; height: 25px; font: 500 12px/1 var(--sans); color: var(--soft); }
+.br .trk { position: relative; height: 12px; }
+.br .bar { position: absolute; left: 0; top: 0; height: 12px; border-radius: 1px; background: rgba(241,233,218,.32); }
+.br .num { position: absolute; top: -1px; font: 600 12px/14px var(--sans); color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.br.w { color: var(--ink); font-weight: 600; }
+.br.w .bar { background: linear-gradient(180deg, var(--brass-hi), var(--brass) 55%, var(--brass-lo)); }
+#b5 .sm { margin-top: 8px; font-size: 12px; color: var(--muted); }
+
+/* sources */
+#end { top: 116px; }
+#end h2 { margin: 6px 0 10px; font: 500 27px/1.1 var(--serif); }
+#end ol { margin: 0; padding: 0; list-style: none; }
+#end li { padding: 6px 0; border-top: 1px solid var(--rule); font: 400 12px/1.36 var(--sans); color: var(--soft); }
+#end li b { color: var(--ink); font-weight: 600; }
+#end a { color: inherit; text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 2px; }
+#end .note { margin-top: 9px; font: 400 11.5px/1.42 var(--sans); color: var(--muted); }
+
+#replay { position: absolute; left: 26px; top: 484px; min-height: 44px; padding: 0 22px; border: 1.5px solid var(--brass); border-radius: 999px;
+  background: #1d130a; color: var(--ink); font: 600 15px var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay:focus-visible, #end a:focus-visible { outline: 2px solid var(--brass-hi); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage" aria-label="Animated story: Trump names Stephen Miller White House chief of staff, replacing Susie Wiles">
+
+  <div class="deco" id="wood">
+    <svg viewBox="0 0 432 768" preserveAspectRatio="none" aria-hidden="true">
+      <filter id="grain" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.22" numOctaves="4" seed="7" result="n"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.29  0 0 0 0 0.17  0 0 0 0 0.09  0.9 0 0 0 -0.15" result="c"/>
+        <feComposite in="c" in2="SourceGraphic" operator="over"/>
+      </filter>
+      <rect width="432" height="768" fill="#3a2414"/>
+      <rect width="432" height="768" fill="#3a2414" filter="url(#grain)"/>
+    </svg>
+  </div>
+  <div class="deco" id="panel"></div>
+  <div class="deco" id="light"></div>
+  <div class="deco" id="vig"></div>
+
+  <div id="plateWrap">
+    <div class="plate" id="main">
+      <div class="bevel"></div>
+      <div class="sheen" id="sheen"></div>
+      <div class="t etch">Chief of Staff</div>
+      <div class="rl"></div>
+      <div id="scar"></div>
+      <div class="nm etch"><div id="nmOld">Susie Wiles</div><div id="nmNew">Stephen Miller</div></div>
+      <div id="pen"></div>
+      <div class="screw" id="sc1" style="left:14px"><i></i></div>
+      <div class="screw" id="sc2" style="right:14px"><i></i></div>
+    </div>
+  </div>
+
+  <div id="subs">
+    <div class="plate sub" id="s1"><div class="bevel"></div><div class="t etch">Deputy Chief of Staff<br>for Policy</div><div class="dash"></div>
+      <div class="screw" style="left:12px"><i></i></div><div class="screw" style="right:12px"><i></i></div></div>
+    <div class="plate sub" id="s2"><div class="bevel"></div><div class="t etch">Homeland Security<br>Adviser</div><div class="dash"></div>
+      <div class="screw" style="left:12px"><i></i></div><div class="screw" style="right:12px"><i></i></div></div>
+  </div>
+
+  <div class="layer" id="b1">
+    <div class="k">White House &middot; Chief of staff change</div>
+    <h1>A new name on the door</h1>
+    <p>Trump names Stephen Miller White House chief of staff. Susie Wiles steps out of the job.</p>
+  </div>
+
+  <div class="layer" id="b2">
+    <span class="stamp">Thu, Nov 5 &middot; night</span>
+    <p class="cap">Wiles submits her resignation, officials tell CBS and Fox.</p>
+    <p class="sm">Accounts of why differ: a White House official called it <b>&ldquo;very amicable&rdquo;</b> (Fox). CNN&rsquo;s Kaitlan Collins posted that Trump <b>&ldquo;was angry with her this week.&rdquo;</b></p>
+  </div>
+
+  <div class="layer" id="b3">
+    <span class="stamp">Fri, Nov 6</span>
+    <p class="cap"><q>Serving President Trump in the White House has been the honor of a lifetime.</q></p>
+    <p class="sm"><b>Susie Wiles</b>, on X. She moves to the Trump political operation.</p>
+  </div>
+
+  <div class="layer" id="b4">
+    <span class="stamp">Fri, Nov 6</span>
+    <p class="cap">Trump on Truth Social: Miller, <q>one of my most trusted advisors,</q> takes over Monday, Nov. 9.</p>
+    <p class="sm">Trump on Wiles: <b>&ldquo;She has done a great job!&rdquo;</b></p>
+  </div>
+
+  <div class="layer" id="b5">
+    <div class="k">Days in the job</div>
+    <h2>Wiles: <b>655 days</b>, the longest of Trump&rsquo;s chiefs, and the first woman to hold the job</h2>
+    <div id="bars">
+      <div class="br"><span>Priebus</span><div class="trk"><div class="bar"></div><span class="num">~192</span></div></div>
+      <div class="br"><span>Kelly</span><div class="trk"><div class="bar"></div><span class="num">520</span></div></div>
+      <div class="br"><span>Mulvaney*</span><div class="trk"><div class="bar"></div><span class="num">454</span></div></div>
+      <div class="br"><span>Meadows</span><div class="trk"><div class="bar"></div><span class="num">295</span></div></div>
+      <div class="br w"><span>Wiles</span><div class="trk"><div class="bar"></div><span class="num">655</span></div></div>
+    </div>
+    <p class="sm">Day counts are our calculation from reported start and end dates. *Acting. Longest and first woman per AP.</p>
+  </div>
+
+  <div class="layer" id="b6">
+    <span class="stamp">Mon, Nov 9</span>
+    <p class="cap">Miller takes over. No successor has been reported yet for his two current posts.</p>
+  </div>
+
+  <div class="layer" id="end">
+    <div class="k">Sources</div>
+    <h2>Who reported what</h2>
+    <ol>
+      <li><b>CBS News</b>: <a href="https://www.cbsnews.com/news/stephen-miller-trump-chief-of-staff-susie-wiles/" target="_blank" rel="noopener">announcement, Nov. 9 start, Thursday resignation, political operation move</a></li>
+      <li><b>Fox News</b>: <a href="https://www.foxnews.com/politics/trump-names-stephen-miller-new-white-house-chief-staff-replacing-susie-wiles" target="_blank" rel="noopener">&ldquo;very amicable,&rdquo; Trump on Wiles</a></li>
+      <li><b>Yonhap / Korea Herald</b>: <a href="https://www.koreaherald.com/article/10929289" target="_blank" rel="noopener">Truth Social post text</a></li>
+      <li><b>KIRO 7, citing CNN</b>: <a href="https://www.kiro7.com/news/trending/susie-wiles-chief-staff-leave-white-house-replaced-by-stephen-miller/6CQLN5CPIJD3LBU6VNI44GA6AM/" target="_blank" rel="noopener">Collins: Trump &ldquo;angry with her&rdquo;</a></li>
+      <li><b>Newsweek</b>: <a href="https://www.newsweek.com/stephen-miller-susie-wiles-chief-staff-donald-trump-12679459" target="_blank" rel="noopener">Wiles on X: &ldquo;honor of a lifetime&rdquo;</a></li>
+      <li><b>AP via Boston Globe</b>: <a href="https://www.bostonglobe.com/2026/11/06/nation/susie-wiles-replaced-stephen-miller-white-house-chief-of-staff/" target="_blank" rel="noopener">longest-serving, first woman, Miller&rsquo;s posts</a></li>
+      <li><b>First-term dates</b>: <a href="https://www.pbs.org/newshour/politics/watch-trump-swears-new-chief-staff-says-kelly-will-spectacular-job" target="_blank" rel="noopener">PBS</a>, <a href="https://theweek.com/speedreads/815042/john-kelly-gave-exit-interview-bonecrushing-hard-job-being-trumps-chief-staff" target="_blank" rel="noopener">The Week</a> (Kelly), <a href="https://news.ballotpedia.org/2020/03/31/meadows-resigns-from-congress-to-become-new-white-house-chief-of-staff/" target="_blank" rel="noopener">Ballotpedia</a> (Mulvaney, Meadows)</li>
+    </ol>
+    <p class="note">Priebus&rsquo;s end date is approximate. Animated by Claude.</p>
+  </div>
+
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const inout = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const ramp = (t, s, d) => ease(clamp((t - s) / d, 0, 1));
+  const lin = (t, s, d) => clamp((t - s) / d, 0, 1);
+  const fade = (el, k, dy = 0) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${dy.toFixed(1)}px)`; };
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const B2 = 3.1, B3 = 6.4, B4 = 9.4, B5 = 12.4, B6 = 15.2, B7 = 18.0, END = 19.7;
+  const beats = [["b1", 0, B2], ["b2", B2, B3], ["b3", B3, B4], ["b4", B4, B5], ["b5", B5, B6], ["b6", B6, B7]].map(([id, s, e]) => ({ el: $(id), kids: [...$(id).children], s, e }));
+  const plateWrap = $("plateWrap"), sheen = $("sheen"), sc1 = $("sc1"), sc2 = $("sc2"), nmOld = $("nmOld"), nmNew = $("nmNew"),
+        scar = $("scar"), pen = $("pen"), subs = $("subs"), s1 = $("s1"), s2 = $("s2"), endEl = $("end"), endKids = [...endEl.children];
+  const bars = [...document.querySelectorAll(".br")], days = [192, 520, 454, 295, 655], BW = 222;
+  const NAMEW = 354; // name line width for wipes
+
+  function render(t) {
+    // caption beats: each stagger-fades in, fades out before the next
+    beats.forEach((b, bi) => {
+      const out = bi === beats.length - 1 ? 1 - ramp(t, B7 - 0.35, 0.3) : 1 - ramp(t, b.e - 0.32, 0.28);
+      const on = t >= b.s - 0.02 ? 1 : 0;
+      b.kids.forEach((el, i) => { const k = ramp(t, b.s + (bi ? 0.08 : 0.05) + i * 0.28, 0.35); fade(el, k * out * on, (1 - k) * 8); });
+    });
+
+    // plate arrives in beat 1
+    const pIn = ramp(t, 0.1, 0.6);
+    // beat 6 the plate lifts slightly and shrinks to make room for the two smaller plates
+    const shrink = inout(lin(t, B6, 0.7));
+    const lift = ramp(t, B5 - 0.1, 0.6) * (1 - shrink);
+    const endOut = 1 - ramp(t, B7 - 0.35, 0.35);
+    const sc = (0.94 + 0.06 * pIn) * (1 - 0.15 * shrink);
+    plateWrap.style.opacity = (pIn * endOut).toFixed(3);
+    plateWrap.style.transform = `translateY(${(-12 * shrink - 10 * lift).toFixed(1)}px) scale(${sc.toFixed(4)})`;
+
+    // specular sweep, slow drift tied to time
+    const sw = (t * 0.11) % 1;
+    sheen.style.left = (-40 + 180 * sw).toFixed(1) + "%";
+
+    // beat 2: screws loosen (quarter turns); beat 4: screws tighten back
+    const loosen = inout(lin(t, B2 + 0.6, 1.6));
+    const tighten = inout(lin(t, B4 + 1.9, 0.9));
+    const rot = 30 + 180 * loosen - 180 * tighten;
+    sc1.style.transform = sc2.style.transform = `rotate(${rot.toFixed(1)}deg)`;
+
+    // beat 3: the old name slides out to the left and fades; a faint scar of where it sat
+    const slide = inout(lin(t, B3 + 0.4, 1.4));
+    nmOld.style.transform = `translateX(${(-NAMEW * 1.05 * slide).toFixed(1)}px)`;
+    nmOld.style.opacity = (1 - lin(t, B3 + 0.9, 0.9)).toFixed(3);
+    scar.style.opacity = (slide * (1 - lin(t, B4 + 0.3, 1.8))).toFixed(3);
+
+    // beat 4: the new name is engraved left to right, a hot hairline leads the cut
+    const cut = lin(t, B4 + 0.25, 1.6);
+    const c0 = 40, c1 = 314;
+    const x = c0 + (c1 - c0) * cut;
+    nmNew.style.clipPath = `inset(0 ${(NAMEW - x).toFixed(1)}px 0 0)`;
+    nmNew.style.opacity = t >= B4 ? "1" : "0";
+    pen.style.left = x.toFixed(1) + "px";
+    pen.style.opacity = (cut > 0 && cut < 1 ? 1 : 0) * (1 - lin(t, B4 + 1.85, 0.15)) + "";
+
+    // beat 5: bars grow on one scale
+    bars.forEach((r, i) => {
+      const k = ramp(t, B5 + 0.9 + i * 0.22, 0.6);
+      const w = BW * days[i] / 655 * k;
+      r.querySelector(".bar").style.width = w.toFixed(1) + "px";
+      const n = r.querySelector(".num"); n.style.left = (w + 7).toFixed(1) + "px"; n.style.opacity = ramp(t, B5 + 1.2 + i * 0.22, 0.3).toFixed(3);
+    });
+
+    // beat 6: two smaller plates for Miller's current posts, name line left blank
+    subs.style.opacity = (t >= B6 ? 1 : 0) * endOut + "";
+    [s1, s2].forEach((p, i) => { const k = ramp(t, B6 + 0.45 + i * 0.3, 0.45); fade(p, k, (1 - k) * 12); });
+
+    // beat 7: sources over a dimmed door
+    $("dim").style.opacity = (ramp(t, B7 - 0.3, 0.4) * 1).toFixed(3);
+    endEl.style.opacity = t >= B7 - 0.2 ? "1" : "0";
+    endKids.forEach((el, i) => { const k = ramp(t, B7 - 0.2 + i * 0.1, 0.3); fade(el, k, (1 - k) * 6); });
+    endEl.style.pointerEvents = t > B7 + 0.4 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  const dim = document.createElement("div"); dim.className = "deco"; dim.id = "dim"; stage.insertBefore(dim, $("plateWrap"));
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, END)); }, play };
+  render(0);
+  const start = () => { if (reduce) { render(END); replay.hidden = false; } else play(); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>548 Sentences</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* 548 Sentences. Gov. Newsom commutes every death sentence in California to life without parole
+   (open letter, Nov 5, 2026). One mark per person on the row, no names. Two neutral states
+   (solid = death sentence, outline = life without parole, final); the single cool accent marks
+   only "pending state Supreme Court review". Fixed 432x768 stage scaled to fit. All readable
+   content stays in the social safe box x 26-380 / y 108-600 stage px = x 65-950 / y 270-1500
+   at 1080x1920. */
+:root {
+  --bg: #15171a;
+  --bg2: #1c1f23;
+  --ink: #ebe8e1;
+  --soft: #c4c0b7;
+  --muted: #9a968d;
+  --rule: #363a40;
+  --acc: #8db1d1;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #15171a; } }
+:root[data-theme="dark"] { --bg: #15171a; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: radial-gradient(120% 80% at 50% 40%, var(--bg2), var(--bg)); }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+.layer { position: absolute; left: 26px; width: 354px; }
+.k { font: 600 11.5px/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.chip { font: 400 12.5px/1.4 var(--sans); color: var(--muted); }
+h1, h2 { margin: 0; font-family: var(--serif); font-weight: 500; letter-spacing: -.01em; }
+
+/* beat 1 + 2 header zone */
+#b1 { top: 118px; }
+#b1 h1 { margin-top: 8px; font-size: 34px; line-height: 1.06; }
+#b1 p { margin: 10px 0 0; font: 400 17px/1.32 var(--serif); color: var(--soft); }
+#b2 { top: 118px; }
+#b2 h2 { margin-top: 8px; font-size: 25px; line-height: 1.14; }
+#b2 h2 .a { color: var(--acc); }
+#b2 p { margin: 8px 0 0; font: 400 13px/1.4 var(--sans); color: var(--soft); }
+
+#grid { position: absolute; left: 26px; top: 318px; width: 354px; height: 228px; }
+.m { position: absolute; width: 8px; height: 8px; box-sizing: border-box; }
+#gchip { top: 556px; }
+#legend { top: 556px; display: flex; flex-wrap: wrap; gap: 4px 10px; font: 500 11.5px/1.3 var(--sans); color: var(--soft); }
+#legend span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+#legend i { display: inline-block; width: 9px; height: 9px; box-sizing: border-box; }
+
+/* beat 3: national */
+#b3 { top: 118px; }
+#b3 h2 { margin-top: 8px; font-size: 30px; line-height: 1.1; }
+#b3 .attr { margin-top: 8px; font: 400 13px/1.4 var(--sans); color: var(--soft); }
+#bars { position: absolute; left: 26px; top: 300px; width: 354px; }
+.bl { font: 500 12px/1.3 var(--sans); color: var(--muted); margin-bottom: 6px; }
+.bl b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.track { position: relative; height: 34px; margin-bottom: 18px; }
+.seg { position: absolute; top: 0; height: 34px; box-sizing: border-box; }
+#nowA { background: var(--ink); }
+#nowB { border: 1.5px solid var(--ink); background: repeating-linear-gradient(90deg, transparent 0 5px, rgba(235,232,225,.18) 5px 6px); }
+#afterA { background: var(--ink); }
+#big { position: absolute; left: 26px; top: 446px; width: 354px; }
+#big b { display: block; font: 500 44px/1.02 var(--serif); letter-spacing: -.02em; }
+#big span { display: block; margin-top: 8px; font: 400 14px/1.4 var(--sans); color: var(--soft); }
+
+/* beat 4: what doesn't change */
+#b4 { top: 118px; }
+#b4 h2 { margin-top: 8px; font-size: 29px; line-height: 1.1; }
+#b4 .lede { margin: 10px 0 0; font: 400 16px/1.38 var(--serif); color: var(--soft); }
+#tl { position: absolute; left: 26px; top: 300px; width: 354px; }
+.row { display: grid; grid-template-columns: 78px 1fr; gap: 10px; padding: 10px 0; border-top: 1px solid var(--rule); font: 400 14px/1.35 var(--sans); color: var(--soft); }
+.row b { font: 600 14px/1.35 var(--sans); color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* beat 5: two voices, equal weight */
+#b5 { top: 118px; }
+.voice { position: absolute; left: 26px; width: 354px; }
+.voice blockquote { margin: 8px 0 0; font: 400 21px/1.3 var(--serif); color: var(--ink); }
+.voice .chip { margin-top: 8px; }
+#v1 { top: 152px; }
+#v2 { top: 330px; padding-top: 16px; border-top: 1px solid var(--rule); }
+
+/* beat 6: sources */
+#end { top: 116px; }
+#end h2 { margin: 6px 0 12px; font-size: 28px; line-height: 1.1; }
+#end ol { margin: 0; padding: 0; list-style: none; }
+#end li { padding: 7px 0; border-top: 1px solid var(--rule); font: 400 12.5px/1.38 var(--sans); color: var(--soft); }
+#end li b { color: var(--ink); font-weight: 600; }
+#end a { color: inherit; text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 2px; }
+#end .note { margin-top: 12px; font: 400 12px/1.45 var(--sans); color: var(--muted); }
+
+#replay { position: absolute; left: 26px; top: 540px; min-height: 44px; padding: 0 22px; border: 1.5px solid var(--ink); border-radius: 999px;
+  background: var(--bg); color: var(--ink); font: 600 15px var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay:focus-visible, #end a:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage" aria-label="Animated story: California Gov. Gavin Newsom commutes all 548 death sentences to life without parole">
+
+  <div class="layer" id="b1">
+    <div class="k">California &middot; Thursday, Nov 5, 2026</div>
+    <h1>Gov. Gavin Newsom moves to commute all 548 death sentences</h1>
+    <p>Each would become life in prison without the possibility of parole.</p>
+  </div>
+
+  <div class="layer" id="b2">
+    <div class="k">What happens to the 548</div>
+    <h2>166 he can commute on his own. <span class="a">382 need California Supreme Court approval.</span></h2>
+    <p>The state constitution requires it for anyone convicted of a felony more than once. Count from Newsom&rsquo;s office, via AP.</p>
+  </div>
+
+  <div id="grid" aria-hidden="true"></div>
+  <div class="layer chip" id="gchip">One mark per person on California&rsquo;s death row. No one is released.</div>
+  <div class="layer" id="legend">
+    <span><i style="background:var(--ink)"></i>death sentence</span>
+    <span><i style="border:1.5px solid var(--ink)"></i>life without parole</span>
+    <span><i style="border:1.5px dashed var(--acc)"></i>needs court approval</span>
+  </div>
+
+  <div class="layer" id="b3">
+    <div class="k">Across the United States</div>
+    <h2>&ldquo;The largest mass clemency in American history&rdquo;</h2>
+    <div class="attr">The Death Penalty Information Center&rsquo;s description.</div>
+  </div>
+  <div id="bars">
+    <div class="bl" id="bl1">US death row, before: <b>about 1,936</b></div>
+    <div class="track" id="tr1"><div class="seg" id="nowA"></div><div class="seg" id="nowB"></div></div>
+    <div class="bl" id="bl2">If all 548 are commuted: <b>about 1,388</b></div>
+    <div class="track" id="tr2"><div class="seg" id="afterA"></div></div>
+  </div>
+  <div id="big"><b>Nearly 30% smaller</b><span>If all are approved. That would be the lowest US death row count since 1984, per DPI. &ldquo;Before&rdquo; is 1,388 + 548.</span></div>
+
+  <div class="layer" id="b4">
+    <div class="k">What doesn&rsquo;t change</div>
+    <h2>The death penalty is still California law.</h2>
+    <p class="lede">Prosecutors can still seek it. DPI says only a ballot measure can repeal it.</p>
+  </div>
+  <div id="tl">
+    <div class="row"><b>1978</b><span>Death penalty reinstated. 13 executions since, the last in 2006.</span></div>
+    <div class="row"><b>2012, 2016</b><span>Voters reject repeal at the ballot box.</span></div>
+    <div class="row"><b>2019</b><span>Newsom halts executions with a moratorium.</span></div>
+    <div class="row"><b>Jan 2027</b><span>Newsom&rsquo;s final term ends.</span></div>
+  </div>
+
+  <div class="layer" id="b5"><div class="k">Two views</div></div>
+  <div class="voice" id="v1">
+    <blockquote>&ldquo;State-sanctioned killing is incompatible with California&rsquo;s values, undermines the foundations of our legal system, and diminishes each of us.&rdquo;</blockquote>
+    <div class="chip">Gov. Gavin Newsom, open letter, Nov 5</div>
+  </div>
+  <div class="voice" id="v2">
+    <blockquote>&ldquo;With the stroke of a pen, Governor Newsom has disregarded the decisions of hundreds of jurors and judges, and the anguish of families who lost loved ones to the worst crimes imaginable.&rdquo;</blockquote>
+    <div class="chip">Jeannine M. Pacioni, president, California District Attorneys Association</div>
+  </div>
+
+  <div class="layer" id="end">
+    <div class="k">548 Sentences &middot; Nov 6, 2026</div>
+    <h2>Sources</h2>
+    <ol>
+      <li><b>Gov. Gavin Newsom</b>: <a href="https://www.gov.ca.gov/wp-content/uploads/2026/11/2026-11-5-26-GGN-Open-Letter-FINAL.pdf" target="_blank" rel="noopener">open letter, Nov 5</a></li>
+      <li><b>Death Penalty Information Center</b>: <a href="https://deathpenaltyinfo.org/news/governor-gavin-newsom-grants-largest-mass-commutation-in-u-s-history-to-death-sentenced-prisoners-in-california" target="_blank" rel="noopener">largest-clemency claim, US totals, 13 executions</a></li>
+      <li><b>CBS Sacramento</b>: <a href="https://www.cbsnews.com/sacramento/news/gavin-newsom-california-death-row-commuted-life-in-prison/" target="_blank" rel="noopener">last execution 2006, 2012/2016 votes, 2019 moratorium, prosecutors can still seek it</a></li>
+      <li><b>Al Jazeera</b>: <a href="https://www.aljazeera.com/news/2026/11/6/california-governor-commutes-sentences-of-more-than-500-people-on-death-row" target="_blank" rel="noopener">term ends January 2027</a></li>
+      <li><b>AP via NBC Bay Area</b>: <a href="https://www.nbcbayarea.com/news/california/newsom-commute-death-sentences-life-without-parole/4171100/" target="_blank" rel="noopener">382 need court approval; CDAA statement</a></li>
+    </ol>
+    <div class="note">Marks are split 166 / 382 to match the counts, not placed by individual case. 166 is 548 minus 382.<br>Compiled Nov 6, 2026 &middot; Animated by Claude</div>
+  </div>
+
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const ramp = (t, s, d) => ease(clamp((t - s) / d, 0, 1));
+  const fade = (el, k, dy = 0) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${dy.toFixed(1)}px)`; };
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // 548 marks, 28 columns x 20 rows (last row 16). 166 settle as final;
+  // the other 382 go to "needs court approval". Order of the split is spread across the grid, not by row,
+  // so no mark reads as a particular case.
+  const N = 548, COLS = 28, CELL = 12.64, NOW = 166;
+  const grid = $("grid"), marks = [];
+  const order = [...Array(N).keys()].sort((a, b) => ((a * 7919) % 548) - ((b * 7919) % 548));
+  const isNow = new Array(N).fill(false);
+  order.slice(0, NOW).forEach((i) => (isNow[i] = true));
+  for (let i = 0; i < N; i++) {
+    const node = document.createElement("div");
+    node.className = "m";
+    node.style.left = (i % COLS) * CELL + "px";
+    node.style.top = Math.floor(i / COLS) * 12 + "px";
+    grid.appendChild(node);
+    marks.push({ node, now: isNow[i], rank: order.indexOf(i) });
+  }
+
+  const B2 = 3.7, B3 = 7.9, B4 = 11.5, B5 = 15.2, B6 = 18.2, END = 19.8;
+  const b1 = $("b1"), b1k = [...b1.children], b2 = $("b2"), b2k = [...b2.children], gchip = $("gchip"), legend = $("legend"),
+        b3 = $("b3"), b3k = [...b3.children], bars = $("bars"), bl1 = $("bl1"), bl2 = $("bl2"), tr1 = $("tr1"), tr2 = $("tr2"),
+        nowA = $("nowA"), nowB = $("nowB"), afterA = $("afterA"), big = $("big"),
+        b4 = $("b4"), b4k = [...b4.children], rows = [...$("tl").children], tl = $("tl"),
+        b5 = $("b5"), v1 = $("v1"), v2 = $("v2"), endEl = $("end"), endKids = [...endEl.children];
+  const W = 354, WA = W * 1388 / 1936; // widths share one scale
+
+  let lastState = "";
+  function render(t) {
+    // beat 1: hook. Text and grid land inside 1.5s.
+    const out1 = 1 - ramp(t, B2 - 0.3, 0.3);
+    b1k.forEach((el, i) => { const k = ramp(t, 0.05 + i * 0.25, 0.35); fade(el, k * out1, (1 - k) * 8); });
+    fade(gchip, ramp(t, 1.6, 0.35) * out1);
+
+    // beat 2: the split
+    const out2 = 1 - ramp(t, B3 - 0.35, 0.3);
+    b2k.forEach((el, i) => { const k = ramp(t, B2 + i * 0.3, 0.35); fade(el, k * out2 * (t >= B2 - 0.05 ? 1 : 0), (1 - k) * 8); });
+    fade(legend, ramp(t, B2 + 0.9, 0.35) * out2);
+    const gIn = ramp(t, 0.3, 0.2);
+    grid.style.opacity = (gIn * out2).toFixed(3);
+    const split = clamp((t - (B2 + 0.6)) / 1.6, 0, 1);
+    marks.forEach((m) => {
+      const kIn = ramp(t, 0.3 + (m.rank / N) * 1.0, 0.15);
+      // each mark changes state when the sweep reaches its rank
+      const flip = split * N > m.rank;
+      let s;
+      if (!flip) s = "d"; else s = m.now ? "l" : "p";
+      if (m.s !== s) {
+        m.s = s;
+        const st = m.node.style;
+        if (s === "d") { st.background = "var(--ink)"; st.border = "0"; }
+        else if (s === "l") { st.background = "transparent"; st.border = "1.5px solid var(--ink)"; }
+        else { st.background = "transparent"; st.border = "1.5px dashed var(--acc)"; }
+      }
+      m.node.style.opacity = kIn.toFixed(3);
+    });
+
+    // beat 3: national count
+    const out3 = 1 - ramp(t, B4 - 0.35, 0.3);
+    b3k.forEach((el, i) => { const k = ramp(t, B3 + i * 0.3, 0.35); fade(el, k * out3, (1 - k) * 8); });
+    bars.style.opacity = (t >= B3 ? 1 : 0) * out3;
+    fade(bl1, ramp(t, B3 + 0.5, 0.3)); fade(tr1, ramp(t, B3 + 0.5, 0.3));
+    const grow = ramp(t, B3 + 0.6, 0.7);
+    nowA.style.left = "0px"; nowA.style.width = (WA * grow).toFixed(1) + "px";
+    nowB.style.left = WA.toFixed(1) + "px"; nowB.style.width = ((W - WA) * ramp(t, B3 + 1.1, 0.5)).toFixed(1) + "px";
+    fade(bl2, ramp(t, B3 + 1.6, 0.3)); fade(tr2, ramp(t, B3 + 1.6, 0.3));
+    afterA.style.width = (WA * ramp(t, B3 + 1.7, 0.6)).toFixed(1) + "px";
+    const kb = ramp(t, B3 + 2.2, 0.4); fade(big, kb * out3, (1 - kb) * 8);
+
+    // beat 4: what doesn't change
+    const out4 = 1 - ramp(t, B5 - 0.35, 0.3);
+    b4k.forEach((el, i) => { const k = ramp(t, B4 + i * 0.3, 0.35); fade(el, k * out4, (1 - k) * 8); });
+    tl.style.opacity = (t >= B4 ? 1 : 0) * out4;
+    rows.forEach((r, i) => { const k = ramp(t, B4 + 1.0 + i * 0.35, 0.35); fade(r, k, (1 - k) * 6); });
+
+    // beat 5: two views, arriving together, same size and weight
+    const out5 = 1 - ramp(t, B6 - 0.35, 0.3);
+    const kv = ramp(t, B5 + 0.2, 0.45);
+    fade(b5, ramp(t, B5, 0.35) * out5);
+    fade(v1, kv * out5, (1 - kv) * 8); fade(v2, kv * out5, (1 - kv) * 8);
+
+    // beat 6: sources
+    endEl.style.opacity = t >= B6 ? "1" : "0";
+    endKids.forEach((el, i) => { const k = ramp(t, B6 + i * 0.15, 0.3); fade(el, k, (1 - k) * 6); });
+    endEl.style.pointerEvents = t > B6 + 0.4 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(clamp(t, 0, END)); }, play };
+  render(0);
+  if (reduce) { render(END); replay.hidden = false; } else play();
+})();
+</script>
+</body>
+</html>

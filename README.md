@@ -4,7 +4,9 @@ The daily Top Story: one animated news explainer a day, made by the "Daily Top S
 
 - `latest.html` is always the newest story. Big Boi OS (the living-room TV's home screen) downloads it from
   `https://raw.githubusercontent.com/keithmancuso/top-story/main/latest.html` every few hours and plays it on a loop.
-- `stories/<YYYY-MM-DD>-<slug>.html` keeps every day's story.
+- `stories/<YYYY-MM-DD>-<slug>.html` keeps every day's story. The TV lists this folder (GitHub contents API) so
+  Keith can flip back through past stories with Up/Down. Keep the date-first names: the TV sorts by them.
+  The archive starts on 2026-10-24; the earlier stories used other stage sizes or no `__story` hook.
 
 ## Contract for each story
 

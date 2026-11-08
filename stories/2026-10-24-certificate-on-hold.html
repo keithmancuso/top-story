@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Certificate on Hold</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one fixed 432x768 (9:16) stage, scaled to fit. Content stays inside the social safe box,
+   x 26-380 / y 108-600 in stage px (x 65-950 / y 270-1500 at 1080x1920). A blank election
+   certificate sits on top; captions, ballot rows and bars swap in below it; a stamp hovers but never lands. */
+:root {
+  --ground: #e9e3d4;
+  --paper: #f6f1e5;
+  --ink: #1c2230;
+  --muted: #5f6470;
+  --rule: #b9b2a1;
+  --accent: #a8670f;
+  --bar: #8a8f98;
+  --bar2: #3c4249;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --caps: "Cinzel", "Trajan Pro", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #11141b; --paper: #1b202a; --ink: #ece7dc; --muted: #a2a6ae; --rule: #3d4350; --accent: #e3a443; --bar: #6b717c; --bar2: #b9bec7; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #11141b; --paper: #1b202a; --ink: #ece7dc; --muted: #a2a6ae; --rule: #3d4350; --accent: #e3a443; --bar: #6b717c; --bar2: #b9bec7; color-scheme: dark;
+}
+html, body { height: 100%; margin: 0; }
+body { background: var(--ground); color: var(--ink); overflow: hidden; }
+#wrap { position: fixed; inset: 0; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+/* Decorative paper texture: allowed to bleed past the safe box. */
+#stage::before {
+  content: ""; position: absolute; inset: -400px; pointer-events: none; opacity: .5;
+  background-image: repeating-linear-gradient(0deg, transparent 0 3px, color-mix(in srgb, var(--rule) 18%, transparent) 3px 4px);
+}
+.eyebrow {
+  position: absolute; left: 30px; right: 56px; top: 112px; display: flex; justify-content: space-between;
+  font: 600 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+}
+.eyebrow b { color: var(--accent); font-weight: 600; }
+h1 { position: absolute; left: 30px; right: 56px; top: 128px; margin: 0; font: 700 29px/1 var(--serif); letter-spacing: -.01em; }
+
+#cert { position: absolute; left: 40px; top: 168px; width: 332px; height: 218px; transform-origin: 166px 0; }
+#cert svg { position: absolute; inset: 0; overflow: visible; }
+.c-paper { fill: var(--paper); }
+.c-line { fill: none; stroke: var(--ink); }
+.c-rule { fill: none; stroke: var(--rule); }
+.c-acc { fill: none; stroke: var(--accent); }
+.c-t { fill: var(--ink); }
+.c-m { fill: var(--muted); }
+#shadow { position: absolute; left: 70px; top: 128px; width: 190px; height: 18px; border-radius: 50%; background: var(--ink); filter: blur(9px); opacity: 0; }
+#stamp {
+  position: absolute; left: 56px; top: 64px; width: 220px; padding: 9px 0 8px; text-align: center; opacity: 0;
+  border: 3px dashed var(--accent); border-radius: 6px; color: var(--accent);
+  background: color-mix(in srgb, var(--paper) 93%, transparent);
+}
+#stamp b { display: block; font: 700 36px/1 var(--caps); letter-spacing: .12em; }
+#stamp span { display: block; margin-top: 4px; font: 600 10px/1 var(--mono); letter-spacing: .2em; }
+#tag {
+  position: absolute; left: 50%; top: 168px; transform: translateX(-50%); padding: 6px 10px 5px; white-space: nowrap; opacity: 0;
+  background: var(--ink); color: var(--paper); font: 600 10px/1 var(--mono); letter-spacing: .16em;
+}
+
+#caps { position: absolute; left: 30px; right: 56px; top: 398px; height: 188px; }
+.cap { position: absolute; inset: 0; opacity: 0; }
+.cap p { margin: 0; font: 400 19px/1.22 var(--serif); text-wrap: pretty; }
+.cap p em { font-style: normal; font-weight: 700; }
+.cap p q { font-style: italic; font-weight: 600; color: var(--accent); quotes: "\201C" "\201D"; }
+.cap small { display: block; margin-top: 10px; font: 500 11px/1.45 var(--mono); color: var(--muted); }
+.cap small q { color: var(--ink); quotes: "\201C" "\201D"; }
+
+.ballot { margin-top: 8px; border-top: 1px solid var(--rule); }
+.row { display: flex; align-items: center; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--rule); }
+.oval { flex: none; width: 22px; height: 13px; border: 1.5px solid var(--ink); border-radius: 50%; }
+.row b { display: block; font: 700 16px/1.1 var(--serif); }
+.row b i { font-style: normal; border-radius: 3px; padding: 0 2px; margin: 0 -2px; }
+.row span { display: block; margin-top: 2px; font: 500 10.5px/1.2 var(--mono); color: var(--muted); }
+.row span.flag { color: var(--accent); }
+
+.bars { position: relative; margin-top: 14px; height: 100px; }
+.bars .lab { position: absolute; left: 0; font: 600 10.5px/1 var(--mono); color: var(--muted); letter-spacing: .04em; }
+.bars .bar { position: absolute; left: 0; height: 14px; border-radius: 2px; transform-origin: left; }
+#bP { top: 13px; width: 250px; background: var(--bar); }
+#bS { top: 47px; width: 222px; background: var(--bar2); }
+#ghost { position: absolute; top: 47px; left: 222px; width: 46px; height: 14px; border: 1.5px dashed var(--accent); border-radius: 2px; box-sizing: border-box; opacity: 0; }
+#ghostLab { position: absolute; top: 67px; left: 150px; font: 600 10px/1 var(--mono); color: var(--accent); opacity: 0; white-space: nowrap; }
+#mark { position: absolute; top: 6px; left: 250px; width: 0; height: 60px; border-left: 1.5px dotted var(--ink); opacity: 0; }
+#illus { position: absolute; left: 0; top: 84px; font: 600 9.5px/1 var(--mono); letter-spacing: .1em; padding: 3px 5px; border: 1px solid var(--muted); color: var(--muted); }
+
+.cap.end { top: -86px; height: 274px; }
+.end .status { font: 700 22px/1.12 var(--serif); }
+.end .status i { font-style: normal; color: var(--accent); }
+.end .case { margin-top: 6px; font: 500 10.5px/1.4 var(--mono); color: var(--muted); }
+.src-head { margin-top: 12px; font: 600 10.5px/1 var(--mono); letter-spacing: .16em; color: var(--accent); }
+.src { display: grid; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
+.src li { font: 500 11.5px/1.3 var(--mono); color: var(--muted); }
+.src a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--rule); }
+.src a:focus-visible, #replay:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+#bar { position: absolute; left: 30px; right: 56px; top: 594px; display: flex; gap: 4px; }
+#bar i { flex: 1; height: 3px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+#bar i b { display: block; height: 100%; width: 0; background: var(--accent); }
+#replay {
+  position: absolute; right: 56px; top: 612px; padding: 8px 12px; border: 1px solid var(--ink); border-radius: 3px;
+  background: var(--paper); color: var(--ink); font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+}
+</style>
+
+<div id="wrap"><div id="stage">
+  <div class="eyebrow"><span><b>Top Story</b> &middot; Sat 24 Oct 2026</span><span>Alaska</span></div>
+  <h1>Certificate on Hold</h1>
+
+  <div id="cert">
+    <svg viewBox="0 0 332 218" width="332" height="218" aria-hidden="true">
+      <rect class="c-paper" x="0" y="0" width="332" height="218"/>
+      <rect id="b1" class="c-line" x="0.75" y="0.75" width="330.5" height="216.5" stroke-width="1.5" pathLength="1"/>
+      <rect id="b2" class="c-rule" x="7" y="7" width="318" height="204" stroke-width="0.8" pathLength="1"/>
+      <g id="ctext">
+        <text class="c-t" x="166" y="34" text-anchor="middle" style="font:700 16px var(--caps);letter-spacing:.08em">Certificate of Election</text>
+        <text class="c-m" x="166" y="50" text-anchor="middle" style="font:600 9px var(--mono);letter-spacing:.16em">UNITED STATES SENATE &#183; STATE OF ALASKA</text>
+        <text class="c-t" x="166" y="76" text-anchor="middle" style="font:italic 400 12px var(--serif)">This certifies that</text>
+        <line class="c-line" x1="44" y1="104" x2="288" y2="104" stroke-width="1"/>
+        <text class="c-m" x="166" y="120" text-anchor="middle" style="font:italic 400 11px var(--serif)">was elected on November 3, 2026</text>
+        <line class="c-rule" x1="26" y1="186" x2="166" y2="186" stroke-width="1"/>
+        <text class="c-m" x="26" y="198" style="font:600 8.5px var(--mono);letter-spacing:.14em">CERTIFIED BY</text>
+      </g>
+      <g id="seal" transform="translate(268 168)"></g>
+    </svg>
+    <div id="shadow"></div>
+    <div id="stamp"><b>HOLD</b><span>PENDING INVESTIGATION</span></div>
+    <div id="tag">REQUESTED &middot; NOT ORDERED</div>
+  </div>
+
+  <div id="caps">
+    <div class="cap"><p>The <em>Justice Department</em> sued Alaska on Oct. 22, asking a federal court to block certification of its U.S. Senate race <em>in one scenario</em>.</p><small>Filed 11 days before Election Day, Nov. 3<br>United States v. State of Alaska</small></div>
+    <div class="cap"><p>Two Sullivans are on the ballot. DOJ says voters may confuse them.</p>
+      <div class="ballot">
+        <div class="row"><i class="oval"></i><div><b><i class="sul">Sullivan</i>, Dan S.</b><span>(Registered Republican) Incumbent</span></div></div>
+        <div class="row"><i class="oval"></i><div><b><i class="sul">Sullivan</i>, Daniel J. Jr.</b><span class="flag">no party listed</span></div></div>
+      </div>
+      <small>Alaska&rsquo;s Supreme Court kept Daniel J. Sullivan on the ballot in June.</small></div>
+    <div class="cap"><p>The suit applies only if <em>Sen. Sullivan loses</em> but would have won with <em>all</em> of Daniel J. Sullivan&rsquo;s votes.</p>
+      <div class="bars">
+        <span id="illus">ILLUSTRATION, NOT RESULTS</span>
+        <span class="lab" style="top:0">Peltola (D)</span><i class="bar" id="bP"></i>
+        <span class="lab" style="top:34px">Sen. Sullivan (R)</span><i class="bar" id="bS"></i>
+        <i id="mark"></i><i id="ghost"></i><span id="ghostLab">+ Daniel J.&rsquo;s votes</span>
+      </div></div>
+    <div class="cap"><p>The ask: no certification <em>pending an investigation</em> into whether those votes were meant for the senator.</p><small>Trump: <q>I&rsquo;m the one that said do it.</q><br>AG Todd Blanche: DOJ doesn&rsquo;t intend to <q>improperly interfere with elections.</q></small></div>
+    <div class="cap"><p>Notre Dame election-law scholar Derek Muller called the legal argument <q>one of the worst ones I&rsquo;ve ever seen.</q></p><small>Experts across the spectrum called it weak.<br>Sen. Lisa Murkowski (R-Alaska): DOJ <q>should never have filed this lawsuit.</q></small></div>
+    <div class="cap end">
+      <div class="status">As of Oct. 24: <i>no hearing scheduled, no ruling.</i></div>
+      <div class="case">3:26-cv-00376 &middot; D. Alaska &middot; Judge Sharon Gleason</div>
+      <div class="src-head">SOURCES</div>
+      <ul class="src">
+        <li><a href="https://www.courthousenews.com/wp-content/uploads/2026/10/sullivan-ak-fed-suit.pdf" target="_blank" rel="noopener">Complaint</a> &middot; via Courthouse News</li>
+        <li><a href="https://www.pbs.org/newshour/politics/trump-administration-files-lawsuit-to-block-possible-democratic-win-in-alaska-senate-race" target="_blank" rel="noopener">PBS NewsHour / AP</a> &middot; Trump, Blanche</li>
+        <li><a href="https://alaskabeacon.com/2026/10/23/trump-administration-sues-to-block-alaskas-us-senate-election-result-if-peltola-wins/" target="_blank" rel="noopener">Alaska Beacon</a> &middot; filing, judge, ballot, Muller</li>
+        <li><a href="https://www.cbsnews.com/news/trump-admin-sues-to-block-alaska-senate-certification-if-sen-dan-sullivan-loses/" target="_blank" rel="noopener">CBS News</a> &middot; Murkowski</li>
+        <li><a href="https://rollcall.com/2026/10/23/doj-sues-to-prevent-sullivan-loss-in-alaska/" target="_blank" rel="noopener">Roll Call</a> &middot; trigger, relief</li>
+        <li><a href="https://www.alaskasnewssource.com/2026/06/29/petersburg-sullivan-remain-ballot-state-supreme-court-rules/" target="_blank" rel="noopener">Alaska&rsquo;s News Source</a> &middot; June ruling</li>
+        <li><a href="https://www.yahoo.com/news/politics/articles/why-trump-dubious-election-lawsuits-192528376.html" target="_blank" rel="noopener">CNN via Yahoo</a> &middot; expert views</li>
+        <li><a href="https://www.democracydocket.com/news-alerts/one-of-the-worst-ones-ive-ever-seen-legal-experts-eviscerate-dojs-alaska-lawsuit/" target="_blank" rel="noopener">Democracy Docket</a> &middot; Olson, Becker</li>
+      </ul>
+    </div>
+  </div>
+  <button id="replay" type="button" hidden>Replay</button>
+  <div id="bar"></div>
+</div></div>
+
+<script>
+(() => {
+  const END = 19.4;
+  const BEATS = [0, 3.2, 6.6, 10.2, 13.6, 16.4, END];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ease = x => { x = clamp(x); return 1 - Math.pow(1 - x, 3); };
+  const ramp = (t, a, d) => reduce ? (t >= a ? 1 : 0) : ease((t - a) / d);
+  const $ = id => document.getElementById(id);
+  const NS = "http://www.w3.org/2000/svg";
+
+  // Guilloche seal: a few rose-curve rings drawn with pathLength=1 so they can trace themselves.
+  const seal = $("seal");
+  const rings = [[30, 2.2, 18, "c-line", .7], [24, 1.8, 14, "c-acc", .7], [17, 1.4, 11, "c-line", .6], [9, 1, 7, "c-acc", .8]].map(([R, a, k, cls, w]) => {
+    let d = "";
+    for (let i = 0; i <= 720; i++) {
+      const th = i / 720 * Math.PI * 2, r = R + a * Math.sin(k * th);
+      d += (i ? "L" : "M") + (r * Math.cos(th)).toFixed(2) + " " + (r * Math.sin(th)).toFixed(2);
+    }
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("d", d + "Z"); p.setAttribute("class", cls); p.setAttribute("stroke-width", w); p.setAttribute("pathLength", "1");
+    p.style.strokeDasharray = "1 1"; seal.appendChild(p); return p;
+  });
+  const b1 = $("b1"), b2 = $("b2");
+  [b1, b2].forEach(p => p.style.strokeDasharray = "1 1");
+
+  const cert = $("cert"), ctext = $("ctext"), stamp = $("stamp"), shadow = $("shadow"), tag = $("tag");
+  const caps = [...document.querySelectorAll(".cap")];
+  const sul = [...document.querySelectorAll(".sul")];
+  const bP = $("bP"), bS = $("bS"), ghost = $("ghost"), ghostLab = $("ghostLab"), mark = $("mark");
+  const bar = $("bar");
+  const segs = BEATS.slice(0, -1).map(() => { const i = document.createElement("i"); const b = document.createElement("b"); i.appendChild(b); bar.appendChild(i); return b; });
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+  let last = 0;
+  function render(t) {
+    t = clamp(t, 0, END); last = t;
+
+    // Beat 0: the certificate draws itself, the winner line stays blank.
+    b1.style.strokeDashoffset = (1 - ramp(t, 0.05, 1.2)).toFixed(4);
+    b2.style.strokeDashoffset = (1 - ramp(t, 0.35, 1.2)).toFixed(4);
+    ctext.style.opacity = ramp(t, 0.7, 0.6).toFixed(3);
+    rings.forEach((p, i) => p.style.strokeDashoffset = (1 - ramp(t, 1.0 + i * 0.25, 1.3)).toFixed(4));
+
+    // Beat 1: the shared surname pulses on both ballot rows.
+    const pulse = t > 3.6 && t < 6.6 ? 0.5 + 0.5 * Math.sin((t - 3.6) * Math.PI * 1.6 - Math.PI / 2) : 0;
+    sul.forEach(el => el.style.background = `color-mix(in srgb, ${css("--accent")} ${(pulse * 30).toFixed(0)}%, transparent)`);
+
+    // Beat 2: schematic bars. The ghost block would carry Sen. Sullivan past the dotted line.
+    bP.style.transform = `scaleX(${ramp(t, 7.1, 0.7).toFixed(3)})`;
+    bS.style.transform = `scaleX(${ramp(t, 7.3, 0.7).toFixed(3)})`;
+    mark.style.opacity = ramp(t, 8.0, 0.3).toFixed(3);
+    const g = ramp(t, 8.4, 0.6);
+    ghost.style.opacity = g.toFixed(3);
+    ghost.style.width = (46 * g).toFixed(1) + "px";
+    ghostLab.style.opacity = ramp(t, 8.7, 0.4).toFixed(3);
+
+    // Beat 3 on: the stamp descends, then hovers above the seal line without ever touching down.
+    const drop = ramp(t, 10.3, 0.9);
+    const bob = reduce ? 0 : Math.sin((t - 10.3) * 2.2) * 3 * drop;
+    const lift = -60 * (1 - drop) - 12 + bob;
+    stamp.style.opacity = (drop * 0.95).toFixed(3);
+    stamp.style.transform = `translateY(${lift.toFixed(1)}px) rotate(-6deg) scale(${(1.08 - 0.03 * drop).toFixed(3)})`;
+    shadow.style.opacity = (drop * (0.16 - bob * 0.01)).toFixed(3);
+    shadow.style.transform = `scaleX(${(0.9 - bob * 0.02).toFixed(3)})`;
+    tag.style.opacity = ramp(t, 11.2, 0.4).toFixed(3);
+    tag.style.transform = `translate(-50%, ${(bob * 0.6 + (1 - ramp(t, 11.2, 0.4)) * 6).toFixed(1)}px) rotate(-6deg)`;
+
+    // End card: the certificate shrinks up to make room for status and sources.
+    const shrink = ramp(t, 16.4, 0.6);
+    cert.style.transform = `scale(${(1 - 0.4 * shrink).toFixed(3)})`;
+
+    caps.forEach((el, i) => {
+      const a = BEATS[i], b = BEATS[i + 1], lastCap = i === caps.length - 1;
+      const inn = clamp((t - a - (lastCap ? 0.35 : 0.12)) / 0.3);
+      let o = reduce ? (t >= a ? 1 : 0) : inn;
+      if (!lastCap) o = Math.min(o, clamp((b - t) / 0.25));
+      el.style.opacity = o.toFixed(3);
+      el.style.transform = `translateY(${((1 - inn) * 10).toFixed(1)}px)`;
+      el.style.pointerEvents = o > 0.5 ? "auto" : "none";
+    });
+    segs.forEach((b, i) => { b.style.width = (clamp((t - BEATS[i]) / (BEATS[i + 1] - BEATS[i])) * 100).toFixed(1) + "%"; });
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(t);
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(t); }, play };
+  document.fonts?.ready.then(() => render(last));
+  render(0); play();
+})();
+</script>
+</body>
+</html>

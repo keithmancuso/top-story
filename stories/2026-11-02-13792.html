@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>13,792</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;1,8..60,500&display=swap">
+<style>
+/* One fixed 432x768 (9:16) stage, scaled to fit. Everything readable stays inside the social
+   safe box, x 26-380 / y 108-600 in stage px (x 65-950 / y 270-1500 at 1080x1920).
+   The device: the August primary as two near-equal columns in neutral shades (both candidates
+   are Democrats), the axis zooms to show the 13,792-vote gap, then a hard cut to the quote.
+   Party red appears once, on Rogers' name. Dark palette set explicitly for both host themes. */
+:root {
+  --bg: #15171a;
+  --ink: #f1ede4;
+  --soft: #c3bdb1;
+  --muted: #8b867c;
+  --rule: #3a3b3d;
+  --a: #e9e3d6;      /* El-Sayed column */
+  --b: #8c867b;      /* Stevens column */
+  --hi: #f0a83a;     /* the gap, the accent */
+  --rep: #e25a4c;    /* Republican, used once */
+  --sans: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --serif: "Source Serif 4", Georgia, serif;
+  color-scheme: dark;
+}
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+#stage::before { content: ""; position: absolute; inset: -600px; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px); }
+
+#head { position: absolute; left: 30px; width: 346px; top: 112px; }
+.eyebrow { display: flex; justify-content: space-between; font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+h1 { margin: 10px 0 0; font: 700 64px/.9 var(--sans); letter-spacing: -.01em; color: var(--hi); font-variant-numeric: tabular-nums; }
+.sub { margin: 8px 0 0; font: 500 15px/1.25 var(--sans); color: var(--ink); }
+
+svg#g { position: absolute; left: 0; top: 0; width: 432px; height: 768px; overflow: visible; pointer-events: none; }
+.nm { font: 700 15px var(--sans); fill: var(--ink); }
+.vv { font: 600 22px var(--sans); fill: var(--ink); font-variant-numeric: tabular-nums; }
+.pc { font: 500 11px var(--mono); fill: var(--soft); }
+.ax { font: 500 9.5px var(--mono); letter-spacing: .06em; fill: var(--muted); }
+.gap { font: 700 20px var(--sans); fill: var(--hi); font-variant-numeric: tabular-nums; }
+.gaps { font: 500 10px var(--mono); fill: var(--hi); }
+
+#cap { position: absolute; left: 30px; width: 346px; top: 548px; height: 50px; }
+#cap p { position: absolute; left: 0; bottom: 0; margin: 0; width: 346px; font: 500 15px/1.3 var(--sans); color: var(--ink); text-wrap: balance; }
+#cap b { color: var(--hi); font-weight: 700; }
+
+.beat { position: absolute; left: 30px; width: 346px; opacity: 0; }
+.k { font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+#tl { top: 128px; }
+#tl .row { display: grid; grid-template-columns: 70px 1fr; gap: 14px; padding: 16px 0; border-top: 1px solid var(--rule); }
+#tl .d { font: 500 11px/1.3 var(--mono); letter-spacing: .06em; color: var(--hi); text-transform: uppercase; padding-top: 3px; }
+#tl .t { font: 600 19px/1.2 var(--sans); color: var(--ink); }
+#tl .s { margin-top: 5px; font: 400 13px/1.35 var(--sans); color: var(--soft); }
+
+#q { top: 196px; }
+#q .mark { font: 600 72px/0.6 var(--serif); color: var(--hi); height: 30px; }
+#q blockquote { margin: 0; font: italic 500 27px/1.22 var(--serif); color: var(--ink); text-wrap: pretty; }
+#q blockquote .r { font-style: normal; font-weight: 600; color: var(--rep); }
+#q .who { margin-top: 14px; font: 500 11px/1.4 var(--mono); letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+#q .two { margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--rule); font: italic 500 22px/1.2 var(--serif); color: var(--ink); }
+#q .two small { display: block; margin-top: 8px; font: 400 12.5px/1.35 var(--sans); font-style: normal; color: var(--soft); }
+
+#re { top: 122px; }
+#re .grid { margin-top: 12px; display: grid; gap: 9px; }
+.st { padding: 10px 12px 11px; border: 1px solid var(--rule); border-left: 3px solid var(--muted); border-radius: 3px; background: rgba(255,255,255,.025); }
+.st .w { font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.st .x { margin-top: 5px; font: 600 17.5px/1.2 var(--sans); color: var(--ink); }
+.st.dem { border-left-color: #6f8fb8; }
+.st.gop { border-left-color: var(--rep); }
+.st.hi { border-left-color: var(--hi); }
+
+#po { top: 150px; }
+#po .h { margin-top: 8px; font: 700 26px/1.1 var(--sans); color: var(--ink); }
+#po .h em { font-style: normal; color: var(--hi); }
+.poll { margin-top: 20px; }
+.poll .src { display: flex; justify-content: space-between; font: 500 10.5px/1 var(--mono); letter-spacing: .04em; color: var(--soft); }
+.prow { display: grid; grid-template-columns: 76px 1fr 34px; align-items: center; gap: 10px; margin-top: 9px; }
+.prow .n { font: 600 14px/1 var(--sans); color: var(--ink); }
+.prow .tr { height: 14px; background: rgba(255,255,255,.05); border-radius: 2px; overflow: hidden; }
+.prow .f { height: 100%; width: 0; border-radius: 2px; background: var(--a); }
+.prow.r .f { background: var(--b); }
+.prow .v { font: 700 19px/1 var(--sans); color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+#po .fine { margin-top: 18px; font: 400 12px/1.4 var(--sans); color: var(--soft); }
+
+#end { position: absolute; left: 30px; width: 346px; top: 112px; height: 486px; opacity: 0; pointer-events: none; }
+#end .n { font: 700 46px/.95 var(--sans); color: var(--hi); }
+#end .l { margin-top: 10px; font: 500 15px/1.32 var(--sans); color: var(--ink); }
+#end h2 { margin: 20px 0 7px; font: 500 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#end ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; font: 400 11.5px/1.3 var(--sans); color: var(--soft); }
+#end li b { color: var(--ink); font-weight: 600; }
+#end a { color: inherit; text-decoration: underline; text-decoration-color: #55554f; text-underline-offset: 2px; }
+#end .by { margin-top: 14px; font: 500 9.5px/1 var(--mono); letter-spacing: .08em; color: var(--muted); }
+
+#replay { position: absolute; right: 56px; top: 560px; padding: 8px 14px; border: 1.5px solid var(--ink); border-radius: 999px;
+  background: var(--bg); color: var(--ink); font: 600 12px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#end a:focus-visible, #replay:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div id="wrap">
+<div id="stage" role="img" aria-label="Animated explainer: Abdul El-Sayed beat Rep. Haley Stevens in Michigan's August 4 Democratic Senate primary by 13,792 votes, 48.45 to 47.55 percent. Stevens pledged to back him, but after a week-long feud over an outside group's ad, she endorsed Republican Mike Rogers on Sunday, November 1, saying it is this one vote. Senate Democratic leader Chuck Schumer called it a despicable betrayal, Donald Trump praised her, Rogers said he was honored, El-Sayed said none of this matters, and her chief of staff resigned. Polls taken before the endorsement showed El-Sayed ahead 51 to 44 (Mitchell, Oct 26-27) and 50 to 48 (Marist, Oct 15-18). Election Day is Tuesday, November 3.">
+  <div id="head">
+    <div class="eyebrow"><span>Michigan Senate</span><span>Nov 2, 2026</span></div>
+    <h1>13,792</h1>
+    <p class="sub" id="subl">votes decided August's Democratic Senate primary.</p>
+  </div>
+
+  <svg id="g" viewBox="0 0 432 768" aria-hidden="true"></svg>
+
+  <div id="cap">
+    <p data-in="0.2" data-out="4.6">Aug 4: <b>El-Sayed</b> beat Rep. Haley Stevens by under one point.</p>
+  </div>
+
+  <div class="beat" id="tl">
+    <div class="k">What happened next</div>
+    <div class="row" style="margin-top:12px"><div class="d">August</div><div><div class="t">Stevens concedes and pledges to back El-Sayed</div></div></div>
+    <div class="row"><div class="d">Oct 30</div><div><div class="t">She demands he condemn an outside group's ad on Israel</div><div class="s">He says it wasn't his and he disagrees with it.</div></div></div>
+    <div class="row"><div class="d">Nov 1</div><div><div class="t">Asked to skip a Democratic unity event</div><div class="s">Instead she goes to a Detroit-area church with Republican Mike Rogers.</div></div></div>
+  </div>
+
+  <div class="beat" id="q">
+    <div class="mark">“</div>
+    <blockquote>…that's why I am endorsing <span class="r">Mike Rogers</span> for the United States Senate today.</blockquote>
+    <div class="who">Rep. Haley Stevens (D) · video · Sun Nov 1</div>
+    <div class="two">“It is this one vote.”<small>She says she is not turning her back on Democrats.</small></div>
+  </div>
+
+  <div class="beat" id="re">
+    <div class="k">The reaction</div>
+    <div class="grid">
+      <div class="st dem"><div class="w">Chuck Schumer, Senate Dem leader</div><div class="x">“A despicable betrayal”</div></div>
+      <div class="st gop"><div class="w">Donald Trump</div><div class="x">“Haley said what few people are willing to say”</div></div>
+      <div class="st gop"><div class="w">Mike Rogers (R)</div><div class="x">“Honored” by her support</div></div>
+      <div class="st dem"><div class="w">Abdul El-Sayed (D)</div><div class="x">“None of this matters”</div></div>
+      <div class="st hi"><div class="w">Stevens' office</div><div class="x">Her chief of staff resigns</div></div>
+    </div>
+  </div>
+
+  <div class="beat" id="po">
+    <div class="k">Open seat · Senate control in play</div>
+    <div class="h">Polls taken <em>before</em> the endorsement</div>
+    <div class="poll">
+      <div class="src"><span>MITCHELL · OCT 26-27</span><span>±3.9</span></div>
+      <div class="prow"><span class="n">El-Sayed</span><div class="tr"><div class="f"></div></div><span class="v">51</span></div>
+      <div class="prow r"><span class="n">Rogers</span><div class="tr"><div class="f"></div></div><span class="v">44</span></div>
+    </div>
+    <div class="poll">
+      <div class="src"><span>MARIST · OCT 15-18</span><span>±4.3</span></div>
+      <div class="prow"><span class="n">El-Sayed</span><div class="tr"><div class="f"></div></div><span class="v">50</span></div>
+      <div class="prow r"><span class="n">Rogers</span><div class="tr"><div class="f"></div></div><span class="v">48</span></div>
+    </div>
+    <div class="fine">Likely voters. No public poll yet measures the endorsement's effect.</div>
+  </div>
+
+  <div id="end">
+    <div class="n">Election Day<br>Tue, Nov 3</div>
+    <div class="l">Michigan picks a successor to retiring Democrat Gary Peters: El-Sayed (D) or Rogers (R). Stevens is not on the ballot.</div>
+    <h2>Sources</h2>
+    <ol>
+      <li><b>CBS News:</b> <a href="https://www.cbsnews.com/news/haley-stevens-mike-rogers-together-church-abdul-el-sayed-michigan-senate/" target="_blank" rel="noopener">Stevens endorses Rogers amid rift</a> and <a href="https://www.cbsnews.com/live-updates/2026-midterm-elections-campaigns-weekend-before/" target="_blank" rel="noopener">live updates</a>, Nov 1</li>
+      <li><b>AP via ABC7 and Bridge Michigan:</b> <a href="https://abc7news.com/post/2026-election-news-haley-stevens-endorsement-mike-rogers-michigan-senate-race-abdul-el-sayed-stunts-democratic-party/20006348/" target="_blank" rel="noopener">quotes and reactions</a>, <a href="https://bridgemi.com/michigan-politics/haley-stevens-joins-mike-rogers-in-detroit-bucking-abdul-el-sayed-in-senate-race/" target="_blank" rel="noopener">Sunday timeline</a> · <b>Fox News:</b> <a href="https://www.foxnews.com/live-news/midterm-elections-2026-haley-stevens-mike-rogers-michigan-november-2" target="_blank" rel="noopener">staff resignation</a></li>
+      <li><b>Primary result:</b> <a href="https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Michigan" target="_blank" rel="noopener">Aug 4 totals</a></li>
+      <li><b>Polls:</b> <a href="https://www.cbsnews.com/detroit/news/el-sayed-widens-lead-rogers-michigan-senate-poll/" target="_blank" rel="noopener">Mitchell for CBS Detroit</a>, <a href="https://maristpoll.marist.edu/polls/midterm-elections-in-michigan-october-2026/" target="_blank" rel="noopener">Marist</a></li>
+    </ol>
+    <div class="by">Animated by Claude · Nov 2, 2026</div>
+  </div>
+
+  <button id="replay" type="button" hidden>Replay</button>
+</div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const NS = "http://www.w3.org/2000/svg";
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const END = 19.4;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const ramp = (t, a, d) => ease(clamp((t - a) / d, 0, 1));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const fade = (el, o, dy = 0) => { el.style.opacity = o.toFixed(3); el.style.transform = dy ? `translateY(${dy.toFixed(1)}px)` : ""; };
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+  const fmt = (n) => Math.round(n).toLocaleString("en-US");
+
+  // The primary: Aug 4, 2026, certified totals.
+  const ES = 744952, HS = 731160;
+  const svg = $("g");
+  const chart = mk("g", {}, svg);
+  const BASE_Y = 528, TOP_Y = 300;            // column area: max column reaches TOP_Y
+  const COLS = [
+    { name: "El-Sayed", v: ES, pct: "48.45%", x: 44, fill: "#e9e3d6" },
+    { name: "Stevens", v: HS, pct: "47.55%", x: 170, fill: "#8c867b" },
+  ];
+  const CW = 104;
+  mk("line", { x1: 30, x2: 376, y1: BASE_Y + .5, y2: BASE_Y + .5, stroke: "#8b867c", "stroke-width": 1 }, chart);
+  const axl = mk("text", { x: 30, y: BASE_Y + 16, class: "ax" }, chart);
+  const cols = COLS.map((c) => {
+    const r = mk("rect", { x: c.x, width: CW, fill: c.fill, rx: 1 }, chart);
+    const vt = mk("text", { x: c.x, class: "vv" }, chart);
+    const n = mk("text", { x: c.x, class: "nm" }, chart); n.textContent = c.name;
+    const p = mk("text", { x: c.x + CW, "text-anchor": "end", class: "pc" }, chart); p.textContent = c.pct;
+    return { ...c, r, vt, n, p };
+  });
+  // gap marker: a highlighted band between the two tops, plus a bracket and label on the right
+  const gapBand = mk("rect", { x: 170, width: CW, fill: "#f0a83a", opacity: 0 }, chart);
+  const br = mk("path", { fill: "none", stroke: "#f0a83a", "stroke-width": 1.5 }, chart);
+  const gl = mk("text", { x: 292, class: "gap" }, chart); gl.textContent = "13,792";
+  const gs = mk("text", { x: 292, class: "gaps" }, chart); gs.textContent = "votes, 0.9 pt";
+
+  const caps = [...document.querySelectorAll("#cap p")];
+  const head = $("head"), tl = $("tl"), q = $("q"), re = $("re"), po = $("po"), endEl = $("end");
+  const tlRows = [...tl.querySelectorAll(".row")];
+  const qTwo = q.querySelector(".two");
+  const stamps = [...re.querySelectorAll(".st")];
+  const fills = [...po.querySelectorAll(".f")], fw = [51, 44, 50, 48];
+  const polls = [...po.querySelectorAll(".poll")], fine = po.querySelector(".fine");
+
+  function render(t) {
+    // head: number + line, stays through the chart beat
+    const headOut = ramp(t, 4.7, 0.35);
+    fade(head, 1 - headOut);
+
+    // 1. columns rise (0.3-1.8), axis zooms from 0 to 700,000 (2.3-3.4) so the gap opens up
+    const grow = ramp(t, 0.3, 1.4);
+    const base = lerp(0, 700000, ramp(t, 2.3, 1.1));
+    const scale = (TOP_Y - BASE_Y) / (ES - base);
+    chart.setAttribute("opacity", (1 - headOut).toFixed(3));
+    axl.textContent = base < 1000 ? "0 VOTES" : `AXIS STARTS AT ${fmt(Math.round(base / 1000) * 1000)}`;
+    let tops = [];
+    cols.forEach((c) => {
+      const h = Math.max(0, (c.v - base) * -scale) * grow;
+      const y = BASE_Y - h;
+      tops.push(y);
+      c.r.setAttribute("y", y.toFixed(2)); c.r.setAttribute("height", h.toFixed(2));
+    });
+    const ly = Math.min(...tops);   // labels share the higher top so the gap band never covers them
+    cols.forEach((c) => {
+      c.vt.setAttribute("y", (ly - 30).toFixed(1)); c.vt.textContent = fmt(c.v * grow);
+      c.n.setAttribute("y", (ly - 12).toFixed(1));
+      c.p.setAttribute("y", (ly - 12).toFixed(1));
+    });
+    const gk = ramp(t, 3.3, 0.4);
+    gapBand.setAttribute("y", tops[0].toFixed(2));
+    gapBand.setAttribute("height", Math.max(0, tops[1] - tops[0]).toFixed(2));
+    gapBand.setAttribute("opacity", (0.9 * gk).toFixed(3));
+    const bx = 284;
+    br.setAttribute("d", `M${bx - 6},${tops[0].toFixed(1)} H${bx} V${tops[1].toFixed(1)} H${bx - 6}`);
+    br.setAttribute("opacity", gk.toFixed(3));
+    const my = (tops[0] + tops[1]) / 2;
+    gl.setAttribute("y", (my + 2).toFixed(1)); gs.setAttribute("y", (my + 16).toFixed(1));
+    gl.setAttribute("opacity", gk.toFixed(3)); gs.setAttribute("opacity", gk.toFixed(3));
+
+    // captions
+    for (const p of caps) {
+      const a = +p.dataset.in, z = +p.dataset.out;
+      const o = ramp(t, a, 0.35) * (1 - ramp(t, z - 0.3, 0.3));
+      fade(p, o, (1 - ramp(t, a, 0.35)) * 4);
+    }
+
+    // 2. timeline (5.0-8.6)
+    const k2 = ramp(t, 5.0, 0.4) * (1 - ramp(t, 8.6, 0.25));
+    fade(tl, k2);
+    tlRows.forEach((r, i) => fade(r, ramp(t, 5.1 + i * 0.95, 0.4), (1 - ramp(t, 5.1 + i * 0.95, 0.4)) * 8));
+
+    // 3. hard cut to the quote (8.9-12.2)
+    const k3 = (t >= 8.9 ? 1 : 0) * (1 - ramp(t, 12.2, 0.25));
+    fade(q, k3);
+    fade(qTwo, ramp(t, 10.4, 0.4), (1 - ramp(t, 10.4, 0.4)) * 6);
+
+    // 4. reactions (12.5-15.4)
+    const k4 = ramp(t, 12.5, 0.3) * (1 - ramp(t, 15.4, 0.25));
+    fade(re, k4);
+    stamps.forEach((s, i) => {
+      const a = 12.6 + i * 0.32, k = ramp(t, a, 0.25);
+      s.style.opacity = k.toFixed(3);
+      s.style.transform = `translateX(${((1 - k) * -14).toFixed(1)}px)`;
+    });
+
+    // 5. polls (15.7-17.7), static numbers, bars fill once
+    const k5 = ramp(t, 15.7, 0.3) * (1 - ramp(t, 17.7, 0.25));
+    fade(po, k5);
+    fills.forEach((f, i) => f.style.width = (fw[i] * ramp(t, 15.9 + Math.floor(i / 2) * 0.3, 0.6)).toFixed(1) + "%");
+    fade(fine, ramp(t, 16.5, 0.3));
+
+    // 6. end + sources
+    const ek = ramp(t, 17.9, 0.4);
+    fade(endEl, ek, (1 - ek) * 6);
+    endEl.style.pointerEvents = ek > 0.5 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(clamp(t, 0, END)); }, play };
+  render(0);
+  if (reduce) { render(END); replay.hidden = false; } else play();
+})();
+</script>
+</body>
+</html>

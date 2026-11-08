@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Call Log</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* The Call Log. Election night 2026 as a ledger that writes itself, one CBS News projection
+   per row, while a clock runs from 7 PM to 4 AM ET. Fixed 432x768 stage scaled to fit.
+   All readable content stays in the social safe box x 26-380 / y 108-600 (stage px),
+   which is x 65-950 / y 270-1500 at 1080x1920. No party colors: flips use one amber accent. */
+:root {
+  --bg: #111317;
+  --bg2: #171a20;
+  --ink: #f2efe8;
+  --soft: #c9c4b8;
+  --muted: #8e8a81;
+  --rule: #2f333b;
+  --hi: #f2a93b;
+  --sans: "Archivo Narrow", "Arial Narrow", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+:root:not([data-theme="light"]) { --bg: #111317; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #111317; } }
+:root[data-theme="dark"] { --bg: #111317; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: radial-gradient(120% 70% at 50% 35%, var(--bg2), var(--bg)); }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+#stage::before { content: ""; position: absolute; inset: -600px; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,.016) 0 1px, transparent 1px 3px); }
+
+/* title card */
+#title { position: absolute; left: 30px; width: 346px; top: 236px; }
+#title .k { font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#title h1 { margin: 14px 0 0; font: 700 50px/.95 var(--sans); letter-spacing: -.01em; }
+#title h1 span { color: var(--hi); }
+#title p { margin: 14px 0 0; font: 500 17px/1.3 var(--sans); color: var(--soft); }
+
+/* ledger header */
+#head { position: absolute; left: 28px; width: 350px; top: 112px; height: 84px; }
+#head .k { font: 500 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#clock { position: absolute; left: 0; top: 22px; font: 700 46px/1 var(--mono); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+#clock small { font-size: 18px; font-weight: 500; margin-left: 6px; color: var(--soft); letter-spacing: 0; }
+#tally { position: absolute; right: 0; top: 6px; text-align: right; }
+#tally b { display: block; font: 700 46px/1 var(--mono); color: var(--hi); font-variant-numeric: tabular-nums; }
+#tally span { display: block; margin-top: 4px; font: 500 11px/1.1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--soft); }
+#hrule { position: absolute; left: 28px; width: 350px; top: 200px; height: 1px; background: var(--rule); transform-origin: left; }
+
+/* rows */
+#log { position: absolute; left: 28px; width: 350px; top: 210px; }
+.row { position: absolute; left: 0; width: 350px; height: 30px; display: flex; align-items: center; }
+.row .t { width: 51px; font: 500 11.5px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.row .tag { width: 44px; height: 17px; margin-right: 7px; border-radius: 3px; font: 700 11px/17px var(--mono); letter-spacing: .06em; text-align: center; }
+.row.flip .tag { background: var(--hi); color: #1a1408; }
+.row.hold .tag { border: 1px solid var(--muted); color: var(--soft); line-height: 15px; box-sizing: border-box; }
+.row .st { width: 26px; font: 700 14px var(--sans); }
+.row .tx { font: 500 14px var(--sans); color: var(--ink); white-space: nowrap; }
+.row .tx em { font-style: normal; color: var(--soft); }
+.row.band { height: 36px; }
+.row.band .box { position: absolute; left: 58px; right: 0; top: 2px; bottom: 2px; border: 1.5px solid var(--ink); border-radius: 4px; transform-origin: left; }
+.row.band .tx { position: relative; padding-left: 12px; font: 700 15px var(--sans); letter-spacing: .01em; }
+.row.band .tx b { font: 700 11px var(--mono); letter-spacing: .14em; margin-right: 8px; color: var(--hi); }
+.mark { position: absolute; left: -5px; top: 50%; width: 3px; height: 16px; margin-top: -8px; background: var(--hi); border-radius: 2px; }
+
+/* end card */
+#end { position: absolute; left: 28px; width: 350px; top: 112px; }
+#end .big { display: flex; align-items: flex-end; gap: 14px; }
+#end .big b { font: 700 104px/.82 var(--mono); color: var(--hi); }
+#end .big p { margin: 0 0 2px; font: 600 17px/1.22 var(--sans); }
+#end .line { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--rule); font: 500 14.5px/1.3 var(--sans); color: var(--soft); }
+#end .line strong { color: var(--ink); font-weight: 700; }
+.chip { margin-top: 10px; padding: 9px 11px; border: 1.5px dashed var(--muted); border-radius: 6px; }
+.chip .h { font: 700 11px/1 var(--mono); letter-spacing: .12em; color: var(--ink); }
+.chip .h i { font-style: normal; color: var(--muted); margin-left: 6px; }
+.chip p { margin: 6px 0 0; font: 500 14px/1.28 var(--sans); color: var(--soft); }
+#src { position: absolute; left: 28px; width: 350px; top: 540px; font: 400 11px/1.75 var(--mono); color: var(--muted); }
+#src a { color: var(--soft); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 2px; }
+
+#replay { position: absolute; right: 54px; top: 476px; padding: 12px 20px; min-height: 44px; font-size: 15px !important; border: 1.5px solid var(--ink); border-radius: 999px;
+  background: var(--bg); color: var(--ink); font: 600 13px var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay:focus-visible, #src a:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div id="wrap"><div id="stage">
+  <div id="title">
+    <div class="k">Wed, Nov 4, 2026 · U.S. midterms</div>
+    <h1>Congress flipped <span>in one night.</span></h1>
+    <p>Democrats won the House and the Senate. Here is the night, one projection at a time.</p>
+  </div>
+
+  <div id="head">
+    <div class="k">CBS News projections · times ET</div>
+    <div id="clock">7:00<small>PM</small></div>
+    <div id="tally"><b id="tn">0</b><span>Senate seats<br>flipped</span></div>
+  </div>
+  <div id="hrule"></div>
+  <div id="log"></div>
+
+  <div id="end">
+    <div class="big"><b>7</b><p>Republican-held Senate seats flipped to Democrats. None went the other way.</p></div>
+    <div class="line"><strong>House:</strong> Democrats win control. About 75 races were still uncalled at 4:19 AM.</div>
+    <div class="chip"><div class="h">ALASKA<i>UNCALLED</i></div><p>Sullivan (R) leads Peltola (D). Ranked-choice count Nov 18.</p></div>
+    <div class="chip"><div class="h">MISSISSIPPI<i>UNCALLED</i></div><p>Colom (D) and Hyde-Smith (R) under 50 votes apart, ~96% counted.</p></div>
+    <div class="line" style="border:0;padding-top:0;margin-top:12px">New Congress sworn in <strong>Jan 3, 2027</strong>.</div>
+  </div>
+  <div id="src">Sources: <a href="https://www.cbsnews.com/live-updates/election-day-2026-midterms/" target="_blank" rel="noopener">CBS News live results</a> (call times), <a href="https://rollcall.com/2026/11/04/senate-democrats-majority-midterm-elections-2/" target="_blank" rel="noopener">Roll Call</a> (AP Senate call), <a href="https://www.ktoo.org/2026/11/03/sullivan-and-peltola-locked-in-tight-u-s-senate-race-as-more-results-come-in-2/" target="_blank" rel="noopener">KTOO</a>, <a href="https://www.kbtx.com/2026/11/04/colom-hyde-smith-separated-by-narrow-margin-mississippi-senate-race/" target="_blank" rel="noopener">KBTX</a>. As of 6 AM ET.</div>
+  <button id="replay" type="button" hidden>Replay</button>
+</div></div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const ease = k => 1 - Math.pow(1 - k, 3);
+  const ramp = (t, s, d) => ease(clamp((t - s) / d, 0, 1));
+  const fade = (el, k, dy = 0) => { el.style.opacity = k.toFixed(3); el.style.transform = dy ? `translateY(${dy.toFixed(1)}px)` : ""; };
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // clock minutes after 7:00 PM; at = story time the row lands
+  const EV = [
+    { m: 90,  at: 2.9,  k: "flip", st: "NC", tx: "Cooper (D) beats Whatley (R)" },
+    { m: 180, at: 3.8,  k: "flip", st: "SC", tx: "Andrews (D) <em>takes the GOP seat</em>" },
+    { m: 195, at: 4.7,  k: "band", lab: "HOUSE",  tx: "Democrats win control" },
+    { m: 235, at: 6.1,  k: "flip", st: "TX", tx: "Talarico (D) beats Paxton (R)" },
+    { m: 251, at: 7.0,  k: "flip", st: "OH", tx: "Brown (D) beats Sen. Husted (R)" },
+    { m: 266, at: 7.9,  k: "flip", st: "KS", tx: "Hamilton (D) beats Sen. Marshall (R)" },
+    { m: 274, at: 8.8,  k: "flip", st: "IA", tx: "Turek (D) beats Hinson (R)" },
+    { m: 275, at: 9.7,  k: "band", lab: "SENATE", tx: "Democrats win control", time: "~11:35P" },
+    { m: 352, at: 11.1, k: "flip", st: "ME", tx: "Jackson (D) beats Sen. Collins (R)" },
+    { m: 450, at: 12.1, k: "hold", st: "MI", tx: "El-Sayed (D) <em>holds the seat</em>" },
+    { m: 541, at: 13.0, k: "hold", st: "NE", tx: "Ricketts (R) <em>holds the seat</em>" },
+  ];
+  const fmt = m => { const h24 = (19 + Math.floor(m / 60)) % 24, mm = Math.floor(m % 60);
+    const h = h24 % 12 || 12; return { hm: `${h}:${String(mm).padStart(2, "0")}`, ap: h24 >= 12 ? "PM" : "AM" }; };
+
+  const log = $("log");
+  let y = 0;
+  EV.forEach(e => {
+    const r = document.createElement("div");
+    r.className = "row " + e.k;
+    const f = fmt(e.m), time = e.time || (f.hm + f.ap[0]);
+    if (e.k === "band") r.innerHTML = `<span class="t">${time}</span><span class="box"></span><span class="tx"><b>${e.lab}</b>${e.tx}</span>`;
+    else r.innerHTML = `<span class="t">${time}</span><span class="tag">${e.k === "flip" ? "FLIP" : "HOLD"}</span><span class="st">${e.st}</span><span class="tx">${e.tx}</span>`;
+    r.style.top = y + "px";
+    y += e.k === "band" ? 36 : 30;
+    const mk = document.createElement("span"); mk.className = "mark"; r.appendChild(mk);
+    log.appendChild(r);
+    e.el = r; e.box = r.querySelector(".box"); e.mk = mk;
+  });
+
+  const T1 = 2.3, LOG0 = 2.5, LOGEND = 14.4, END0 = 14.7, END = 19.4;
+  const title = $("title"), head = $("head"), hrule = $("hrule"), clock = $("clock"), tn = $("tn"),
+        endEl = $("end"), src = $("src");
+  const endKids = [...endEl.children];
+
+  function clockAt(t) {
+    // piecewise linear between event landings, 7:00 PM at LOG0
+    let pm = 0, pt = LOG0;
+    for (const e of EV) {
+      if (t < e.at) return pm + (e.m - pm) * clamp((t - pt) / (e.at - pt), 0, 1);
+      pm = e.m; pt = e.at;
+    }
+    return pm;
+  }
+
+  function render(t) {
+    // 1. title card
+    fade(title, ramp(t, 0, 0.45) * (1 - ramp(t, T1, 0.3)), (1 - ramp(t, 0, 0.45)) * 10 - ramp(t, T1, 0.3) * 12);
+
+    // 2. ledger
+    const lk = ramp(t, LOG0, 0.35) * (1 - ramp(t, LOGEND, 0.35));
+    fade(head, lk);
+    hrule.style.opacity = lk.toFixed(3);
+    hrule.style.transform = `scaleX(${ramp(t, LOG0, 0.6).toFixed(3)})`;
+    const c = fmt(clockAt(t));
+    clock.innerHTML = `${c.hm}<small>${c.ap}</small>`;
+    let flips = 0, last = -1;
+    EV.forEach((e, i) => {
+      const k = ramp(t, e.at, 0.3);
+      if (t >= e.at) { last = i; if (e.k === "flip") flips++; }
+      e.el.style.opacity = (k * lk).toFixed(3);
+      e.el.style.transform = `translateX(${((1 - k) * 10).toFixed(1)}px)`;
+      if (e.box) e.box.style.transform = `scaleX(${ramp(t, e.at, 0.5).toFixed(3)})`;
+    });
+    EV.forEach((e, i) => {
+      const cur = i === last && t < LOGEND;
+      e.mk.style.opacity = cur ? "1" : "0";
+      if (t >= e.at + 0.3 && !cur) e.el.style.opacity = (0.72 * lk).toFixed(3);
+    });
+    tn.textContent = flips;
+
+    // 3. end card, staged
+    const ek = ramp(t, END0, 0.4);
+    endKids.forEach((el, i) => { const k = ramp(t, END0 + i * 0.45, 0.4); fade(el, k, (1 - k) * 8); });
+    endEl.style.opacity = ek > 0 ? "1" : "0";
+    fade(src, ramp(t, END0 + 2.4, 0.4));
+    src.style.pointerEvents = t > END0 + 2.4 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(clamp(t, 0, END)); }, play };
+  render(0);
+  if (reduce) { render(END); replay.hidden = false; } else play();
+})();
+</script>
+</body>
+</html>

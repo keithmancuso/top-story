@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Short of 61</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<style>
+/* Layout: one fixed 432x768 (9:16) stage, scaled to fit. Content stays inside the social safe box,
+   x 26-380 / y 108-600 in stage px (x 65-950 / y 270-1500 at 1080x1920). The piece is a set of level
+   gauges, each scaled to all 120 Knesset seats, with one red line at 61. Every level on screen is a
+   timestamped partial count from the Times of Israel live blog, never a final result. The Arab-led
+   parties get their own narrow gauge, set apart and past the end of the red line, because they sit
+   in neither bloc. Blocs use neutral colours, not party colours. */
+:root {
+  --ground: #0f1620;
+  --glass: #18222e;
+  --edge: #2f3d4d;
+  --head: #eef2f6;
+  --muted: #8d9aa8;
+  --soft: #b9c3cd;
+  --nb: #7f9cc4;
+  --ob: #e2a855;
+  --ab: #4fb3a6;
+  --red: #ef4b4b;
+  --paper: #f2efe7;
+  --ink: #1c232c;
+  --sans: "Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+/* One night-instrument design in both themes; tokens are restated so either theme lands here. */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ground: #0f1620; } }
+:root[data-theme="dark"] { --ground: #0f1620; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--ground); color: var(--head); overflow: hidden; }
+#wrap { position: fixed; inset: 0; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+#stage::before {
+  content: ""; position: absolute; inset: -400px; pointer-events: none;
+  background: radial-gradient(420px 500px at 50% 50%, #17212d 0%, transparent 72%);
+}
+
+.eyebrow {
+  position: absolute; left: 30px; right: 56px; top: 111px; display: flex; justify-content: space-between;
+  font: 600 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+}
+.eyebrow b { color: var(--red); font-weight: 700; }
+h1 { position: absolute; left: 30px; right: 56px; top: 127px; margin: 0; font: 800 24px/1.08 var(--sans); letter-spacing: -.005em; color: var(--head); }
+
+#chip {
+  position: absolute; left: 30px; top: 186px; height: 22px; padding: 0 9px; display: flex; align-items: center; gap: 8px;
+  border: 1px solid var(--edge); border-radius: 11px; background: #131c27;
+  font: 600 10px/1 var(--mono); letter-spacing: .06em; color: var(--soft); white-space: nowrap;
+}
+#chip i { width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+#chip b { color: var(--head); font-weight: 700; }
+
+svg#g { position: absolute; left: 0; top: 0; width: 432px; height: 768px; overflow: visible; pointer-events: none; }
+.num { font: 700 38px/1 var(--sans); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.nm { font: 600 9.5px var(--mono); letter-spacing: .08em; fill: var(--muted); }
+.tag61 { font: 700 13px var(--mono); fill: var(--red); }
+.tag61s { font: 600 7.5px var(--mono); letter-spacing: .1em; fill: var(--red); }
+.short { font: 700 10px var(--mono); letter-spacing: .08em; fill: var(--red); }
+.sum { font: 700 15px var(--mono); fill: var(--head); }
+.raam { font: 600 9px var(--mono); letter-spacing: 0; fill: var(--ab); }
+
+#cap {
+  position: absolute; left: 30px; right: 56px; top: 558px; height: 36px;
+  font: 600 13.5px/1.28 var(--sans); color: var(--soft);
+}
+#cap p { position: absolute; inset: 0; margin: 0; opacity: 0; }
+#cap b { color: var(--head); }
+
+#catch {
+  position: absolute; left: 30px; top: 222px; width: 346px; box-sizing: border-box; padding: 10px 13px 11px;
+  background: var(--paper); color: var(--ink); border-radius: 4px; box-shadow: 0 8px 22px #0008; opacity: 0;
+}
+#catch .k { font: 700 9.5px/1 var(--mono); letter-spacing: .16em; color: #9b2c2c; }
+#catch p { margin: 6px 0 0; font: 600 14px/1.24 var(--sans); }
+
+#end {
+  position: absolute; left: 30px; top: 186px; width: 346px; height: 404px; box-sizing: border-box; padding: 16px 16px 14px;
+  background: #0c121a; border: 1px solid var(--edge); border-radius: 6px; opacity: 0;
+}
+#end .k { font: 700 10px/1 var(--mono); letter-spacing: .16em; color: var(--red); text-transform: uppercase; }
+#end .row { display: flex; justify-content: space-between; margin-top: 12px; }
+#end .row div { font: 600 8.5px/1.25 var(--mono); letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+#end .row div b { display: block; font: 700 38px/1 var(--sans); letter-spacing: -.02em; margin-bottom: 4px; }
+#end .note { margin: 14px 0 0; font: 600 14.5px/1.3 var(--sans); color: var(--soft); }
+#end .note b { color: var(--head); }
+#end hr { border: 0; border-top: 1px dashed var(--edge); margin: 16px 0 11px; }
+.src { margin: 0; padding: 0; list-style: none; display: grid; gap: 3px; }
+.src li { font: 500 11.5px/1.4 var(--mono); color: var(--muted); }
+.src a { color: var(--soft); text-decoration: underline; text-decoration-color: #4a5a6c; text-underline-offset: 3px; pointer-events: auto; padding: 6px 0; margin: -6px 0; }
+.src a:focus-visible, #replay:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+#end .by { margin-top: 12px; font: 600 9px/1 var(--mono); letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+
+#replay {
+  position: absolute; right: 56px; top: 612px; padding: 8px 12px; border: 1px solid var(--soft); border-radius: 3px;
+  background: var(--ground); color: var(--head); font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+</style>
+
+<div id="wrap"><div id="stage">
+  <div class="eyebrow"><span><b>Top Story</b> &middot; Wed 28 Oct 2026</span><span>Israel</span></div>
+  <h1>Israel counted all night.<br>No bloc has reached 61.</h1>
+  <div id="chip"><i></i><span id="chipTxt">Knesset: 120 seats</span></div>
+
+  <svg id="g" viewBox="0 0 432 768" aria-hidden="true">
+    <defs>
+      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="6" height="6" fill="#ef4b4b22"/><line x1="0" y1="0" x2="0" y2="6" stroke="#ef4b4b" stroke-width="2"/>
+      </pattern>
+    </defs>
+    <g id="tanks"></g>
+  </svg>
+
+  <div id="catch"><div class="k">THE CATCH</div><p>On paper, 49 + 17 = 66. But Eisenkot, Bennett and Lapid have ruled out a government that relies on Arab-led parties.</p></div>
+
+  <div id="cap">
+    <p data-in="0" data-out="2.3">A majority is <b>61</b> of the Knesset&rsquo;s 120 seats. Here is how the count moved.</p>
+    <p data-in="2.3" data-out="5.1">Initial exit polls had Eisenkot&rsquo;s bloc narrowly ahead. The <b>early count</b> put Netanyahu&rsquo;s bloc over 61.</p>
+    <p data-in="5.1" data-out="7.7">Ra&rsquo;am moves above the 3.25% threshold and wins seats. Netanyahu&rsquo;s bloc dips <b>under 61</b>.</p>
+    <p data-in="7.7" data-out="10.3">As more ballot boxes are counted, Netanyahu&rsquo;s bloc falls <b>further below the line</b>.</p>
+    <p data-in="10.3" data-out="12.9">Latest count: Netanyahu&rsquo;s bloc is <b>7 short</b>. Eisenkot&rsquo;s bloc is <b>12 short</b>.</p>
+    <p data-in="12.9" data-out="16.5">Netanyahu, for his part, has ruled out Ra&rsquo;am, the Joint List and the Democrats.</p>
+  </div>
+
+  <div id="end">
+    <div class="k">Still counting</div>
+    <div class="row">
+      <div><b style="color:var(--nb)">54</b>Netanyahu<br>bloc</div>
+      <div><b style="color:var(--ob)">49</b>Eisenkot-led<br>bloc</div>
+      <div><b style="color:var(--ab)">17</b>Arab-led<br>parties</div>
+    </div>
+    <p class="note">Partial count, 84.5% of ballot boxes, 12:34pm Israel time. About <b>600,000&ndash;650,000</b> double-envelope ballots, including soldiers&rsquo;, are still to be counted.</p>
+    <p class="note">Final tally expected <b>Friday</b>. Official results due <b>Nov 4</b>. Then President Herzog picks who tries first to form a government.</p>
+    <hr>
+    <ul class="src">
+      <li><a href="https://www.timesofisrael.com/liveblog-october-28-2026/" target="_blank" rel="noopener">Times of Israel</a>, live blog, Oct 28 (count)</li>
+      <li><a href="https://www.ynetnews.com/article/hjnatbkaml" target="_blank" rel="noopener">Ynet</a>, results and uncounted ballots</li>
+      <li><a href="https://www.aljazeera.com/news/2026/10/28/five-key-takeaways-from-israels-parliamentary-elections" target="_blank" rel="noopener">Al Jazeera</a>, five key takeaways</li>
+      <li><a href="https://unpacked.media/elections-2026-israel-facing-political-crisis-after-both-blocs-fail-to-take-knesset-majority/" target="_blank" rel="noopener">Unpacked</a>, red lines; <a href="https://www.timesofisrael.com/eisenkot-and-netanyahu-each-vow-to-form-next-coalition-even-as-exit-polls-predict-stalemate/" target="_blank" rel="noopener">ToI</a>, pledges</li>
+    </ul>
+    <div class="by">Animated by Claude</div>
+  </div>
+
+  <button id="replay" type="button" hidden>Replay</button>
+</div></div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const END = 19.4;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  const ramp = (t, at, d) => ease(clamp((t - at) / d));
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; };
+
+  // Gauges: each spans 120 seats over 260px, bottom at y 480. The 61 line sits at y 347.8.
+  const BOT = 480, TOP = 220, K = (BOT - TOP) / 120, Y61 = BOT - 61 * K;
+  const G = [
+    { x: 40, w: 96, c: "#7f9cc4", name: ["NETANYAHU", "BLOC"] },
+    { x: 160, w: 96, c: "#e2a855", name: ["EISENKOT-LED", "BLOC"] },
+    { x: 300, w: 52, c: "#4fb3a6", name: ["ARAB-LED", "PARTIES"] },
+  ];
+  // Times of Israel live-blog checkpoints, Oct 28, Israel time. At 4:05am Ra'am was under the threshold (3.2%),
+  // so the Arab-led gauge holds only the Joint List's 8. At 4:51am the blocs were 59 and 46; the 120-seat total
+  // leaves 15 for the Arab-led parties.
+  const STATES = [
+    { at: 2.4, v: [63, 49, 8], chip: "<b>EARLY COUNT</b> 25.2% of ballot boxes &middot; 4:05am" },
+    { at: 5.2, v: [59, 46, 15], chip: "32.5% of ballot boxes &middot; 4:51am" },
+    { at: 7.8, v: [54, 47, 19], chip: "76.8% of ballot boxes &middot; 10:58am" },
+    { at: 10.4, v: [54, 49, 17], chip: "<b>LATEST</b> 84.5% of ballot boxes &middot; 12:34pm" },
+  ];
+  const MOVE = 1.1;
+
+  const root = $("tanks");
+  const clipDefs = root.ownerSVGElement.querySelector("defs");
+  G.forEach((g, i) => {
+    const cp = el("clipPath", { id: "c" + i }, clipDefs);
+    el("rect", { x: g.x, y: TOP, width: g.w, height: BOT - TOP, rx: 8 }, cp);
+    el("rect", { x: g.x, y: TOP, width: g.w, height: BOT - TOP, rx: 8, fill: "#18222e", stroke: "#2f3d4d", "stroke-width": 1.2 }, root);
+    const inner = el("g", { "clip-path": `url(#c${i})` }, root);
+    for (let s = 10; s < 120; s += 10) el("line", { x1: g.x, x2: g.x + (s % 50 === 0 ? 14 : 8), y1: BOT - s * K, y2: BOT - s * K, stroke: "#2f3d4d", "stroke-width": 1 }, inner);
+    g.gap = el("rect", { x: g.x, width: g.w, y: Y61, height: 0, fill: "url(#hatch)", opacity: 0 }, inner);
+    g.liq = el("path", { fill: g.c, opacity: 0.92 }, inner);
+    g.sheen = el("path", { fill: "none", stroke: "#ffffff55", "stroke-width": 1.4 }, inner);
+    g.num = el("text", { x: g.x + g.w / 2, y: 524, "text-anchor": "middle", class: "num", fill: g.c }, root);
+    g.name.forEach((n, j) => { const t = el("text", { x: g.x + g.w / 2, y: 539 + j * 11, "text-anchor": "middle", class: "nm" }, root); t.textContent = n; });
+  });
+  // The red 61 line spans only the two blocs and stops short of the Arab-led gauge.
+  const line = el("line", { x1: 34, x2: 262, y1: Y61, y2: Y61, stroke: "#ef4b4b", "stroke-width": 2.2, "stroke-linecap": "round" }, root);
+  const tag = el("g", {}, root);
+  el("text", { x: 268, y: Y61 + 4.5, class: "tag61" }, tag).textContent = "61";
+  const sh = [el("text", { x: 88, y: Y61 - 9, "text-anchor": "middle", class: "short" }, root), el("text", { x: 208, y: Y61 - 9, "text-anchor": "middle", class: "short" }, root)];
+  sh[0].textContent = "7 SHORT"; sh[1].textContent = "12 SHORT";
+  ["NEITHER", "BLOC"].forEach((n, j) => { el("text", { x: 326, y: TOP + 17 + j * 11, "text-anchor": "middle", class: "raam" }, root).textContent = n; });
+  const raam = el("g", {}, root);
+  el("line", { x1: 304, x2: 348, y1: BOT - 8 * K - 7, y2: BOT - 8 * K - 7, stroke: "#4fb3a6", "stroke-width": 1.4, "stroke-dasharray": "3 3" }, raam);
+  ["RA'AM", "3.2%", "UNDER", "3.25%"].forEach((n, j) => { el("text", { x: 326, y: BOT - 8 * K - 46 + j * 11, "text-anchor": "middle", class: "raam" }, raam).textContent = n; });
+  // Ghost: the Arab-led parties' 17 seats lifted onto the Eisenkot-led bloc to show the paper majority.
+  const ghost = el("rect", { fill: "#4fb3a6", opacity: 0, rx: 2 }, root);
+  const ghostX = el("g", { opacity: 0 }, root);
+  el("line", { x1: 164, x2: 252, y1: 0, y2: 0, stroke: "#ef4b4b", "stroke-width": 3, "stroke-linecap": "round", id: "gx1" }, ghostX);
+  const sum = el("text", { x: 208, y: 0, "text-anchor": "middle", class: "sum", opacity: 0 }, root);
+  sum.textContent = "49 + 17 = 66";
+
+  const caps = [...document.querySelectorAll("#cap p")];
+  const chipTxt = $("chipTxt"), catchEl = $("catch"), endEl = $("end");
+
+  function levels(t) {
+    let v = [0, 0, 0];
+    let prev = [0, 0, 0];
+    for (const s of STATES) {
+      const k = reduce ? (t >= s.at ? 1 : 0) : ramp(t, s.at, MOVE);
+      v = prev.map((p, i) => p + (s.v[i] - p) * k);
+      if (t < s.at + MOVE) break;
+      prev = s.v;
+    }
+    return v;
+  }
+  function surf(g, y, t, amp) {
+    let d = `M${g.x} ${BOT + 2} L${g.x} ${y.toFixed(2)}`;
+    const n = 12;
+    for (let j = 1; j <= n; j++) {
+      const x = g.x + (g.w * j) / n;
+      const yy = y + Math.sin(j * 0.9 + t * 5) * amp;
+      d += ` L${x.toFixed(1)} ${yy.toFixed(2)}`;
+    }
+    return d + ` L${g.x + g.w} ${BOT + 2} Z`;
+  }
+
+  let last = 0;
+  function render(t) {
+    last = t;
+    const v = levels(t);
+    G.forEach((g, i) => {
+      const y = BOT - v[i] * K;
+      let moving = 0;
+      for (const s of STATES) moving = Math.max(moving, clamp(1 - Math.abs(t - (s.at + MOVE / 2)) / (MOVE / 2 + 0.4)));
+      const amp = reduce ? 0 : 0.6 + 1.6 * moving;
+      g.liq.setAttribute("d", surf(g, y, t, amp));
+      g.sheen.setAttribute("d", surf(g, y, t, amp).replace(`M${g.x} ${BOT + 2} L`, "M").replace(/ L[\d.]+ [\d.]+ Z$/, ""));
+      g.num.textContent = t < STATES[0].at ? "" : Math.round(v[i]);
+    });
+    // 61 line draws on in the opening beat.
+    const lk = reduce ? 1 : ramp(t, 0.5, 1.0);
+    line.setAttribute("x2", (34 + (262 - 34) * lk).toFixed(1));
+    tag.setAttribute("opacity", ramp(t, 1.3, 0.4).toFixed(2));
+    // Ra'am under the threshold, only in the first checkpoint.
+    raam.setAttribute("opacity", (ramp(t, 2.9, 0.4) * (1 - ramp(t, 5.2, 0.3))).toFixed(2));
+    // Shortfall bands on the latest count.
+    const gk = ramp(t, 11.3, 0.5);
+    [0, 1].forEach((i) => {
+      const g = G[i], top = BOT - v[i] * K;
+      const out = i === 1 ? ramp(t, 12.9, 0.3) : 0;
+      g.gap.setAttribute("y", Y61.toFixed(2));
+      g.gap.setAttribute("height", Math.max(0, top - Y61).toFixed(2));
+      g.gap.setAttribute("opacity", (gk * (1 - out)).toFixed(2));
+      sh[i].setAttribute("opacity", (gk * (1 - out)).toFixed(2));
+    });
+    // The catch: 17 seats lift from the Arab-led gauge onto the Eisenkot-led bloc, cross 61, then get struck.
+    const lift = ramp(t, 13.0, 1.2);
+    const h = 17 * K;
+    const fx = 300, fw = 52, fy = BOT - h, tx = 160, tw = 96, ty = BOT - 49 * K - h;
+    ghost.setAttribute("x", (fx + (tx - fx) * lift).toFixed(1));
+    ghost.setAttribute("width", (fw + (tw - fw) * lift).toFixed(1));
+    ghost.setAttribute("y", (fy + (ty - fy) * lift).toFixed(1));
+    ghost.setAttribute("height", h.toFixed(1));
+    const gIn = t >= 12.95 && t < 16.5 ? 1 : 0;
+    ghost.setAttribute("opacity", (gIn * (0.35 + 0.35 * ramp(t, 13.0, 0.3)) * (1 - ramp(t, 16.2, 0.3))).toFixed(2));
+    ghost.setAttribute("stroke", "#eef2f6"); ghost.setAttribute("stroke-dasharray", "4 3"); ghost.setAttribute("stroke-width", "1.2");
+    sum.setAttribute("y", (ty - 8).toFixed(1));
+    sum.setAttribute("opacity", (ramp(t, 14.1, 0.3) * (1 - ramp(t, 16.2, 0.3))).toFixed(2));
+    const gy = ty + h / 2;
+    const xk = ramp(t, 15.0, 0.35);
+    const gx1 = $("gx1");
+    gx1.setAttribute("y1", (gy - h / 2 + 3).toFixed(1)); gx1.setAttribute("y2", (gy + h / 2 - 3).toFixed(1));
+    gx1.setAttribute("x2", (164 + 88 * xk).toFixed(1));
+    gx1.setAttribute("y2", (gy - h / 2 + 3 + (h - 6) * xk).toFixed(1));
+    ghostX.setAttribute("opacity", (xk > 0.01 ? 1 : 0) * (1 - ramp(t, 16.2, 0.3)));
+    const ck = ramp(t, 14.3, 0.4) * (1 - ramp(t, 16.2, 0.3));
+    catchEl.style.opacity = ck.toFixed(3);
+    catchEl.style.translate = `0 ${((1 - ramp(t, 14.3, 0.4)) * -8).toFixed(1)}px`;
+    // Chip text follows the checkpoints.
+    let chip = "Knesset: 120 seats &middot; majority 61";
+    for (const s of STATES) if (t >= s.at) chip = s.chip;
+    if (chipTxt.innerHTML !== chip) chipTxt.innerHTML = chip;
+    for (const p of caps) {
+      const a = Number(p.dataset.in), z = Number(p.dataset.out);
+      const inn = a <= 0 ? ramp(t, 0.2, 0.4) : ramp(t, a, 0.35), out = ramp(t, z - 0.3, 0.3);
+      const o = reduce ? (t >= a && t < z ? 1 : 0) : inn * (1 - out);
+      p.style.opacity = o.toFixed(3);
+      p.style.translate = `0 ${((1 - inn) * 4).toFixed(1)}px`;
+    }
+    const ek = reduce ? (t >= 16.5 ? 1 : 0) : ramp(t, 16.5, 0.5);
+    endEl.style.opacity = ek.toFixed(3);
+    endEl.style.translate = `0 ${((1 - ek) * 8).toFixed(1)}px`;
+    endEl.style.pointerEvents = ek > 0.5 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(t); }, play };
+  document.fonts?.ready.then(() => render(last));
+  render(0); play();
+})();
+</script>
+</body>
+</html>

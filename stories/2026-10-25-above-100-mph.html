@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Above 100 MPH</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:ital,wght@0,500;0,600;0,700;1,500;1,600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one fixed 432x768 (9:16) stage, scaled to fit. Content stays inside the social safe box,
+   x 26-380 / y 108-600 in stage px (x 65-950 / y 270-1500 at 1080x1920). A speedometer of the
+   terminal's own speed drives a signal-bar readout: above the ~100 mph cap the bars fall to zero. */
+:root {
+  --ground: #0b1220;
+  --panel: #111a2c;
+  --track: #24324a;
+  --ink: #e8eef5;
+  --muted: #7c8ba1;
+  --ok: #3ddc97;
+  --cap: #ff4d3d;
+  --claim: #f2b33d;
+  --line: #2c3a54;
+  --sans: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+/* The piece is a night-instrument design in both themes; the tokens are restated so either theme lands here. */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ground: #0b1220; } }
+:root[data-theme="dark"] { --ground: #0b1220; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--ground); color: var(--ink); overflow: hidden; }
+#wrap { position: fixed; inset: 0; overflow: hidden; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); }
+/* Decorative vignette and grid: allowed to bleed past the safe box. */
+#stage::before {
+  content: ""; position: absolute; inset: -400px; pointer-events: none;
+  background:
+    radial-gradient(420px 420px at 50% 36%, #16233c 0%, transparent 70%),
+    repeating-linear-gradient(90deg, transparent 0 23px, #ffffff06 23px 24px),
+    repeating-linear-gradient(0deg, transparent 0 23px, #ffffff06 23px 24px);
+}
+.eyebrow {
+  position: absolute; left: 30px; right: 52px; top: 112px; display: flex; justify-content: space-between;
+  font: 600 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+}
+.eyebrow b { color: var(--cap); font-weight: 600; }
+h1 { position: absolute; left: 30px; right: 52px; top: 127px; margin: 0; font: 700 27px/1 var(--sans); letter-spacing: -.005em; }
+h1 i { font-style: normal; color: var(--cap); }
+
+#gauge { position: absolute; left: 0; top: 0; width: 432px; height: 400px; overflow: visible; }
+#gauge text { font-family: var(--mono); }
+.tick { stroke: var(--muted); stroke-width: 1.5; }
+.tick.minor { stroke: var(--track); }
+.tlab { fill: var(--muted); font-size: 10px; font-weight: 500; }
+#readout { fill: var(--ink); font: 600 34px var(--mono); }
+.rlab { fill: var(--muted); font-size: 8.5px; font-weight: 600; letter-spacing: .14em; }
+.blab { fill: var(--muted); font-size: 8.5px; font-weight: 600; letter-spacing: .14em; }
+#status { font-size: 12px; font-weight: 600; letter-spacing: .1em; }
+#date { fill: var(--ink); font-size: 11px; font-weight: 600; letter-spacing: .1em; }
+
+#legend { position: absolute; left: 30px; right: 52px; top: 358px; display: flex; gap: 14px; font: 600 9.5px/1 var(--mono); letter-spacing: .03em; color: var(--muted); }
+#legend span { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+#legend i { display: inline-block; width: 14px; height: 0; border-top: 2.5px solid var(--cap); }
+#lgNeed i { border-top: 2px dashed var(--muted); }
+
+#caps { position: absolute; left: 30px; right: 52px; top: 384px; height: 206px; }
+.cap { position: absolute; inset: 0; opacity: 0; }
+.cap p { margin: 0; font: 600 20px/1.22 var(--sans); text-wrap: pretty; }
+.cap p em { font-style: normal; color: var(--cap); }
+.cap p q { font-style: italic; quotes: "\201C" "\201D"; }
+.cap small { display: block; margin-top: 10px; font: 500 11px/1.5 var(--mono); color: var(--muted); }
+.cap small b { color: var(--ink); font-weight: 600; }
+.cap p.quote { font: italic 600 23px/1.18 var(--sans); }
+.cap p.quote q { font-style: italic; }
+
+.who { font: 600 10px/1 var(--mono); letter-spacing: .16em; color: var(--muted); margin-bottom: 9px; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.card { border: 1px solid var(--line); background: var(--panel); border-radius: 4px; padding: 9px 10px 10px; }
+.card h3 { margin: 0 0 6px; font: 600 9px/1.2 var(--mono); letter-spacing: .12em; color: var(--muted); }
+.card div { font: 600 14.5px/1.25 var(--sans); }
+.card div q { font-style: italic; quotes: "\201C" "\201D"; }
+.anon { margin-top: 9px; font: 500 10px/1.45 var(--mono); color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 4px 5px; margin-top: 5px; }
+.chips span { border: 1px dashed var(--line); border-radius: 3px; padding: 3px 5px 2px; color: var(--ink); font: 500 9.5px/1.2 var(--mono); }
+.anon b { color: var(--ink); font-weight: 600; }
+
+.tag { display: inline-block; margin-bottom: 8px; padding: 4px 6px 3px; border: 1px solid var(--claim); color: var(--claim); border-radius: 3px; font: 600 9px/1 var(--mono); letter-spacing: .12em; }
+.mq { border-left: 3px solid var(--claim); padding-left: 11px; }
+.mq h3 { margin: 0 0 5px; font: 600 9.5px/1 var(--mono); letter-spacing: .14em; color: var(--muted); }
+.mq p { font: italic 600 19px/1.2 var(--sans); }
+.mq p q { quotes: "\201C" "\201D"; }
+
+.cap.up { top: -18px; bottom: 18px; }
+.cap.up2 { top: -30px; bottom: 30px; }
+.cap.end { top: -214px; height: 420px; }
+.end .verdict { font: 700 26px/1.12 var(--sans); }
+.end .verdict i { font-style: normal; color: var(--claim); }
+.end .asof { margin-top: 8px; font: 500 10.5px/1.4 var(--mono); color: var(--muted); }
+.src-head { margin-top: 16px; font: 600 10.5px/1 var(--mono); letter-spacing: .16em; color: var(--cap); }
+.src { display: grid; gap: 6px; margin: 9px 0 0; padding: 0; list-style: none; }
+.src li { font: 500 11.5px/1.3 var(--mono); color: var(--muted); }
+.src a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--line); }
+.src a:focus-visible, #replay:focus-visible { outline: 2px solid var(--claim); outline-offset: 2px; }
+
+#bar { position: absolute; left: 30px; right: 52px; top: 594px; display: flex; gap: 4px; }
+#bar i { flex: 1; height: 3px; background: var(--track); border-radius: 2px; overflow: hidden; }
+#bar i b { display: block; height: 100%; width: 0; background: var(--ink); }
+#replay {
+  position: absolute; right: 52px; top: 612px; padding: 8px 12px; border: 1px solid var(--ink); border-radius: 3px;
+  background: var(--panel); color: var(--ink); font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+}
+</style>
+
+<div id="wrap"><div id="stage">
+  <div class="eyebrow"><span><b>Top Story</b> &middot; Sun 25 Oct 2026</span><span>Ukraine</span></div>
+  <h1>Above <i>100 mph</i>, no link</h1>
+
+  <svg id="gauge" viewBox="0 0 432 400" width="432" height="400" aria-hidden="true">
+    <defs>
+      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="6" height="6" fill="#ff4d3d22"/><line x1="0" y1="0" x2="0" y2="6" stroke="#ff4d3d" stroke-width="2"/>
+      </pattern>
+    </defs>
+    <g id="dial">
+      <path id="track" fill="none" stroke="var(--track)" stroke-width="10" stroke-linecap="butt"/>
+      <path id="okArc" fill="none" stroke="var(--ok)" stroke-width="10" opacity=".35"/>
+      <path id="zone" fill="none" stroke="url(#hatch)" stroke-width="10"/>
+      <g id="ticks"></g>
+      <line id="capLine" stroke="var(--cap)" stroke-width="3.5" stroke-linecap="round" pathLength="1"/>
+      <line id="capGhost" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 3"/>
+      <line id="need" stroke="var(--muted)" stroke-width="2" stroke-dasharray="4 3"/>
+      <g id="needle">
+        <line id="nline" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+        <circle id="hub" r="7" fill="var(--ink)"/>
+      </g>
+      <text id="readout" text-anchor="middle">0</text>
+      <text class="rlab" id="rlab" text-anchor="middle">MPH &#183; TERMINAL SPEED</text>
+    </g>
+    <g id="sig">
+      <text class="blab" x="300" y="200">STARSHIELD</text>
+      <text class="blab" x="300" y="212">LINK</text>
+      <g id="bars"></g>
+      <text id="status" x="300" y="288">LINK OK</text>
+      <text id="date" x="300" y="308">OCT 14</text>
+    </g>
+  </svg>
+  <div id="legend"><span id="lgCap"><i></i>CAP ~100 MPH (160 KM/H)</span><span id="lgNeed"><i></i>UKRAINE&rsquo;S NEED ~280</span></div>
+
+  <div id="caps">
+    <div class="cap"><p>From the night of Oct. 13&ndash;14, Ukrainian satellite terminals moving faster than <em>~100&nbsp;mph</em> lost their link.</p><small>Mainly Starshield, the military version of Starlink, which Ukraine&rsquo;s long-range strike and interceptor drones rely on.</small></div>
+    <div class="cap"><p class="quote"><q>Starlink was not switched off. The speed was reduced.</q></p><small><b>Volodymyr Zelensky, Oct. 16</b><br>Ukraine says its interceptors need a link up to ~280&nbsp;mph (450&nbsp;km/h).</small></div>
+    <div class="cap up"><div class="who">WHO SET THE CAP?</div>
+      <div class="cards">
+        <div class="card"><h3>MUSK &middot; X &middot; OCT 14</h3><div><q>Any limits on speed or usage are decided by the US military and ultimately POTUS.</q></div></div>
+        <div class="card"><h3>ON THE RECORD</h3><div>The White House, Trump, Rubio and Hegseth deny ordering it.</div></div>
+      </div>
+      <div class="anon">Anonymous-source reports conflict:
+        <div class="chips"><span>WSJ/CBS: Musk</span><span>Reuters: White House</span><span>Telegraph: Musk proposed, Trump agreed</span></div>
+        <b>None confirmed.</b></div></div>
+    <div class="cap"><p>Oct. 24: Ukraine&rsquo;s Defense Ministry says service is fully restored, stable above 400&nbsp;km/h (~250&nbsp;mph).</p><small>Per the ministry; not independently verified.<br>After more than a week of disruption.</small></div>
+    <div class="cap up up2"><span class="tag">MUSK&rsquo;S CLAIM &middot; NOT INDEPENDENTLY CONFIRMED</span>
+      <div class="mq"><h3>MUSK &middot; X &middot; OCT 24</h3><p><q>Ukraine military violated Starlink terms of service and used it for offensive drone strikes&hellip;</q> <q>That loophole was closed last week.</q></p></div>
+      <small>His post is about commercial Starlink; the cap was mainly on Starshield. Zelensky adviser Serhii Beskrestnov: whitelisting leaves Ukraine <b>&ldquo;physically unable&rdquo;</b> to use it for deep strikes.</small></div>
+    <div class="cap end">
+      <div class="verdict">The claim is Musk&rsquo;s. <i>Who ordered the cap remains disputed.</i></div>
+      <div class="asof">As of Oct. 25, 2026 &middot; speeds per Ukraine&rsquo;s Defense Ministry</div>
+      <div class="src-head">SOURCES</div>
+      <ul class="src">
+        <li><a href="https://www.pbs.org/newshour/world/ukraines-starlink-satellite-speeds-restored-after-a-week-of-front-line-disruption" target="_blank" rel="noopener">AP via PBS NewsHour</a> &middot; restored, Musk</li>
+        <li><a href="https://www.cbsnews.com/news/ukraine-starlink-drone-spacex-musk-speed-restriction/" target="_blank" rel="noopener">CBS News / AP</a> &middot; restored, Defense Ministry</li>
+        <li><a href="https://www.foxnews.com/politics/ukraines-starlink-restored-elon-musk-claims-kyiv-violated-terms-service-kill-people" target="_blank" rel="noopener">Fox News</a> &middot; Musk posts</li>
+        <li><a href="https://www.aljazeera.com/news/2026/10/14/ukraine-accuses-elon-musks-spacex-of-throttling-starlink-terminals" target="_blank" rel="noopener">Al Jazeera</a> &middot; cap, Oct 14 post</li>
+        <li><a href="https://www.kyivpost.com/post/87341" target="_blank" rel="noopener">Kyiv Post</a> &middot; Zelensky &middot; <a href="https://www.kyivpost.com/post/88082" target="_blank" rel="noopener">Kyiv Post</a> &middot; Beskrestnov</li>
+        <li><a href="https://cybernews.com/news/ukraine-starshield-access-restrictions-white-house/" target="_blank" rel="noopener">Reuters via Cybernews</a> &middot; White House, Oct 15</li>
+        <li><a href="https://theprint.in/world/musk-ordered-starlink-slowdown-that-blindsided-ukraine-wsj-reports/3077314/" target="_blank" rel="noopener">Reuters via ThePrint</a> &middot; WSJ: Musk, Oct 20</li>
+        <li><a href="https://fortune.com/2026/10/19/ukraine-starlink-starshield-drone-speed-limit-musk-trump/" target="_blank" rel="noopener">Fortune</a> &middot; 450 km/h need</li>
+        <li><a href="https://www.stripes.com/theaters/us/2026-10-21/lawmakers-investigation-ukraine-starlink-disruptions-23218791.html" target="_blank" rel="noopener">Stars and Stripes</a> &middot; denials</li>
+        <li><a href="https://news.liga.net/en/politics/news/trump-says-he-did-not-restrict-starlink-and-does-not-know-whether-musk-did-the-telegraph-reports-otherwise" target="_blank" rel="noopener">LIGA.net</a> &middot; Trump, Telegraph</li>
+      </ul>
+    </div>
+  </div>
+  <button id="replay" type="button" hidden>Replay</button>
+  <div id="bar"></div>
+</div></div>
+
+<script>
+(() => {
+  const END = 19.4;
+  const BEATS = [0, 3.4, 6.6, 10.4, 13.2, 16.6, END];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ease = x => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+  const ramp = (t, a, d) => reduce ? (t >= a ? 1 : 0) : ease((t - a) / d);
+  // Piecewise keyframes: [[t, v], ...], eased between neighbours.
+  const kf = (t, k) => {
+    if (t <= k[0][0]) return k[0][1];
+    for (let i = 1; i < k.length; i++) if (t <= k[i][0]) {
+      const [t0, v0] = k[i - 1], [t1, v1] = k[i];
+      return v0 + (v1 - v0) * (reduce ? 1 : ease((t - t0) / (t1 - t0)));
+    }
+    return k[k.length - 1][1];
+  };
+  const $ = id => document.getElementById(id);
+  const NS = "http://www.w3.org/2000/svg";
+
+  // Dial geometry: 0 mph at 210deg, 300 mph at -30deg, sweeping clockwise over the top.
+  const CX = 168, CY = 288, R = 104, MAX = 300;
+  const ang = v => (210 - 240 * v / MAX) * Math.PI / 180;
+  const pt = (v, r) => [CX + r * Math.cos(ang(v)), CY - r * Math.sin(ang(v))];
+  const arc = (v0, v1, r) => {
+    const [x0, y0] = pt(v0, r), [x1, y1] = pt(v1, r);
+    return `M${x0.toFixed(2)} ${y0.toFixed(2)}A${r} ${r} 0 ${(v1 - v0) * 0.8 > 180 ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+  };
+  const setLine = (el, v, r0, r1) => {
+    const [x0, y0] = pt(v, r0), [x1, y1] = pt(v, r1);
+    el.setAttribute("x1", x0.toFixed(2)); el.setAttribute("y1", y0.toFixed(2));
+    el.setAttribute("x2", x1.toFixed(2)); el.setAttribute("y2", y1.toFixed(2));
+  };
+  $("track").setAttribute("d", arc(0, MAX, R));
+  $("okArc").setAttribute("d", arc(0, 100, R));
+  $("zone").setAttribute("d", arc(100, 280, R));
+  const ticks = $("ticks");
+  for (let v = 0; v <= MAX; v += 10) {
+    const major = v % 50 === 0, l = document.createElementNS(NS, "line");
+    setLine(l, v, R - (major ? 15 : 10), R - 6);
+    l.setAttribute("class", major ? "tick" : "tick minor"); ticks.appendChild(l);
+    if (major) {
+      const [x, y] = pt(v, R - 27), tx = document.createElementNS(NS, "text");
+      tx.setAttribute("x", x.toFixed(1)); tx.setAttribute("y", (y + 3.5).toFixed(1));
+      tx.setAttribute("text-anchor", "middle"); tx.setAttribute("class", "tlab"); tx.textContent = v; ticks.appendChild(tx);
+    }
+  }
+  const capLine = $("capLine"), capGhost = $("capGhost"), need = $("need");
+  setLine(capLine, 100, R - 18, R + 12); setLine(capGhost, 100, R - 18, R + 12); setLine(need, 280, R - 18, R + 12);
+  capLine.style.strokeDasharray = "1 1";
+  $("readout").setAttribute("x", CX); $("readout").setAttribute("y", CY + 44);
+  $("rlab").setAttribute("x", CX); $("rlab").setAttribute("y", CY + 57);
+  $("hub").setAttribute("cx", CX); $("hub").setAttribute("cy", CY);
+  const nline = $("nline");
+  nline.setAttribute("x1", CX); nline.setAttribute("y1", CY);
+
+  // Five signal bars, rising left to right.
+  const barsG = $("bars");
+  const bars = [0, 1, 2, 3, 4].map(i => {
+    const r = document.createElementNS(NS, "rect"), h = 12 + i * 8;
+    r.setAttribute("x", 300 + i * 14); r.setAttribute("y", 266 - h); r.setAttribute("width", 10); r.setAttribute("height", h); r.setAttribute("rx", 1.5);
+    barsG.appendChild(r); return r;
+  });
+  const status = $("status"), date = $("date"), dial = $("dial"), sig = $("sig"), gauge = $("gauge"), legend = $("legend");
+  const lgNeed = $("lgNeed"), zone = $("zone"), okArc = $("okArc");
+  const caps = [...document.querySelectorAll(".cap")];
+  const bar = $("bar");
+  const segs = BEATS.slice(0, -1).map(() => { const i = document.createElement("i"); const b = document.createElement("b"); i.appendChild(b); bar.appendChild(i); return b; });
+  const C = { ok: "var(--ok)", cap: "var(--cap)", off: "var(--track)", claim: "var(--claim)" };
+
+  // Needle speed (mph) over time: push past the cap, fall back, then the restored sweep.
+  const SPEED = [[0, 0], [0.15, 0], [1.5, 130], [3.5, 130], [4.3, 60], [10.6, 60], [12.2, 250]];
+
+  let last = 0;
+  function render(t) {
+    t = clamp(t, 0, END); last = t;
+    const v = kf(t, SPEED);
+    const [nx, ny] = pt(v, R - 20);
+    nline.setAttribute("x2", nx.toFixed(2)); nline.setAttribute("y2", ny.toFixed(2));
+    $("readout").textContent = Math.round(v);
+
+    // The cap holds until the restoration beat; above it the bars step down, one per ~6 mph.
+    const capOn = t < 10.5;
+    const n = capOn && v > 100 ? Math.max(0, 5 - Math.floor((v - 100) / 6) - 1) : 5;
+    bars.forEach((b, i) => b.setAttribute("fill", i < n ? (n === 5 ? C.ok : C.claim) : C.off));
+    status.textContent = n === 5 ? "LINK OK" : n === 0 ? "NO LINK" : "LOSING";
+    status.setAttribute("fill", n === 5 ? C.ok : n === 0 ? C.cap : C.claim);
+    const day = t >= 10.5 ? 24 : 14 + Math.min(9, Math.floor(clamp((t - 3.4) / 7) * 10));
+    date.textContent = `OCT ${day}`;
+    date.setAttribute("fill", t >= 10.5 ? C.ok : "var(--ink)");
+
+    // Cap line is on screen from frame 0; it turns into a dashed ghost once service is restored.
+    const restored = ramp(t, 10.5, 0.6);
+    capLine.style.strokeDashoffset = (1 - ramp(t, 0, 0.5)).toFixed(3);
+    capLine.style.opacity = (1 - restored).toFixed(3);
+    capGhost.style.opacity = restored.toFixed(3);
+    const z = ramp(t, 4.4, 0.6) * (1 - restored);
+    zone.style.opacity = z.toFixed(3);
+    need.style.opacity = (ramp(t, 4.4, 0.6) * (1 - ramp(t, 13.2, 0.4))).toFixed(3);
+    lgNeed.style.opacity = (ramp(t, 4.4, 0.6) * (1 - ramp(t, 13.2, 0.4))).toFixed(3);
+    okArc.setAttribute("d", arc(0, 100 + 160 * restored, R));
+    okArc.style.opacity = (0.35 + 0.25 * restored).toFixed(3);
+
+    // Dim the instrument while the who-said-what cards are up, and clear it for the sources frame.
+    const dim = Math.max(ramp(t, 6.6, 0.3) * (1 - ramp(t, 10.4, 0.3)), ramp(t, 13.2, 0.3));
+    const gone = ramp(t, 16.6, 0.4);
+    const go = (1 - 0.72 * dim) * (1 - gone);
+    gauge.style.opacity = go.toFixed(3);
+    legend.style.opacity = ((1 - dim) * (1 - gone)).toFixed(3);
+
+    caps.forEach((el, i) => {
+      const a = BEATS[i], b = BEATS[i + 1], lastCap = i === caps.length - 1;
+      const inn = clamp((t - a - (lastCap ? 0.3 : 0.1)) / 0.22);
+      let o = reduce ? (t >= a ? 1 : 0) : inn;
+      if (!lastCap) o = Math.min(o, clamp((b - t) / 0.2));
+      el.style.opacity = o.toFixed(3);
+      el.style.transform = `translateY(${((1 - inn) * 8).toFixed(1)}px)`;
+      el.style.pointerEvents = o > 0.5 ? "auto" : "none";
+    });
+    segs.forEach((b, i) => { b.style.width = (clamp((t - BEATS[i]) / (BEATS[i + 1] - BEATS[i])) * 100).toFixed(1) + "%"; });
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(t);
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); render(t); }, play };
+  document.fonts?.ready.then(() => render(last));
+  render(0); play();
+})();
+</script>
+</body>
+</html>
