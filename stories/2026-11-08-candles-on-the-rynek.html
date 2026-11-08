@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Candles on the Rynek</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Candles on the Rynek. Nov 7, 2026: a gunman fired from a car at people on and near Krakow's Main Market Square.
+   One quiet arc: the square draws itself, goes still, and becomes a place of mourning. No route, no weapon, no faces.
+   The 6 killed in Krakow and the 3 found dead at the suspect's home are never added together.
+   Fixed 432x768 stage scaled to fit. All readable content inside the social safe box x 26-380 / y 108-600 stage px. */
+:root {
+  --bg: #15171c;
+  --ink: #ece6da;
+  --soft: #cfc8bb;
+  --muted: #a39d92;
+  --line: #d8d0c0;
+  --rule: rgba(236,230,218,.22);
+  --flame: #f0b04a;
+  --glass: rgba(122,30,36,.62);
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #15171c; } }
+:root[data-theme="dark"] { --bg: #15171c; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #111317; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: var(--bg); }
+.deco { position: absolute; pointer-events: none; }
+#vig { inset: 0; background: radial-gradient(90% 60% at 50% 42%, rgba(0,0,0,0) 0%, rgba(0,0,0,.25) 65%, rgba(0,0,0,.55) 100%); }
+#night { inset: 0; background: #0d0f13; opacity: 0; }
+
+#kicker { position: absolute; left: 26px; top: 112px; width: 354px; display: flex; justify-content: space-between; align-items: center;
+  font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#kicker .dev { color: var(--ink); }
+#kicker .dev i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--flame); margin-right: 7px; vertical-align: 1px; }
+
+.top { position: absolute; left: 26px; top: 136px; width: 354px; font: 600 21px/1.24 var(--serif); color: var(--ink); text-wrap: balance; }
+.top small { display: block; margin-top: 7px; font: 500 13px/1.35 var(--sans); color: var(--muted); letter-spacing: .01em; }
+
+#plan { position: absolute; left: 0; top: 0; width: 432px; height: 768px; }
+#plan .ln { fill: none; stroke: var(--line); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+#plan .bld { fill: rgba(216,208,192,.06); stroke: var(--line); stroke-width: 1.3; }
+#plan text { font: 500 11px var(--sans); fill: var(--muted); letter-spacing: .02em; }
+#plan .sch { font-size: 11px; fill: #918b80; }
+
+.bot { position: absolute; left: 26px; top: 506px; width: 354px; }
+.hero { font: 600 36px/1.05 var(--serif); color: var(--ink); letter-spacing: -.01em; }
+.hero.s { font-size: 27px; line-height: 1.12; }
+.sub { margin-top: 9px; font: 400 14px/1.4 var(--sans); color: var(--soft); }
+.sub b { font-weight: 600; color: var(--ink); }
+
+#panel { position: absolute; left: 26px; top: 434px; width: 354px; height: 62px; box-sizing: border-box; border: 1px solid var(--rule); border-radius: 4px; }
+#panel .k { position: absolute; left: 14px; top: 12px; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+#panel .p { position: absolute; left: 14px; top: 30px; font: 600 17px/1.2 var(--serif); color: var(--ink); }
+#divider { position: absolute; left: 26px; top: 428px; width: 354px; height: 1px; background: var(--rule); transform-origin: 0 50%; }
+
+#end { position: absolute; left: 26px; top: 494px; width: 354px; }
+#end .src { font: 400 12.5px/1.6 var(--sans); color: var(--muted); }
+#end .src b { font-weight: 600; color: var(--soft); letter-spacing: .1em; text-transform: uppercase; font-size: 11.5px; }
+#end .src a { color: var(--soft); text-decoration: none; border-bottom: 1px solid rgba(207,200,187,.3); }
+#end .asof { margin-top: 12px; font: 500 12px/1.4 var(--sans); color: var(--muted); }
+
+#replay { position: absolute; left: 26px; top: 440px; min-height: 44px; padding: 0 18px; border: 1.5px solid var(--flame); border-radius: 999px;
+  background: rgba(21,23,28,.85); color: var(--ink); font: 600 13px/1 var(--sans); letter-spacing: .04em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay[hidden] { display: none; }
+#replay:focus-visible, #end a:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage" role="img" aria-label="Animated explainer: the Krakow Main Market Square shooting on November 7, 2026. Six people were killed in Krakow, at least 15 wounded. Separately, three people were found dead at the suspect's home. Poland is observing two days of national mourning.">
+  <div class="deco" id="vig"></div>
+  <div class="deco" id="night"></div>
+
+  <svg id="plan" viewBox="0 0 432 768" aria-hidden="true">
+    <defs>
+      <radialGradient id="glow"><stop offset="0" stop-color="#f0b04a" stop-opacity=".55"/><stop offset="1" stop-color="#f0b04a" stop-opacity="0"/></radialGradient>
+    </defs>
+    <g id="sq">
+      <!-- the square, schematic: outline with street gaps; Sławkowska leaves the north side -->
+      <path class="ln draw" d="M 132 232 L 72 232 L 72 410 L 196 410 M 236 410 L 324 410 L 324 300 M 324 262 L 324 232 L 168 232" />
+      <path class="ln draw" d="M 132 232 L 132 216 M 168 232 L 168 216" />
+      <!-- Cloth Hall -->
+      <rect class="bld draw" x="176" y="266" width="46" height="92" rx="2" />
+      <!-- Town Hall Tower -->
+      <rect class="bld draw" x="122" y="312" width="18" height="18" rx="1" />
+      <!-- St. Mary's: nave and two towers at the east corner -->
+      <path class="bld draw" d="M 270 246 L 306 246 L 306 284 L 270 284 Z" />
+      <rect class="bld draw" x="262" y="240" width="10" height="12" />
+      <rect class="bld draw" x="262" y="276" width="10" height="12" />
+      <g id="lbls">
+        <text x="199" y="262" text-anchor="middle">Cloth Hall</text>
+        <text x="131" y="346" text-anchor="middle">Town Hall Tower</text>
+        <text x="288" y="300" text-anchor="middle">St. Mary's</text>
+        <text x="174" y="213">Sławkowska St.</text>
+        <text class="sch" x="72" y="426">Candles in remembrance · schematic plan</text>
+      </g>
+    </g>
+    <!-- six candles along the south edge: remembrance, not locations -->
+    <g id="candles"></g>
+    <!-- flag on a standalone pole, lowered to half-mast with a black ribbon (kir) -->
+    <g id="flagG">
+      <line x1="356" y1="236" x2="356" y2="408" stroke="#bdb5a6" stroke-width="2" stroke-linecap="round" />
+      <circle cx="356" cy="234" r="2.5" fill="#bdb5a6" />
+      <path id="kir" d="M 357 238 L 365 238 L 366 266 L 362 262 L 358 268 Z" fill="#050505" stroke="#8d877c" stroke-width=".6" />
+      <g id="flag">
+        <rect x="358" y="0" width="20" height="7" fill="#ededed" />
+        <rect x="358" y="7" width="20" height="7" fill="#c8102e" />
+        
+      </g>
+    </g>
+  </svg>
+
+  <div id="kicker"><span class="dev"><i></i>Kraków shooting · Developing</span><span>As of Nov 8</span></div>
+
+  <div class="top" id="t1">Kraków, Main Market Square<small>Saturday, Nov 7 · about 3 p.m. local time</small></div>
+  <div class="top" id="t2">Police say a gunman fired from a car at people on and near the square</div>
+  <div class="top" id="t3">The suspect, a young Polish man, is under police guard in hospital</div>
+  <div class="top" id="t4">Poland is in mourning</div>
+  <div class="top" id="t5">Mass shootings are rare in Poland</div>
+
+  <div id="divider"></div>
+  <div id="panel"><div class="k">Separately · Ostrowiec Świętokrzyski</div><div class="p">3 people found dead at the suspect's home</div></div>
+
+  <div class="bot" id="b2"><div class="sub">Police exchanged fire with him after a chase and wounded him. <b>They say he acted alone.</b></div></div>
+  <div class="bot" id="b3"><div class="hero">6 killed in Kraków</div><div class="sub" id="b3s">4 women and 2 men. <b>At least 15 wounded</b>, including 2 police officers.</div></div>
+  <div class="bot" id="b4"><div class="sub" style="margin-top:0;font-size:15px">Police say <b>they were his father, mother and sister.</b> Prosecutors are examining any link to the attack.</div></div>
+  <div class="bot" id="b5"><div class="sub" style="margin-top:0;font-size:15px">Prosecutors <b>intend to treat it as a terrorist act.</b> Officials say he held far-right, ultranationalist views.</div></div>
+  <div class="bot" id="b6"><div class="hero s">2 days of national mourning, from Sunday</div><div class="sub">Kraków mourns through Wed, Nov 11.</div></div>
+
+  <div id="end">
+    <div class="src"><b>Sources</b><br>
+      <a href="https://abcnews.com/International/deadly-mass-shooting-poland-investigated-terror-act-prosecutor/story?id=137951543" target="_blank" rel="noopener">ABC News</a> ·
+      <a href="https://www.pbs.org/newshour/world/gunman-opens-fire-in-polish-city-of-krakow-killing-6-people-and-injuring-15" target="_blank" rel="noopener">AP via PBS</a> ·
+      <a href="http://thepeninsulaqatar.com/article/08/11/2026/gunman-fascinated-by-far-right-kills-six-in-krakow-poland" target="_blank" rel="noopener">AFP</a> ·
+      <a href="https://www.aljazeera.com/news/2026/11/7/casualties-reported-after-shooting-in-polands-krakow" target="_blank" rel="noopener">Al Jazeera</a> ·
+      <a href="https://www.newsweek.com/krakow-shooting-suspect-what-we-know-as-more-victims-discovered-12683092" target="_blank" rel="noopener">Newsweek</a> ·
+      <a href="https://tvpworld.com/96368052/krakow-shootings-poland-begins-national-mourning-period" target="_blank" rel="noopener">TVP World</a> ·
+      <a href="https://www.euronews.com/2026/11/08/what-we-know-about-the-krakow-shooting-that-left-six-people-dead" target="_blank" rel="noopener">Euronews</a> ·
+      <a href="https://www.pap.pl/aktualnosci/tragedia-w-krakowie-prezydent-miasta-oglosil-zalobe" target="_blank" rel="noopener">PAP</a></div>
+    <div class="asof">As of Nov 8, 2026. Figures may change.</div>
+  </div>
+
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lin = (t, s, d) => clamp((t - s) / d, 0, 1);
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const ramp = (t, s, d) => ease(lin(t, s, d));
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // beats (s)
+  const B2 = 3.0, B3 = 6.0, B4 = 9.6, B5 = 12.4, B6 = 15.2, B7 = 17.4, END = 19.6;
+
+  // build candles
+  const NS = "http://www.w3.org/2000/svg";
+  const cg = $("candles");
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+  const candles = [];
+  for (let i = 0; i < 6; i++) {
+    const x = 104 + i * 38, y = 400;
+    const g = mk("g", { opacity: 0 }, cg);
+    const glow = mk("circle", { cx: x, cy: y - 18, r: 17, fill: "url(#glow)" }, g);
+    mk("rect", { x: x - 7, y: y - 12, width: 14, height: 18, rx: 2.5, fill: "var(--glass)", stroke: "rgba(236,180,160,.35)", "stroke-width": .6 }, g);
+    mk("rect", { x: x - 6, y: y - 15, width: 12, height: 3, rx: 1, fill: "#8d877c" }, g);
+    const fl = mk("ellipse", { cx: x, cy: y - 20, rx: 2.6, ry: 4.6, fill: "var(--flame)" }, g);
+    candles.push({ g, glow, fl, x, y });
+  }
+
+  // draw-on paths
+  const draws = [...document.querySelectorAll("#plan .draw")].map((el) => { const L = el.getTotalLength ? el.getTotalLength() : 400; el.style.strokeDasharray = L; return { el, L }; });
+
+  const fade = (el, k, dy) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${(dy || 0).toFixed(1)}px)`; };
+  const win = (t, a, b, fi = 0.4, fo = 0.35) => Math.min(ramp(t, a, fi), 1 - lin(t, b - fo, fo));
+
+  const sq = $("sq"), lbls = $("lbls"), flag = $("flag"), flagG = $("flagG");
+  const endEl = $("end"), endKids = [...endEl.children];
+
+  function render(t) {
+    // square draws on
+    draws.forEach((d, i) => { const k = ramp(t, 0.15 + i * 0.12, 1.2); d.el.style.strokeDashoffset = (d.L * (1 - k)).toFixed(1); });
+    lbls.style.opacity = (ramp(t, 1.4, 0.6) * (1 - 0.45 * ramp(t, B2, 1.0))).toFixed(3);
+    // the square goes quiet: line dims one step, night falls a little
+    sq.style.opacity = (1 - 0.45 * ramp(t, B2, 1.2)).toFixed(3);
+    $("night").style.opacity = (0.35 * ramp(t, B2, 1.2) + 0.45 * ramp(t, B7 - 0.2, 0.6)).toFixed(3);
+
+    // top lines
+    fade($("t1"), win(t, 0.3, B2 + 0.1), (1 - ramp(t, 0.3, 0.5)) * 6);
+    fade($("t2"), win(t, B2 + 0.1, B3 + 3.6), (1 - ramp(t, B2 + 0.1, 0.5)) * 6);
+    fade($("t3"), win(t, B5, B6), (1 - ramp(t, B5, 0.5)) * 6);
+    fade($("t4"), win(t, B6, B7), (1 - ramp(t, B6, 0.5)) * 6);
+    fade($("t5"), win(t, B7, END + 1), (1 - ramp(t, B7, 0.5)) * 6);
+
+    // bottom lines
+    fade($("b2"), win(t, B2 + 0.6, B3), (1 - ramp(t, B2 + 0.6, 0.5)) * 6);
+    fade($("b3"), win(t, B3 + 0.3, B4), (1 - ramp(t, B3 + 0.3, 0.5)) * 6);
+    $("b3s").style.opacity = ramp(t, B3 + 1.3, 0.5).toFixed(3);
+    fade($("b4"), win(t, B4 + 0.5, B5), (1 - ramp(t, B4 + 0.5, 0.5)) * 6);
+    fade($("b5"), win(t, B5 + 0.5, B6), (1 - ramp(t, B5 + 0.5, 0.5)) * 6);
+    fade($("b6"), win(t, B6 + 0.4, B7), (1 - ramp(t, B6 + 0.4, 0.5)) * 6);
+
+    // candles: one at a time, 0.6s apart, then a gentle flicker (deterministic in t)
+    candles.forEach((c, i) => {
+      const k = ramp(t, B3 + 0.2 + i * 0.6, 0.7);
+      c.g.setAttribute("opacity", k.toFixed(3));
+      const f = 1 + 0.06 * Math.sin(t * 7.3 + i * 1.7) * Math.sin(t * 3.1 + i);
+      c.glow.setAttribute("opacity", (f * k).toFixed(3));
+      c.fl.setAttribute("ry", (4.6 * (0.96 + 0.04 * Math.sin(t * 9 + i * 2.3))).toFixed(2));
+    });
+
+    // separate panel for the suspect's home
+    const pk = ramp(t, B4, 0.6);
+    $("divider").style.transform = `scaleX(${pk.toFixed(3)})`;
+    $("divider").style.opacity = (pk * (1 - lin(t, B7 - 0.3, 0.3))).toFixed(3);
+    fade($("panel"), ramp(t, B4 + 0.25, 0.5) * (1 - lin(t, B7 - 0.3, 0.3)), (1 - ramp(t, B4 + 0.25, 0.5)) * 6);
+
+    // flag: at full height, lowered to half-mast in beat 6, black ribbon appears
+    flagG.style.opacity = ramp(t, 1.0, 0.8).toFixed(3);
+    const fy = 238 + 84 * ramp(t, B6 + 0.2, 1.5);
+    flag.setAttribute("transform", `translate(0 ${fy.toFixed(1)})`);
+    $("kir").setAttribute("opacity", ramp(t, B6 + 1.4, 0.4).toFixed(3));
+
+    // end card
+    endEl.style.opacity = t >= B7 + 0.1 ? "1" : "0";
+    endKids.forEach((el, i) => { const k = ramp(t, B7 + 0.1 + i * 0.25, 0.4); fade(el, k, (1 - k) * 6); });
+    endEl.style.pointerEvents = t > B7 + 0.4 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, END)); }, play };
+  render(0);
+  const start = () => { if (reduce) { render(END); replay.hidden = false; } else play(); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+})();
+</script>
+</body>
+</html>
