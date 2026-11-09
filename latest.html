@@ -2,149 +2,154 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Candles on the Rynek</title>
+<title>Too Tough</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;500;600&display=block">
 <style>
-/* Candles on the Rynek. Nov 7, 2026: a gunman fired from a car at people on and near Krakow's Main Market Square.
-   One quiet arc: the square draws itself, goes still, and becomes a place of mourning. No route, no weapon, no faces.
-   The 6 killed in Krakow and the 3 found dead at the suspect's home are never added together.
+/* Too Tough. Nov 8, 2026: on 60 Minutes, Trump said his immigration crackdown "both helped and hurt" and
+   "So I think it was too tough." Two bands: the top band is what he said (a waveform that speaks each quote, then rests),
+   the bottom band is the ICE daily arrest target CBS reports, which holds still because no change has been ordered.
+   The waveform has no downward trend: it pulses per quote and rests, so it reports speech, not a verdict on tone.
    Fixed 432x768 stage scaled to fit. All readable content inside the social safe box x 26-380 / y 108-600 stage px. */
 :root {
-  --bg: #15171c;
-  --ink: #ece6da;
-  --soft: #cfc8bb;
-  --muted: #a39d92;
-  --line: #d8d0c0;
-  --rule: rgba(236,230,218,.22);
-  --flame: #f0b04a;
-  --glass: rgba(122,30,36,.62);
-  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --bg: #141516;
+  --ink: #e9e7e1;
+  --soft: #c9c6bf;
+  --muted: #9a9ea3;
+  --hair: #4a4f54;
+  --ochre: #cfae6b;
+  --steel: #2c3033;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #15171c; } }
-:root[data-theme="dark"] { --bg: #15171c; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #141516; } }
+:root[data-theme="dark"] { --bg: #141516; }
 html, body { height: 100%; margin: 0; }
-body { background: var(--bg); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
-#wrap { position: fixed; inset: 0; overflow: hidden; background: #111317; }
+body { background: #0f1011; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #0f1011; }
 #stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: var(--bg); }
 .deco { position: absolute; pointer-events: none; }
-#vig { inset: 0; background: radial-gradient(90% 60% at 50% 42%, rgba(0,0,0,0) 0%, rgba(0,0,0,.25) 65%, rgba(0,0,0,.55) 100%); }
-#night { inset: 0; background: #0d0f13; opacity: 0; }
+#grain { inset: 0; background: radial-gradient(110% 70% at 50% 40%, rgba(255,255,255,.035), rgba(0,0,0,0) 60%), radial-gradient(90% 60% at 50% 100%, rgba(0,0,0,.35), rgba(0,0,0,0) 70%); }
 
-#kicker { position: absolute; left: 26px; top: 112px; width: 354px; display: flex; justify-content: space-between; align-items: center;
-  font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-#kicker .dev { color: var(--ink); }
-#kicker .dev i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--flame); margin-right: 7px; vertical-align: 1px; }
+.abs { position: absolute; }
+#kicker { left: 26px; top: 112px; width: 354px; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#kicker i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ochre); margin-right: 7px; vertical-align: 1px; }
 
-.top { position: absolute; left: 26px; top: 136px; width: 354px; font: 600 21px/1.24 var(--serif); color: var(--ink); text-wrap: balance; }
-.top small { display: block; margin-top: 7px; font: 500 13px/1.35 var(--sans); color: var(--muted); letter-spacing: .01em; }
+/* top band */
+.lab { font: 600 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#topLab { left: 26px; top: 140px; width: 354px; }
+#title { left: 26px; top: 140px; width: 354px; }
+#title .h { font: 600 27px/1.14 var(--serif); color: var(--ink); text-wrap: balance; letter-spacing: -.005em; }
+#title .s { margin-top: 10px; font: 400 13px/1.4 var(--sans); color: var(--soft); }
+.q { left: 26px; top: 164px; width: 354px; }
+.q .t { font: italic 500 25px/1.2 var(--serif); color: var(--ink); text-wrap: balance; }
+.q .t.big { font-size: 30px; line-height: 1.08; color: var(--ochre); }
+.q .t .lead, .q .t.big .lead { font-style: normal; font-family: var(--sans); font-weight: 500; font-size: 14px; color: var(--soft); display: block; margin-bottom: 6px; letter-spacing: .01em; }
+.q .src { margin-top: 9px; font: 500 11px/1.3 var(--mono); color: var(--muted); letter-spacing: .02em; }
+#poll { left: 26px; top: 290px; width: 354px; font: 400 13.5px/1.38 var(--sans); color: var(--soft); }
+#poll b { font: 700 22px/1 var(--mono); color: var(--ink); margin-right: 6px; vertical-align: -2px; }
+#poll .src { margin-top: 4px; font: 500 11px/1.3 var(--mono); color: var(--muted); }
+#wave { left: 0; top: 0; width: 432px; height: 768px; }
+#wave path { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+#wave line { stroke: var(--hair); stroke-width: 1; }
 
-#plan { position: absolute; left: 0; top: 0; width: 432px; height: 768px; }
-#plan .ln { fill: none; stroke: var(--line); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-#plan .bld { fill: rgba(216,208,192,.06); stroke: var(--line); stroke-width: 1.3; }
-#plan text { font: 500 11px var(--sans); fill: var(--muted); letter-spacing: .02em; }
-#plan .sch { font-size: 11px; fill: #918b80; }
+#sofar { left: 26px; top: 140px; width: 354px; }
+#sofar .h { font: 600 23px/1.16 var(--serif); color: var(--ink); text-wrap: balance; }
+#sofar .p { margin-top: 8px; font: 400 13px/1.38 var(--sans); color: var(--soft); }
+#sofar .bis { margin-top: 8px; padding-left: 10px; border-left: 2px solid var(--ochre); font: italic 500 14.5px/1.3 var(--serif); color: var(--ink); }
+#sofar .bis span { display: block; margin-top: 4px; font: 500 11px/1.3 var(--mono); font-style: normal; color: var(--muted); }
 
-.bot { position: absolute; left: 26px; top: 506px; width: 354px; }
-.hero { font: 600 36px/1.05 var(--serif); color: var(--ink); letter-spacing: -.01em; }
-.hero.s { font-size: 27px; line-height: 1.12; }
-.sub { margin-top: 9px; font: 400 14px/1.4 var(--sans); color: var(--soft); }
-.sub b { font-weight: 600; color: var(--ink); }
+/* divider */
+#rule { left: 26px; top: 362px; width: 354px; height: 1px; background: var(--hair); transform-origin: left center; }
 
-#panel { position: absolute; left: 26px; top: 434px; width: 354px; height: 62px; box-sizing: border-box; border: 1px solid var(--rule); border-radius: 4px; }
-#panel .k { position: absolute; left: 14px; top: 12px; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
-#panel .p { position: absolute; left: 14px; top: 30px; font: 600 17px/1.2 var(--serif); color: var(--ink); }
-#divider { position: absolute; left: 26px; top: 428px; width: 354px; height: 1px; background: var(--rule); transform-origin: 0 50%; }
+/* bottom band */
+#botLab { left: 26px; top: 378px; width: 354px; display: flex; justify-content: space-between; align-items: center; }
+#botLab .lab { color: var(--ink); font-size: 13px; }
+#pill { font: 700 11px/1 var(--mono); letter-spacing: .14em; color: var(--ochre); border: 1.5px solid var(--ochre); border-radius: 3px; padding: 4px 6px 3px; }
+#counter { left: 26px; top: 402px; height: 74px; display: flex; align-items: center; gap: 4px; }
+.drum { position: relative; width: 44px; height: 70px; background: var(--steel); border-radius: 5px; overflow: hidden; box-shadow: inset 0 10px 12px -8px rgba(0,0,0,.7), inset 0 -10px 12px -8px rgba(0,0,0,.7); }
+.drum .reel { position: absolute; left: 0; top: 0; width: 100%; }
+.drum .reel div { height: 70px; font: 700 50px/70px var(--mono); text-align: center; color: var(--ochre); }
+.drum::after { content: ""; position: absolute; left: 0; right: 0; top: 34px; height: 1px; background: rgba(0,0,0,.35); }
+.comma { font: 700 46px/70px var(--mono); color: var(--ochre); width: 14px; text-align: center; margin: 0 -2px; }
+#unit { margin-left: 10px; font: 500 15px/1.25 var(--sans); color: var(--soft); }
+#unit b { display: block; font-weight: 600; color: var(--ink); font-size: 17px; }
+#facts { left: 26px; top: 490px; width: 354px; }
+#facts div { font: 400 13.5px/1.35 var(--sans); color: var(--soft); margin-bottom: 6px; }
+#facts s { color: var(--muted); text-decoration-thickness: 1.5px; }
+#facts .src { font: 500 11px/1.3 var(--mono); color: var(--muted); margin-top: 2px; }
 
-#end { position: absolute; left: 26px; top: 494px; width: 354px; }
-#end .src { font: 400 12.5px/1.6 var(--sans); color: var(--muted); }
-#end .src b { font-weight: 600; color: var(--soft); letter-spacing: .1em; text-transform: uppercase; font-size: 11.5px; }
-#end .src a { color: var(--soft); text-decoration: none; border-bottom: 1px solid rgba(207,200,187,.3); }
-#end .asof { margin-top: 12px; font: 500 12px/1.4 var(--sans); color: var(--muted); }
+#sources { left: 26px; top: 484px; width: 354px; font: 500 11px/1.36 var(--mono); color: var(--muted); }
+#sources .lab { font-size: 11px; color: var(--ink); margin-bottom: 6px; }
+#sources div { margin-bottom: 3px; }
+#sources a { color: inherit; text-decoration: none; }
+#sources a:hover { color: var(--ink); text-decoration: underline; }
 
-#replay { position: absolute; left: 26px; top: 440px; min-height: 44px; padding: 0 18px; border: 1.5px solid var(--flame); border-radius: 999px;
-  background: rgba(21,23,28,.85); color: var(--ink); font: 600 13px/1 var(--sans); letter-spacing: .04em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay { position: absolute; right: 52px; top: 104px; min-height: 36px; min-width: 44px; padding: 0 14px; border: 1.5px solid var(--ochre); border-radius: 999px;
+  background: var(--bg); color: var(--ochre); font: 600 13px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
 #replay[hidden] { display: none; }
-#replay:focus-visible, #end a:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
+#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--ochre); outline-offset: 2px; }
 </style>
 </head>
 <body>
 <div id="wrap">
-<div id="stage" role="img" aria-label="Animated explainer: the Krakow Main Market Square shooting on November 7, 2026. Six people were killed in Krakow, at least 15 wounded. Separately, three people were found dead at the suspect's home. Poland is observing two days of national mourning.">
-  <div class="deco" id="vig"></div>
-  <div class="deco" id="night"></div>
+<div id="stage" role="img" aria-label="Animation: on 60 Minutes, Trump said his immigration crackdown both helped and hurt and might be too tough, while CBS reports the ICE target of about 2,700 arrests a day has not been changed.">
+  <div class="deco" id="grain"></div>
 
-  <svg id="plan" viewBox="0 0 432 768" aria-hidden="true">
-    <defs>
-      <radialGradient id="glow"><stop offset="0" stop-color="#f0b04a" stop-opacity=".55"/><stop offset="1" stop-color="#f0b04a" stop-opacity="0"/></radialGradient>
-    </defs>
-    <g id="sq">
-      <!-- the square, schematic: outline with street gaps; Sławkowska leaves the north side -->
-      <path class="ln draw" d="M 132 232 L 72 232 L 72 410 L 196 410 M 236 410 L 324 410 L 324 300 M 324 262 L 324 232 L 168 232" />
-      <path class="ln draw" d="M 132 232 L 132 216 M 168 232 L 168 216" />
-      <!-- Cloth Hall -->
-      <rect class="bld draw" x="176" y="266" width="46" height="92" rx="2" />
-      <!-- Town Hall Tower -->
-      <rect class="bld draw" x="122" y="312" width="18" height="18" rx="1" />
-      <!-- St. Mary's: nave and two towers at the east corner -->
-      <path class="bld draw" d="M 270 246 L 306 246 L 306 284 L 270 284 Z" />
-      <rect class="bld draw" x="262" y="240" width="10" height="12" />
-      <rect class="bld draw" x="262" y="276" width="10" height="12" />
-      <g id="lbls">
-        <text x="199" y="262" text-anchor="middle">Cloth Hall</text>
-        <text x="131" y="346" text-anchor="middle">Town Hall Tower</text>
-        <text x="288" y="300" text-anchor="middle">St. Mary's</text>
-        <text x="174" y="213">Sławkowska St.</text>
-        <text class="sch" x="72" y="426">Candles in remembrance · schematic plan</text>
-      </g>
-    </g>
-    <!-- six candles along the south edge: remembrance, not locations -->
-    <g id="candles"></g>
-    <!-- flag on a standalone pole, lowered to half-mast with a black ribbon (kir) -->
-    <g id="flagG">
-      <line x1="356" y1="236" x2="356" y2="408" stroke="#bdb5a6" stroke-width="2" stroke-linecap="round" />
-      <circle cx="356" cy="234" r="2.5" fill="#bdb5a6" />
-      <path id="kir" d="M 357 238 L 365 238 L 366 266 L 362 262 L 358 268 Z" fill="#050505" stroke="#8d877c" stroke-width=".6" />
-      <g id="flag">
-        <rect x="358" y="0" width="20" height="7" fill="#ededed" />
-        <rect x="358" y="7" width="20" height="7" fill="#c8102e" />
-        
-      </g>
-    </g>
+  <div class="abs" id="kicker"><i></i>60 Minutes &middot; aired Sun Nov 8</div>
+
+  <div class="abs" id="title">
+    <div class="h">Trump says his immigration crackdown &ldquo;both helped and hurt&rdquo;</div>
+    <div class="s">Interview with Ross Douthat, taped after Democrats won the House and Senate</div>
+  </div>
+
+  <div class="abs lab" id="topLab">What Trump said</div>
+
+  <div class="abs q" id="q1"><div class="t">&ldquo;I think I got an A+ for closing up the border.&rdquo;</div><div class="src">CBS News, 10 takeaways</div></div>
+  <div class="abs q" id="q2"><div class="t"><span class="lead">On what hurt:</span>&ldquo;I get hurt because we also took people that had good jobs&hellip;&rdquo;</div><div class="src">CBS News, 10 takeaways</div></div>
+  <div class="abs q" id="q3"><div class="t big"><span class="lead">Asked if deportations went too far:</span>&ldquo;I think it might be too tough, yeah.&rdquo;</div><div class="src">60 Minutes transcript, CBS News</div></div>
+  <div class="abs" id="poll"><b>58%</b>of voters in the CBS News exit poll said the administration&rsquo;s immigration actions have &ldquo;gone too far.&rdquo;</div>
+  <div class="abs q" id="q4"><div class="t"><span class="lead">On a deal with Democrats, he would</span>&ldquo;love to do something on immigration.&rdquo;</div><div class="src">CBS News</div></div>
+
+  <div class="abs" id="sofar">
+    <div class="lab" style="margin-bottom:10px">So far</div>
+    <div class="h">No change to enforcement has been announced.</div>
+    <div class="p">DHS and ICE officials have received no instruction to scale back since the election, sources told CBS.</div>
+    <div class="bis">&ldquo;This administration will not slow down its efforts to arrest and deport criminal illegal aliens who terrorize our communities.&rdquo;<span>White House spokeswoman Lauren Bis, via CBS News</span></div>
+  </div>
+
+  <svg id="wave" class="abs" viewBox="0 0 432 768" aria-hidden="true">
+    <line x1="26" y1="330" x2="380" y2="330"></line>
+    <path id="wp" d=""></path>
   </svg>
 
-  <div id="kicker"><span class="dev"><i></i>Kraków shooting · Developing</span><span>As of Nov 8</span></div>
+  <div class="abs" id="rule"></div>
 
-  <div class="top" id="t1">Kraków, Main Market Square<small>Saturday, Nov 7 · about 3 p.m. local time</small></div>
-  <div class="top" id="t2">Police say a gunman fired from a car at people on and near the square</div>
-  <div class="top" id="t3">The suspect, a young Polish man, is under police guard in hospital</div>
-  <div class="top" id="t4">Poland is in mourning</div>
-  <div class="top" id="t5">Mass shootings are rare in Poland</div>
+  <div class="abs" id="botLab"><span class="lab">ICE daily arrest target</span><span id="pill">TARGET</span></div>
+  <div class="abs" id="counter">
+    <div class="drum"><div class="reel" data-d="2"></div></div>
+    <div class="comma">,</div>
+    <div class="drum"><div class="reel" data-d="7"></div></div>
+    <div class="drum"><div class="reel" data-d="0"></div></div>
+    <div class="drum"><div class="reel" data-d="0"></div></div>
+    <div id="unit"><b>arrests a day</b>roughly</div>
+  </div>
+  <div class="abs" id="facts">
+    <div id="f1">About 19,000 a week, ordered in recent weeks. Earlier target: <s>2,000</s> a day.</div>
+    <div id="f2">$75 billion for ICE through 2029.</div>
+    <div class="src" id="f3">CBS News, citing agency sources, Nov 8</div>
+  </div>
 
-  <div id="divider"></div>
-  <div id="panel"><div class="k">Separately · Ostrowiec Świętokrzyski</div><div class="p">3 people found dead at the suspect's home</div></div>
-
-  <div class="bot" id="b2"><div class="sub">Police exchanged fire with him after a chase and wounded him. <b>They say he acted alone.</b></div></div>
-  <div class="bot" id="b3"><div class="hero">6 killed in Kraków</div><div class="sub" id="b3s">4 women and 2 men. <b>At least 15 wounded</b>, including 2 police officers.</div></div>
-  <div class="bot" id="b4"><div class="sub" style="margin-top:0;font-size:15px">Police say <b>they were his father, mother and sister.</b> Prosecutors are examining any link to the attack.</div></div>
-  <div class="bot" id="b5"><div class="sub" style="margin-top:0;font-size:15px">Prosecutors <b>intend to treat it as a terrorist act.</b> Officials say he held far-right, ultranationalist views.</div></div>
-  <div class="bot" id="b6"><div class="hero s">2 days of national mourning, from Sunday</div><div class="sub">Kraków mourns through Wed, Nov 11.</div></div>
-
-  <div id="end">
-    <div class="src"><b>Sources</b><br>
-      <a href="https://abcnews.com/International/deadly-mass-shooting-poland-investigated-terror-act-prosecutor/story?id=137951543" target="_blank" rel="noopener">ABC News</a> ·
-      <a href="https://www.pbs.org/newshour/world/gunman-opens-fire-in-polish-city-of-krakow-killing-6-people-and-injuring-15" target="_blank" rel="noopener">AP via PBS</a> ·
-      <a href="http://thepeninsulaqatar.com/article/08/11/2026/gunman-fascinated-by-far-right-kills-six-in-krakow-poland" target="_blank" rel="noopener">AFP</a> ·
-      <a href="https://www.aljazeera.com/news/2026/11/7/casualties-reported-after-shooting-in-polands-krakow" target="_blank" rel="noopener">Al Jazeera</a> ·
-      <a href="https://www.newsweek.com/krakow-shooting-suspect-what-we-know-as-more-victims-discovered-12683092" target="_blank" rel="noopener">Newsweek</a> ·
-      <a href="https://tvpworld.com/96368052/krakow-shootings-poland-begins-national-mourning-period" target="_blank" rel="noopener">TVP World</a> ·
-      <a href="https://www.euronews.com/2026/11/08/what-we-know-about-the-krakow-shooting-that-left-six-people-dead" target="_blank" rel="noopener">Euronews</a> ·
-      <a href="https://www.pap.pl/aktualnosci/tragedia-w-krakowie-prezydent-miasta-oglosil-zalobe" target="_blank" rel="noopener">PAP</a></div>
-    <div class="asof">As of Nov 8, 2026. Figures may change.</div>
+  <div class="abs" id="sources">
+    <div class="lab">Sources</div>
+    <div><a href="https://www.cbsnews.com/news/10-takeaways-from-trump-60-minutes-interview/" target="_blank" rel="noopener">CBS News: 10 takeaways from the interview, Nov 8</a></div>
+    <div><a href="https://www.cbsnews.com/news/trump-says-some-of-his-immigration-policies-may-have-been-too-tough-60-minutes/" target="_blank" rel="noopener">CBS News: &ldquo;too tough&rdquo; report and exit poll, Nov 8</a></div>
+    <div><a href="https://www.cbsnews.com/news/donald-trump-2026-post-midterm-elections-interview-60-minutes-transcript/" target="_blank" rel="noopener">CBS News: 60 Minutes interview transcript, Nov 8</a></div>
+    <div><a href="https://www.cbsnews.com/news/ice-crackdown-stephen-miller-illegal-immigration/" target="_blank" rel="noopener">CBS News: ICE unlikely to scale back crackdown, Nov 8</a></div>
   </div>
 
   <button id="replay" type="button" hidden>&#8635; Replay</button>
@@ -157,84 +162,79 @@ body { background: var(--bg); color: var(--ink); overflow: hidden; -webkit-font-
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const lin = (t, s, d) => clamp((t - s) / d, 0, 1);
   const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const inout = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
   const ramp = (t, s, d) => ease(lin(t, s, d));
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // beats (s)
-  const B2 = 3.0, B3 = 6.0, B4 = 9.6, B5 = 12.4, B6 = 15.2, B7 = 17.4, END = 19.6;
+  const B1 = 3.0, B2 = 6.2, B3 = 9.6, B4 = 13.2, B5 = 16.0, END = 19.6;
 
-  // build candles
-  const NS = "http://www.w3.org/2000/svg";
-  const cg = $("candles");
-  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
-  const candles = [];
-  for (let i = 0; i < 6; i++) {
-    const x = 104 + i * 38, y = 400;
-    const g = mk("g", { opacity: 0 }, cg);
-    const glow = mk("circle", { cx: x, cy: y - 18, r: 17, fill: "url(#glow)" }, g);
-    mk("rect", { x: x - 7, y: y - 12, width: 14, height: 18, rx: 2.5, fill: "var(--glass)", stroke: "rgba(236,180,160,.35)", "stroke-width": .6 }, g);
-    mk("rect", { x: x - 6, y: y - 15, width: 12, height: 3, rx: 1, fill: "#8d877c" }, g);
-    const fl = mk("ellipse", { cx: x, cy: y - 20, rx: 2.6, ry: 4.6, fill: "var(--flame)" }, g);
-    candles.push({ g, glow, fl, x, y });
-  }
-
-  // draw-on paths
-  const draws = [...document.querySelectorAll("#plan .draw")].map((el) => { const L = el.getTotalLength ? el.getTotalLength() : 400; el.style.strokeDasharray = L; return { el, L }; });
+  // drums: each reel holds 0..9 then the target digit again at the end, rolls from 0 to its digit (plus full spins for character)
+  const reels = [...document.querySelectorAll(".reel")].map((el, i) => {
+    const d = +el.dataset.d, spins = 1 + (i === 0 ? 0 : 1);
+    const seq = []; for (let s = 0; s < spins; s++) for (let n = 0; n < 10; n++) seq.push(n);
+    for (let n = 0; n <= d; n++) seq.push(n);
+    el.innerHTML = seq.map((n) => `<div>${n}</div>`).join("");
+    return { el, steps: seq.length - 1 };
+  });
 
   const fade = (el, k, dy) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${(dy || 0).toFixed(1)}px)`; };
-  const win = (t, a, b, fi = 0.4, fo = 0.35) => Math.min(ramp(t, a, fi), 1 - lin(t, b - fo, fo));
+  const win = (t, a, b, fi = 0.45, fo = 0.35) => Math.min(ramp(t, a, fi), 1 - lin(t, b - fo, fo));
+  const rise = (t, a) => (1 - ramp(t, a, 0.5)) * 8;
 
-  const sq = $("sq"), lbls = $("lbls"), flag = $("flag"), flagG = $("flagG");
-  const endEl = $("end"), endKids = [...endEl.children];
+  // waveform: amplitude envelope pulses while each quote "speaks", then rests. Deterministic in t.
+  const wp = $("wp");
+  const speaks = [[B1 + 0.2, 2.0], [B2 + 0.2, 2.4], [B3 + 0.2, 1.6], [B4 + 0.2, 1.8]];
+  function amp(t) {
+    let a = 0.06;
+    for (const [s, d] of speaks) { const k = lin(t, s, d); if (k > 0 && k < 1) a = Math.max(a, Math.sin(Math.PI * k) * (0.75 + 0.25 * Math.sin(k * 23))); }
+    return a;
+  }
+  function wave(t) {
+    const A = amp(t) * 20, pts = [];
+    for (let x = 26; x <= 380; x += 3) {
+      const u = (x - 26) / 354, edge = Math.sin(Math.PI * u);
+      const y = 330 - A * edge * (0.55 * Math.sin(x * 0.11 + t * 9) + 0.3 * Math.sin(x * 0.27 - t * 13) + 0.15 * Math.sin(x * 0.53 + t * 5));
+      pts.push(`${x},${y.toFixed(1)}`);
+    }
+    wp.setAttribute("d", "M" + pts.join(" L"));
+  }
 
   function render(t) {
-    // square draws on
-    draws.forEach((d, i) => { const k = ramp(t, 0.15 + i * 0.12, 1.2); d.el.style.strokeDashoffset = (d.L * (1 - k)).toFixed(1); });
-    lbls.style.opacity = (ramp(t, 1.4, 0.6) * (1 - 0.45 * ramp(t, B2, 1.0))).toFixed(3);
-    // the square goes quiet: line dims one step, night falls a little
-    sq.style.opacity = (1 - 0.45 * ramp(t, B2, 1.2)).toFixed(3);
-    $("night").style.opacity = (0.35 * ramp(t, B2, 1.2) + 0.45 * ramp(t, B7 - 0.2, 0.6)).toFixed(3);
+    // title then top label
+    fade($("title"), win(t, 0.15, B1 + 0.1), rise(t, 0.15));
+    $("topLab").style.opacity = (ramp(t, B1, 0.4) * (1 - lin(t, B5 - 0.3, 0.3))).toFixed(3);
 
-    // top lines
-    fade($("t1"), win(t, 0.3, B2 + 0.1), (1 - ramp(t, 0.3, 0.5)) * 6);
-    fade($("t2"), win(t, B2 + 0.1, B3 + 3.6), (1 - ramp(t, B2 + 0.1, 0.5)) * 6);
-    fade($("t3"), win(t, B5, B6), (1 - ramp(t, B5, 0.5)) * 6);
-    fade($("t4"), win(t, B6, B7), (1 - ramp(t, B6, 0.5)) * 6);
-    fade($("t5"), win(t, B7, END + 1), (1 - ramp(t, B7, 0.5)) * 6);
+    // quotes
+    fade($("q1"), win(t, B1 + 0.15, B2), rise(t, B1 + 0.15));
+    fade($("q2"), win(t, B2 + 0.15, B3), rise(t, B2 + 0.15));
+    fade($("q3"), win(t, B3 + 0.15, B4), rise(t, B3 + 0.15));
+    fade($("poll"), win(t, B3 + 1.5, B4), rise(t, B3 + 1.5));
+    fade($("q4"), win(t, B4 + 0.15, B5), rise(t, B4 + 0.15));
+    fade($("sofar"), ramp(t, B5 + 0.1, 0.5), rise(t, B5 + 0.1));
 
-    // bottom lines
-    fade($("b2"), win(t, B2 + 0.6, B3), (1 - ramp(t, B2 + 0.6, 0.5)) * 6);
-    fade($("b3"), win(t, B3 + 0.3, B4), (1 - ramp(t, B3 + 0.3, 0.5)) * 6);
-    $("b3s").style.opacity = ramp(t, B3 + 1.3, 0.5).toFixed(3);
-    fade($("b4"), win(t, B4 + 0.5, B5), (1 - ramp(t, B4 + 0.5, 0.5)) * 6);
-    fade($("b5"), win(t, B5 + 0.5, B6), (1 - ramp(t, B5 + 0.5, 0.5)) * 6);
-    fade($("b6"), win(t, B6 + 0.4, B7), (1 - ramp(t, B6 + 0.4, 0.5)) * 6);
+    // waveform: visible from B1, sits under quotes, out during the poll line and the end card
+    const wv = ramp(t, B1 - 0.2, 0.5) * (1 - lin(t, B3 + 1.2, 0.3)) + ramp(t, B4, 0.4) * (1 - lin(t, B5 - 0.3, 0.3));
+    $("wave").style.opacity = clamp(wv, 0, 1).toFixed(3);
+    wave(t);
 
-    // candles: one at a time, 0.6s apart, then a gentle flicker (deterministic in t)
-    candles.forEach((c, i) => {
-      const k = ramp(t, B3 + 0.2 + i * 0.6, 0.7);
-      c.g.setAttribute("opacity", k.toFixed(3));
-      const f = 1 + 0.06 * Math.sin(t * 7.3 + i * 1.7) * Math.sin(t * 3.1 + i);
-      c.glow.setAttribute("opacity", (f * k).toFixed(3));
-      c.fl.setAttribute("ry", (4.6 * (0.96 + 0.04 * Math.sin(t * 9 + i * 2.3))).toFixed(2));
+    // divider + bottom band: present from frame 1 (hook), drums roll in the first 2.4s then hold
+    $("rule").style.transform = `scaleX(${ramp(t, 0, 0.8).toFixed(3)})`;
+    $("botLab").style.opacity = ramp(t, 0, 0.4).toFixed(3);
+    reels.forEach((r, i) => {
+      const k = inout(lin(t, 0.1 + i * 0.12, 2.0));
+      r.el.style.transform = `translateY(${(-70 * r.steps * k).toFixed(2)}px)`;
     });
+    $("unit").style.opacity = ramp(t, 1.9, 0.5).toFixed(3);
+    fade($("f1"), ramp(t, 2.3, 0.5) * (1 - lin(t, B5 - 0.3, 0.3)), rise(t, 2.3));
+    fade($("f2"), ramp(t, B4 + 0.5, 0.5) * (1 - lin(t, B5 - 0.3, 0.3)), rise(t, B4 + 0.5));
+    $("f3").style.opacity = (ramp(t, 2.6, 0.5) * (1 - lin(t, B5 - 0.3, 0.3))).toFixed(3);
 
-    // separate panel for the suspect's home
-    const pk = ramp(t, B4, 0.6);
-    $("divider").style.transform = `scaleX(${pk.toFixed(3)})`;
-    $("divider").style.opacity = (pk * (1 - lin(t, B7 - 0.3, 0.3))).toFixed(3);
-    fade($("panel"), ramp(t, B4 + 0.25, 0.5) * (1 - lin(t, B7 - 0.3, 0.3)), (1 - ramp(t, B4 + 0.25, 0.5)) * 6);
-
-    // flag: at full height, lowered to half-mast in beat 6, black ribbon appears
-    flagG.style.opacity = ramp(t, 1.0, 0.8).toFixed(3);
-    const fy = 238 + 84 * ramp(t, B6 + 0.2, 1.5);
-    flag.setAttribute("transform", `translate(0 ${fy.toFixed(1)})`);
-    $("kir").setAttribute("opacity", ramp(t, B6 + 1.4, 0.4).toFixed(3));
-
-    // end card
-    endEl.style.opacity = t >= B7 + 0.1 ? "1" : "0";
-    endKids.forEach((el, i) => { const k = ramp(t, B7 + 0.1 + i * 0.25, 0.4); fade(el, k, (1 - k) * 6); });
-    endEl.style.pointerEvents = t > B7 + 0.4 ? "auto" : "none";
+    // sources on the end card
+    const sk = [...$("sources").children];
+    sk.forEach((el, i) => { const k = ramp(t, B5 + 0.4 + i * 0.2, 0.4); fade(el, k, (1 - k) * 6); });
+    $("sources").style.opacity = t > B5 ? "1" : "0";
+    $("sources").style.pointerEvents = t > B5 + 0.5 ? "auto" : "none";
   }
 
   const stage = $("stage");

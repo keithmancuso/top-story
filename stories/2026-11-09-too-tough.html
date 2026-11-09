@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Too Tough</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;500;600&display=block">
+<style>
+/* Too Tough. Nov 8, 2026: on 60 Minutes, Trump said his immigration crackdown "both helped and hurt" and
+   "So I think it was too tough." Two bands: the top band is what he said (a waveform that speaks each quote, then rests),
+   the bottom band is the ICE daily arrest target CBS reports, which holds still because no change has been ordered.
+   The waveform has no downward trend: it pulses per quote and rests, so it reports speech, not a verdict on tone.
+   Fixed 432x768 stage scaled to fit. All readable content inside the social safe box x 26-380 / y 108-600 stage px. */
+:root {
+  --bg: #141516;
+  --ink: #e9e7e1;
+  --soft: #c9c6bf;
+  --muted: #9a9ea3;
+  --hair: #4a4f54;
+  --ochre: #cfae6b;
+  --steel: #2c3033;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #141516; } }
+:root[data-theme="dark"] { --bg: #141516; }
+html, body { height: 100%; margin: 0; }
+body { background: #0f1011; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #0f1011; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: var(--bg); }
+.deco { position: absolute; pointer-events: none; }
+#grain { inset: 0; background: radial-gradient(110% 70% at 50% 40%, rgba(255,255,255,.035), rgba(0,0,0,0) 60%), radial-gradient(90% 60% at 50% 100%, rgba(0,0,0,.35), rgba(0,0,0,0) 70%); }
+
+.abs { position: absolute; }
+#kicker { left: 26px; top: 112px; width: 354px; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#kicker i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ochre); margin-right: 7px; vertical-align: 1px; }
+
+/* top band */
+.lab { font: 600 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#topLab { left: 26px; top: 140px; width: 354px; }
+#title { left: 26px; top: 140px; width: 354px; }
+#title .h { font: 600 27px/1.14 var(--serif); color: var(--ink); text-wrap: balance; letter-spacing: -.005em; }
+#title .s { margin-top: 10px; font: 400 13px/1.4 var(--sans); color: var(--soft); }
+.q { left: 26px; top: 164px; width: 354px; }
+.q .t { font: italic 500 25px/1.2 var(--serif); color: var(--ink); text-wrap: balance; }
+.q .t.big { font-size: 30px; line-height: 1.08; color: var(--ochre); }
+.q .t .lead, .q .t.big .lead { font-style: normal; font-family: var(--sans); font-weight: 500; font-size: 14px; color: var(--soft); display: block; margin-bottom: 6px; letter-spacing: .01em; }
+.q .src { margin-top: 9px; font: 500 11px/1.3 var(--mono); color: var(--muted); letter-spacing: .02em; }
+#poll { left: 26px; top: 290px; width: 354px; font: 400 13.5px/1.38 var(--sans); color: var(--soft); }
+#poll b { font: 700 22px/1 var(--mono); color: var(--ink); margin-right: 6px; vertical-align: -2px; }
+#poll .src { margin-top: 4px; font: 500 11px/1.3 var(--mono); color: var(--muted); }
+#wave { left: 0; top: 0; width: 432px; height: 768px; }
+#wave path { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+#wave line { stroke: var(--hair); stroke-width: 1; }
+
+#sofar { left: 26px; top: 140px; width: 354px; }
+#sofar .h { font: 600 23px/1.16 var(--serif); color: var(--ink); text-wrap: balance; }
+#sofar .p { margin-top: 8px; font: 400 13px/1.38 var(--sans); color: var(--soft); }
+#sofar .bis { margin-top: 8px; padding-left: 10px; border-left: 2px solid var(--ochre); font: italic 500 14.5px/1.3 var(--serif); color: var(--ink); }
+#sofar .bis span { display: block; margin-top: 4px; font: 500 11px/1.3 var(--mono); font-style: normal; color: var(--muted); }
+
+/* divider */
+#rule { left: 26px; top: 362px; width: 354px; height: 1px; background: var(--hair); transform-origin: left center; }
+
+/* bottom band */
+#botLab { left: 26px; top: 378px; width: 354px; display: flex; justify-content: space-between; align-items: center; }
+#botLab .lab { color: var(--ink); font-size: 13px; }
+#pill { font: 700 11px/1 var(--mono); letter-spacing: .14em; color: var(--ochre); border: 1.5px solid var(--ochre); border-radius: 3px; padding: 4px 6px 3px; }
+#counter { left: 26px; top: 402px; height: 74px; display: flex; align-items: center; gap: 4px; }
+.drum { position: relative; width: 44px; height: 70px; background: var(--steel); border-radius: 5px; overflow: hidden; box-shadow: inset 0 10px 12px -8px rgba(0,0,0,.7), inset 0 -10px 12px -8px rgba(0,0,0,.7); }
+.drum .reel { position: absolute; left: 0; top: 0; width: 100%; }
+.drum .reel div { height: 70px; font: 700 50px/70px var(--mono); text-align: center; color: var(--ochre); }
+.drum::after { content: ""; position: absolute; left: 0; right: 0; top: 34px; height: 1px; background: rgba(0,0,0,.35); }
+.comma { font: 700 46px/70px var(--mono); color: var(--ochre); width: 14px; text-align: center; margin: 0 -2px; }
+#unit { margin-left: 10px; font: 500 15px/1.25 var(--sans); color: var(--soft); }
+#unit b { display: block; font-weight: 600; color: var(--ink); font-size: 17px; }
+#facts { left: 26px; top: 490px; width: 354px; }
+#facts div { font: 400 13.5px/1.35 var(--sans); color: var(--soft); margin-bottom: 6px; }
+#facts s { color: var(--muted); text-decoration-thickness: 1.5px; }
+#facts .src { font: 500 11px/1.3 var(--mono); color: var(--muted); margin-top: 2px; }
+
+#sources { left: 26px; top: 484px; width: 354px; font: 500 11px/1.36 var(--mono); color: var(--muted); }
+#sources .lab { font-size: 11px; color: var(--ink); margin-bottom: 6px; }
+#sources div { margin-bottom: 3px; }
+#sources a { color: inherit; text-decoration: none; }
+#sources a:hover { color: var(--ink); text-decoration: underline; }
+
+#replay { position: absolute; right: 52px; top: 104px; min-height: 36px; min-width: 44px; padding: 0 14px; border: 1.5px solid var(--ochre); border-radius: 999px;
+  background: var(--bg); color: var(--ochre); font: 600 13px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay[hidden] { display: none; }
+#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--ochre); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage" role="img" aria-label="Animation: on 60 Minutes, Trump said his immigration crackdown both helped and hurt and might be too tough, while CBS reports the ICE target of about 2,700 arrests a day has not been changed.">
+  <div class="deco" id="grain"></div>
+
+  <div class="abs" id="kicker"><i></i>60 Minutes &middot; aired Sun Nov 8</div>
+
+  <div class="abs" id="title">
+    <div class="h">Trump says his immigration crackdown &ldquo;both helped and hurt&rdquo;</div>
+    <div class="s">Interview with Ross Douthat, taped after Democrats won the House and Senate</div>
+  </div>
+
+  <div class="abs lab" id="topLab">What Trump said</div>
+
+  <div class="abs q" id="q1"><div class="t">&ldquo;I think I got an A+ for closing up the border.&rdquo;</div><div class="src">CBS News, 10 takeaways</div></div>
+  <div class="abs q" id="q2"><div class="t"><span class="lead">On what hurt:</span>&ldquo;I get hurt because we also took people that had good jobs&hellip;&rdquo;</div><div class="src">CBS News, 10 takeaways</div></div>
+  <div class="abs q" id="q3"><div class="t big"><span class="lead">Asked if deportations went too far:</span>&ldquo;I think it might be too tough, yeah.&rdquo;</div><div class="src">60 Minutes transcript, CBS News</div></div>
+  <div class="abs" id="poll"><b>58%</b>of voters in the CBS News exit poll said the administration&rsquo;s immigration actions have &ldquo;gone too far.&rdquo;</div>
+  <div class="abs q" id="q4"><div class="t"><span class="lead">On a deal with Democrats, he would</span>&ldquo;love to do something on immigration.&rdquo;</div><div class="src">CBS News</div></div>
+
+  <div class="abs" id="sofar">
+    <div class="lab" style="margin-bottom:10px">So far</div>
+    <div class="h">No change to enforcement has been announced.</div>
+    <div class="p">DHS and ICE officials have received no instruction to scale back since the election, sources told CBS.</div>
+    <div class="bis">&ldquo;This administration will not slow down its efforts to arrest and deport criminal illegal aliens who terrorize our communities.&rdquo;<span>White House spokeswoman Lauren Bis, via CBS News</span></div>
+  </div>
+
+  <svg id="wave" class="abs" viewBox="0 0 432 768" aria-hidden="true">
+    <line x1="26" y1="330" x2="380" y2="330"></line>
+    <path id="wp" d=""></path>
+  </svg>
+
+  <div class="abs" id="rule"></div>
+
+  <div class="abs" id="botLab"><span class="lab">ICE daily arrest target</span><span id="pill">TARGET</span></div>
+  <div class="abs" id="counter">
+    <div class="drum"><div class="reel" data-d="2"></div></div>
+    <div class="comma">,</div>
+    <div class="drum"><div class="reel" data-d="7"></div></div>
+    <div class="drum"><div class="reel" data-d="0"></div></div>
+    <div class="drum"><div class="reel" data-d="0"></div></div>
+    <div id="unit"><b>arrests a day</b>roughly</div>
+  </div>
+  <div class="abs" id="facts">
+    <div id="f1">About 19,000 a week, ordered in recent weeks. Earlier target: <s>2,000</s> a day.</div>
+    <div id="f2">$75 billion for ICE through 2029.</div>
+    <div class="src" id="f3">CBS News, citing agency sources, Nov 8</div>
+  </div>
+
+  <div class="abs" id="sources">
+    <div class="lab">Sources</div>
+    <div><a href="https://www.cbsnews.com/news/10-takeaways-from-trump-60-minutes-interview/" target="_blank" rel="noopener">CBS News: 10 takeaways from the interview, Nov 8</a></div>
+    <div><a href="https://www.cbsnews.com/news/trump-says-some-of-his-immigration-policies-may-have-been-too-tough-60-minutes/" target="_blank" rel="noopener">CBS News: &ldquo;too tough&rdquo; report and exit poll, Nov 8</a></div>
+    <div><a href="https://www.cbsnews.com/news/donald-trump-2026-post-midterm-elections-interview-60-minutes-transcript/" target="_blank" rel="noopener">CBS News: 60 Minutes interview transcript, Nov 8</a></div>
+    <div><a href="https://www.cbsnews.com/news/ice-crackdown-stephen-miller-illegal-immigration/" target="_blank" rel="noopener">CBS News: ICE unlikely to scale back crackdown, Nov 8</a></div>
+  </div>
+
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lin = (t, s, d) => clamp((t - s) / d, 0, 1);
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const inout = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const ramp = (t, s, d) => ease(lin(t, s, d));
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // beats (s)
+  const B1 = 3.0, B2 = 6.2, B3 = 9.6, B4 = 13.2, B5 = 16.0, END = 19.6;
+
+  // drums: each reel holds 0..9 then the target digit again at the end, rolls from 0 to its digit (plus full spins for character)
+  const reels = [...document.querySelectorAll(".reel")].map((el, i) => {
+    const d = +el.dataset.d, spins = 1 + (i === 0 ? 0 : 1);
+    const seq = []; for (let s = 0; s < spins; s++) for (let n = 0; n < 10; n++) seq.push(n);
+    for (let n = 0; n <= d; n++) seq.push(n);
+    el.innerHTML = seq.map((n) => `<div>${n}</div>`).join("");
+    return { el, steps: seq.length - 1 };
+  });
+
+  const fade = (el, k, dy) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${(dy || 0).toFixed(1)}px)`; };
+  const win = (t, a, b, fi = 0.45, fo = 0.35) => Math.min(ramp(t, a, fi), 1 - lin(t, b - fo, fo));
+  const rise = (t, a) => (1 - ramp(t, a, 0.5)) * 8;
+
+  // waveform: amplitude envelope pulses while each quote "speaks", then rests. Deterministic in t.
+  const wp = $("wp");
+  const speaks = [[B1 + 0.2, 2.0], [B2 + 0.2, 2.4], [B3 + 0.2, 1.6], [B4 + 0.2, 1.8]];
+  function amp(t) {
+    let a = 0.06;
+    for (const [s, d] of speaks) { const k = lin(t, s, d); if (k > 0 && k < 1) a = Math.max(a, Math.sin(Math.PI * k) * (0.75 + 0.25 * Math.sin(k * 23))); }
+    return a;
+  }
+  function wave(t) {
+    const A = amp(t) * 20, pts = [];
+    for (let x = 26; x <= 380; x += 3) {
+      const u = (x - 26) / 354, edge = Math.sin(Math.PI * u);
+      const y = 330 - A * edge * (0.55 * Math.sin(x * 0.11 + t * 9) + 0.3 * Math.sin(x * 0.27 - t * 13) + 0.15 * Math.sin(x * 0.53 + t * 5));
+      pts.push(`${x},${y.toFixed(1)}`);
+    }
+    wp.setAttribute("d", "M" + pts.join(" L"));
+  }
+
+  function render(t) {
+    // title then top label
+    fade($("title"), win(t, 0.15, B1 + 0.1), rise(t, 0.15));
+    $("topLab").style.opacity = (ramp(t, B1, 0.4) * (1 - lin(t, B5 - 0.3, 0.3))).toFixed(3);
+
+    // quotes
+    fade($("q1"), win(t, B1 + 0.15, B2), rise(t, B1 + 0.15));
+    fade($("q2"), win(t, B2 + 0.15, B3), rise(t, B2 + 0.15));
+    fade($("q3"), win(t, B3 + 0.15, B4), rise(t, B3 + 0.15));
+    fade($("poll"), win(t, B3 + 1.5, B4), rise(t, B3 + 1.5));
+    fade($("q4"), win(t, B4 + 0.15, B5), rise(t, B4 + 0.15));
+    fade($("sofar"), ramp(t, B5 + 0.1, 0.5), rise(t, B5 + 0.1));
+
+    // waveform: visible from B1, sits under quotes, out during the poll line and the end card
+    const wv = ramp(t, B1 - 0.2, 0.5) * (1 - lin(t, B3 + 1.2, 0.3)) + ramp(t, B4, 0.4) * (1 - lin(t, B5 - 0.3, 0.3));
+    $("wave").style.opacity = clamp(wv, 0, 1).toFixed(3);
+    wave(t);
+
+    // divider + bottom band: present from frame 1 (hook), drums roll in the first 2.4s then hold
+    $("rule").style.transform = `scaleX(${ramp(t, 0, 0.8).toFixed(3)})`;
+    $("botLab").style.opacity = ramp(t, 0, 0.4).toFixed(3);
+    reels.forEach((r, i) => {
+      const k = inout(lin(t, 0.1 + i * 0.12, 2.0));
+      r.el.style.transform = `translateY(${(-70 * r.steps * k).toFixed(2)}px)`;
+    });
+    $("unit").style.opacity = ramp(t, 1.9, 0.5).toFixed(3);
+    fade($("f1"), ramp(t, 2.3, 0.5) * (1 - lin(t, B5 - 0.3, 0.3)), rise(t, 2.3));
+    fade($("f2"), ramp(t, B4 + 0.5, 0.5) * (1 - lin(t, B5 - 0.3, 0.3)), rise(t, B4 + 0.5));
+    $("f3").style.opacity = (ramp(t, 2.6, 0.5) * (1 - lin(t, B5 - 0.3, 0.3))).toFixed(3);
+
+    // sources on the end card
+    const sk = [...$("sources").children];
+    sk.forEach((el, i) => { const k = ramp(t, B5 + 0.4 + i * 0.2, 0.4); fade(el, k, (1 - k) * 6); });
+    $("sources").style.opacity = t > B5 ? "1" : "0";
+    $("sources").style.pointerEvents = t > B5 + 0.5 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, END)); }, play };
+  render(0);
+  const start = () => { if (reduce) { render(END); replay.hidden = false; } else play(); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+})();
+</script>
+</body>
+</html>
