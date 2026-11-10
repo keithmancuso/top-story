@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Eight Times</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;1,8..60,500&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=block">
+<style>
+/* Eight Times. Nov 9-10, 2026: Rep. Thomas Massie (R-Ky.) refiled eight articles of impeachment against
+   Defense Secretary Pete Hegseth as the lame-duck House returned. The document is the hero: a typed page on a dark desk,
+   a thin timeline strip on top (filed Sep 15, House sent home Sep 16 with no vote, refiled Nov 9, vote due this week),
+   then reactions at equal weight, then the procedure as stamps, then precedent and sources.
+   Fixed 432x768 stage scaled to fit. All readable content inside the safe box x 26-380 / y 108-600 stage px. */
+:root {
+  --desk: #15181c;
+  --ink: #e8e4da;
+  --muted: #9aa0a6;
+  --hair: #3d434a;
+  --paper: #efe9dc;
+  --pink: #1d1f22;
+  --pmuted: #5e5a52;
+  --prule: #cfc6b3;
+  --brass: #a8792a;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --desk: #15181c; } }
+:root[data-theme="dark"] { --desk: #15181c; }
+html, body { height: 100%; margin: 0; }
+body { background: #0f1114; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #0f1114; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: var(--desk); }
+.deco { position: absolute; pointer-events: none; }
+#vig { inset: 0; background: radial-gradient(120% 70% at 50% 45%, rgba(255,255,255,.04), rgba(0,0,0,0) 60%), radial-gradient(90% 50% at 50% 100%, rgba(0,0,0,.4), rgba(0,0,0,0) 70%); }
+.abs { position: absolute; }
+
+/* kicker + timeline strip */
+#kicker { left: 26px; top: 112px; width: 354px; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#kicker i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--brass); margin-right: 7px; vertical-align: 1px; }
+#strip { left: 26px; top: 132px; width: 354px; height: 46px; }
+#line { position: absolute; left: 8px; top: 6px; width: 338px; height: 1.5px; background: var(--hair); transform-origin: 0 50%; }
+#prog { position: absolute; left: 8px; top: 6px; height: 1.5px; width: 0; background: var(--brass); }
+.node { position: absolute; top: 2px; width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%; border: 1.5px solid var(--hair); background: var(--desk); box-sizing: border-box; }
+.node.on { border-color: var(--brass); background: var(--brass); }
+.nl { position: absolute; top: 17px; font: 500 11px/1.25 var(--sans); color: var(--muted); white-space: nowrap; }
+.nl b { display: block; font: 600 11px/1.25 var(--mono); color: var(--ink); letter-spacing: .04em; }
+.nl.l { transform: none; } .nl.c { transform: translateX(-50%); text-align: center; } .nl.r { transform: translateX(-100%); text-align: right; }
+
+/* paper */
+#paper { left: 26px; top: 190px; width: 354px; height: 402px; background: var(--paper); border-radius: 3px; box-shadow: 0 18px 40px rgba(0,0,0,.45), 0 1px 0 rgba(255,255,255,.4) inset; color: var(--pink); overflow: hidden; }
+#paper::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,.012) 0 2px, rgba(0,0,0,0) 2px 4px); pointer-events: none; }
+.pad { position: absolute; left: 20px; width: 314px; }
+#hd { top: 15px; }
+#hd .a { font: 600 11px/1 var(--mono); letter-spacing: .16em; color: var(--pmuted); }
+#hd .n { margin-top: 7px; font: 600 18px/1.15 var(--serif); }
+#hd .n span { display: inline; font-size: 14px; font-weight: 500; margin-left: 6px; color: var(--pmuted); }
+#hd .f { margin-top: 6px; font: 400 12px/1.3 var(--sans); color: var(--pmuted); }
+#hr { top: 90px; height: 1px; background: var(--prule); transform-origin: 0 50%; }
+
+.grp { position: absolute; left: 20px; top: 106px; width: 314px; }
+/* cover */
+#cover .big { font: 600 46px/1 var(--serif); letter-spacing: -.01em; }
+#cover .sub { margin-top: 12px; font: 500 16px/1.35 var(--serif); color: #3a3832; text-wrap: balance; }
+#cover .cq { margin-top: 16px; padding-left: 12px; border-left: 2px solid var(--brass); font: italic 600 18px/1.25 var(--serif); }
+#cover .meta { margin-top: 8px; font: 500 12px/1.4 var(--sans); color: var(--pmuted); }
+
+/* articles */
+.art { display: flex; gap: 10px; margin-bottom: 8px; font: 500 12.5px/1.36 var(--mono); color: var(--pink); }
+.art .num { flex: 0 0 44px; font-weight: 600; color: #6d4a12; }
+.art .tx { flex: 1; }
+.art .tx .h { color: transparent; }
+#artnote { margin-top: 2px; font: 400 11px/1.4 var(--sans); color: var(--pmuted); }
+
+/* reactions */
+#react .lab, #next .lab { font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--pmuted); margin-bottom: 9px; }
+.rq { padding: 7px 0 8px; border-top: 1px solid var(--prule); }
+.rq .t { font: italic 500 15.5px/1.3 var(--serif); }
+.rq .who { margin-top: 4px; font: 500 11px/1.3 var(--sans); color: var(--pmuted); }
+
+/* next steps */
+.step { position: relative; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+.stamp { flex: 0 0 34px; height: 34px; border: 2px solid var(--brass); border-radius: 50%; display: grid; place-items: center; font: 600 15px/1 var(--mono); color: #7a5414; box-sizing: border-box; }
+.step .h { font: 600 15px/1.25 var(--serif); }
+.step .s { margin-top: 3px; font: 400 12px/1.4 var(--sans); color: #4a473f; }
+
+/* end */
+#end .lab { font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--pmuted); margin-bottom: 10px; }
+#end .prec { font: 500 15px/1.35 var(--serif); }
+#end .prec b { font-weight: 600; }
+#sources { margin-top: 14px; border-top: 1px solid var(--prule); padding-top: 10px; }
+#sources div { margin-bottom: 5px; font: 400 11px/1.35 var(--sans); color: #3f3c35; }
+#sources a { color: inherit; text-decoration: underline; text-decoration-color: rgba(0,0,0,.25); text-underline-offset: 2px; }
+
+#replay { position: absolute; right: 68px; top: 556px; min-height: 36px; min-width: 44px; padding: 0 14px; border: 1.5px solid var(--brass); border-radius: 999px;
+  background: rgba(21,24,28,.92); color: var(--ink); font: 600 12px/1 var(--sans); letter-spacing: .04em; cursor: pointer; -webkit-tap-highlight-color: transparent; z-index: 5; }
+#replay[hidden] { display: none; }
+#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage" role="img" aria-label="Animated explainer: Rep. Thomas Massie refiled eight articles of impeachment against Defense Secretary Pete Hegseth on Nov 9, 2026; the House must act within two legislative days.">
+  <div class="deco" id="vig"></div>
+
+  <div class="abs" id="kicker"><i></i>U.S. House &middot; Nov 10, 2026</div>
+
+  <div class="abs" id="strip" data-key>
+    <div id="line"></div><div id="prog"></div>
+    <div class="node" id="n0" style="left:8px"></div>
+    <div class="node" id="n1" style="left:118px"></div>
+    <div class="node" id="n2" style="left:236px"></div>
+    <div class="node" id="n3" style="left:346px"></div>
+    <div class="nl l" id="l0" style="left:2px"><b>SEP 15</b>filed</div>
+    <div class="nl c" id="l1" style="left:118px"><b>SEP 16</b>sent home, no vote</div>
+    <div class="nl c" id="l2" style="left:236px"><b>NOV 9</b>refiled</div>
+    <div class="nl r" id="l3" style="left:352px"><b>THIS WEEK</b>vote due</div>
+  </div>
+
+  <div class="abs" id="paper" data-key>
+    <div class="pad" id="hd">
+      <div class="a">ARTICLES OF IMPEACHMENT</div>
+      <div class="n">Peter Brian Hegseth<span>Secretary of Defense</span></div>
+      <div class="f">Filed by Rep. Thomas Massie (R-Ky.) &middot; 34 pages</div>
+    </div>
+    <div class="pad" id="hr"></div>
+
+    <div class="grp" id="cover">
+      <div class="big">Eight Times</div>
+      <div class="sub">A Republican congressman is forcing a House vote on impeaching the Defense Secretary.</div>
+      <div class="cq">&ldquo;The answer is yes, eight times.&rdquo;</div><div class="meta">Massie, on whether Hegseth committed impeachable acts. He refiled the eight articles Monday as the House returned after the midterms.</div>
+    </div>
+
+    <div class="grp" id="arts">
+      <div class="art"><div class="num">I&ndash;III</div><div class="tx" data-t="War on Iran without authorization from Congress"></div></div>
+      <div class="art"><div class="num">IV</div><div class="tx" data-t="Civilian protections ignored, citing a strike on a school in Iran"></div></div>
+      <div class="art"><div class="num">V</div><div class="tx" data-t="Drug-boat strikes in the Caribbean and Pacific"></div></div>
+      <div class="art"><div class="num">VI</div><div class="tx" data-t="Free speech: Pentagon scrutiny of Sen. Mark Kelly"></div></div>
+      <div class="art"><div class="num">VII</div><div class="tx" data-t="Capture of Venezuela&#8217;s Nicol&aacute;s Maduro"></div></div>
+      <div class="art"><div class="num">VIII</div><div class="tx" data-t="Strikes in Yemen without authorization"></div></div>
+      <div id="artnote">As summarized by Roll Call and CBS News.</div>
+    </div>
+
+    <div class="grp" id="react">
+      <div class="lab">The responses</div>
+      <div class="rq" id="r1"><div class="t">&ldquo;Sham articles.&rdquo;</div><div class="who">Pete Hegseth, in a video post</div></div>
+      <div class="rq" id="r2"><div class="t">&ldquo;A terrible, terrible look&rdquo; in the middle of hostilities abroad.</div><div class="who">Speaker Mike Johnson (R-La.)</div></div>
+      <div class="rq" id="r3"><div class="t">A &ldquo;hard yes.&rdquo;</div><div class="who">Minority Leader Hakeem Jeffries (D-N.Y.), on ABC</div></div>
+      <div class="rq" id="r4"><div class="t">He would &ldquo;stand by&rdquo; Hegseth even if impeached.</div><div class="who">President Trump</div></div>
+    </div>
+
+    <div class="grp" id="next">
+      <div class="lab">What happens next</div>
+      <div class="step" id="s1"><div class="stamp">1</div><div><div class="h">House must act within two legislative days</div><div class="s">It can vote on the articles, or table them or send them to committee.</div></div></div>
+      <div class="step" id="s2"><div class="stamp">2</div><div><div class="h">A simple majority of those voting impeaches</div><div class="s">At least three Republicans would be needed if every Democrat votes yes, depending on absences. None besides Massie has committed.</div></div></div>
+      <div class="step" id="s3"><div class="stamp">3</div><div><div class="h">Senate trial: 67 votes to convict</div><div class="s">More than a dozen Republican senators would be needed.</div></div></div>
+    </div>
+
+    <div class="grp" id="end">
+      <div class="lab">Precedent</div>
+      <div class="prec">The House has impeached two Cabinet secretaries: <b>William Belknap</b>, 1876, acquitted, and <b>Alejandro Mayorkas</b>, 2024, charges dismissed.</div>
+      <div id="sources">
+        <div><a href="https://www.cbsnews.com/news/pete-hegseth-impeachment-vote-house-thomas-massie/" target="_blank" rel="noopener">CBS News: Hegseth could face impeachment vote this week, Nov 9</a></div>
+        <div><a href="https://www.cbsnews.com/news/hegseth-pentagon-briefing-impeachment-iran-war/" target="_blank" rel="noopener">CBS News: Hegseth briefing ahead of vote, Nov 10</a></div>
+        <div><a href="https://abcnews.com/Politics/defense-secretary-pete-hegseth-face-impeachment-vote/story?id=137926360" target="_blank" rel="noopener">ABC News: Hegseth to face impeachment vote, Nov 9</a></div>
+        <div><a href="https://rollcall.com/2026/11/09/massie-moves-to-force-hegseth-impeachment-vote/" target="_blank" rel="noopener">Roll Call: Massie moves to force vote, Nov 9</a></div>
+        <div><a href="https://www.opb.org/article/2026/09/16/speaker-johnson-recesses-the-house-early-as-rep-thomas-massie-pushes-hegseth-impeachment/" target="_blank" rel="noopener">OPB/AP: Johnson recesses House early, Sep 16</a></div>
+        <div><a href="https://www.aljazeera.com/news/2026/11/9/us-congressman-files-resolution-to-impeach-defence-secretary-pete-hegseth" target="_blank" rel="noopener">Al Jazeera: resolution filed, Nov 9</a></div>
+      </div>
+    </div>
+  </div>
+
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lin = (t, s, d) => clamp((t - s) / d, 0, 1);
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const inout = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const ramp = (t, s, d) => ease(lin(t, s, d));
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // beats (s)
+  const B1 = 3.4, B2 = 9.6, B3 = 13.0, B4 = 16.3, END = 19.6;
+
+  const fade = (el, k, dy) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${(dy || 0).toFixed(1)}px)`; };
+  const win = (t, a, b, fi = 0.45, fo = 0.35) => Math.min(ramp(t, a, fi), 1 - lin(t, b - fo, fo));
+  const rise = (t, a) => (1 - ramp(t, a, 0.5)) * 8;
+
+  // typewriter lines: visible slice + transparent remainder keeps wrapping stable
+  const lines = [...document.querySelectorAll(".art .tx")].map((el) => {
+    const tmp = document.createElement("textarea"); tmp.innerHTML = el.dataset.t; return { el, s: tmp.value, last: -1 };
+  });
+  const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const TYPE0 = B1 + 0.3, PER = 0.85, CPS = 60;
+  function typeLines(t) {
+    lines.forEach((L, i) => {
+      const n = Math.round(clamp((t - (TYPE0 + i * PER)) * CPS, 0, L.s.length));
+      if (n !== L.last) { L.el.innerHTML = esc(L.s.slice(0, n)) + '<span class="h">' + esc(L.s.slice(n)) + "</span>"; L.last = n; }
+      L.el.parentElement.style.opacity = t >= TYPE0 + i * PER ? "1" : "0";
+    });
+  }
+
+  // timeline: node positions along the strip (px from strip left) and when the marker reaches each
+  const NX = [8, 118, 236, 346], NT = [B1 + 0.2, B1 + 1.5, B1 + 2.8, B3 + 0.2];
+  function strip(t) {
+    $("line").style.transform = `scaleX(${ramp(t, 0.1, 0.9).toFixed(3)})`;
+    let x = NX[0];
+    for (let i = 1; i < 4; i++) { const k = inout(lin(t, NT[i] - 1.0, 1.0)); if (k > 0) x = NX[i - 1] + (NX[i] - NX[i - 1]) * k; }
+    const vis = t >= NT[0] - 0.2;
+    $("prog").style.width = vis ? (x - 8).toFixed(1) + "px" : "0px";
+    for (let i = 0; i < 4; i++) {
+      $("n" + i).classList.toggle("on", t >= NT[i]);
+      $("l" + i).style.opacity = (0.45 + 0.55 * ramp(t, NT[i] - 0.3, 0.4)).toFixed(3) * ramp(t, 0.3, 0.6);
+      $("n" + i).style.opacity = ramp(t, 0.3, 0.6).toFixed(3);
+    }
+  }
+
+  function render(t) {
+    $("kicker").style.opacity = ramp(t, 0, 0.4).toFixed(3);
+    strip(t);
+
+    // paper rises in, header + rule
+    const pk = ramp(t, 0, 0.7);
+    $("paper").style.opacity = pk.toFixed(3);
+    $("paper").style.transform = `translateY(${((1 - pk) * 24).toFixed(1)}px)`;
+    $("hr").style.transform = `scaleX(${ramp(t, 0.4, 0.8).toFixed(3)})`;
+
+    // cover then articles
+    fade($("cover"), win(t, 0.25, B1 + 0.1), rise(t, 0.25));
+    $("arts").style.opacity = (1 - lin(t, B2 - 0.35, 0.35)).toFixed(3);
+    typeLines(t);
+    $("artnote").style.opacity = ramp(t, TYPE0 + 6 * PER, 0.5).toFixed(3);
+    // reactions, equal weight, one after another
+    $("react").style.opacity = (ramp(t, B2, 0.3) * (1 - lin(t, B3 - 0.35, 0.35))).toFixed(3);
+    ["r1", "r2", "r3", "r4"].forEach((id, i) => fade($(id), ramp(t, B2 + 0.2 + i * 0.55, 0.45), rise(t, B2 + 0.2 + i * 0.55)));
+
+    // next steps: stamps press in
+    $("next").style.opacity = (ramp(t, B3, 0.3) * (1 - lin(t, B4 - 0.35, 0.35))).toFixed(3);
+    ["s1", "s2", "s3"].forEach((id, i) => {
+      const a = B3 + 0.25 + i * 0.85, k = ramp(t, a, 0.35);
+      fade($(id), k, rise(t, a));
+      const st = $(id).querySelector(".stamp");
+      st.style.transform = `scale(${(1.35 - 0.35 * ease(lin(t, a, 0.3))).toFixed(3)})`;
+    });
+
+    // end card
+    $("end").style.opacity = ramp(t, B4, 0.3).toFixed(3);
+    fade($("end").querySelector(".prec"), ramp(t, B4 + 0.1, 0.5), rise(t, B4 + 0.1));
+    [...$("sources").children].forEach((el, i) => { const k = ramp(t, B4 + 0.7 + i * 0.18, 0.4); fade(el, k, (1 - k) * 6); });
+    $("sources").style.opacity = ramp(t, B4 + 0.5, 0.3).toFixed(3);
+    $("end").style.pointerEvents = t > B4 + 0.5 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, END)); }, play };
+  render(0);
+  const start = () => { if (reduce) { render(END); replay.hidden = false; } else play(); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+})();
+</script>
+</body>
+</html>
