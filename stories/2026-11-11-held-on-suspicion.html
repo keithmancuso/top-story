@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Held on Suspicion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=block">
+<style>
+/* Held on Suspicion. Nov 10, 2026: a 41-year-old U.S. Army soldier, not named, was arrested near Gloucester, UK, on
+   suspicion of offences under Sections 1 and 3 of the UK National Security Act 2023. Police say the activity relates
+   to Russia; two Gloucestershire locations were searched; the case appears unrelated to the RAF Fairford plot.
+   One steel ID tag carries the story: it drops in, brackets close (held), a map pins Gloucester, the tag flips to show
+   the two sections, an arrow points to Russia, a zoom shows Fairford as a separate case, an hourglass runs (ongoing).
+   Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+:root {
+  --bg: #121417; --ink: #ece8de; --muted: #8e959d; --hair: #343a41;
+  --amber: #d9a441; --teal: #3fb6a8; --steel1: #c9ced4; --steel2: #858c95; --emb: #4a5058;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #121417; } }
+:root[data-theme="dark"] { --bg: #121417; }
+html, body { height: 100%; margin: 0; }
+body { background: #0c0d0f; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #0c0d0f; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: var(--bg); }
+.deco { position: absolute; pointer-events: none; }
+#vig { inset: 0; background: radial-gradient(110% 60% at 50% 40%, rgba(255,255,255,.05), rgba(0,0,0,0) 62%); }
+.abs { position: absolute; }
+.lab { font: 600 12px/1.2 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+.sub { font: 500 12px/1.2 var(--sans); color: var(--muted); }
+
+#kicker { left: 26px; top: 112px; width: 354px; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#kicker i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); margin-right: 7px; vertical-align: 1px; }
+
+#map { left: 0; top: 0; width: 432px; height: 768px; }
+#map path.coast { fill: #1b1f24; stroke: #5b636c; stroke-width: 1.4; stroke-linejoin: round; }
+
+/* tag */
+#chain { left: 0; top: 0; width: 432px; height: 768px; }
+#tag { position: absolute; left: 0; top: 0; width: 176px; height: 108px; margin: -54px 0 0 -88px; perspective: 700px; }
+#flip { position: absolute; inset: 0; transform-style: preserve-3d; }
+.face { position: absolute; inset: 0; border-radius: 26px; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background: linear-gradient(155deg, var(--steel1) 0%, #a7adb5 45%, var(--steel2) 100%);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.35), inset 0 -3px 6px rgba(0,0,0,.25), 0 12px 26px rgba(0,0,0,.5); }
+.face .hole { position: absolute; left: 14px; top: 46px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); box-shadow: inset 0 1px 2px rgba(0,0,0,.6); }
+.face .rim { position: absolute; inset: 7px; border-radius: 20px; border: 1.5px solid rgba(60,66,74,.35); }
+.emb { position: absolute; left: 40px; font: 600 15px/1 var(--mono); letter-spacing: .08em; color: var(--emb); text-shadow: 0 1px 0 rgba(255,255,255,.45); white-space: nowrap; }
+#fName { top: 24px; width: 110px; height: 3px; background: var(--emb); opacity: .5; border-radius: 2px; box-shadow: 0 1px 0 rgba(255,255,255,.45); }
+#fArmy { top: 44px; }
+#fAge { top: 68px; font-size: 20px; }
+#back { transform: rotateY(180deg); }
+#back svg { position: absolute; top: 18px; width: 46px; height: 46px; }
+#back svg * { fill: none; stroke: var(--emb); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+#back .sec { position: absolute; top: 72px; width: 60px; text-align: center; font: 600 15px/1 var(--mono); color: var(--emb); text-shadow: 0 1px 0 rgba(255,255,255,.45); }
+#i1 { left: 46px; } #s1 { left: 39px; }
+#i3 { left: 108px; } #s3 { left: 101px; }
+
+#brackets { left: 0; top: 0; width: 432px; height: 768px; }
+#brackets path { fill: none; stroke: var(--amber); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+#heldLab { left: 26px; top: 376px; width: 354px; text-align: center; }
+
+#lawHead { left: 26px; top: 196px; width: 354px; text-align: center; }
+#lawHead .y { font: 600 13px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.secLab { top: 412px; width: 160px; text-align: center; }
+#sl1 { left: 40px; } #sl3 { left: 206px; }
+.secLab b { display: block; font: 600 22px/1 var(--mono); color: var(--amber); margin-bottom: 6px; }
+
+#overlay { left: 0; top: 0; width: 432px; height: 768px; }
+.pin { fill: var(--amber); stroke: var(--bg); stroke-width: 2; }
+.ring { fill: none; stroke: var(--amber); stroke-width: 1.6; }
+#arrow { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
+#arrowHead { fill: var(--ink); }
+#fLine { fill: none; stroke: #c9cdd2; stroke-width: 2; stroke-dasharray: 5 5; }
+.fpin { fill: var(--teal); stroke: var(--bg); stroke-width: 2; }
+
+#gLab { left: 26px; top: 0; width: 160px; text-align: right; }
+#search { left: 218px; top: 0; }
+#search svg { width: 30px; height: 26px; margin-right: 4px; vertical-align: middle; }
+#search svg * { fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+#search span { vertical-align: middle; }
+#search .x2 { font: 600 20px/1 var(--mono); color: var(--amber); margin-right: 8px; }
+#ruLab { left: 220px; top: 0; width: 160px; text-align: right; }
+#ruLab .lab { font-size: 15px; }
+.cbox { top: 318px; height: 46px; box-sizing: border-box; border: 1.5px solid; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(18,20,23,.85); }
+.cbox i { width: 10px; height: 10px; border-radius: 50%; }
+#boxA { left: 34px; width: 140px; border-color: var(--amber); } #boxA i { background: var(--amber); }
+#boxF { left: 236px; width: 140px; border-color: var(--teal); } #boxF i { background: var(--teal); } #boxF .lab { color: var(--teal); }
+#neq { left: 185px; top: 324px; width: 42px; text-align: center; font: 600 34px/1 var(--sans); color: var(--ink); }
+#sepLab { left: 26px; top: 384px; width: 354px; text-align: center; }
+.lead { fill: none; stroke-width: 1.6; }
+#leadA { stroke: var(--amber); } #leadF { stroke: var(--teal); }
+
+#glass { left: 166px; top: 300px; width: 100px; height: 140px; }
+#glass svg { width: 100px; height: 140px; }
+#ongoing { left: 26px; top: 456px; width: 354px; text-align: center; }
+
+#end { left: 26px; top: 136px; width: 354px; }
+#end .t { font: 700 36px/1.05 var(--sans); letter-spacing: -.01em; }
+#end .r { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+#end .chip { font: 600 12px/1 var(--sans); letter-spacing: .06em; padding: 7px 10px; border: 1px solid var(--hair); border-radius: 999px; color: var(--ink); }
+#end .chip b { color: var(--amber); }
+#sources { margin-top: 24px; border-top: 1px solid var(--hair); padding-top: 12px; }
+#sources .h { font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+#sources div.s { margin-bottom: 8px; font: 400 12px/1.35 var(--sans); color: #c9c6be; }
+#sources a { color: inherit; text-decoration: underline; text-decoration-color: rgba(255,255,255,.3); text-underline-offset: 2px; }
+
+#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 552px; min-height: 36px; min-width: 44px; padding: 0 16px; border: 1.5px solid var(--amber); border-radius: 999px;
+  background: rgba(18,20,23,.92); color: var(--ink); font: 600 12px/1 var(--sans); letter-spacing: .04em; cursor: pointer; -webkit-tap-highlight-color: transparent; z-index: 30; }
+#replay[hidden] { display: none; }
+#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage" role="img" aria-label="A 41-year-old U.S. Army soldier, not named, was arrested near Gloucester, England, on Nov 10, 2026, on suspicion of offences under Sections 1 and 3 of the UK National Security Act 2023. Police say the activity relates to Russia. Two sites in Gloucestershire were searched. Police say it is not linked to the RAF Fairford plot. The investigation is ongoing.">
+  <div class="deco" id="vig"></div>
+
+  <svg class="abs" id="map" viewBox="0 0 432 768" aria-hidden="true">
+    <g id="mapG"><path class="coast" d="M176.4 250.8 L182.2 251.8 L181.8 258.4 L171.0 268.9 L168.7 277.5 L159.9 290.1 L166.7 286.4 L184.4 283.5 L203.0 283.1 L207.3 289.4 L201.4 300.9 L193.9 315.5 L191.7 329.7 L183.6 334.9 L175.8 338.2 L185.5 339.6 L193.3 338.9 L200.5 342.2 L203.0 346.5 L214.3 371.2 L218.5 382.1 L230.0 388.7 L240.3 400.9 L243.9 418.8 L248.4 433.3 L245.7 442.8 L251.5 439.5 L267.0 440.2 L275.4 451.1 L275.8 455.1 L271.9 467.6 L266.6 472.9 L264.1 477.8 L255.4 486.4 L249.6 489.0 L269.9 491.4 L267.4 499.9 L260.6 506.9 L246.7 512.8 L239.1 509.8 L226.5 512.8 L220.5 511.2 L214.6 510.5 L205.3 513.5 L194.3 519.7 L184.8 513.1 L175.8 516.8 L171.2 529.6 L161.5 525.0 L140.9 538.2 L130.8 534.6 L135.5 530.0 L143.2 523.0 L153.9 503.2 L160.3 502.2 L174.3 497.0 L184.0 492.7 L189.4 488.1 L192.3 483.4 L195.2 479.1 L191.0 482.8 L184.6 486.1 L180.3 489.0 L170.0 488.4 L165.2 484.1 L158.0 485.4 L156.4 480.1 L150.6 481.8 L146.0 484.1 L139.0 474.9 L145.2 470.9 L151.2 467.6 L162.6 457.4 L163.2 452.8 L163.2 447.1 L156.0 441.5 L149.4 444.5 L151.6 439.9 L159.0 433.3 L152.5 429.6 L153.3 424.0 L158.4 424.0 L163.2 428.0 L167.5 427.0 L174.1 427.3 L181.7 426.3 L182.6 424.0 L183.6 416.4 L182.6 410.8 L185.5 402.6 L179.7 401.6 L171.2 388.7 L172.7 383.8 L179.7 373.5 L172.0 375.9 L163.2 378.5 L147.5 383.8 L144.8 375.2 L141.7 371.9 L147.5 364.0 L152.0 356.7 L147.3 345.5 L150.6 340.5 L140.9 343.8 L129.3 362.0 L133.1 348.8 L135.7 325.4 L121.1 314.8 L128.7 305.9 L131.0 296.7 L128.3 287.8 L129.3 281.8 L140.9 276.2 L139.9 267.9 L144.8 252.4 L149.6 254.1 L156.4 254.8 L173.5 253.1 Z" vector-effect="non-scaling-stroke"/></g>
+  </svg>
+
+  <svg class="abs" id="overlay" viewBox="0 0 432 768" aria-hidden="true">
+    <circle class="ring" id="r1" r="10"/><circle class="ring" id="r2" r="10"/>
+    <path id="arrow" d=""/><path id="arrowHead" d=""/>
+    <path class="lead" id="leadA" d=""/><path class="lead" id="leadF" d=""/>
+    <circle class="fpin" id="fpin" r="7"/>
+    <circle class="pin" id="gpin" r="7"/>
+  </svg>
+
+  <div class="abs" id="kicker"><i></i>Nov 10 &middot; Gloucester, UK</div>
+
+  <div class="abs lab" id="gLab">Gloucester</div>
+  <div class="abs" id="search" data-key><svg viewBox="0 0 30 26"><path d="M2 12L10 5l8 7v12H2z"/><path d="M14 10l8-7 7 6v15h-9"/></svg><span class="x2">2</span><span class="lab">sites searched</span></div>
+  <div class="abs" id="ruLab"><div class="lab">Russia</div><div class="sub">police say</div></div>
+  <div class="abs cbox" id="boxA" data-key><i></i><span class="lab">This arrest</span></div>
+  <div class="abs cbox" id="boxF" data-key><i></i><span class="lab">Fairford plot</span></div>
+  <div class="abs" id="neq">&ne;</div>
+  <div class="abs" id="sepLab"><span class="lab">Not linked</span> <span class="sub">&middot; police say</span></div>
+
+  <svg class="deco" id="chain" viewBox="0 0 432 768" aria-hidden="true"><path id="chainP" d="" fill="none" stroke="#9aa1a9" stroke-width="2.4" stroke-dasharray="1 5" stroke-linecap="round"/></svg>
+
+  <div id="tag" data-key>
+    <div id="flip">
+      <div class="face" id="front"><div class="rim"></div><div class="hole"></div>
+        <div class="emb" id="fName"></div>
+        <div class="emb" id="fArmy">U.S. ARMY</div>
+        <div class="emb" id="fAge">AGE 41</div>
+      </div>
+      <div class="face" id="back"><div class="rim"></div>
+        <svg id="i1" viewBox="0 0 46 46"><path d="M8 4h18l8 8v30H8z"/><path d="M26 4v8h8"/><path d="M14 22h12M14 29h8"/><path d="M30 30h14M38 24l6 6-6 6"/></svg>
+        <div class="sec" id="s1">&sect;1</div>
+        <svg id="i3" viewBox="0 0 46 46"><path d="M3 23c6-10 14-14 20-14s14 4 20 14c-6 10-14 14-20 14S9 33 3 23z"/><circle cx="23" cy="23" r="6"/></svg>
+        <div class="sec" id="s3">&sect;3</div>
+        <div class="hole" style="left:auto;right:14px"></div>
+      </div>
+    </div>
+  </div>
+
+  <svg class="abs" id="brackets" viewBox="0 0 432 768" aria-hidden="true"><path id="bL" d=""/><path id="bR" d=""/></svg>
+  <div class="abs lab" id="heldLab">Held on suspicion</div>
+
+  <div class="abs" id="lawHead"><div class="lab">UK National Security Act</div><div class="y">2023</div></div>
+  <div class="abs secLab" id="sl1"><b>&sect;1</b><span class="lab">Protected info</span></div>
+  <div class="abs secLab" id="sl3"><b>&sect;3</b><span class="lab">Foreign intel</span></div>
+
+  <div class="abs" id="glass" data-key><svg viewBox="0 0 100 140">
+    <path d="M18 8h64M18 132h64" stroke="#9aa1a9" stroke-width="4" stroke-linecap="round"/>
+    <path d="M24 10c0 30 22 44 22 60S24 100 24 130h52c0-30-22-44-22-60s22-30 22-60z" fill="none" stroke="#c9cdd2" stroke-width="2.4" stroke-linejoin="round"/>
+    <clipPath id="topC"><path d="M24 10c0 30 22 44 22 60h8c0-16 22-30 22-60z"/></clipPath>
+    <clipPath id="botC"><path d="M46 70c0 16-22 30-22 60h52c0-30-22-44-22-60z"/></clipPath>
+    <rect id="sandT" x="20" y="40" width="60" height="40" fill="#d9a441" clip-path="url(#topC)"/>
+    <rect id="sandB" x="20" y="110" width="60" height="30" fill="#d9a441" clip-path="url(#botC)"/>
+    <path id="stream" d="M50 68v60" stroke="#d9a441" stroke-width="2" stroke-dasharray="3 4"/>
+  </svg></div>
+  <div class="abs lab" id="ongoing">Investigation ongoing</div>
+
+  <div class="abs" id="end">
+    <div class="t">Held on Suspicion</div>
+    <div class="r"><span class="chip">U.S. soldier, <b>41</b></span><span class="chip">Not named</span><span class="chip">Police: Russia-linked</span></div>
+    <div id="sources">
+      <div class="h">Sources</div>
+      <div class="s"><a href="https://www.cbsnews.com/news/american-soldier-spying-russia-arrest-uk/" target="_blank" rel="noopener">CBS News: soldier arrested near Gloucester, Nov 10</a></div>
+      <div class="s"><a href="https://www.cnbc.com/2026/11/11/us-army-soldier-russia-espionage-arrest.html" target="_blank" rel="noopener">CNBC: arrested on suspicion of spying for Russia, Nov 11</a></div>
+      <div class="s"><a href="https://www.nbcnews.com/world/united-kingdom/us-army-member-arrested-uk-suspicion-working-russian-intelligence-rcna608616" target="_blank" rel="noopener">NBC News: suspicion of assisting Russian intelligence</a></div>
+      <div class="s"><a href="https://www.cnn.com/2026/11/10/uk/us-army-soldier-arrested-uk-alleged-espionage-russia" target="_blank" rel="noopener">CNN: arrested on suspicion of espionage, Nov 10</a></div>
+    </div>
+  </div>
+
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lin = (t, s, d) => clamp((t - s) / d, 0, 1);
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const inout = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const ramp = (t, s, d) => ease(lin(t, s, d));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const win = (t, a, b, f) => ramp(t, a, f || 0.4) * (1 - lin(t, b - 0.3, 0.3));
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // beats (s)
+  const B1 = 2.3, B2 = 4.6, B3 = 7.9, B4 = 11.0, B5 = 13.3, B6 = 15.7, B7 = 17.0, END = 19.6;
+
+  const G = [198.3, 475.5], F = [207.3, 480.5];   // Gloucester, RAF Fairford (same projection as the coastline)
+  
+  const fade = (el, k, dy) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${(dy || 0).toFixed(1)}px)`; };
+  const rise = (t, a) => (1 - ramp(t, a, 0.5)) * 8;
+  const setPos = (el, x, y) => { el.style.left = x.toFixed(1) + "px"; el.style.top = y.toFixed(1) + "px"; };
+
+  function render(t) {
+    fade($("kicker"), win(t, 0, B7, 0.4), 0);
+
+    // ---- tag position / scale / flip
+    const drop = ramp(t, 0.1, 0.9);
+    const swing = Math.sin((t - 0.9) * 5.2) * 9 * Math.exp(-Math.max(0, t - 0.9) * 1.5) * (t > 0.9 ? 1 : 0);
+    let x = 216, y = lerp(170, 268, drop), s = 1, rot = swing, flipDeg = 0, op = 1;
+    const toCorner = inout(lin(t, B2, 0.8));           // shrink to corner for the map
+    const toCenter = inout(lin(t, B3, 0.7));           // back to center for the law
+    const toCorner2 = inout(lin(t, B4 - 0.2, 0.6));    // corner again for Russia / Fairford
+    const toEnd = inout(lin(t, B6, 0.6));              // center, small, beside hourglass
+    const C1 = [104, 176, 0.62];
+    if (t >= B2) { x = lerp(216, C1[0], toCorner); y = lerp(268, C1[1], toCorner); s = lerp(1, C1[2], toCorner); }
+    if (t >= B3) { x = lerp(C1[0], 216, toCenter); y = lerp(C1[1], 300, toCenter); s = lerp(C1[2], 1.25, toCenter); }
+    if (t >= B4 - 0.2) { x = lerp(216, C1[0], toCorner2); y = lerp(300, C1[1], toCorner2); s = lerp(1.25, C1[2], toCorner2); }
+    if (t >= B6) { x = lerp(C1[0], 216, toEnd); y = lerp(C1[1], 214, toEnd); s = lerp(C1[2], 0.72, toEnd); }
+    flipDeg = 180 * inout(lin(t, B3 + 0.6, 0.7)) * (1 - inout(lin(t, B4 - 0.4, 0.5)));
+    op = (1 - lin(t, B7 - 0.3, 0.3)) * lin(t, 0.1, 0.5);
+    const dim = 1 - 0.25 * ramp(t, B1 + 0.4, 0.5) * (1 - lin(t, B2, 0.4));
+    const tag = $("tag");
+    setPos(tag, x, y);
+    tag.style.transform = `scale(${s.toFixed(3)}) rotate(${rot.toFixed(2)}deg)`;
+    tag.style.opacity = op.toFixed(3);
+    tag.style.filter = t < B2 + 0.2 ? `brightness(${dim.toFixed(3)})` : "none";
+    $("flip").style.transform = `rotateY(${flipDeg.toFixed(1)}deg)`;
+
+    // chain from above the frame to the tag's hole (decoration only)
+    const ang = rot * Math.PI / 180, hx = x + (-88 + 21) * s * Math.cos(ang), hy = y + (-88 + 21) * s * Math.sin(ang) + 0;
+    const chainOn = (1 - lin(t, B2, 0.3));
+    $("chainP").setAttribute("d", `M${(x - 20).toFixed(1)} ${(y - 260).toFixed(1)} L${hx.toFixed(1)} ${hy.toFixed(1)}`);
+    $("chain").style.opacity = chainOn.toFixed(3);
+
+    // ---- brackets close around the tag (held)
+    const bk = inout(lin(t, B1, 0.6)), bo = win(t, B1, B2 + 0.2, 0.3);
+    const gap = lerp(70, 0, bk);
+    const L = 216 - 108 - gap, R = 216 + 108 + gap, T = 268 - 72, Bm = 268 + 72;
+    $("bL").setAttribute("d", `M${L + 16} ${T} H${L} V${Bm} H${L + 16}`);
+    $("bR").setAttribute("d", `M${R - 16} ${T} H${R} V${Bm} H${R - 16}`);
+    $("brackets").style.opacity = bo.toFixed(3);
+    fade($("heldLab"), win(t, B1 + 0.5, B2 + 0.2), rise(t, B1 + 0.5));
+
+    // ---- map: draw in, dim during the law beat, zoom to Gloucester for Fairford, fade before the hourglass
+    const mapIn = ramp(t, B2 + 0.3, 0.7);
+    const mapDim = 1 - 1.0 * inout(lin(t, B3, 0.4)) * (1 - inout(lin(t, B4 - 0.3, 0.4)));
+    const mapOut = 1 - lin(t, B6 - 0.3, 0.4);
+    $("map").style.opacity = (mapIn * mapDim * mapOut * (1 - 0.6 * ramp(t, B5 + 0.6, 0.5))).toFixed(3);
+    const P = (p) => p;
+    const ov = mapIn * mapOut;
+    $("overlay").style.opacity = (ov * mapDim).toFixed(3);
+
+    // Gloucester pin + search ripples
+    const gp = P(G), pinK = ramp(t, B2 + 0.8, 0.35);
+    $("gpin").setAttribute("cx", gp[0].toFixed(1)); $("gpin").setAttribute("cy", (gp[1] - 10 * (1 - pinK)).toFixed(1));
+    $("gpin").setAttribute("opacity", pinK.toFixed(3));
+    [["r1", B2 + 1.3], ["r2", B2 + 1.9]].forEach(([id, a]) => {
+      const k = lin(t, a, 1.1), on = t >= a && t < B3 ? 1 : 0;
+      const el = $(id); el.setAttribute("cx", gp[0]); el.setAttribute("cy", gp[1]);
+      el.setAttribute("r", (8 + 26 * ease(k)).toFixed(1)); el.setAttribute("opacity", (on * (1 - k) * 0.9).toFixed(3));
+    });
+    $("gLab").style.top = (gp[1] - 8).toFixed(1) + "px";
+    $("gLab").style.left = (gp[0] - 172).toFixed(1) + "px";
+    fade($("gLab"), ramp(t, B2 + 1.0, 0.4) * mapOut * mapDim, 0);
+    const sEl = $("search"); sEl.style.top = (gp[1] + 22).toFixed(1) + "px"; sEl.style.left = (gp[0] - 8).toFixed(1) + "px";
+    fade(sEl, win(t, B2 + 1.5, B3), 0);
+
+    // Russia arrow (east)
+    const ak = inout(lin(t, B4 + 0.3, 0.9)), ao = win(t, B4 + 0.3, B5 + 0.1, 0.2);
+    const ax0 = gp[0] + 12, ay = gp[1], ax1 = lerp(ax0, 368, ak);
+    $("arrow").setAttribute("d", `M${ax0.toFixed(1)} ${ay.toFixed(1)} H${ax1.toFixed(1)}`);
+    $("arrowHead").setAttribute("d", `M${(ax1 + 2).toFixed(1)} ${ay} l-10 -6 v12 z`);
+    $("arrow").style.opacity = $("arrowHead").style.opacity = ao.toFixed(3);
+    $("ruLab").style.top = (ay - 52).toFixed(1) + "px";
+    fade($("ruLab"), win(t, B4 + 1.0, B5 + 0.1), rise(t, B4 + 1.0));
+
+    // Fairford: teal pin, two leaders to separate boxes, not-equal between them
+    const fp = F, fk = ramp(t, B5 + 0.2, 0.35), fo = (1 - lin(t, B6 - 0.3, 0.3));
+    $("fpin").setAttribute("cx", fp[0]); $("fpin").setAttribute("cy", (fp[1] - 10 * (1 - fk)).toFixed(1));
+    $("fpin").setAttribute("opacity", (fk * fo).toFixed(3));
+    const lead = (id, p, q, k) => { $(id).setAttribute("d", `M${p[0]} ${p[1] - 9} L${lerp(p[0], q[0], k).toFixed(1)} ${lerp(p[1] - 9, q[1], k).toFixed(1)}`); $(id).style.opacity = (k > 0 ? fo : 0).toFixed(3); };
+    lead("leadA", gp, [104, 364], inout(lin(t, B5 + 0.4, 0.6)));
+    lead("leadF", fp, [306, 364], inout(lin(t, B5 + 0.6, 0.6)));
+    fade($("boxA"), ramp(t, B5 + 0.8, 0.35) * fo, rise(t, B5 + 0.8));
+    fade($("boxF"), ramp(t, B5 + 1.0, 0.35) * fo, rise(t, B5 + 1.0));
+    const nq = ramp(t, B5 + 1.4, 0.3) * fo; $("neq").style.opacity = nq.toFixed(3); $("neq").style.transform = `scale(${(1.4 - 0.4 * nq).toFixed(3)})`;
+    fade($("sepLab"), ramp(t, B5 + 1.7, 0.4) * fo, rise(t, B5 + 1.7));
+
+    // ---- law beat labels
+    fade($("lawHead"), win(t, B3 + 0.3, B4 - 0.2), rise(t, B3 + 0.3));
+    fade($("sl1"), win(t, B3 + 1.3, B4 - 0.2), rise(t, B3 + 1.3));
+    fade($("sl3"), win(t, B3 + 1.6, B4 - 0.2), rise(t, B3 + 1.6));
+
+    // ---- hourglass (ongoing)
+    const go = win(t, B6 + 0.2, B7, 0.4);
+    $("glass").style.opacity = go.toFixed(3);
+    const sk = clamp((t - B6 - 0.2) / 6, 0, 1);       // sand keeps falling; never runs out
+    $("sandT").setAttribute("y", (36 + 30 * sk).toFixed(1));
+    $("sandB").setAttribute("y", (122 - 22 * sk).toFixed(1));
+    $("stream").setAttribute("stroke-dashoffset", (-t * 28).toFixed(1));
+    fade($("ongoing"), win(t, B6 + 0.6, B7), rise(t, B6 + 0.6));
+
+    // ---- end card
+    fade($("end"), ramp(t, B7, 0.45), rise(t, B7));
+    [...$("sources").querySelectorAll(".s")].forEach((el, i) => { const k = ramp(t, B7 + 0.4 + i * 0.15, 0.4); fade(el, k, (1 - k) * 6); });
+    $("end").style.pointerEvents = t > B7 + 0.4 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, END)); }, play };
+  render(0);
+  const start = () => { if (reduce) { render(END); replay.hidden = false; } else play(); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+})();
+</script>
+</body>
+</html>
