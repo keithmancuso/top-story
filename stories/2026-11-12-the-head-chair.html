@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Head Chair</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&display=block">
+<style>
+/* The Head Chair. Thu Nov 12, 2026, about 7am ET: Nvidia's board met late Wednesday on whether to remove co-founder
+   and CEO Jensen Huang; no decision had been announced. One boardroom table seen from above carries the story:
+   the head chair (Huang, CEO since co-founding Nvidia in 1993), the Nov 8 memo (admitted affair; board probe),
+   two reported items (dashed), four daily stock moves, ten director chairs with open question marks, a calendar.
+   The head chair never moves or empties: the decision is pending.
+   Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+:root {
+  --bg: #111214; --ink: #ede6d8; --muted: #8f8a80; --hair: #3a3633;
+  --wood1: #2c2520; --wood2: #241e1a; --chair: #5a2323; --chair2: #3c2a26;
+  --brass: #c9a55a; --amber: #e0a030; --red: #e0584f; --cyan: #5ec8d8;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "IBM Plex Sans Condensed", "Arial Narrow", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #111214; } }
+:root[data-theme="dark"] { --bg: #111214; }
+html, body { height: 100%; margin: 0; }
+body { background: #0b0b0c; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #0b0b0c; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: var(--bg); }
+.deco { position: absolute; pointer-events: none; }
+.abs { position: absolute; }
+#spot { left: 0; top: 0; width: 432px; height: 768px; background: radial-gradient(120px 110px at 203px 172px, rgba(255,228,170,.16), rgba(0,0,0,0) 100%); }
+#room { left: 0; top: 0; width: 432px; height: 768px; }
+
+.lab { font: 600 15px/1.15 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.sub { font: 500 13px/1.2 var(--sans); color: var(--muted); letter-spacing: .04em; }
+.num { font: 600 15px/1 var(--mono); }
+
+#kicker { left: 26px; top: 112px; font: 600 12px/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+#kicker i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); margin-right: 7px; vertical-align: 1px; }
+
+#plate { left: 143px; top: 213px; width: 120px; height: 30px; border-radius: 3px; text-align: center;
+  background: linear-gradient(180deg, #e2c47e, #b08d45); box-shadow: 0 2px 4px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.4);
+  font: 600 13px/30px var(--mono); letter-spacing: .06em; color: #3a2c12; }
+#ceo { left: 103px; top: 252px; width: 200px; text-align: center; }
+
+#since { left: 103px; top: 300px; width: 200px; text-align: center; }
+#since .big { font: 600 54px/1 var(--mono); color: var(--ink); letter-spacing: -.02em; }
+#since .sub { margin-top: 8px; }
+
+/* memo */
+#memo { left: 128px; top: 280px; width: 150px; height: 120px; border-radius: 6px; background: #ece5d6; box-shadow: 0 10px 22px rgba(0,0,0,.5); }
+#memo .ln { position: absolute; left: 18px; height: 4px; border-radius: 2px; background: #b9b1a1; }
+#memo .tab { position: absolute; left: 12px; top: -14px; padding: 4px 8px; border-radius: 4px 4px 0 0; background: #ece5d6; font: 600 12px/1 var(--mono); color: #3b362e; }
+#stampA { left: 92px; top: 418px; width: 222px; text-align: center; padding: 8px 0; border: 2.5px solid var(--ink); border-radius: 6px; font: 700 20px/1 var(--sans); letter-spacing: .1em; color: var(--ink); text-transform: uppercase; background: rgba(17,18,20,.9); }
+#probe { left: 103px; top: 468px; width: 200px; text-align: center; }
+#lens { left: 0; top: 0; width: 60px; height: 60px; }
+#lens * { fill: none; stroke: #2b2620; stroke-width: 3.2; stroke-linecap: round; }
+
+/* reported folders */
+.fold { left: 40px; width: 326px; height: 82px; box-sizing: border-box; border: 2px dashed var(--amber); border-radius: 10px; background: rgba(26,22,18,.94);
+  display: flex; align-items: center; gap: 14px; padding: 0 16px; }
+.fold svg { flex: 0 0 38px; width: 38px; height: 38px; }
+.fold svg * { fill: none; stroke: var(--amber); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fold .lab { font-size: 16px; letter-spacing: .03em; text-transform: none; }
+.fold .ch { margin-top: 6px; display: inline-block; font: 600 12px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--hair); padding: 4px 7px; border-radius: 99px; }
+#fA { top: 258px; height: 100px; } #fB { top: 370px; }
+#rep { left: 120px; top: 466px; width: 166px; text-align: center; padding: 7px 0; border: 2.5px dashed var(--amber); border-radius: 6px; font: 700 20px/1 var(--sans); letter-spacing: .14em; color: var(--amber); background: rgba(17,18,20,.92); }
+#charged { left: 113px; top: 520px; width: 180px; text-align: center; padding: 8px 0; border-radius: 99px; background: #2a2b2e; font: 600 15px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+
+/* stock bars */
+#bars { left: 0; top: 0; width: 432px; height: 768px; }
+#bars .zero { stroke: var(--ink); stroke-width: 1.6; opacity: .7; }
+.bl { width: 76px; text-align: center; }
+.bl .num { font-size: 18px; }
+.bl .sub { margin-top: 4px; }
+#bv0 .num, #bv1 .num, #bv3 .num { color: var(--red); }
+#bv2 .num { color: var(--ink); }
+#loss { left: 103px; top: 500px; width: 200px; text-align: center; }
+#loss .num { font-size: 34px; color: var(--red); }
+#moon { width: 20px; height: 20px; vertical-align: -4px; }
+
+/* board beat */
+#qs { left: 0; top: 0; width: 432px; height: 768px; }
+#qs text { font: 600 18px var(--mono); fill: var(--cyan); text-anchor: middle; dominant-baseline: central; }
+#dirLab { left: 26px; top: 518px; width: 354px; text-align: center; }
+#dirLab .num { font-size: 26px; color: var(--cyan); }
+#dirLab .lab { margin-top: 6px; }
+#nodec { left: 113px; top: 330px; width: 180px; height: 70px; box-sizing: border-box; border: 2px solid var(--cyan); border-radius: 10px; background: rgba(17,18,20,.92);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+#nodec .lab { color: var(--cyan); font-size: 17px; }
+#nodec svg { width: 22px; height: 22px; }
+
+/* calendar */
+.cal { top: 300px; width: 122px; height: 132px; perspective: 500px; }
+.cal .pg { position: absolute; inset: 0; border-radius: 8px; background: #ece5d6; box-shadow: 0 8px 18px rgba(0,0,0,.5); transform-origin: 50% 0; overflow: hidden; text-align: center; color: #26221d; }
+.cal .hd { height: 28px; background: var(--red); color: #fff; font: 600 13px/28px var(--sans); letter-spacing: .14em; }
+.cal .d { font: 600 44px/1 var(--mono); margin-top: 10px; }
+.cal .w { font: 600 13px/1 var(--sans); letter-spacing: .04em; text-transform: uppercase; margin-top: 8px; }
+.cal .w2 { font: 500 12px/1 var(--sans); color: #6b645a; margin-top: 4px; }
+#c1 { left: 78px; } #c2 { left: 210px; }
+
+/* end card */
+#end { left: 26px; top: 128px; width: 354px; }
+#end .t { font: 700 40px/1.02 var(--sans); letter-spacing: -.005em; }
+#end .pend { margin-top: 14px; display: inline-flex; align-items: center; gap: 10px; border: 2px solid var(--cyan); border-radius: 8px; padding: 9px 12px; }
+#end .pend i { width: 10px; height: 10px; border-radius: 50%; background: var(--cyan); }
+#end .pend .lab { color: var(--cyan); }
+#end .pend .sub { color: var(--ink); opacity: .75; }
+#sources { margin-top: 22px; border-top: 1px solid var(--hair); padding-top: 12px; }
+#sources .h { font: 600 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+#sources div.s { margin-bottom: 8px; font: 500 13px/1.3 var(--sans); color: #cfc8bb; }
+#sources a { color: inherit; text-decoration: underline; text-decoration-color: rgba(255,255,255,.3); text-underline-offset: 2px; }
+
+#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 552px; min-height: 36px; min-width: 44px; padding: 0 16px; border: 1.5px solid var(--cyan); border-radius: 999px;
+  background: rgba(17,18,20,.92); color: var(--ink); font: 600 13px/1 var(--sans); letter-spacing: .04em; cursor: pointer; -webkit-tap-highlight-color: transparent; z-index: 30; }
+#replay[hidden] { display: none; }
+#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage" role="img" aria-label="Nvidia's board met late Wednesday, Nov 11, 2026, on whether to remove co-founder and CEO Jensen Huang, who has led the company since 1993. On Nov 8 Huang admitted an affair in a memo and the board opened a probe. The board voiced confidence in him. Reported, not confirmed: US agencies believe a woman linked to Huang is a Chinese intelligence asset (China calls this baseless), and a second relationship. No one has been charged. Nvidia stock fell 4.3% Monday, more than 5% Tuesday, rose 2.9% Wednesday and fell more than 8% after hours. The board has 11 directors and can remove the CEO by majority vote. No decision had been announced as of Thursday 7am ET. Earnings are due Nov 17 and House committee chairs requested a briefing for Nov 18. Nvidia has lost about $600 billion in market value this week, per Reuters.">
+  <div class="deco" id="spot"></div>
+
+  <svg class="deco" id="room" viewBox="0 0 432 768" aria-hidden="true">
+    <defs>
+      <linearGradient id="wood" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#2a231e"/><stop offset=".5" stop-color="#342a23"/><stop offset="1" stop-color="#28211c"/>
+      </linearGradient>
+    </defs>
+    <g id="tableG">
+      <rect x="128" y="206" width="150" height="300" rx="28" fill="url(#wood)" stroke="#4a3d33" stroke-width="1.5"/>
+      <path d="M150 230 V484 M172 222 V492 M196 218 V496 M222 218 V496 M246 222 V492 M262 232 V480" stroke="#3b3029" stroke-width="1" opacity=".55"/>
+    </g>
+    <g id="dirs"></g>
+    <g id="head">
+      <rect x="171" y="150" width="64" height="50" rx="12" fill="var(--chair)"/>
+      <path d="M171 162 Q203 136 235 162 L235 152 Q203 126 171 152 Z" fill="#6e2b2b"/>
+      <rect x="161" y="162" width="10" height="30" rx="4" fill="#4a1c1c"/><rect x="235" y="162" width="10" height="30" rx="4" fill="#4a1c1c"/>
+    </g>
+  </svg>
+
+  <div class="abs" id="kicker"><i></i>Nvidia</div>
+  <div class="abs" id="plate" data-key>JENSEN HUANG</div>
+  <div class="abs" id="since"><div class="big" id="yr">1993</div><div class="sub" id="yrSub">co-founder</div></div>
+
+  <div class="abs" id="memo" data-key>
+    <div class="tab">Nov 8</div>
+    <div class="ln" style="top:24px;width:70px;background:#8d8576"></div>
+    <div class="ln" style="top:42px;width:112px"></div><div class="ln" style="top:56px;width:104px"></div>
+    <div class="ln" style="top:70px;width:114px"></div><div class="ln" style="top:84px;width:80px"></div>
+  </div>
+  <div class="abs" id="stampA">Admitted affair</div>
+  <svg class="abs" id="lens" viewBox="0 0 60 60" aria-hidden="true"><circle cx="24" cy="24" r="15"/><path d="M35 35 L52 52"/></svg>
+  <div class="abs" id="probe"><div class="lab">Board probe</div><div class="sub">&ldquo;confidence in Jensen&rdquo;</div></div>
+
+  <div class="abs fold" id="fA" data-key>
+    <svg viewBox="0 0 38 38"><circle cx="19" cy="19" r="15"/><path d="M4 19h30M19 4c-6 6-6 24 0 30M19 4c6 6 6 24 0 30"/></svg>
+    <div><div class="lab">Woman linked to Huang:<br>China asset, US agencies say</div><span class="ch">China: baseless</span></div>
+  </div>
+  <div class="abs fold" id="fB" data-key>
+    <svg viewBox="0 0 38 38"><rect x="5" y="7" width="28" height="24" rx="2"/><path d="M10 13h18M10 19h18M10 25h11"/></svg>
+    <div><div class="lab">2nd relationship</div><span class="ch">Unconfirmed</span></div>
+  </div>
+  <div class="abs" id="rep">REPORTED</div>
+  <div class="abs" id="charged">No charges</div>
+
+  <svg class="abs" id="bars" viewBox="0 0 432 768" aria-hidden="true">
+    <line class="zero" id="zero" x1="40" x2="366" y1="340" y2="340"/>
+    <rect id="b0" x="52" width="60" fill="var(--red)"/><rect id="b1" x="130" width="60" fill="var(--red)"/>
+    <rect id="b2" x="208" width="60" fill="var(--ink)"/><rect id="b3" x="286" width="60" fill="none" stroke="var(--red)" stroke-width="2.2" stroke-dasharray="6 4"/>
+  </svg>
+  <div class="abs bl" id="bv0"><div class="num">&minus;4.3%</div><div class="sub">MON</div></div>
+  <div class="abs bl" id="bv1"><div class="num">&minus;5%+</div><div class="sub">TUE</div></div>
+  <div class="abs bl" id="bv2"><div class="num">+2.9%</div><div class="sub">WED</div></div>
+  <div class="abs bl" id="bv3"><div class="num">&minus;8%+</div><div class="sub"><svg id="moon" viewBox="0 0 18 18"><path d="M12 2a7 7 0 1 0 4 12A6 6 0 0 1 12 2z" fill="var(--muted)"/></svg></div></div>
+  <div class="abs" id="loss"><div class="num">&asymp;&minus;$600B</div><div class="sub">this week, per Reuters</div></div>
+
+  <svg class="abs" id="qs" viewBox="0 0 432 768" aria-hidden="true"></svg>
+  <div class="abs" id="nodec" data-key>
+    <svg viewBox="0 0 22 22"><path d="M17 3a8 8 0 1 0 2 12A7 7 0 0 1 17 3z" fill="var(--cyan)"/></svg>
+    <div class="lab">No decision yet</div>
+  </div>
+  <div class="abs" id="dirLab"><div class="num">11 directors</div><div class="lab">Majority can remove</div></div>
+
+  <div class="abs cal" id="c1" data-key><div class="pg"><div class="hd">NOV</div><div class="d">17</div><div class="w">Earnings</div></div></div>
+  <div class="abs cal" id="c2" data-key><div class="pg"><div class="hd">NOV</div><div class="d">18</div><div class="w">House briefing</div><div class="w2">requested</div></div></div>
+
+  <div class="abs" id="end">
+    <div class="t">The Head Chair</div>
+    <div class="pend"><i></i><span class="lab">Decision pending</span><span class="sub">as of Thu 7am ET</span></div>
+    <div id="sources">
+      <div class="h">Sources</div>
+      <div class="s"><a href="https://nvidianews.nvidia.com/news/statement-from-nvidia-board-of-directors" target="_blank" rel="noopener">Nvidia board statement, Nov 8</a></div>
+      <div class="s"><a href="https://www.cbsnews.com/news/nvidia-board-ceo-jensen-huang-china/" target="_blank" rel="noopener">CBS News: board preparing to oust Huang, sources say</a></div>
+      <div class="s"><a href="https://www.cbsnews.com/news/nvidia-stock-dives-report-board-prepares-oust-jensen-huang/" target="_blank" rel="noopener">CBS News: Nvidia stock dives after hours</a></div>
+      <div class="s"><a href="https://www.aljazeera.com/news/2026/11/12/nvidia-board-weighs-jensen-huangs-future-can-it-remove-its-founder" target="_blank" rel="noopener">Al Jazeera: can the board remove its founder?</a></div>
+      <div class="s"><a href="https://english.aawsat.com/technology/5340398-nvidia-board-meets-decide-ceo-huangs-future-leadership-crisis-deepens" target="_blank" rel="noopener">Reuters via Asharq Al-Awsat: board met late into the night</a></div>
+    </div>
+  </div>
+
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lin = (t, s, d) => clamp((t - s) / d, 0, 1);
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const inout = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const ramp = (t, s, d) => ease(lin(t, s, d));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const win = (t, a, b, f) => ramp(t, a, f || 0.4) * (1 - lin(t, b - 0.3, 0.3));
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const NS = "http://www.w3.org/2000/svg";
+
+  // beats (s)
+  const B1 = 2.6, B2 = 5.4, B3 = 9.0, B4 = 12.4, B5 = 15.0, B6 = 16.9, END = 19.6;
+
+  // ten director chairs, five per side
+  const seats = [];
+  for (let i = 0; i < 10; i++) {
+    const left = i < 5, y = 236 + (i % 5) * 60, x = left ? 98 : 308;
+    const g = document.createElementNS(NS, "g");
+    g.innerHTML = `<rect x="${x - 15}" y="${y - 17}" width="30" height="34" rx="7" fill="#3c2a26"/>` +
+      `<rect x="${left ? x - 19 : x + 11}" y="${y - 15}" width="8" height="30" rx="3" fill="#4a3530"/>` +
+      `<rect class="ring" x="${x - 19}" y="${y - 21}" width="38" height="42" rx="9" fill="none" stroke="var(--cyan)" stroke-width="2" opacity="0"/>`;
+    $("dirs").appendChild(g);
+    const q = document.createElementNS(NS, "text"); q.setAttribute("x", x); q.setAttribute("y", y); q.textContent = "?";
+    $("qs").appendChild(q);
+    seats.push({ g, ring: g.querySelector(".ring"), q });
+  }
+
+  const fade = (el, k, dy) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${(dy || 0).toFixed(1)}px)`; };
+  const rise = (t, a) => (1 - ramp(t, a, 0.5)) * 8;
+  const pctPx = 12;                                   // px per percentage point
+  const bars = [[-4.3, B3 + 0.3], [-5.0, B3 + 0.6], [2.9, B3 + 0.9], [-8.0, B3 + 1.4]];
+
+  function render(t) {
+    const endK = ramp(t, B6, 0.5), sceneOut = 1 - lin(t, B6 - 0.2, 0.5);
+    const endIn = ramp(t, B6 + 0.7, 0.6), atEnd = t >= B6 + 0.3;
+
+    // room: table + chairs fade up, dim behind cards
+    const roomIn = ramp(t, 0, 0.9);
+    const cardDim = 1 - 0.55 * ramp(t, B1, 0.4) * (1 - ramp(t, B4 - 0.2, 0.4)) - 0.4 * ramp(t, B5, 0.4);
+    $("tableG").style.opacity = (roomIn * cardDim * sceneOut).toFixed(3);
+    $("dirs").style.opacity = (roomIn * (B4 <= t && t < B5 ? 1 : cardDim) * sceneOut).toFixed(3);
+    const headK = atEnd ? endIn : roomIn * sceneOut;
+    $("head").style.opacity = headK.toFixed(3);
+    $("head").style.transform = atEnd ? "translateY(306px)" : "none";
+    $("spot").style.opacity = (atEnd ? endIn : ramp(t, 0.3, 1.0) * sceneOut).toFixed(3);
+    $("spot").style.transform = atEnd ? "translateY(306px)" : "none";
+    fade($("kicker"), ramp(t, 0.2, 0.4) * sceneOut, 0);
+
+    // nameplate stays put the whole time (decision pending)
+    if (atEnd) fade($("plate"), endIn, 306);
+    else fade($("plate"), ramp(t, 0.5, 0.5) * sceneOut, (1 - ramp(t, 0.5, 0.5)) * -10);
+
+    // 1993 -> 33 yrs
+    const sk = win(t, 0.8, B1 + 0.2);
+    fade($("since"), sk, rise(t, 0.8));
+    const roll = lin(t, 1.2, 0.9);
+    if (roll < 1) { $("yr").textContent = String(Math.round(lerp(1993, 2026, inout(roll)))); $("yrSub").textContent = "\u00a0"; }
+    else { $("yr").textContent = "33 yrs"; $("yrSub").textContent = "as CEO"; }
+
+    // memo + admitted stamp + probe lens
+    const mIn = ramp(t, B1, 0.5), mOut = 1 - lin(t, B2 - 0.3, 0.3);
+    $("memo").style.opacity = (mIn * mOut).toFixed(3);
+    $("memo").style.transform = `translateX(${((1 - mIn) * -160).toFixed(1)}px) rotate(${((1 - mIn) * -8 - 2).toFixed(2)}deg)`;
+    const st = ramp(t, B1 + 0.7, 0.25);
+    $("stampA").style.opacity = (st * mOut).toFixed(3);
+    $("stampA").style.transform = `scale(${(1.35 - 0.35 * st).toFixed(3)}) rotate(-3deg)`;
+    const lk = lin(t, B1 + 1.4, 1.0);
+    const lx = lerp(120, 230, inout(lk)), ly = 300 + Math.sin(lk * Math.PI) * 30;
+    $("lens").style.left = lx.toFixed(1) + "px"; $("lens").style.top = ly.toFixed(1) + "px";
+    $("lens").style.opacity = (win(t, B1 + 1.3, B2, 0.3)).toFixed(3);
+    fade($("probe"), win(t, B1 + 1.6, B2), rise(t, B1 + 1.6));
+
+    // reported folders
+    const fo = 1 - lin(t, B3 - 0.3, 0.3);
+    const fa = ramp(t, B2, 0.5), fb = ramp(t, B2 + 0.8, 0.5);
+    fade($("fA"), fa * fo, 0); $("fA").style.transform = `scale(${(0.92 + 0.08 * fa).toFixed(3)})`;
+    fade($("fB"), fb * fo, 0); $("fB").style.transform = `scale(${(0.92 + 0.08 * fb).toFixed(3)})`;
+    const rk = ramp(t, B2 + 1.5, 0.25);
+    $("rep").style.opacity = (rk * fo).toFixed(3);
+    $("rep").style.transform = `scale(${(1.35 - 0.35 * rk).toFixed(3)}) rotate(-2deg)`;
+    fade($("charged"), ramp(t, B2 + 2.1, 0.4) * fo, rise(t, B2 + 2.1));
+
+    // stock bars
+    const bo = win(t, B3, B4, 0.3);
+    $("bars").style.opacity = bo.toFixed(3);
+    bars.forEach(([v, a], i) => {
+      const k = ease(lin(t, a, 0.6)), h = Math.abs(v) * pctPx * k;
+      const r = $("b" + i);
+      r.setAttribute("height", Math.max(0.01, h).toFixed(1));
+      r.setAttribute("y", (v < 0 ? 340 : 340 - h).toFixed(1));
+      const lab = $("bv" + i), x = 52 + i * 78 - 8;
+      lab.style.left = x + "px";
+      lab.style.top = (v < 0 ? 340 + Math.abs(v) * pctPx + 8 : 340 - v * pctPx - 46) + "px";
+      fade(lab, ramp(t, a + 0.35, 0.35) * bo, 0);
+    });
+    fade($("loss"), win(t, B3 + 2.1, B4), rise(t, B3 + 2.1));
+
+    // board: ten director chairs light up with open question marks
+    const dk = win(t, B4, B5 + 0.2, 0.3);
+    seats.forEach((s, i) => {
+      const k = ramp(t, B4 + 0.1 + i * 0.07, 0.35) * dk;
+      const pulse = 0.65 + 0.35 * Math.sin((t - B4) * 4.2);
+      s.ring.setAttribute("opacity", (k * pulse).toFixed(3));
+      s.q.setAttribute("opacity", k.toFixed(3));
+    });
+    fade($("dirLab"), win(t, B4 + 0.6, B5 + 0.2), rise(t, B4 + 0.6));
+    fade($("nodec"), win(t, B4 + 1.3, B5 + 0.2), rise(t, B4 + 1.3));
+
+    // calendar: two pages flip down
+    const co = 1 - lin(t, B6 - 0.3, 0.3);
+    [["c1", B5 + 0.1], ["c2", B5 + 0.5]].forEach(([id, a]) => {
+      const k = ramp(t, a, 0.5);
+      $(id).style.opacity = (lin(t, a, 0.15) * co).toFixed(3);
+      $(id).firstElementChild.style.transform = `rotateX(${((1 - k) * -90).toFixed(1)}deg)`;
+    });
+
+    // end card
+    fade($("end"), endK, rise(t, B6));
+    [...$("sources").querySelectorAll(".s")].forEach((el, i) => { const k = ramp(t, B6 + 0.4 + i * 0.12, 0.4); fade(el, k, (1 - k) * 6); });
+    $("end").style.pointerEvents = t > B6 + 0.4 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, END));
+    if (t < END && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: END, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, END)); }, play };
+  render(0);
+  const start = () => { if (reduce) { render(END); replay.hidden = false; } else play(); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+})();
+</script>
+</body>
+</html>
