@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ground Stop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=block">
+<style>
+/* Ground Stop. Fri Nov 13, 2026: a telecom outage at the FAA's en-route centers led to a nationwide ground stop of
+   departures for more than four hours (3:54 to 8:15 PM ET). Planes already flying kept going and landed.
+   A busy sky over a U.S. map; centers flicker from Chicago east; every airport gets a red stop; the sky thins while the clock runs
+   to 8:15; stops turn green; then cancellation dot grids (Fri / Sat so far), a three-tick rarity line, the cause,
+   and the end card with sources. Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+:root {
+  --night: #0d141d; --land: #172231; --coast: #33475e; --ink: #ece8de; --muted: #95a1ae; --hair: #2c3a4a;
+  --red: #e5484d; --green: #3fbf8f; --amber: #f0b34a; --plane: #f4efe4;
+  --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --night: #0d141d; } }
+:root[data-theme="dark"] { --night: #0d141d; }
+html, body { height: 100%; margin: 0; }
+body { background: #090e14; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #090e14; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: var(--night); }
+.deco { position: absolute; pointer-events: none; }
+#vig { inset: 0; background: radial-gradient(110% 60% at 50% 42%, rgba(80,120,170,.10), rgba(0,0,0,0) 62%); }
+.abs { position: absolute; }
+#kicker { left: 26px; top: 112px; width: 354px; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#kicker i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--red); margin-right: 7px; vertical-align: 1px; }
+
+#clockRow { left: 26px; top: 134px; width: 354px; height: 60px; }
+#clock { position: absolute; left: 0; top: 0; font: 600 44px/1 var(--serif); font-variant-numeric: tabular-nums; }
+#clock small { font: 600 15px/1 var(--mono); color: var(--muted); margin-left: 6px; letter-spacing: .04em; }
+#stamp { position: absolute; right: 8px; top: 4px; padding: 7px 10px; border: 2px solid var(--red); border-radius: 4px; color: var(--red);
+  font: 600 13px/1.1 var(--mono); letter-spacing: .08em; text-align: center; transform-origin: 50% 50%; }
+#stamp b { display: block; font-weight: 600; }
+#stamp span { display: block; font-size: 11px; color: #f08a8d; margin-top: 3px; letter-spacing: .02em; }
+#lifted { position: absolute; right: 8px; top: 4px; padding: 7px 10px; border: 2px solid var(--green); border-radius: 4px; color: var(--green);
+  font: 600 13px/1.1 var(--mono); letter-spacing: .08em; text-align: center; }
+#lifted span { display: block; font-size: 11px; color: #8fdcbf; margin-top: 3px; letter-spacing: .02em; }
+#holdBar { position: absolute; left: 0; top: 54px; height: 4px; width: 0; background: var(--red); border-radius: 2px; }
+
+#map { left: 0; top: 0; width: 432px; height: 768px; }
+#map svg { position: absolute; left: 0; top: 0; width: 432px; height: 768px; overflow: visible; }
+
+.lab { left: 26px; width: 354px; text-align: center; }
+.lab .a { font: 600 22px/1.15 var(--serif); }
+.lab .b { margin-top: 4px; font: 500 13px/1.3 var(--sans); color: var(--muted); }
+#lCenters { top: 476px; } #lCenters .a { color: var(--amber); }
+#lAir { top: 476px; }
+#lLow { top: 476px; }
+#lHrs { top: 530px; } #lHrs .a { color: var(--red); }
+
+/* cancellations */
+#cx { left: 0; top: 0; width: 432px; height: 768px; }
+#cxHead { left: 26px; top: 170px; width: 354px; text-align: center; font: 600 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+#cxHead svg { width: 22px; height: 22px; vertical-align: -6px; margin-right: 8px; }
+.grid { position: absolute; top: 210px; width: 150px; }
+.grid svg { display: block; width: 150px; height: 118px; overflow: visible; }
+.grid .num { font: 600 40px/1 var(--serif); margin-bottom: 10px; font-variant-numeric: tabular-nums; }
+.grid .day { margin-top: 10px; font: 600 12px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+#gF { left: 38px; } #gS { left: 228px; }
+#gF .num { color: var(--red); } #gS .num { color: #f08a8d; }
+#legend { left: 26px; top: 392px; width: 354px; text-align: center; font: 500 12px/1 var(--mono); color: var(--muted); }
+#legend i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--red); margin-right: 6px; vertical-align: 0; }
+
+/* rarity line */
+#rare { left: 26px; top: 236px; width: 354px; height: 200px; }
+#rareHead { position: absolute; left: 0; top: 0; width: 354px; text-align: center; font: 600 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+#rareLine { position: absolute; left: 40px; top: 93px; height: 2px; width: 282px; background: var(--hair); transform-origin: 0 50%; }
+.tick { position: absolute; top: 72px; width: 56px; margin-left: -28px; text-align: center; }
+.tick .dot { width: 18px; height: 18px; margin: 12px auto 0; border-radius: 50%; background: var(--muted); }
+.tick .y { margin-top: 14px; font: 600 22px/1 var(--serif); }
+.tick .w { margin-top: 6px; font: 500 12px/1.2 var(--sans); color: var(--muted); }
+#tk3 .dot { background: var(--red); box-shadow: 0 0 0 6px rgba(229,72,77,.22); }
+#tk3 .y { color: var(--red); }
+
+/* cause */
+#cause { left: 26px; top: 214px; width: 354px; height: 300px; }
+#cause svg { position: absolute; left: 97px; top: 0; width: 160px; height: 150px; overflow: visible; }
+#cause .a { position: absolute; left: 0; top: 176px; width: 354px; text-align: center; font: 600 26px/1.1 var(--serif); }
+#cause .b { position: absolute; left: 0; top: 216px; width: 354px; text-align: center; font: 500 13px/1.3 var(--sans); color: var(--muted); }
+
+/* end */
+#end { left: 26px; top: 140px; width: 354px; }
+#end .t { font: 600 44px/1 var(--serif); }
+#end .r { margin-top: 10px; font: 500 15px/1.35 var(--sans); color: var(--muted); }
+#sources { margin-top: 24px; border-top: 1px solid var(--hair); padding-top: 12px; }
+#sources .h { font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+#sources div.s { margin-bottom: 8px; font: 400 12px/1.35 var(--sans); color: #c9c6be; }
+#sources a { color: inherit; text-decoration: underline; text-decoration-color: rgba(255,255,255,.3); text-underline-offset: 2px; }
+
+#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 552px; min-height: 36px; min-width: 44px; padding: 0 16px; border: 1.5px solid var(--red); border-radius: 999px;
+  background: rgba(13,20,29,.92); color: var(--ink); font: 600 12px/1 var(--sans); letter-spacing: .04em; cursor: pointer; -webkit-tap-highlight-color: transparent; z-index: 5; }
+#replay[hidden] { display: none; }
+#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage" role="img" aria-label="On Friday Nov 13, 2026 a telecom outage at FAA air traffic control centers led to a nationwide ground stop of departures from 3:54 to 8:15 PM Eastern. Planes already in the air kept flying and landed. More than 9,000 flights were cancelled Friday and more than 3,400 so far Saturday. It was the second nationwide ground stop since 9/11.">
+  <div class="deco" id="vig"></div>
+  <div class="abs" id="kicker"><i></i>U.S. airspace &middot; Fri, Nov 13</div>
+
+  <div class="abs" id="clockRow">
+    <div id="clock"><span id="clk">3:15</span><small id="ampm">PM ET</small></div>
+    <div id="stamp"><b>GROUND STOP</b><span>3:54 PM ET</span></div>
+    <div id="lifted"><b>LIFTED</b><span>8:15 PM ET</span></div>
+    <div id="holdBar"></div>
+  </div>
+
+  <div class="abs" id="map"><svg viewBox="0 0 432 768" aria-hidden="true">
+    <path id="us" fill="var(--land)" stroke="var(--coast)" stroke-width="1.4" stroke-linejoin="round"/>
+    <g id="centers"></g>
+    <g id="ports"></g>
+    <g id="planes"></g>
+  </svg></div>
+
+  <div class="abs lab" id="lCenters"><div class="a">Radar &amp; radio unstable</div></div>
+  <div class="abs lab" id="lAir"><div class="a">3,000+ in the air</div><div class="b">all landed safely</div></div>
+  <div class="abs lab" id="lLow"><div class="a">&lt;400 airborne</div><div class="b">at the low point</div></div>
+  <div class="abs lab" id="lHrs"><div class="a">4+ hrs</div></div>
+
+  <div class="abs" id="cx">
+    <div class="abs" id="cxHead"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15.5v-2l-8-5V3.8a1.5 1.5 0 0 0-3 0v4.7l-8 5v2l8-2.5v5l-2 1.5V21l3.5-1 3.5 1v-1.5l-2-1.5v-5z" fill="var(--ink)"/><path d="M3 3l18 18" stroke="var(--red)" stroke-width="2.6" stroke-linecap="round"/></svg>Cancelled</div>
+    <div class="grid" id="gF"><div class="num" id="nF">0</div><svg id="dF" viewBox="0 0 150 118"></svg><div class="day">Friday</div></div>
+    <div class="grid" id="gS"><div class="num" id="nS">0</div><svg id="dS" viewBox="0 0 150 118"></svg><div class="day">Saturday, so far</div></div>
+    <div class="abs" id="legend"><i></i>= 50 flights</div>
+  </div>
+
+  <div class="abs" id="rare">
+    <div id="rareHead">Nationwide ground stops</div>
+    <div id="rareLine"></div>
+    <div class="tick" id="tk1" style="left:40px"><div class="dot"></div><div class="y">9/11</div><div class="w">2001</div></div>
+    <div class="tick" id="tk2" style="left:262px"><div class="dot"></div><div class="y">Jan</div><div class="w">2023</div></div>
+    <div class="tick" id="tk3" style="left:322px"><div class="dot"></div><div class="y">Nov</div><div class="w">2026</div></div>
+  </div>
+
+  <div class="abs" id="cause">
+    <svg viewBox="0 0 160 150" aria-hidden="true">
+      <g id="waves" fill="none" stroke="var(--amber)" stroke-width="4" stroke-linecap="round">
+        <path id="w1" d="M66 40a20 20 0 0 1 28 0"/><path id="w2" d="M56 28a34 34 0 0 1 48 0"/><path id="w3" d="M46 16a48 48 0 0 1 68 0"/>
+      </g>
+      <rect x="18" y="70" width="124" height="44" rx="8" fill="#223044" stroke="#4a5f78" stroke-width="2"/>
+      <line x1="80" y1="70" x2="80" y2="50" stroke="#4a5f78" stroke-width="4" stroke-linecap="round"/>
+      <g id="leds"><circle cx="40" cy="92" r="5"/><circle cx="58" cy="92" r="5"/><circle cx="76" cy="92" r="5"/><circle cx="94" cy="92" r="5"/></g>
+      <rect x="108" y="87" width="22" height="10" rx="2" fill="#16202d"/>
+    </svg>
+    <div class="a">Telecom outage</div>
+    <div class="b">No sign of cyberattack so far &middot; DHS</div>
+  </div>
+
+  <div class="abs" id="end">
+    <div class="t">Ground Stop</div>
+    <div class="r">Departures held 4+ hrs. Still catching up.</div>
+    <div id="sources">
+      <div class="h">Sources</div>
+      <div class="s"><a href="https://abcnews.com/US/nationwide-ground-stop-ordered-airports-faa/story?id=138121848" target="_blank" rel="noopener">ABC News: stop lifted after 4+ hours</a></div>
+      <div class="s"><a href="https://www.kjct8.com/2026/11/14/thousands-flights-canceled-airlines-work-dig-out-nationwide-ground-stop/" target="_blank" rel="noopener">AP: second nationwide stop since 9/11</a></div>
+      <div class="s"><a href="https://www.mensjournal.com/news/faa-ground-stop-saturday-flight-cancellations" target="_blank" rel="noopener">Men's Journal: FlightAware cancellation counts</a></div>
+      <div class="s"><a href="https://www.securityweek.com/no-signs-of-hacking-in-faa-ground-stop-as-fbi-reportedly-probes-software-update/" target="_blank" rel="noopener">SecurityWeek: DHS, no sign of hacking</a></div>
+      <div class="s"><a href="https://www.aljazeera.com/news/2026/11/14/faa-ground-stop-lifted-why-were-us-flights-grounded-and-whats-next" target="_blank" rel="noopener">Al Jazeera: timeline, 3,000+ airborne</a></div>
+    </div>
+  </div>
+
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div>
+</div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lin = (t, s, d) => clamp((t - s) / d, 0, 1);
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const inout = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const ramp = (t, s, d) => ease(lin(t, s, d));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const NS = "http://www.w3.org/2000/svg";
+
+  // numbers (fact sheet)
+  const FRI = 9000, SAT = 3400, PER = 50;
+
+  // beats (s)
+  const FLK = 1.9, STOP = 3.4, LIFT = 8.4, MAPOUT = 9.5, CX = 9.8, RARE = 13.4, CAUSE = 15.5, END = 17.6, DUR = 19.6;
+
+  // projection: lon/lat -> stage px
+  const P = (lon, lat) => [30 + (lon + 125) * 5.93, 250 + (49.5 - lat) * 7.5];
+  const outline = [[-124.7,48.4],[-122.8,49],[-95.2,49],[-94.8,49.4],[-89.6,48],[-84.4,46.5],[-82.4,43],[-83.1,42],[-79,42.8],[-79.3,43.3],[-76.5,44.2],[-75,45],[-71.5,45],[-70,46.7],[-69.2,47.4],[-67.8,47.1],[-67,44.8],[-70.2,43.6],[-70.6,42.6],[-70,41.8],[-71,41.5],[-73.7,40.6],[-74,40.5],[-74,39.5],[-75,38.8],[-75.5,38],[-76,37],[-75.7,35.6],[-76.5,34.7],[-78.5,33.9],[-79.9,32.7],[-81,31.7],[-81.4,30.5],[-80.6,28.6],[-80,26.8],[-80.4,25.2],[-81.1,25.1],[-81.8,26.1],[-82.7,27.7],[-82.8,29],[-84,30],[-85.4,29.7],[-86.5,30.4],[-88.1,30.4],[-89.6,30.2],[-89.4,29],[-90.5,29.1],[-92,29.6],[-94,29.7],[-95,29.2],[-97.2,27.7],[-97.4,26],[-99.1,26.4],[-100.3,28],[-101.4,29.8],[-103,29],[-104.5,29.6],[-106.5,31.8],[-108.2,31.8],[-111,31.3],[-114.8,32.5],[-117.1,32.5],[-118.4,33.8],[-120.6,34.6],[-121.9,36.6],[-122.5,37.8],[-123.8,39.8],[-124.2,41.9],[-124.5,43],[-124,46.2]];
+  $("us").setAttribute("d", "M" + outline.map((p) => P(p[0], p[1]).map((v) => v.toFixed(1)).join(" ")).join("L") + "Z");
+
+  // 20 big airports
+  const AP = [[-122.3,47.4],[-122.4,37.6],[-118.4,33.9],[-115.2,36.1],[-112,33.4],[-112,40.8],[-104.7,39.9],[-97,32.9],[-95.3,30],[-93.2,44.9],
+              [-87.9,42],[-84.4,33.6],[-83.4,42.2],[-80.9,35.2],[-81.3,28.4],[-80.3,25.8],[-77.5,38.9],[-75.2,39.9],[-73.8,40.6],[-71,42.4]].map((p) => P(p[0], p[1]));
+  const ports = AP.map(([x, y]) => {
+    const g = document.createElementNS(NS, "g");
+    g.innerHTML = `<circle class="base" cx="${x}" cy="${y}" r="2.6" fill="#7d8fa3"/>` +
+      `<circle class="st" cx="${x}" cy="${y}" r="5.5" fill="none" stroke-width="2.2" opacity="0"/>`;
+    $("ports").appendChild(g);
+    return { x, y, st: g.querySelector(".st") };
+  });
+
+  // FAA advisories: trouble shows first at Chicago, then Boston, then Washington
+  const CT = [[-88.3,41.8],[-71.5,42.8],[-77.6,39.1]].map((p) => P(p[0], p[1]));
+  const centers = CT.map(([x, y]) => {
+    const g = document.createElementNS(NS, "g");
+    g.innerHTML = `<circle cx="${x}" cy="${y}" r="10" fill="none" stroke="var(--amber)" stroke-width="2"/>` +
+      `<circle cx="${x}" cy="${y}" r="16" fill="none" stroke="var(--amber)" stroke-width="1.4" stroke-dasharray="3 4"/>`;
+    $("centers").appendChild(g);
+    return g;
+  });
+
+  // deterministic flights
+  let seed = 1113;
+  const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  const flights = [];
+  function mk(td) {
+    let a = Math.floor(rnd() * 20), b = Math.floor(rnd() * 20);
+    if (a === b) b = (b + 7) % 20;
+    const [x0, y0] = AP[a], [x1, y1] = AP[b];
+    const dx = x1 - x0, dy = y1 - y0, d = Math.hypot(dx, dy);
+    const bend = 0.16 * d;
+    const cx = (x0 + x1) / 2 + (dy / d) * bend * (dx > 0 ? 1 : -1), cy = (y0 + y1) / 2 - Math.abs(dx / d) * bend;
+    const dur = 1.5 + d / 52;
+    const g = document.createElementNS(NS, "path");
+    g.setAttribute("d", "M7 0L-4 -5.8L-2.2 0L-4 5.8Z");
+    g.setAttribute("fill", "var(--plane)");
+    $("planes").appendChild(g);
+    flights.push({ x0, y0, x1, y1, cx, cy, td, dur, g, ap: b });
+  }
+  for (let i = 0; i < 112; i++) mk(-7 + rnd() * (STOP - 0.1 + 7));
+  for (let i = 0; i < 20; i++) mk(LIFT + 0.15 + rnd() * 1.0);
+
+  // dot grids: 15 columns, 9px pitch
+  function grid(svg, n, dashed) {
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const c = document.createElementNS(NS, "circle");
+      c.setAttribute("cx", (5 + (i % 15) * 9.6).toFixed(1));
+      c.setAttribute("cy", (5 + Math.floor(i / 15) * 9.6).toFixed(1));
+      c.setAttribute("r", "3.5"); c.setAttribute("fill", dashed ? "#f08a8d" : "var(--red)"); c.setAttribute("opacity", "0");
+      svg.appendChild(c); out.push(c);
+    }
+    return out;
+  }
+  const dotsF = grid($("dF"), Math.round(FRI / PER));
+  const dotsS = grid($("dS"), Math.round(SAT / PER), true);
+  // Saturday is still counting: dashed open slots after the filled ones
+  for (let i = dotsS.length; i < dotsS.length + 20; i++) {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", (5 + (i % 15) * 9.6).toFixed(1)); c.setAttribute("cy", (5 + Math.floor(i / 15) * 9.6).toFixed(1));
+    c.setAttribute("r", "3.2"); c.setAttribute("fill", "none"); c.setAttribute("stroke", "#f08a8d"); c.setAttribute("stroke-width", "1.4"); c.setAttribute("stroke-dasharray", "2.2 1.6");
+    c.setAttribute("class", "open"); c.setAttribute("opacity", "0");
+    $("dS").appendChild(c);
+  }
+  const openS = [...$("dS").querySelectorAll(".open")];
+
+  const fade = (el, k, dy) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${(dy || 0).toFixed(1)}px)`; };
+  const rise = (t, a) => (1 - ramp(t, a, 0.5)) * 8;
+  const win = (t, a, b, f) => ramp(t, a, f || 0.4) * (1 - lin(t, b - 0.3, 0.3));
+  const fmt = (n) => n.toLocaleString("en-US");
+
+  // clock: 3:15 PM at t=0 -> 3:54 at STOP -> 8:15 at LIFT
+  function clockMin(t) {
+    if (t <= STOP) return lerp(15 * 60 + 15, 15 * 60 + 54, t / STOP);
+    return lerp(15 * 60 + 54, 20 * 60 + 15, inout(lin(t, STOP + 0.3, LIFT - STOP - 0.5)));
+  }
+
+  function render(t) {
+    // map scene
+    const mapK = ramp(t, 0, 0.6) * (1 - lin(t, MAPOUT - 0.3, 0.4));
+    $("map").style.opacity = mapK.toFixed(3);
+    fade($("kicker"), ramp(t, 0.1, 0.4) * (1 - lin(t, MAPOUT - 0.3, 0.4)), 0);
+    fade($("clockRow"), ramp(t, 0.2, 0.4) * (1 - lin(t, MAPOUT - 0.3, 0.4)), 0);
+    const m = Math.round(clockMin(t)), hh = Math.floor(m / 60) - 12, mm = m % 60;
+    $("clk").textContent = `${hh}:${String(mm).padStart(2, "0")}`;
+
+    // stamp slams in at STOP, lifts at LIFT
+    const sk = ramp(t, STOP, 0.25);
+    $("stamp").style.opacity = (lin(t, STOP, 0.12) * (1 - lin(t, LIFT, 0.25))).toFixed(3);
+    $("stamp").style.transform = `scale(${(1.35 - 0.35 * sk).toFixed(3)}) rotate(${(-4 * sk).toFixed(1)}deg)`;
+    const lk = ramp(t, LIFT, 0.3);
+    $("lifted").style.opacity = lk.toFixed(3);
+    $("lifted").style.transform = `scale(${(1.2 - 0.2 * lk).toFixed(3)})`;
+    $("holdBar").style.width = (354 * lin(t, STOP + 0.3, LIFT - STOP - 0.5)).toFixed(1) + "px";
+    $("holdBar").style.background = t >= LIFT ? "var(--green)" : "var(--red)";
+    $("holdBar").style.opacity = (lin(t, STOP + 0.3, 0.2)).toFixed(3);
+
+    // centers flicker (intermittent, not dark)
+    centers.forEach((g, i) => {
+      const a = FLK + i * 0.4, on = lin(t, a, 0.1) * (1 - lin(t, LIFT, 0.4));
+      const fl = 0.45 + 0.55 * Math.abs(Math.sin((t - a) * 11 + i * 1.7));
+      g.setAttribute("opacity", (on * fl).toFixed(3));
+    });
+
+    // airport stop rings
+    ports.forEach((p, i) => {
+      const a = STOP + 0.04 * i;
+      const red = lin(t, a, 0.15), gr = lin(t, LIFT + 0.03 * i, 0.15);
+      p.st.setAttribute("stroke", gr > 0 ? "var(--green)" : "var(--red)");
+      p.st.setAttribute("opacity", (gr > 0 ? (1 - lin(t, LIFT + 0.6, 0.4)) * gr : red).toFixed(3));
+      p.st.setAttribute("r", (5.5 + 3 * (1 - (gr > 0 ? gr : red))).toFixed(2));
+    });
+
+    // planes
+    flights.forEach((f) => {
+      const k = (t - f.td) / f.dur;
+      if (k < 0 || k > 1) { f.g.setAttribute("opacity", "0"); return; }
+      const u = 1 - k;
+      const x = u * u * f.x0 + 2 * u * k * f.cx + k * k * f.x1;
+      const y = u * u * f.y0 + 2 * u * k * f.cy + k * k * f.y1;
+      const tx = 2 * u * (f.cx - f.x0) + 2 * k * (f.x1 - f.cx), ty = 2 * u * (f.cy - f.y0) + 2 * k * (f.y1 - f.cy);
+      const ang = Math.atan2(ty, tx) * 180 / Math.PI;
+      const s = 0.55 + 0.45 * Math.min(1, k / 0.12, (1 - k) / 0.12);
+      f.g.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(0)}) scale(${s.toFixed(2)})`);
+      f.g.setAttribute("opacity", Math.min(1, k / 0.06, (1 - k) / 0.06).toFixed(3));
+    });
+
+    // labels under the map
+    fade($("lCenters"), win(t, FLK, STOP + 0.1), rise(t, FLK));
+    fade($("lAir"), win(t, STOP + 0.3, 6.6), rise(t, STOP + 0.3));
+    fade($("lLow"), win(t, 6.8, MAPOUT), rise(t, 6.8));
+    fade($("lHrs"), win(t, 5.0, MAPOUT), rise(t, 5.0));
+
+    // cancellations
+    const cxOut = 1 - lin(t, RARE - 0.3, 0.3);
+    $("cx").style.opacity = (lin(t, CX, 0.3) * cxOut).toFixed(3);
+    fade($("cxHead"), ramp(t, CX, 0.4), rise(t, CX));
+    const fk = inout(lin(t, CX + 0.3, 1.6));
+    const fn = Math.round(dotsF.length * fk);
+    dotsF.forEach((c, i) => c.setAttribute("opacity", i < fn ? "1" : "0"));
+    $("nF").textContent = fk >= 1 ? fmt(FRI) + "+" : fmt(Math.round(FRI * fk / 10) * 10);
+    const sk2 = inout(lin(t, CX + 1.6, 1.2));
+    const sn = Math.round(dotsS.length * sk2);
+    dotsS.forEach((c, i) => c.setAttribute("opacity", i < sn ? "1" : "0"));
+    openS.forEach((c, i) => c.setAttribute("opacity", (lin(t, CX + 2.8 + i * 0.03, 0.2) * (0.55 + 0.45 * Math.sin(t * 5 + i))).toFixed(3)));
+    $("nS").textContent = sk2 >= 1 ? fmt(SAT) + "+" : fmt(Math.round(SAT * sk2 / 10) * 10);
+    fade($("gS"), ramp(t, CX + 1.5, 0.3), 0);
+    fade($("legend"), ramp(t, CX + 0.6, 0.4), rise(t, CX + 0.6));
+
+    // rarity line
+    const rOut = 1 - lin(t, CAUSE - 0.3, 0.3);
+    $("rare").style.opacity = (lin(t, RARE, 0.3) * rOut).toFixed(3);
+    $("rareLine").style.transform = `scaleX(${inout(lin(t, RARE + 0.1, 0.7)).toFixed(3)})`;
+    [["tk1", RARE + 0.3], ["tk2", RARE + 0.7], ["tk3", RARE + 1.1]].forEach(([id, a]) => {
+      const k = ramp(t, a, 0.35);
+      $(id).style.opacity = k.toFixed(3);
+      $(id).style.transform = `translateY(${((1 - k) * 10).toFixed(1)}px)`;
+    });
+
+    // cause
+    const cOut = 1 - lin(t, END - 0.3, 0.3);
+    $("cause").style.opacity = (lin(t, CAUSE, 0.3) * cOut).toFixed(3);
+    ["w1", "w2", "w3"].forEach((id, i) => {
+      const fl = Math.sin(t * 9 + i * 2.1) > -0.1 ? 1 : 0.15;
+      $(id).setAttribute("opacity", (ramp(t, CAUSE + 0.15 * i, 0.3) * fl).toFixed(3));
+    });
+    [...$("leds").children].forEach((c, i) => {
+      const blink = Math.sin(t * 7 + i * 1.3) > 0;
+      c.setAttribute("fill", t > CAUSE + 0.5 ? (blink ? "var(--red)" : "#4a2326") : "var(--green)");
+    });
+
+    // end card
+    fade($("end"), ramp(t, END, 0.5), rise(t, END));
+    [...$("sources").querySelectorAll(".s")].forEach((el, i) => { const k = ramp(t, END + 0.4 + i * 0.12, 0.4); fade(el, k, (1 - k) * 6); });
+    $("end").style.pointerEvents = t > END + 0.4 ? "auto" : "none";
+  }
+
+  const stage = $("stage");
+  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
+  addEventListener("resize", fit); fit();
+
+  const replay = $("replay");
+  let t0 = null, playing = true, raf = 0;
+  function tick(now) {
+    if (t0 === null) t0 = now;
+    const t = (now - t0) / 1000;
+    render(Math.min(t, DUR));
+    if (t < DUR && playing) raf = requestAnimationFrame(tick);
+    else { playing = false; replay.hidden = false; }
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: DUR, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, DUR)); }, play };
+  render(0);
+  const start = () => { if (reduce) { render(DUR); replay.hidden = false; } else play(); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+})();
+</script>
+</body>
+</html>
