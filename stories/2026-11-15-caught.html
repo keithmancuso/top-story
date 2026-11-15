@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Caught</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=block">
+<style>
+/* Caught. SpaceX Starship Flight 15: liftoff Fri Nov 13, 2026, 5:47 PM ET from Starbase, Texas. The booster's catch was
+   aborted and it was lost over the Gulf; Ship 42 flew 14 orbits, released 26 Starlink V3 satellites, came back through
+   reentry and was caught by the tower's arms Sat Nov 14 at about 4:20 PM ET, the first Starship ship caught after orbit.
+   Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+:root {
+  --ink: #f3efe6; --muted: #a9b3bf; --steel: #d5d9de; --steel2: #9aa3ad; --tower: #1d242d;
+  --flame: #ffb347; --plasma: #ff6a3d; --red: #ef5350; --cyan: #7fd3ff; --gold: #ffcf6e;
+  --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f3efe6; } }
+:root[data-theme="dark"] { --ink: #f3efe6; }
+html, body { height: 100%; margin: 0; }
+body { background: #05070b; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #05070b; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: #0a0f18; }
+#scene { position: absolute; left: 0; top: 0; width: 432px; height: 768px; }
+.abs { position: absolute; }
+.deco { pointer-events: none; }
+
+#kicker { left: 26px; top: 112px; width: 354px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); opacity: .85; }
+#kicker i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--flame); margin-right: 7px; vertical-align: 1px; }
+#clockRow { left: 26px; top: 132px; width: 354px; height: 40px; }
+#clock { position: absolute; left: 0; top: 0; font: 600 28px/1 var(--serif); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#clock small { font: 600 13px/1 var(--mono); color: var(--muted); margin-left: 4px; }
+#tplus { position: absolute; right: 0; top: 6px; font: 600 17px/1 var(--mono); color: var(--gold); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+#lostLab { left: 288px; top: 500px; width: 92px; padding: 6px 0; border-radius: 6px; background: rgba(10,14,22,.78); text-align: center; font: 600 13px/1 var(--sans); color: #ff7a6e; letter-spacing: .02em; }
+#satLab { left: 26px; top: 220px; width: 354px; text-align: center; font: 600 15px/1 var(--sans); color: var(--cyan); letter-spacing: .04em; }
+#satLab b { font: 700 22px/1 var(--serif); margin-right: 6px; }
+#lapBox { left: 26px; top: 488px; width: 354px; text-align: center; }
+#lapNum { font: 700 46px/1 var(--serif); font-variant-numeric: tabular-nums; }
+#lapLab { margin-top: 4px; font: 600 12px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+
+#caught { left: 76px; top: 182px; width: 254px; text-align: center; font: 700 58px/1 var(--serif); letter-spacing: .06em; color: var(--ink); text-shadow: 0 2px 18px rgba(0,0,0,.35); }
+#caughtSub { left: 26px; top: 248px; width: 354px; text-align: center; font: 600 15px/1.2 var(--sans); color: var(--ink); }
+
+.tile { position: absolute; top: 302px; width: 160px; height: 160px; border-radius: 12px; background: rgba(8,14,24,.97); border: 1.5px solid rgba(255,255,255,.14); text-align: center; }
+#tB { left: 32px; } #tS { left: 216px; border-color: var(--gold); }
+.tile svg { display: block; margin: 14px auto 0; }
+.tile .n { margin-top: 8px; font: 700 40px/1 var(--serif); font-variant-numeric: tabular-nums; height: 40px; overflow: hidden; position: relative; }
+.tile .l { margin-top: 8px; font: 600 12px/1.2 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.tile .x { margin-top: 5px; font: 600 12px/1 var(--sans); color: var(--red); }
+#tS .n { color: var(--gold); }
+#nS0, #nS1 { position: absolute; left: 0; right: 0; top: 0; }
+#next { left: 26px; top: 484px; width: 354px; text-align: center; }
+#next .a { font: 600 18px/1.2 var(--serif); }
+#next .b { margin-top: 6px; font: 500 13px/1.2 var(--sans); color: var(--muted); }
+
+#endCard { left: 26px; top: 220px; width: 354px; text-align: center; }
+#endCard h1 { margin: 0; font: 700 40px/1 var(--serif); letter-spacing: .05em; }
+#endCard .d { margin-top: 10px; font: 600 12px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+#sources { margin-top: 26px; font: 500 12px/1.6 var(--sans); color: var(--muted); }
+#sources b { display: block; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); margin-bottom: 8px; }
+#sources a { color: var(--muted); text-decoration: underline; text-decoration-color: rgba(169,179,191,.4); text-underline-offset: 2px; }
+#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 540px; min-height: 52px; min-width: 44px; padding: 0 22px; border: 1.5px solid var(--flame); border-radius: 999px;
+  background: transparent; color: var(--flame); font: 600 15px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay[hidden] { display: none; }
+#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage" role="img" aria-label="Animation: SpaceX's Starship lifts off, its booster is lost over the Gulf, the ship circles Earth 14 times, then returns and is caught by the launch tower's arms.">
+  <svg id="scene" viewBox="0 0 432 768" aria-hidden="true">
+    <defs>
+      <linearGradient id="gDusk" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2d4f7c"/><stop offset=".5" stop-color="#8f8aa0"/><stop offset=".8" stop-color="#e7a26a"/><stop offset="1" stop-color="#f8cf8a"/>
+      </linearGradient>
+      <linearGradient id="gDay" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2f6fb3"/><stop offset=".7" stop-color="#7fb2e0"/><stop offset="1" stop-color="#cfe3f2"/>
+      </linearGradient>
+      <radialGradient id="gSpace" cx=".5" cy=".45" r=".8">
+        <stop offset="0" stop-color="#0d1730"/><stop offset="1" stop-color="#03050a"/>
+      </radialGradient>
+      <radialGradient id="gGlobe" cx=".38" cy=".35" r=".75">
+        <stop offset="0" stop-color="#3d86c9"/><stop offset=".6" stop-color="#18467c"/><stop offset="1" stop-color="#0a1d38"/>
+      </radialGradient>
+      <linearGradient id="gShade" x1="0" y1="0" x2="1" y2="0">
+        <stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".65"/>
+      </linearGradient>
+      <linearGradient id="gSteel" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8f979f"/><stop offset=".4" stop-color="#e9ecef"/><stop offset="1" stop-color="#7d858d"/>
+      </linearGradient>
+      <linearGradient id="gFlame" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff6d8"/><stop offset=".35" stop-color="#ffb347"/><stop offset="1" stop-color="#ff5a1f" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="gTrail" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ff6a3d" stop-opacity="0"/><stop offset="1" stop-color="#ffd3a1"/>
+      </linearGradient>
+      <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3"/></filter>
+      <filter id="glow2" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="7"/></filter>
+      <g id="shipShape">
+        <path d="M-9,0 L-9,-62 Q-9,-80 0,-86 Q9,-80 9,-62 L9,0 Z" fill="url(#gSteel)"/>
+        <path d="M-9,-66 L-15,-58 L-9,-56 Z M9,-66 L15,-58 L9,-56 Z M-9,-12 L-16,-2 L-9,-2 Z M9,-12 L16,-2 L9,-2 Z" fill="#59616a"/>
+        <rect x="-9" y="-30" width="18" height="30" fill="#2a3036" opacity=".35"/>
+      </g>
+      <g id="boosterShape">
+        <rect x="-9" y="-125" width="18" height="125" fill="url(#gSteel)"/>
+        <rect x="-9" y="-125" width="18" height="6" fill="#59616a"/>
+        <path d="M-9,-118 l-5,3 l5,3 Z M9,-118 l5,3 l-5,3 Z" fill="#59616a"/>
+        <rect x="-9" y="-8" width="18" height="8" fill="#3b4148"/>
+      </g>
+    </defs>
+
+    <!-- skies -->
+    <rect id="skyDusk" x="0" y="0" width="432" height="768" fill="url(#gDusk)"/>
+    <rect id="skyDay" x="0" y="0" width="432" height="768" fill="url(#gDay)" opacity="0"/>
+    <g id="skySpace" opacity="0">
+      <rect x="0" y="0" width="432" height="768" fill="url(#gSpace)"/>
+      <g id="stars"></g>
+    </g>
+
+    <!-- ground, Gulf, tower -->
+    <g id="ground">
+      <rect x="0" y="580" width="432" height="188" fill="#2a2620"/>
+      <rect id="water" x="318" y="580" width="114" height="188" fill="#1e3a52"/>
+      <path id="waves" d="" stroke="#5f8fb3" stroke-width="1.5" fill="none" opacity=".7"/>
+      <rect x="250" y="572" width="24" height="8" fill="#23292f" data-key/>
+      <g id="tower" data-key>
+        <rect x="204" y="300" width="24" height="280" fill="#1d242d"/>
+        <path id="lattice" d="" stroke="#3a4552" stroke-width="1" fill="none"/>
+        <rect x="200" y="294" width="32" height="8" fill="#1d242d"/>
+      </g>
+      <g id="armsG">
+        <g id="armU" transform="translate(228 392)"><rect x="0" y="-3" width="74" height="6" rx="2" fill="#2c3540"/><rect x="62" y="-5" width="12" height="10" rx="2" fill="#2c3540"/></g>
+        <g id="armL" transform="translate(228 399)"><rect x="0" y="-3" width="74" height="6" rx="2" fill="#2c3540"/><rect x="62" y="-5" width="12" height="10" rx="2" fill="#2c3540"/></g>
+      </g>
+      <circle id="clunk" cx="262" cy="395" r="10" fill="none" stroke="#fff3c4" stroke-width="2" opacity="0"/>
+    </g>
+
+    <!-- liftoff -->
+    <path id="exhaust" d="" stroke="#fde3bf" stroke-linecap="round" fill="none" opacity="0"/>
+    <g id="stack" data-key>
+      <ellipse id="stackFlame" cx="0" cy="14" rx="10" ry="22" fill="url(#gFlame)"/>
+      <use href="#boosterShape"/>
+      <use href="#shipShape" transform="translate(0 -125)"/>
+    </g>
+    <g id="ship2" opacity="0" data-key>
+      <ellipse id="ship2Flame" cx="0" cy="10" rx="5" ry="12" fill="url(#gFlame)"/>
+      <use href="#shipShape"/>
+    </g>
+    <g id="booster" opacity="0" data-key>
+      <ellipse id="boostFlame" cx="0" cy="12" rx="8" ry="16" fill="url(#gFlame)"/>
+      <use href="#boosterShape" transform="translate(0 62)"/>
+    </g>
+    <g id="burst" opacity="0">
+      <circle id="burstGlow" cx="362" cy="566" r="14" fill="#ff5a3d" filter="url(#glow2)"/>
+      <circle id="burstCore" cx="362" cy="566" r="7" fill="#ffe2b0"/>
+    </g>
+
+    <!-- orbit -->
+    <g id="orbitG" opacity="0">
+      <g id="globeG" data-key>
+        <circle cx="203" cy="370" r="98" fill="#4aa3ff" opacity=".22" filter="url(#glow2)"/>
+        <circle cx="203" cy="370" r="90" fill="url(#gGlobe)"/>
+        <path d="M150,330 q22,-18 44,-6 q18,10 10,26 q-14,18 -36,10 q-24,-8 -18,-30 Z M222,396 q20,-10 36,4 q10,16 -6,30 q-22,10 -30,-8 q-6,-16 0,-26 Z" fill="#3f7a5a" opacity=".55"/>
+        <circle cx="203" cy="370" r="90" fill="url(#gShade)"/>
+      </g>
+      <ellipse id="orbitPath" cx="203" cy="370" rx="142" ry="40" transform="rotate(-12 203 370)" fill="none" stroke="#7fd3ff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="3 4"/>
+      <g id="sats"></g>
+      <path id="shipTrail" d="" stroke="#ffe6b8" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+      <g id="shipDot" data-key><circle r="7" fill="#ffd38a" opacity=".55" filter="url(#glow)"/><circle r="3" fill="#fff8e6"/></g>
+    </g>
+
+    <!-- reentry -->
+    <g id="reentry" opacity="0">
+      <path id="plasmaTrail" d="" stroke="url(#gTrail)" stroke-width="7" stroke-linecap="round" fill="none" filter="url(#glow)"/>
+      <path id="plasmaCore" d="" stroke="#ffe0c0" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <g id="plasmaHead" data-key><circle r="13" fill="#ff6a3d" opacity=".7" filter="url(#glow2)"/><circle r="5" fill="#fff1dc"/></g>
+    </g>
+    <g id="ship3" opacity="0" data-key>
+      <ellipse id="ship3Flame" cx="0" cy="12" rx="6" ry="16" fill="url(#gFlame)" opacity="0"/>
+      <use href="#shipShape"/>
+    </g>
+    <rect id="dim" x="0" y="0" width="432" height="768" fill="#05080d" opacity="0"/>
+  </svg>
+
+  <div id="kicker" class="abs"><i></i>SpaceX Starship &middot; Flight 15</div>
+  <div id="clockRow" class="abs"><div id="clock">FRI 5:47 PM<small>ET</small></div><div id="tplus">T+00:00</div></div>
+
+  <div id="lostLab" class="abs">Booster lost</div>
+  <div id="satLab" class="abs"><b>26</b>Starlink</div>
+  <div id="lapBox" class="abs"><div id="lapNum">1</div><div id="lapLab">orbits</div></div>
+
+  <div id="caught" class="abs">CAUGHT</div>
+  <div id="caughtSub" class="abs">First ship caught back from orbit</div>
+
+  <div id="tB" class="tile">
+    <svg width="14" height="52" viewBox="-9 -125 18 125" preserveAspectRatio="none"><use href="#boosterShape"/></svg>
+    <div class="n">3</div>
+    <div class="l">Booster catches</div>
+    <div class="x">this flight: lost</div>
+  </div>
+  <div id="tS" class="tile">
+    <svg width="18" height="52" viewBox="-16 -86 32 86"><use href="#shipShape"/></svg>
+    <div class="n"><span id="nS0">0</span><span id="nS1">1</span></div>
+    <div class="l">Ship catches</div>
+  </div>
+  <div id="next" class="abs"><div class="a">Next: refueling in orbit</div><div class="b">NASA Moon landing target: 2028</div></div>
+
+  <div id="endCard" class="abs">
+    <h1>CAUGHT</h1>
+    <div class="d">Starship Flight 15 &middot; Nov 13&ndash;14, 2026</div>
+    <div id="sources"><b>Sources</b>
+      <a href="https://www.pbs.org/newshour/science/spacexs-starship-returns-from-orbit-and-is-captured-by-launch-pad-arms-in-a-dramatic-first" target="_blank" rel="noopener">AP via PBS NewsHour</a> &middot;
+      <a href="https://www.cbsnews.com/news/spacex-catch-starship-rocket/" target="_blank" rel="noopener">CBS News</a><br>
+      <a href="https://space.com/news/live/spacex-starship-flight-15-live-updates-nov-13-2026-starship-first-double-landing-attempt" target="_blank" rel="noopener">Space.com</a> &middot;
+      <a href="https://spaceflightnow.com/2026/11/13/live-coverage-starship-flight-15-attempts-to-recover-full-vehicle-in-double-launch-pad-catch/" target="_blank" rel="noopener">Spaceflight Now</a><br>
+      Times ET. Illustration, not to scale.
+    </div>
+  </div>
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div>
+</div>
+<script>
+(() => {
+  const DUR = 19.6;
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+  const lerp = (a, b, p) => a + (b - a) * p;
+  const eio = p => p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+  const eout = p => 1 - Math.pow(1 - p, 3);
+  const ein = p => p * p * p;
+  const fade = (t, a, b, c, d) => Math.min(seg(t, a, b), 1 - seg(t, c, d));
+  const op = (el, v) => { el.style.opacity = v; el.style.visibility = v < 0.01 ? "hidden" : "visible"; };
+  const sop = (el, v) => { el.setAttribute("opacity", v); el.style.visibility = v < 0.01 ? "hidden" : "visible"; };
+  const NS = "http://www.w3.org/2000/svg";
+
+  // static decoration: stars, waves, tower lattice
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const stars = $("stars");
+  for (let i = 0; i < 90; i++) { const c = document.createElementNS(NS, "circle"); c.setAttribute("cx", (rnd() * 432).toFixed(1)); c.setAttribute("cy", (rnd() * 768).toFixed(1)); c.setAttribute("r", (0.4 + rnd() * 1.1).toFixed(2)); c.setAttribute("fill", "#fff"); c.setAttribute("opacity", (0.25 + rnd() * 0.6).toFixed(2)); stars.appendChild(c); }
+  let w = ""; for (let r = 0; r < 4; r++) { const y = 590 + r * 14; w += `M${322 + (r % 2) * 8},${y}`; for (let x = 330 + (r % 2) * 8; x < 432; x += 16) w += ` q4,-4 8,0 q4,4 8,0`; } $("waves").setAttribute("d", w);
+  let l = ""; for (let y = 300; y < 580; y += 20) l += `M204,${y} L228,${y + 20} M228,${y} L204,${y + 20} `; $("lattice").setAttribute("d", l);
+
+  const sats = $("sats"), satEls = [];
+  for (let i = 0; i < 26; i++) { const c = document.createElementNS(NS, "circle"); c.setAttribute("r", "1.6"); c.setAttribute("fill", "#9fe1ff"); sats.appendChild(c); satEls.push(c); }
+
+  // orbit geometry
+  const CX = 203, CY = 370, RX = 142, RY = 40, ROT = -12 * Math.PI / 180, GR = 90;
+  const orbitPt = th => { const x = RX * Math.cos(th), y = RY * Math.sin(th); return [CX + x * Math.cos(ROT) - y * Math.sin(ROT), CY + x * Math.sin(ROT) + y * Math.cos(ROT), Math.sin(th)]; };
+  const hidden = (p) => p[2] < 0 && Math.hypot(p[0] - CX, p[1] - CY) < GR;
+  const TH0 = Math.PI * 0.85;
+  const lapsAt = t => 14 * Math.pow(seg(t, 6.9, 10.8), 1.6);
+
+  // mission clock (seconds after liftoff) as a function of animation time
+  const CATCH = 22 * 3600 + 32 * 60 + 34;
+  function missionT(t) {
+    if (t < 1.0) return 0;
+    if (t < 6.0) return lerp(0, 400, seg(t, 1.0, 6.0));
+    if (t < 6.9) return lerp(400, 26 * 60, seg(t, 6.0, 6.9));
+    if (t < 10.8) return 26 * 60 + (lapsAt(t) / 14) * (21 * 3600 + 36 * 60 - 26 * 60);
+    return lerp(21 * 3600 + 36 * 60, CATCH, eout(seg(t, 10.8, 14.1)));
+  }
+  const LAUNCH = 17 * 3600 + 47 * 60; // 5:47 PM ET Friday
+  function clockText(ms) {
+    const abs = Math.round((LAUNCH + ms) / 60) * 60, day = abs >= 86400 ? "SAT" : "FRI";
+    let m = Math.floor(abs / 60) % 1440, h = Math.floor(m / 60), mm = m % 60, ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12;
+    const tm = Math.round(ms / 60), th = Math.floor(tm / 60), tmm = tm % 60;
+    return [`${day} ${h}:${String(mm).padStart(2, "0")} ${ap}`, `T+${String(th).padStart(2, "0")}:${String(tmm).padStart(2, "0")}`];
+  }
+
+  const E = {}; ["skyDusk","skyDay","skySpace","ground","exhaust","stack","stackFlame","ship2","ship2Flame","booster","boostFlame","burst","burstGlow","burstCore","orbitG","globeG","shipDot","shipTrail","reentry","plasmaTrail","plasmaCore","plasmaHead","ship3","ship3Flame","armU","armL","clunk","dim","kicker","clockRow","clock","tplus","lostLab","satLab","lapBox","lapNum","lapLab","caught","caughtSub","tB","tS","nS0","nS1","next","endCard"].forEach(k => E[k] = $(k));
+
+  function render(t) {
+    const flick = 0.85 + 0.15 * Math.sin(t * 61) * Math.sin(t * 23);
+    // skies
+    sop(E.skyDusk, 1 - seg(t, 6.0, 6.8));
+    sop(E.skySpace, Math.min(seg(t, 6.0, 6.8), 1 - seg(t, 12.2, 12.9)));
+    sop(E.skyDay, seg(t, 12.2, 12.9));
+    sop(E.ground, Math.max(1 - seg(t, 6.0, 6.7), seg(t, 12.3, 12.9)) * (1 - seg(t, 15.3, 15.7)));
+
+    // liftoff: stack rises and recedes
+    const pL = ein(seg(t, 1.0, 3.4));
+    const sy = lerp(572, 262, pL), ss = lerp(1, 0.45, pL);
+    E.stack.setAttribute("transform", `translate(262 ${sy.toFixed(1)}) scale(${ss.toFixed(3)})`);
+    sop(E.stack, t < 3.45 ? 1 : 0);
+    E.stackFlame.setAttribute("ry", (t < 0.7 ? 0 : (t < 1.0 ? 12 * seg(t, 0.7, 1.0) : 12 + 28 * pL) * flick).toFixed(1));
+    const exO = t < 1.0 ? 0 : 0.55 * (1 - seg(t, 4.0, 6.0));
+    sop(E.exhaust, exO);
+    if (exO > 0) { E.exhaust.setAttribute("d", `M262,575 L262,${Math.min(575, sy + 10).toFixed(1)}`); E.exhaust.setAttribute("stroke-width", (4 + 6 * pL).toFixed(1)); }
+
+    // staging: ship continues up and away
+    const pS = seg(t, 3.45, 4.9);
+    E.ship2.setAttribute("transform", `translate(262 ${lerp(262 - 125 * 0.45, 140, eout(pS)).toFixed(1)}) scale(${lerp(0.45, 0.16, pS).toFixed(3)})`);
+    sop(E.ship2, t >= 3.45 ? 1 - seg(t, 4.5, 4.9) : 0);
+    E.ship2Flame.setAttribute("ry", (12 * flick).toFixed(1));
+
+    // booster: flips, heads back toward the coast, turns away offshore, lost over the Gulf
+    let bx, by, br;
+    if (t < 4.1) { const p = eio(seg(t, 3.45, 4.1)); bx = 262 + 6 * p; by = 262 - 62 * 0.45 + 10 * p; br = 180 * p; }
+    else if (t < 4.75) { const p = eio(seg(t, 4.1, 4.75)); bx = lerp(268, 330, p); by = lerp(244, 390, p); br = lerp(180, 150, p); }
+    else { const p = eio(seg(t, 4.75, 5.35)); bx = lerp(330, 362, p); by = lerp(390, 538, p); br = lerp(150, 0, p); }
+    E.booster.setAttribute("transform", `translate(${bx.toFixed(1)} ${by.toFixed(1)}) scale(0.55) rotate(${br.toFixed(1)})`);
+    sop(E.booster, t >= 3.45 && t < 5.35 ? 1 : 0);
+    E.boostFlame.setAttribute("ry", (t > 3.7 && t < 4.6 ? 16 * flick : (t > 5.0 ? 10 * flick : 0)).toFixed(1));
+    const pB = seg(t, 5.35, 6.2);
+    sop(E.burst, t >= 5.35 ? (1 - pB) : 0);
+    E.burstGlow.setAttribute("r", (10 + 18 * eout(pB)).toFixed(1)); E.burstCore.setAttribute("r", (6 * (1 - pB) + 1).toFixed(1));
+    op(E.lostLab, fade(t, 5.35, 5.6, 5.95, 6.2));
+
+    // orbit
+    const pO = Math.min(seg(t, 6.3, 7.0), 1 - seg(t, 11.0, 11.6));
+    sop(E.orbitG, pO);
+    const gs = t < 11 ? lerp(0.7, 1, eout(seg(t, 6.3, 7.0))) : lerp(1, 1.6, ein(seg(t, 11.0, 11.6)));
+    E.orbitG.setAttribute("transform", `translate(${CX} ${CY}) scale(${gs.toFixed(3)}) translate(${-CX} ${-CY})`);
+    const L = lapsAt(t), th = TH0 + 2 * Math.PI * L;
+    const sp = orbitPt(th);
+    E.shipDot.setAttribute("transform", `translate(${sp[0].toFixed(1)} ${sp[1].toFixed(1)})`);
+    sop(E.shipDot, hidden(sp) ? 0 : 1);
+    let tr = ""; for (let k = 0; k <= 12; k++) { const p = orbitPt(th - k * 0.05 * (0.6 + Math.min(L, 6) * 0.4)); if (!hidden(p)) tr += (tr ? " L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1); else if (tr) break; }
+    E.shipTrail.setAttribute("d", tr);
+    satEls.forEach((c, i) => {
+      const Lr = 0.25 + 0.5 * i / 25;
+      if (L < Lr) { c.style.visibility = "hidden"; return; }
+      const thr = TH0 + 2 * Math.PI * Lr, thi = thr + (th - thr) * (0.94 - 0.0015 * i) - 0.06;
+      const p = orbitPt(thi), o = (1 - seg(L, 2.5, 4.5)) * (hidden(p) ? 0 : 1);
+      c.setAttribute("cx", p[0].toFixed(1)); c.setAttribute("cy", p[1].toFixed(1)); c.setAttribute("opacity", o.toFixed(2)); c.style.visibility = o < .01 ? "hidden" : "visible";
+    });
+    op(E.satLab, fade(t, 7.05, 7.3, 7.85, 8.1));
+    op(E.lapBox, fade(t, 6.9, 7.2, 11.0, 11.4));
+    const nL = clamp(Math.ceil(L - 1e-6), 1, 14); E.lapNum.textContent = String(nL); E.lapLab.textContent = nL === 1 ? "orbit" : "orbits";
+
+    // reentry streak
+    const pR = eout(seg(t, 11.2, 12.6));
+    sop(E.reentry, Math.min(seg(t, 11.1, 11.35), 1 - seg(t, 12.45, 12.75)));
+    const rx0 = 70, ry0 = 140, rx1 = 300, ry1 = 300;
+    const hx = lerp(rx0, rx1, pR), hy = lerp(ry0, ry1, pR);
+    const tx = lerp(rx0, rx1, Math.max(0, pR - 0.45)), ty = lerp(ry0, ry1, Math.max(0, pR - 0.45));
+    E.plasmaTrail.setAttribute("d", `M${tx.toFixed(1)},${ty.toFixed(1)} L${hx.toFixed(1)},${hy.toFixed(1)}`);
+    E.plasmaCore.setAttribute("d", `M${lerp(tx, hx, .5).toFixed(1)},${lerp(ty, hy, .5).toFixed(1)} L${hx.toFixed(1)},${hy.toFixed(1)}`);
+    E.plasmaHead.setAttribute("transform", `translate(${hx.toFixed(1)} ${hy.toFixed(1)}) scale(${(1 + 0.15 * Math.sin(t * 40)).toFixed(3)})`);
+
+    // ship returns: belly first, flips upright, engines on, descends into the arms
+    let cx, cy, rr;
+    if (t < 13.0) { const p = eio(seg(t, 12.45, 13.0)); cx = lerp(300, 292, p); cy = lerp(300, 345, p); rr = 100; }
+    else if (t < 13.45) { const p = eio(seg(t, 13.0, 13.45)); cx = lerp(292, 262, p); cy = lerp(345, 376, p); rr = lerp(100, 0, p); }
+    else { const p = eout(seg(t, 13.45, 14.05)); cx = 262; cy = lerp(376, 422, p); rr = 0; }
+    E.ship3.setAttribute("transform", `translate(${cx.toFixed(1)} ${cy.toFixed(1)}) rotate(${rr.toFixed(1)}) translate(0 43)`);
+    sop(E.ship3, seg(t, 12.45, 12.6) * (1 - seg(t, 15.3, 15.7)));
+    E.ship3Flame.setAttribute("opacity", (t > 13.0 && t < 14.25 ? 1 - seg(t, 14.05, 14.25) : 0).toFixed(2));
+    E.ship3Flame.setAttribute("ry", (16 * flick).toFixed(1));
+    const pA = eio(seg(t, 13.75, 14.1)), open = t < 13.75 ? 1 : 1 - pA;
+    E.armU.setAttribute("transform", `translate(228 392) rotate(${(-24 * open).toFixed(1)})`);
+    E.armL.setAttribute("transform", `translate(228 399) rotate(${(24 * open).toFixed(1)})`);
+    const pC = seg(t, 14.1, 14.7);
+    E.clunk.setAttribute("r", (6 + 30 * eout(pC)).toFixed(1)); sop(E.clunk, t >= 14.1 ? 0.9 * (1 - pC) : 0);
+
+    // clock
+    const [ck, tp] = clockText(missionT(t));
+    E.clock.firstChild.nodeValue = ck; E.tplus.textContent = tp;
+    op(E.kicker, 1 - seg(t, 17.4, 17.7)); op(E.clockRow, 1 - seg(t, 17.4, 17.7));
+
+    // payoff
+    const pK = seg(t, 14.25, 14.6);
+    op(E.caught, pK * (1 - seg(t, 17.4, 17.7))); E.caught.style.transform = `scale(${lerp(1.12, 1, eout(pK)).toFixed(3)})`;
+    op(E.caughtSub, fade(t, 14.55, 14.85, 17.4, 17.7));
+    sop(E.dim, Math.max(0.72 * seg(t, 15.3, 15.7), 1.0 * seg(t, 17.4, 17.7)));
+    op(E.tB, fade(t, 15.45, 15.75, 17.4, 17.7)); E.tB.style.transform = `translateY(${(10 * (1 - eout(seg(t, 15.45, 15.75)))).toFixed(1)}px)`;
+    op(E.tS, fade(t, 15.6, 15.9, 17.4, 17.7)); E.tS.style.transform = `translateY(${(10 * (1 - eout(seg(t, 15.6, 15.9)))).toFixed(1)}px)`;
+    const pN = eio(seg(t, 16.05, 16.35));
+    E.nS0.style.transform = `translateY(${(-44 * pN).toFixed(1)}px)`; op(E.nS0, 1 - pN);
+    E.nS1.style.transform = `translateY(${(44 * (1 - pN)).toFixed(1)}px)`; op(E.nS1, pN);
+    op(E.next, fade(t, 16.4, 16.7, 17.4, 17.7));
+    op(E.endCard, seg(t, 17.65, 18.0));
+  }
+
+  const replay = $("replay");
+  let raf = 0, t0 = null, playing = false;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick(now) { if (t0 === null) t0 = now; const t = (now - t0) / 1000; render(Math.min(t, DUR));
+    if (t < DUR && playing) raf = requestAnimationFrame(tick); else { playing = false; replay.hidden = false; } }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: DUR, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, DUR)); }, play };
+
+  function fit() { const s = Math.min(innerWidth / 432, innerHeight / 768); $("stage").style.transform = `translate(-50%, -50%) scale(${s})`; }
+  addEventListener("resize", fit); fit();
+  render(0);
+  const start = () => { if (reduce) { render(DUR); replay.hidden = false; } else play(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+</body>
+</html>

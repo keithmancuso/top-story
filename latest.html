@@ -2,393 +2,396 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Ground Stop</title>
+<title>Caught</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=block">
 <style>
-/* Ground Stop. Fri Nov 13, 2026: a telecom outage at the FAA's en-route centers led to a nationwide ground stop of
-   departures for more than four hours (3:54 to 8:15 PM ET). Planes already flying kept going and landed.
-   A busy sky over a U.S. map; centers flicker from Chicago east; every airport gets a red stop; the sky thins while the clock runs
-   to 8:15; stops turn green; then cancellation dot grids (Fri / Sat so far), a three-tick rarity line, the cause,
-   and the end card with sources. Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+/* Caught. SpaceX Starship Flight 15: liftoff Fri Nov 13, 2026, 5:47 PM ET from Starbase, Texas. The booster's catch was
+   aborted and it was lost over the Gulf; Ship 42 flew 14 orbits, released 26 Starlink V3 satellites, came back through
+   reentry and was caught by the tower's arms Sat Nov 14 at about 4:20 PM ET, the first Starship ship caught after orbit.
+   Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
 :root {
-  --night: #0d141d; --land: #172231; --coast: #33475e; --ink: #ece8de; --muted: #95a1ae; --hair: #2c3a4a;
-  --red: #e5484d; --green: #3fbf8f; --amber: #f0b34a; --plane: #f4efe4;
+  --ink: #f3efe6; --muted: #a9b3bf; --steel: #d5d9de; --steel2: #9aa3ad; --tower: #1d242d;
+  --flame: #ffb347; --plasma: #ff6a3d; --red: #ef5350; --cyan: #7fd3ff; --gold: #ffcf6e;
   --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --night: #0d141d; } }
-:root[data-theme="dark"] { --night: #0d141d; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f3efe6; } }
+:root[data-theme="dark"] { --ink: #f3efe6; }
 html, body { height: 100%; margin: 0; }
-body { background: #090e14; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
-#wrap { position: fixed; inset: 0; overflow: hidden; background: #090e14; }
-#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: var(--night); }
-.deco { position: absolute; pointer-events: none; }
-#vig { inset: 0; background: radial-gradient(110% 60% at 50% 42%, rgba(80,120,170,.10), rgba(0,0,0,0) 62%); }
+body { background: #05070b; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #05070b; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: #0a0f18; }
+#scene { position: absolute; left: 0; top: 0; width: 432px; height: 768px; }
 .abs { position: absolute; }
-#kicker { left: 26px; top: 112px; width: 354px; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-#kicker i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--red); margin-right: 7px; vertical-align: 1px; }
+.deco { pointer-events: none; }
 
-#clockRow { left: 26px; top: 134px; width: 354px; height: 60px; }
-#clock { position: absolute; left: 0; top: 0; font: 600 44px/1 var(--serif); font-variant-numeric: tabular-nums; }
-#clock small { font: 600 15px/1 var(--mono); color: var(--muted); margin-left: 6px; letter-spacing: .04em; }
-#stamp { position: absolute; right: 8px; top: 4px; padding: 7px 10px; border: 2px solid var(--red); border-radius: 4px; color: var(--red);
-  font: 600 13px/1.1 var(--mono); letter-spacing: .08em; text-align: center; transform-origin: 50% 50%; }
-#stamp b { display: block; font-weight: 600; }
-#stamp span { display: block; font-size: 11px; color: #f08a8d; margin-top: 3px; letter-spacing: .02em; }
-#lifted { position: absolute; right: 8px; top: 4px; padding: 7px 10px; border: 2px solid var(--green); border-radius: 4px; color: var(--green);
-  font: 600 13px/1.1 var(--mono); letter-spacing: .08em; text-align: center; }
-#lifted span { display: block; font-size: 11px; color: #8fdcbf; margin-top: 3px; letter-spacing: .02em; }
-#holdBar { position: absolute; left: 0; top: 54px; height: 4px; width: 0; background: var(--red); border-radius: 2px; }
+#kicker { left: 26px; top: 112px; width: 354px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); opacity: .85; }
+#kicker i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--flame); margin-right: 7px; vertical-align: 1px; }
+#clockRow { left: 26px; top: 132px; width: 354px; height: 40px; }
+#clock { position: absolute; left: 0; top: 0; font: 600 28px/1 var(--serif); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#clock small { font: 600 13px/1 var(--mono); color: var(--muted); margin-left: 4px; }
+#tplus { position: absolute; right: 0; top: 6px; font: 600 17px/1 var(--mono); color: var(--gold); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-#map { left: 0; top: 0; width: 432px; height: 768px; }
-#map svg { position: absolute; left: 0; top: 0; width: 432px; height: 768px; overflow: visible; }
+#lostLab { left: 288px; top: 500px; width: 92px; padding: 6px 0; border-radius: 6px; background: rgba(10,14,22,.78); text-align: center; font: 600 13px/1 var(--sans); color: #ff7a6e; letter-spacing: .02em; }
+#satLab { left: 26px; top: 220px; width: 354px; text-align: center; font: 600 15px/1 var(--sans); color: var(--cyan); letter-spacing: .04em; }
+#satLab b { font: 700 22px/1 var(--serif); margin-right: 6px; }
+#lapBox { left: 26px; top: 488px; width: 354px; text-align: center; }
+#lapNum { font: 700 46px/1 var(--serif); font-variant-numeric: tabular-nums; }
+#lapLab { margin-top: 4px; font: 600 12px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 
-.lab { left: 26px; width: 354px; text-align: center; }
-.lab .a { font: 600 22px/1.15 var(--serif); }
-.lab .b { margin-top: 4px; font: 500 13px/1.3 var(--sans); color: var(--muted); }
-#lCenters { top: 476px; } #lCenters .a { color: var(--amber); }
-#lAir { top: 476px; }
-#lLow { top: 476px; }
-#lHrs { top: 530px; } #lHrs .a { color: var(--red); }
+#caught { left: 76px; top: 182px; width: 254px; text-align: center; font: 700 58px/1 var(--serif); letter-spacing: .06em; color: var(--ink); text-shadow: 0 2px 18px rgba(0,0,0,.35); }
+#caughtSub { left: 26px; top: 248px; width: 354px; text-align: center; font: 600 15px/1.2 var(--sans); color: var(--ink); }
 
-/* cancellations */
-#cx { left: 0; top: 0; width: 432px; height: 768px; }
-#cxHead { left: 26px; top: 170px; width: 354px; text-align: center; font: 600 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
-#cxHead svg { width: 22px; height: 22px; vertical-align: -6px; margin-right: 8px; }
-.grid { position: absolute; top: 210px; width: 150px; }
-.grid svg { display: block; width: 150px; height: 118px; overflow: visible; }
-.grid .num { font: 600 40px/1 var(--serif); margin-bottom: 10px; font-variant-numeric: tabular-nums; }
-.grid .day { margin-top: 10px; font: 600 12px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-#gF { left: 38px; } #gS { left: 228px; }
-#gF .num { color: var(--red); } #gS .num { color: #f08a8d; }
-#legend { left: 26px; top: 428px; width: 354px; text-align: center; font: 500 12px/1 var(--mono); color: var(--muted); }
-#legend i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--red); margin-right: 6px; vertical-align: 0; }
+.tile { position: absolute; top: 302px; width: 160px; height: 160px; border-radius: 12px; background: rgba(8,14,24,.97); border: 1.5px solid rgba(255,255,255,.14); text-align: center; }
+#tB { left: 32px; } #tS { left: 216px; border-color: var(--gold); }
+.tile svg { display: block; margin: 14px auto 0; }
+.tile .n { margin-top: 8px; font: 700 40px/1 var(--serif); font-variant-numeric: tabular-nums; height: 40px; overflow: hidden; position: relative; }
+.tile .l { margin-top: 8px; font: 600 12px/1.2 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.tile .x { margin-top: 5px; font: 600 12px/1 var(--sans); color: var(--red); }
+#tS .n { color: var(--gold); }
+#nS0, #nS1 { position: absolute; left: 0; right: 0; top: 0; }
+#next { left: 26px; top: 484px; width: 354px; text-align: center; }
+#next .a { font: 600 18px/1.2 var(--serif); }
+#next .b { margin-top: 6px; font: 500 13px/1.2 var(--sans); color: var(--muted); }
 
-/* rarity line */
-#rare { left: 26px; top: 236px; width: 354px; height: 200px; }
-#rareHead { position: absolute; left: 0; top: 0; width: 354px; text-align: center; font: 600 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
-#rareLine { position: absolute; left: 40px; top: 93px; height: 2px; width: 282px; background: var(--hair); transform-origin: 0 50%; }
-.tick { position: absolute; top: 72px; width: 56px; margin-left: -28px; text-align: center; }
-.tick .dot { width: 18px; height: 18px; margin: 12px auto 0; border-radius: 50%; background: var(--muted); }
-.tick .y { margin-top: 14px; font: 600 22px/1 var(--serif); }
-.tick .w { margin-top: 6px; font: 500 12px/1.2 var(--sans); color: var(--muted); }
-#tk3 .dot { background: var(--red); box-shadow: 0 0 0 6px rgba(229,72,77,.22); }
-#tk3 .y { color: var(--red); }
-
-/* cause */
-#cause { left: 26px; top: 214px; width: 354px; height: 300px; }
-#cause svg { position: absolute; left: 97px; top: 0; width: 160px; height: 150px; overflow: visible; }
-#cause .a { position: absolute; left: 0; top: 176px; width: 354px; text-align: center; font: 600 26px/1.1 var(--serif); }
-#cause .b { position: absolute; left: 0; top: 216px; width: 354px; text-align: center; font: 500 13px/1.3 var(--sans); color: var(--muted); }
-
-/* end */
-#end { left: 26px; top: 140px; width: 354px; }
-#end .t { font: 600 44px/1 var(--serif); }
-#end .r { margin-top: 10px; font: 500 15px/1.35 var(--sans); color: var(--muted); }
-#sources { margin-top: 24px; border-top: 1px solid var(--hair); padding-top: 12px; }
-#sources .h { font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-#sources div.s { margin-bottom: 8px; font: 400 12px/1.35 var(--sans); color: #c9c6be; }
-#sources a { color: inherit; text-decoration: underline; text-decoration-color: rgba(255,255,255,.3); text-underline-offset: 2px; }
-
-#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 552px; min-height: 36px; min-width: 44px; padding: 0 16px; border: 1.5px solid var(--red); border-radius: 999px;
-  background: rgba(13,20,29,.92); color: var(--ink); font: 600 12px/1 var(--sans); letter-spacing: .04em; cursor: pointer; -webkit-tap-highlight-color: transparent; z-index: 5; }
+#endCard { left: 26px; top: 220px; width: 354px; text-align: center; }
+#endCard h1 { margin: 0; font: 700 40px/1 var(--serif); letter-spacing: .05em; }
+#endCard .d { margin-top: 10px; font: 600 12px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+#sources { margin-top: 26px; font: 500 12px/1.6 var(--sans); color: var(--muted); }
+#sources b { display: block; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); margin-bottom: 8px; }
+#sources a { color: var(--muted); text-decoration: underline; text-decoration-color: rgba(169,179,191,.4); text-underline-offset: 2px; }
+#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 540px; min-height: 52px; min-width: 44px; padding: 0 22px; border: 1.5px solid var(--flame); border-radius: 999px;
+  background: transparent; color: var(--flame); font: 600 15px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
 #replay[hidden] { display: none; }
-#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
 </style>
 </head>
 <body>
 <div id="wrap">
-<div id="stage" role="img" aria-label="On Friday Nov 13, 2026 a telecom outage at FAA air traffic control centers led to a nationwide ground stop of departures from 3:54 to 8:15 PM Eastern. Planes already in the air kept flying and landed. More than 9,000 flights were cancelled Friday and more than 3,400 so far Saturday. It was the second nationwide ground stop since 9/11.">
-  <div class="deco" id="vig"></div>
-  <div class="abs" id="kicker"><i></i>U.S. airspace &middot; Fri, Nov 13</div>
-
-  <div class="abs" id="clockRow">
-    <div id="clock"><span id="clk">3:15</span><small id="ampm">PM ET</small></div>
-    <div id="stamp"><b>GROUND STOP</b><span>3:54 PM ET</span></div>
-    <div id="lifted"><b>LIFTED</b><span>8:15 PM ET</span></div>
-    <div id="holdBar"></div>
-  </div>
-
-  <div class="abs" id="map"><svg viewBox="0 0 432 768" aria-hidden="true">
-    <path id="us" fill="var(--land)" stroke="var(--coast)" stroke-width="1.4" stroke-linejoin="round"/>
-    <g id="centers"></g>
-    <g id="ports"></g>
-    <g id="planes"></g>
-  </svg></div>
-
-  <div class="abs lab" id="lCenters"><div class="a">Radar &amp; radio unstable</div></div>
-  <div class="abs lab" id="lAir"><div class="a">3,000+ in the air</div><div class="b">all landed safely</div></div>
-  <div class="abs lab" id="lLow"><div class="a">&lt;400 airborne</div><div class="b">at the low point</div></div>
-  <div class="abs lab" id="lHrs"><div class="a">4+ hrs</div></div>
-
-  <div class="abs" id="cx">
-    <div class="abs" id="cxHead"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15.5v-2l-8-5V3.8a1.5 1.5 0 0 0-3 0v4.7l-8 5v2l8-2.5v5l-2 1.5V21l3.5-1 3.5 1v-1.5l-2-1.5v-5z" fill="var(--ink)"/><path d="M3 3l18 18" stroke="var(--red)" stroke-width="2.6" stroke-linecap="round"/></svg>Cancelled</div>
-    <div class="grid" id="gF"><div class="num" id="nF">0</div><svg id="dF" viewBox="0 0 150 118"></svg><div class="day">Friday</div></div>
-    <div class="grid" id="gS"><div class="num" id="nS">0</div><svg id="dS" viewBox="0 0 150 118"></svg><div class="day">Saturday, so far</div></div>
-    <div class="abs" id="legend"><i></i>= 50 flights</div>
-  </div>
-
-  <div class="abs" id="rare">
-    <div id="rareHead">Nationwide ground stops</div>
-    <div id="rareLine"></div>
-    <div class="tick" id="tk1" style="left:40px"><div class="dot"></div><div class="y">9/11</div><div class="w">2001</div></div>
-    <div class="tick" id="tk2" style="left:262px"><div class="dot"></div><div class="y">Jan</div><div class="w">2023</div></div>
-    <div class="tick" id="tk3" style="left:322px"><div class="dot"></div><div class="y">Nov</div><div class="w">2026</div></div>
-  </div>
-
-  <div class="abs" id="cause">
-    <svg viewBox="0 0 160 150" aria-hidden="true">
-      <g id="waves" fill="none" stroke="var(--amber)" stroke-width="4" stroke-linecap="round">
-        <path id="w1" d="M66 40a20 20 0 0 1 28 0"/><path id="w2" d="M56 28a34 34 0 0 1 48 0"/><path id="w3" d="M46 16a48 48 0 0 1 68 0"/>
+<div id="stage" role="img" aria-label="Animation: SpaceX's Starship lifts off, its booster is lost over the Gulf, the ship circles Earth 14 times, then returns and is caught by the launch tower's arms.">
+  <svg id="scene" viewBox="0 0 432 768" aria-hidden="true">
+    <defs>
+      <linearGradient id="gDusk" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2d4f7c"/><stop offset=".5" stop-color="#8f8aa0"/><stop offset=".8" stop-color="#e7a26a"/><stop offset="1" stop-color="#f8cf8a"/>
+      </linearGradient>
+      <linearGradient id="gDay" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2f6fb3"/><stop offset=".7" stop-color="#7fb2e0"/><stop offset="1" stop-color="#cfe3f2"/>
+      </linearGradient>
+      <radialGradient id="gSpace" cx=".5" cy=".45" r=".8">
+        <stop offset="0" stop-color="#0d1730"/><stop offset="1" stop-color="#03050a"/>
+      </radialGradient>
+      <radialGradient id="gGlobe" cx=".38" cy=".35" r=".75">
+        <stop offset="0" stop-color="#3d86c9"/><stop offset=".6" stop-color="#18467c"/><stop offset="1" stop-color="#0a1d38"/>
+      </radialGradient>
+      <linearGradient id="gShade" x1="0" y1="0" x2="1" y2="0">
+        <stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".65"/>
+      </linearGradient>
+      <linearGradient id="gSteel" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#8f979f"/><stop offset=".4" stop-color="#e9ecef"/><stop offset="1" stop-color="#7d858d"/>
+      </linearGradient>
+      <linearGradient id="gFlame" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff6d8"/><stop offset=".35" stop-color="#ffb347"/><stop offset="1" stop-color="#ff5a1f" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="gTrail" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ff6a3d" stop-opacity="0"/><stop offset="1" stop-color="#ffd3a1"/>
+      </linearGradient>
+      <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3"/></filter>
+      <filter id="glow2" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="7"/></filter>
+      <g id="shipShape">
+        <path d="M-9,0 L-9,-62 Q-9,-80 0,-86 Q9,-80 9,-62 L9,0 Z" fill="url(#gSteel)"/>
+        <path d="M-9,-66 L-15,-58 L-9,-56 Z M9,-66 L15,-58 L9,-56 Z M-9,-12 L-16,-2 L-9,-2 Z M9,-12 L16,-2 L9,-2 Z" fill="#59616a"/>
+        <rect x="-9" y="-30" width="18" height="30" fill="#2a3036" opacity=".35"/>
       </g>
-      <rect x="18" y="70" width="124" height="44" rx="8" fill="#223044" stroke="#4a5f78" stroke-width="2"/>
-      <line x1="80" y1="70" x2="80" y2="50" stroke="#4a5f78" stroke-width="4" stroke-linecap="round"/>
-      <g id="leds"><circle cx="40" cy="92" r="5"/><circle cx="58" cy="92" r="5"/><circle cx="76" cy="92" r="5"/><circle cx="94" cy="92" r="5"/></g>
-      <rect x="108" y="87" width="22" height="10" rx="2" fill="#16202d"/>
-    </svg>
-    <div class="a">Telecom outage</div>
-    <div class="b">No sign of cyberattack so far &middot; DHS</div>
-  </div>
+      <g id="boosterShape">
+        <rect x="-9" y="-125" width="18" height="125" fill="url(#gSteel)"/>
+        <rect x="-9" y="-125" width="18" height="6" fill="#59616a"/>
+        <path d="M-9,-118 l-5,3 l5,3 Z M9,-118 l5,3 l-5,3 Z" fill="#59616a"/>
+        <rect x="-9" y="-8" width="18" height="8" fill="#3b4148"/>
+      </g>
+    </defs>
 
-  <div class="abs" id="end">
-    <div class="t">Ground Stop</div>
-    <div class="r">Departures held 4+ hrs. Still catching up.</div>
-    <div id="sources">
-      <div class="h">Sources</div>
-      <div class="s"><a href="https://abcnews.com/US/nationwide-ground-stop-ordered-airports-faa/story?id=138121848" target="_blank" rel="noopener">ABC News: stop lifted after 4+ hours</a></div>
-      <div class="s"><a href="https://www.kjct8.com/2026/11/14/thousands-flights-canceled-airlines-work-dig-out-nationwide-ground-stop/" target="_blank" rel="noopener">AP: second nationwide stop since 9/11</a></div>
-      <div class="s"><a href="https://www.mensjournal.com/news/faa-ground-stop-saturday-flight-cancellations" target="_blank" rel="noopener">Men's Journal: FlightAware cancellation counts</a></div>
-      <div class="s"><a href="https://www.securityweek.com/no-signs-of-hacking-in-faa-ground-stop-as-fbi-reportedly-probes-software-update/" target="_blank" rel="noopener">SecurityWeek: DHS, no sign of hacking</a></div>
-      <div class="s"><a href="https://www.aljazeera.com/news/2026/11/14/faa-ground-stop-lifted-why-were-us-flights-grounded-and-whats-next" target="_blank" rel="noopener">Al Jazeera: timeline, 3,000+ airborne</a></div>
+    <!-- skies -->
+    <rect id="skyDusk" x="0" y="0" width="432" height="768" fill="url(#gDusk)"/>
+    <rect id="skyDay" x="0" y="0" width="432" height="768" fill="url(#gDay)" opacity="0"/>
+    <g id="skySpace" opacity="0">
+      <rect x="0" y="0" width="432" height="768" fill="url(#gSpace)"/>
+      <g id="stars"></g>
+    </g>
+
+    <!-- ground, Gulf, tower -->
+    <g id="ground">
+      <rect x="0" y="580" width="432" height="188" fill="#2a2620"/>
+      <rect id="water" x="318" y="580" width="114" height="188" fill="#1e3a52"/>
+      <path id="waves" d="" stroke="#5f8fb3" stroke-width="1.5" fill="none" opacity=".7"/>
+      <rect x="250" y="572" width="24" height="8" fill="#23292f" data-key/>
+      <g id="tower" data-key>
+        <rect x="204" y="300" width="24" height="280" fill="#1d242d"/>
+        <path id="lattice" d="" stroke="#3a4552" stroke-width="1" fill="none"/>
+        <rect x="200" y="294" width="32" height="8" fill="#1d242d"/>
+      </g>
+      <g id="armsG">
+        <g id="armU" transform="translate(228 392)"><rect x="0" y="-3" width="74" height="6" rx="2" fill="#2c3540"/><rect x="62" y="-5" width="12" height="10" rx="2" fill="#2c3540"/></g>
+        <g id="armL" transform="translate(228 399)"><rect x="0" y="-3" width="74" height="6" rx="2" fill="#2c3540"/><rect x="62" y="-5" width="12" height="10" rx="2" fill="#2c3540"/></g>
+      </g>
+      <circle id="clunk" cx="262" cy="395" r="10" fill="none" stroke="#fff3c4" stroke-width="2" opacity="0"/>
+    </g>
+
+    <!-- liftoff -->
+    <path id="exhaust" d="" stroke="#fde3bf" stroke-linecap="round" fill="none" opacity="0"/>
+    <g id="stack" data-key>
+      <ellipse id="stackFlame" cx="0" cy="14" rx="10" ry="22" fill="url(#gFlame)"/>
+      <use href="#boosterShape"/>
+      <use href="#shipShape" transform="translate(0 -125)"/>
+    </g>
+    <g id="ship2" opacity="0" data-key>
+      <ellipse id="ship2Flame" cx="0" cy="10" rx="5" ry="12" fill="url(#gFlame)"/>
+      <use href="#shipShape"/>
+    </g>
+    <g id="booster" opacity="0" data-key>
+      <ellipse id="boostFlame" cx="0" cy="12" rx="8" ry="16" fill="url(#gFlame)"/>
+      <use href="#boosterShape" transform="translate(0 62)"/>
+    </g>
+    <g id="burst" opacity="0">
+      <circle id="burstGlow" cx="362" cy="566" r="14" fill="#ff5a3d" filter="url(#glow2)"/>
+      <circle id="burstCore" cx="362" cy="566" r="7" fill="#ffe2b0"/>
+    </g>
+
+    <!-- orbit -->
+    <g id="orbitG" opacity="0">
+      <g id="globeG" data-key>
+        <circle cx="203" cy="370" r="98" fill="#4aa3ff" opacity=".22" filter="url(#glow2)"/>
+        <circle cx="203" cy="370" r="90" fill="url(#gGlobe)"/>
+        <path d="M150,330 q22,-18 44,-6 q18,10 10,26 q-14,18 -36,10 q-24,-8 -18,-30 Z M222,396 q20,-10 36,4 q10,16 -6,30 q-22,10 -30,-8 q-6,-16 0,-26 Z" fill="#3f7a5a" opacity=".55"/>
+        <circle cx="203" cy="370" r="90" fill="url(#gShade)"/>
+      </g>
+      <ellipse id="orbitPath" cx="203" cy="370" rx="142" ry="40" transform="rotate(-12 203 370)" fill="none" stroke="#7fd3ff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="3 4"/>
+      <g id="sats"></g>
+      <path id="shipTrail" d="" stroke="#ffe6b8" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+      <g id="shipDot" data-key><circle r="7" fill="#ffd38a" opacity=".55" filter="url(#glow)"/><circle r="3" fill="#fff8e6"/></g>
+    </g>
+
+    <!-- reentry -->
+    <g id="reentry" opacity="0">
+      <path id="plasmaTrail" d="" stroke="url(#gTrail)" stroke-width="7" stroke-linecap="round" fill="none" filter="url(#glow)"/>
+      <path id="plasmaCore" d="" stroke="#ffe0c0" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <g id="plasmaHead" data-key><circle r="13" fill="#ff6a3d" opacity=".7" filter="url(#glow2)"/><circle r="5" fill="#fff1dc"/></g>
+    </g>
+    <g id="ship3" opacity="0" data-key>
+      <ellipse id="ship3Flame" cx="0" cy="12" rx="6" ry="16" fill="url(#gFlame)" opacity="0"/>
+      <use href="#shipShape"/>
+    </g>
+    <rect id="dim" x="0" y="0" width="432" height="768" fill="#05080d" opacity="0"/>
+  </svg>
+
+  <div id="kicker" class="abs"><i></i>SpaceX Starship &middot; Flight 15</div>
+  <div id="clockRow" class="abs"><div id="clock">FRI 5:47 PM<small>ET</small></div><div id="tplus">T+00:00</div></div>
+
+  <div id="lostLab" class="abs">Booster lost</div>
+  <div id="satLab" class="abs"><b>26</b>Starlink</div>
+  <div id="lapBox" class="abs"><div id="lapNum">1</div><div id="lapLab">orbits</div></div>
+
+  <div id="caught" class="abs">CAUGHT</div>
+  <div id="caughtSub" class="abs">First ship caught back from orbit</div>
+
+  <div id="tB" class="tile">
+    <svg width="14" height="52" viewBox="-9 -125 18 125" preserveAspectRatio="none"><use href="#boosterShape"/></svg>
+    <div class="n">3</div>
+    <div class="l">Booster catches</div>
+    <div class="x">this flight: lost</div>
+  </div>
+  <div id="tS" class="tile">
+    <svg width="18" height="52" viewBox="-16 -86 32 86"><use href="#shipShape"/></svg>
+    <div class="n"><span id="nS0">0</span><span id="nS1">1</span></div>
+    <div class="l">Ship catches</div>
+  </div>
+  <div id="next" class="abs"><div class="a">Next: refueling in orbit</div><div class="b">NASA Moon landing target: 2028</div></div>
+
+  <div id="endCard" class="abs">
+    <h1>CAUGHT</h1>
+    <div class="d">Starship Flight 15 &middot; Nov 13&ndash;14, 2026</div>
+    <div id="sources"><b>Sources</b>
+      <a href="https://www.pbs.org/newshour/science/spacexs-starship-returns-from-orbit-and-is-captured-by-launch-pad-arms-in-a-dramatic-first" target="_blank" rel="noopener">AP via PBS NewsHour</a> &middot;
+      <a href="https://www.cbsnews.com/news/spacex-catch-starship-rocket/" target="_blank" rel="noopener">CBS News</a><br>
+      <a href="https://space.com/news/live/spacex-starship-flight-15-live-updates-nov-13-2026-starship-first-double-landing-attempt" target="_blank" rel="noopener">Space.com</a> &middot;
+      <a href="https://spaceflightnow.com/2026/11/13/live-coverage-starship-flight-15-attempts-to-recover-full-vehicle-in-double-launch-pad-catch/" target="_blank" rel="noopener">Spaceflight Now</a><br>
+      Times ET. Illustration, not to scale.
     </div>
   </div>
-
   <button id="replay" type="button" hidden>&#8635; Replay</button>
 </div>
 </div>
 <script>
 (() => {
-  const $ = (id) => document.getElementById(id);
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const lin = (t, s, d) => clamp((t - s) / d, 0, 1);
-  const ease = (x) => 1 - Math.pow(1 - x, 3);
-  const inout = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-  const ramp = (t, s, d) => ease(lin(t, s, d));
-  const lerp = (a, b, k) => a + (b - a) * k;
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const DUR = 19.6;
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+  const lerp = (a, b, p) => a + (b - a) * p;
+  const eio = p => p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+  const eout = p => 1 - Math.pow(1 - p, 3);
+  const ein = p => p * p * p;
+  const fade = (t, a, b, c, d) => Math.min(seg(t, a, b), 1 - seg(t, c, d));
+  const op = (el, v) => { el.style.opacity = v; el.style.visibility = v < 0.01 ? "hidden" : "visible"; };
+  const sop = (el, v) => { el.setAttribute("opacity", v); el.style.visibility = v < 0.01 ? "hidden" : "visible"; };
   const NS = "http://www.w3.org/2000/svg";
 
-  // numbers (fact sheet)
-  const FRI = 9000, SAT = 3400, PER = 50;
+  // static decoration: stars, waves, tower lattice
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const stars = $("stars");
+  for (let i = 0; i < 90; i++) { const c = document.createElementNS(NS, "circle"); c.setAttribute("cx", (rnd() * 432).toFixed(1)); c.setAttribute("cy", (rnd() * 768).toFixed(1)); c.setAttribute("r", (0.4 + rnd() * 1.1).toFixed(2)); c.setAttribute("fill", "#fff"); c.setAttribute("opacity", (0.25 + rnd() * 0.6).toFixed(2)); stars.appendChild(c); }
+  let w = ""; for (let r = 0; r < 4; r++) { const y = 590 + r * 14; w += `M${322 + (r % 2) * 8},${y}`; for (let x = 330 + (r % 2) * 8; x < 432; x += 16) w += ` q4,-4 8,0 q4,4 8,0`; } $("waves").setAttribute("d", w);
+  let l = ""; for (let y = 300; y < 580; y += 20) l += `M204,${y} L228,${y + 20} M228,${y} L204,${y + 20} `; $("lattice").setAttribute("d", l);
 
-  // beats (s)
-  const FLK = 1.9, STOP = 3.4, LIFT = 8.4, MAPOUT = 9.5, CX = 9.8, RARE = 13.4, CAUSE = 15.5, END = 17.6, DUR = 19.6;
+  const sats = $("sats"), satEls = [];
+  for (let i = 0; i < 26; i++) { const c = document.createElementNS(NS, "circle"); c.setAttribute("r", "1.6"); c.setAttribute("fill", "#9fe1ff"); sats.appendChild(c); satEls.push(c); }
 
-  // projection: lon/lat -> stage px
-  const P = (lon, lat) => [30 + (lon + 125) * 5.93, 250 + (49.5 - lat) * 7.5];
-  const outline = [[-124.7,48.4],[-122.8,49],[-95.2,49],[-94.8,49.4],[-89.6,48],[-84.4,46.5],[-82.4,43],[-83.1,42],[-79,42.8],[-79.3,43.3],[-76.5,44.2],[-75,45],[-71.5,45],[-70,46.7],[-69.2,47.4],[-67.8,47.1],[-67,44.8],[-70.2,43.6],[-70.6,42.6],[-70,41.8],[-71,41.5],[-73.7,40.6],[-74,40.5],[-74,39.5],[-75,38.8],[-75.5,38],[-76,37],[-75.7,35.6],[-76.5,34.7],[-78.5,33.9],[-79.9,32.7],[-81,31.7],[-81.4,30.5],[-80.6,28.6],[-80,26.8],[-80.4,25.2],[-81.1,25.1],[-81.8,26.1],[-82.7,27.7],[-82.8,29],[-84,30],[-85.4,29.7],[-86.5,30.4],[-88.1,30.4],[-89.6,30.2],[-89.4,29],[-90.5,29.1],[-92,29.6],[-94,29.7],[-95,29.2],[-97.2,27.7],[-97.4,26],[-99.1,26.4],[-100.3,28],[-101.4,29.8],[-103,29],[-104.5,29.6],[-106.5,31.8],[-108.2,31.8],[-111,31.3],[-114.8,32.5],[-117.1,32.5],[-118.4,33.8],[-120.6,34.6],[-121.9,36.6],[-122.5,37.8],[-123.8,39.8],[-124.2,41.9],[-124.5,43],[-124,46.2]];
-  $("us").setAttribute("d", "M" + outline.map((p) => P(p[0], p[1]).map((v) => v.toFixed(1)).join(" ")).join("L") + "Z");
+  // orbit geometry
+  const CX = 203, CY = 370, RX = 142, RY = 40, ROT = -12 * Math.PI / 180, GR = 90;
+  const orbitPt = th => { const x = RX * Math.cos(th), y = RY * Math.sin(th); return [CX + x * Math.cos(ROT) - y * Math.sin(ROT), CY + x * Math.sin(ROT) + y * Math.cos(ROT), Math.sin(th)]; };
+  const hidden = (p) => p[2] < 0 && Math.hypot(p[0] - CX, p[1] - CY) < GR;
+  const TH0 = Math.PI * 0.85;
+  const lapsAt = t => 14 * Math.pow(seg(t, 6.9, 10.8), 1.6);
 
-  // 20 big airports
-  const AP = [[-122.3,47.4],[-122.4,37.6],[-118.4,33.9],[-115.2,36.1],[-112,33.4],[-112,40.8],[-104.7,39.9],[-97,32.9],[-95.3,30],[-93.2,44.9],
-              [-87.9,42],[-84.4,33.6],[-83.4,42.2],[-80.9,35.2],[-81.3,28.4],[-80.3,25.8],[-77.5,38.9],[-75.2,39.9],[-73.8,40.6],[-71,42.4]].map((p) => P(p[0], p[1]));
-  const ports = AP.map(([x, y]) => {
-    const g = document.createElementNS(NS, "g");
-    g.innerHTML = `<circle class="base" cx="${x}" cy="${y}" r="2.6" fill="#7d8fa3"/>` +
-      `<circle class="st" cx="${x}" cy="${y}" r="5.5" fill="none" stroke-width="2.2" opacity="0"/>`;
-    $("ports").appendChild(g);
-    return { x, y, st: g.querySelector(".st") };
-  });
-
-  // FAA advisories: trouble shows first at Chicago, then Boston, then Washington
-  const CT = [[-88.3,41.8],[-71.5,42.8],[-77.6,39.1]].map((p) => P(p[0], p[1]));
-  const centers = CT.map(([x, y]) => {
-    const g = document.createElementNS(NS, "g");
-    g.innerHTML = `<circle cx="${x}" cy="${y}" r="10" fill="none" stroke="var(--amber)" stroke-width="2"/>` +
-      `<circle cx="${x}" cy="${y}" r="16" fill="none" stroke="var(--amber)" stroke-width="1.4" stroke-dasharray="3 4"/>`;
-    $("centers").appendChild(g);
-    return g;
-  });
-
-  // deterministic flights
-  let seed = 1113;
-  const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
-  const flights = [];
-  function mk(td) {
-    let a = Math.floor(rnd() * 20), b = Math.floor(rnd() * 20);
-    if (a === b) b = (b + 7) % 20;
-    const [x0, y0] = AP[a], [x1, y1] = AP[b];
-    const dx = x1 - x0, dy = y1 - y0, d = Math.hypot(dx, dy);
-    const bend = 0.16 * d;
-    const cx = (x0 + x1) / 2 + (dy / d) * bend * (dx > 0 ? 1 : -1), cy = (y0 + y1) / 2 - Math.abs(dx / d) * bend;
-    const dur = 1.5 + d / 52;
-    const g = document.createElementNS(NS, "path");
-    g.setAttribute("d", "M7 0L-4 -5.8L-2.2 0L-4 5.8Z");
-    g.setAttribute("fill", "var(--plane)");
-    $("planes").appendChild(g);
-    flights.push({ x0, y0, x1, y1, cx, cy, td, dur, g, ap: b });
+  // mission clock (seconds after liftoff) as a function of animation time
+  const CATCH = 22 * 3600 + 32 * 60 + 34;
+  function missionT(t) {
+    if (t < 1.0) return 0;
+    if (t < 6.0) return lerp(0, 400, seg(t, 1.0, 6.0));
+    if (t < 6.9) return lerp(400, 26 * 60, seg(t, 6.0, 6.9));
+    if (t < 10.8) return 26 * 60 + (lapsAt(t) / 14) * (21 * 3600 + 36 * 60 - 26 * 60);
+    return lerp(21 * 3600 + 36 * 60, CATCH, eout(seg(t, 10.8, 14.1)));
   }
-  for (let i = 0; i < 112; i++) mk(-7 + rnd() * (STOP - 0.1 + 7));
-  for (let i = 0; i < 20; i++) mk(LIFT + 0.15 + rnd() * 1.0);
-
-  // dot grids: 15 columns, 9px pitch
-  function grid(svg, n, dashed) {
-    const out = [];
-    for (let i = 0; i < n; i++) {
-      const c = document.createElementNS(NS, "circle");
-      c.setAttribute("cx", (5 + (i % 15) * 9.6).toFixed(1));
-      c.setAttribute("cy", (5 + Math.floor(i / 15) * 9.6).toFixed(1));
-      c.setAttribute("r", "3.5"); c.setAttribute("fill", dashed ? "#f08a8d" : "var(--red)"); c.setAttribute("opacity", "0");
-      svg.appendChild(c); out.push(c);
-    }
-    return out;
+  const LAUNCH = 17 * 3600 + 47 * 60; // 5:47 PM ET Friday
+  function clockText(ms) {
+    const abs = Math.round((LAUNCH + ms) / 60) * 60, day = abs >= 86400 ? "SAT" : "FRI";
+    let m = Math.floor(abs / 60) % 1440, h = Math.floor(m / 60), mm = m % 60, ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12;
+    const tm = Math.round(ms / 60), th = Math.floor(tm / 60), tmm = tm % 60;
+    return [`${day} ${h}:${String(mm).padStart(2, "0")} ${ap}`, `T+${String(th).padStart(2, "0")}:${String(tmm).padStart(2, "0")}`];
   }
-  const dotsF = grid($("dF"), Math.round(FRI / PER));
-  const dotsS = grid($("dS"), Math.round(SAT / PER), true);
-  // Saturday is still counting: dashed open slots after the filled ones
-  for (let i = dotsS.length; i < dotsS.length + 20; i++) {
-    const c = document.createElementNS(NS, "circle");
-    c.setAttribute("cx", (5 + (i % 15) * 9.6).toFixed(1)); c.setAttribute("cy", (5 + Math.floor(i / 15) * 9.6).toFixed(1));
-    c.setAttribute("r", "3.2"); c.setAttribute("fill", "none"); c.setAttribute("stroke", "#f08a8d"); c.setAttribute("stroke-width", "1.4"); c.setAttribute("stroke-dasharray", "2.2 1.6");
-    c.setAttribute("class", "open"); c.setAttribute("opacity", "0");
-    $("dS").appendChild(c);
-  }
-  const openS = [...$("dS").querySelectorAll(".open")];
 
-  const fade = (el, k, dy) => { el.style.opacity = k.toFixed(3); el.style.transform = `translateY(${(dy || 0).toFixed(1)}px)`; };
-  const rise = (t, a) => (1 - ramp(t, a, 0.5)) * 8;
-  const win = (t, a, b, f) => ramp(t, a, f || 0.4) * (1 - lin(t, b - 0.3, 0.3));
-  const fmt = (n) => n.toLocaleString("en-US");
-
-  // clock: 3:15 PM at t=0 -> 3:54 at STOP -> 8:15 at LIFT
-  function clockMin(t) {
-    if (t <= STOP) return lerp(15 * 60 + 15, 15 * 60 + 54, t / STOP);
-    return lerp(15 * 60 + 54, 20 * 60 + 15, inout(lin(t, STOP + 0.3, LIFT - STOP - 0.5)));
-  }
+  const E = {}; ["skyDusk","skyDay","skySpace","ground","exhaust","stack","stackFlame","ship2","ship2Flame","booster","boostFlame","burst","burstGlow","burstCore","orbitG","globeG","shipDot","shipTrail","reentry","plasmaTrail","plasmaCore","plasmaHead","ship3","ship3Flame","armU","armL","clunk","dim","kicker","clockRow","clock","tplus","lostLab","satLab","lapBox","lapNum","lapLab","caught","caughtSub","tB","tS","nS0","nS1","next","endCard"].forEach(k => E[k] = $(k));
 
   function render(t) {
-    // map scene
-    const mapK = ramp(t, 0, 0.6) * (1 - lin(t, MAPOUT - 0.3, 0.4));
-    $("map").style.opacity = mapK.toFixed(3);
-    fade($("kicker"), ramp(t, 0.1, 0.4) * (1 - lin(t, MAPOUT - 0.3, 0.4)), 0);
-    fade($("clockRow"), ramp(t, 0.2, 0.4) * (1 - lin(t, MAPOUT - 0.3, 0.4)), 0);
-    const m = Math.round(clockMin(t)), hh = Math.floor(m / 60) - 12, mm = m % 60;
-    $("clk").textContent = `${hh}:${String(mm).padStart(2, "0")}`;
+    const flick = 0.85 + 0.15 * Math.sin(t * 61) * Math.sin(t * 23);
+    // skies
+    sop(E.skyDusk, 1 - seg(t, 6.0, 6.8));
+    sop(E.skySpace, Math.min(seg(t, 6.0, 6.8), 1 - seg(t, 12.2, 12.9)));
+    sop(E.skyDay, seg(t, 12.2, 12.9));
+    sop(E.ground, Math.max(1 - seg(t, 6.0, 6.7), seg(t, 12.3, 12.9)) * (1 - seg(t, 15.3, 15.7)));
 
-    // stamp slams in at STOP, lifts at LIFT
-    const sk = ramp(t, STOP, 0.25);
-    $("stamp").style.opacity = (lin(t, STOP, 0.12) * (1 - lin(t, LIFT, 0.25))).toFixed(3);
-    $("stamp").style.transform = `scale(${(1.35 - 0.35 * sk).toFixed(3)}) rotate(${(-4 * sk).toFixed(1)}deg)`;
-    const lk = ramp(t, LIFT, 0.3);
-    $("lifted").style.opacity = lk.toFixed(3);
-    $("lifted").style.transform = `scale(${(1.2 - 0.2 * lk).toFixed(3)})`;
-    $("holdBar").style.width = (354 * lin(t, STOP + 0.3, LIFT - STOP - 0.5)).toFixed(1) + "px";
-    $("holdBar").style.background = t >= LIFT ? "var(--green)" : "var(--red)";
-    $("holdBar").style.opacity = (lin(t, STOP + 0.3, 0.2)).toFixed(3);
+    // liftoff: stack rises and recedes
+    const pL = ein(seg(t, 1.0, 3.4));
+    const sy = lerp(572, 262, pL), ss = lerp(1, 0.45, pL);
+    E.stack.setAttribute("transform", `translate(262 ${sy.toFixed(1)}) scale(${ss.toFixed(3)})`);
+    sop(E.stack, t < 3.45 ? 1 : 0);
+    E.stackFlame.setAttribute("ry", (t < 0.7 ? 0 : (t < 1.0 ? 12 * seg(t, 0.7, 1.0) : 12 + 28 * pL) * flick).toFixed(1));
+    const exO = t < 1.0 ? 0 : 0.55 * (1 - seg(t, 4.0, 6.0));
+    sop(E.exhaust, exO);
+    if (exO > 0) { E.exhaust.setAttribute("d", `M262,575 L262,${Math.min(575, sy + 10).toFixed(1)}`); E.exhaust.setAttribute("stroke-width", (4 + 6 * pL).toFixed(1)); }
 
-    // centers flicker (intermittent, not dark)
-    centers.forEach((g, i) => {
-      const a = FLK + i * 0.4, on = lin(t, a, 0.1) * (1 - lin(t, LIFT, 0.4));
-      const fl = 0.45 + 0.55 * Math.abs(Math.sin((t - a) * 11 + i * 1.7));
-      g.setAttribute("opacity", (on * fl).toFixed(3));
+    // staging: ship continues up and away
+    const pS = seg(t, 3.45, 4.9);
+    E.ship2.setAttribute("transform", `translate(262 ${lerp(262 - 125 * 0.45, 140, eout(pS)).toFixed(1)}) scale(${lerp(0.45, 0.16, pS).toFixed(3)})`);
+    sop(E.ship2, t >= 3.45 ? 1 - seg(t, 4.5, 4.9) : 0);
+    E.ship2Flame.setAttribute("ry", (12 * flick).toFixed(1));
+
+    // booster: flips, heads back toward the coast, turns away offshore, lost over the Gulf
+    let bx, by, br;
+    if (t < 4.1) { const p = eio(seg(t, 3.45, 4.1)); bx = 262 + 6 * p; by = 262 - 62 * 0.45 + 10 * p; br = 180 * p; }
+    else if (t < 4.75) { const p = eio(seg(t, 4.1, 4.75)); bx = lerp(268, 330, p); by = lerp(244, 390, p); br = lerp(180, 150, p); }
+    else { const p = eio(seg(t, 4.75, 5.35)); bx = lerp(330, 362, p); by = lerp(390, 538, p); br = lerp(150, 0, p); }
+    E.booster.setAttribute("transform", `translate(${bx.toFixed(1)} ${by.toFixed(1)}) scale(0.55) rotate(${br.toFixed(1)})`);
+    sop(E.booster, t >= 3.45 && t < 5.35 ? 1 : 0);
+    E.boostFlame.setAttribute("ry", (t > 3.7 && t < 4.6 ? 16 * flick : (t > 5.0 ? 10 * flick : 0)).toFixed(1));
+    const pB = seg(t, 5.35, 6.2);
+    sop(E.burst, t >= 5.35 ? (1 - pB) : 0);
+    E.burstGlow.setAttribute("r", (10 + 18 * eout(pB)).toFixed(1)); E.burstCore.setAttribute("r", (6 * (1 - pB) + 1).toFixed(1));
+    op(E.lostLab, fade(t, 5.35, 5.6, 5.95, 6.2));
+
+    // orbit
+    const pO = Math.min(seg(t, 6.3, 7.0), 1 - seg(t, 11.0, 11.6));
+    sop(E.orbitG, pO);
+    const gs = t < 11 ? lerp(0.7, 1, eout(seg(t, 6.3, 7.0))) : lerp(1, 1.6, ein(seg(t, 11.0, 11.6)));
+    E.orbitG.setAttribute("transform", `translate(${CX} ${CY}) scale(${gs.toFixed(3)}) translate(${-CX} ${-CY})`);
+    const L = lapsAt(t), th = TH0 + 2 * Math.PI * L;
+    const sp = orbitPt(th);
+    E.shipDot.setAttribute("transform", `translate(${sp[0].toFixed(1)} ${sp[1].toFixed(1)})`);
+    sop(E.shipDot, hidden(sp) ? 0 : 1);
+    let tr = ""; for (let k = 0; k <= 12; k++) { const p = orbitPt(th - k * 0.05 * (0.6 + Math.min(L, 6) * 0.4)); if (!hidden(p)) tr += (tr ? " L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1); else if (tr) break; }
+    E.shipTrail.setAttribute("d", tr);
+    satEls.forEach((c, i) => {
+      const Lr = 0.25 + 0.5 * i / 25;
+      if (L < Lr) { c.style.visibility = "hidden"; return; }
+      const thr = TH0 + 2 * Math.PI * Lr, thi = thr + (th - thr) * (0.94 - 0.0015 * i) - 0.06;
+      const p = orbitPt(thi), o = (1 - seg(L, 2.5, 4.5)) * (hidden(p) ? 0 : 1);
+      c.setAttribute("cx", p[0].toFixed(1)); c.setAttribute("cy", p[1].toFixed(1)); c.setAttribute("opacity", o.toFixed(2)); c.style.visibility = o < .01 ? "hidden" : "visible";
     });
+    op(E.satLab, fade(t, 7.05, 7.3, 7.85, 8.1));
+    op(E.lapBox, fade(t, 6.9, 7.2, 11.0, 11.4));
+    const nL = clamp(Math.ceil(L - 1e-6), 1, 14); E.lapNum.textContent = String(nL); E.lapLab.textContent = nL === 1 ? "orbit" : "orbits";
 
-    // airport stop rings
-    ports.forEach((p, i) => {
-      const a = STOP + 0.04 * i;
-      const red = lin(t, a, 0.15), gr = lin(t, LIFT + 0.03 * i, 0.15);
-      p.st.setAttribute("stroke", gr > 0 ? "var(--green)" : "var(--red)");
-      p.st.setAttribute("opacity", (gr > 0 ? (1 - lin(t, LIFT + 0.6, 0.4)) * gr : red).toFixed(3));
-      p.st.setAttribute("r", (5.5 + 3 * (1 - (gr > 0 ? gr : red))).toFixed(2));
-    });
+    // reentry streak
+    const pR = eout(seg(t, 11.2, 12.6));
+    sop(E.reentry, Math.min(seg(t, 11.1, 11.35), 1 - seg(t, 12.45, 12.75)));
+    const rx0 = 70, ry0 = 140, rx1 = 300, ry1 = 300;
+    const hx = lerp(rx0, rx1, pR), hy = lerp(ry0, ry1, pR);
+    const tx = lerp(rx0, rx1, Math.max(0, pR - 0.45)), ty = lerp(ry0, ry1, Math.max(0, pR - 0.45));
+    E.plasmaTrail.setAttribute("d", `M${tx.toFixed(1)},${ty.toFixed(1)} L${hx.toFixed(1)},${hy.toFixed(1)}`);
+    E.plasmaCore.setAttribute("d", `M${lerp(tx, hx, .5).toFixed(1)},${lerp(ty, hy, .5).toFixed(1)} L${hx.toFixed(1)},${hy.toFixed(1)}`);
+    E.plasmaHead.setAttribute("transform", `translate(${hx.toFixed(1)} ${hy.toFixed(1)}) scale(${(1 + 0.15 * Math.sin(t * 40)).toFixed(3)})`);
 
-    // planes
-    flights.forEach((f) => {
-      const k = (t - f.td) / f.dur;
-      if (k < 0 || k > 1) { f.g.setAttribute("opacity", "0"); return; }
-      const u = 1 - k;
-      const x = u * u * f.x0 + 2 * u * k * f.cx + k * k * f.x1;
-      const y = u * u * f.y0 + 2 * u * k * f.cy + k * k * f.y1;
-      const tx = 2 * u * (f.cx - f.x0) + 2 * k * (f.x1 - f.cx), ty = 2 * u * (f.cy - f.y0) + 2 * k * (f.y1 - f.cy);
-      const ang = Math.atan2(ty, tx) * 180 / Math.PI;
-      const s = 0.55 + 0.45 * Math.min(1, k / 0.12, (1 - k) / 0.12);
-      f.g.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(0)}) scale(${s.toFixed(2)})`);
-      f.g.setAttribute("opacity", Math.min(1, k / 0.06, (1 - k) / 0.06).toFixed(3));
-    });
+    // ship returns: belly first, flips upright, engines on, descends into the arms
+    let cx, cy, rr;
+    if (t < 13.0) { const p = eio(seg(t, 12.45, 13.0)); cx = lerp(300, 292, p); cy = lerp(300, 345, p); rr = 100; }
+    else if (t < 13.45) { const p = eio(seg(t, 13.0, 13.45)); cx = lerp(292, 262, p); cy = lerp(345, 376, p); rr = lerp(100, 0, p); }
+    else { const p = eout(seg(t, 13.45, 14.05)); cx = 262; cy = lerp(376, 422, p); rr = 0; }
+    E.ship3.setAttribute("transform", `translate(${cx.toFixed(1)} ${cy.toFixed(1)}) rotate(${rr.toFixed(1)}) translate(0 43)`);
+    sop(E.ship3, seg(t, 12.45, 12.6) * (1 - seg(t, 15.3, 15.7)));
+    E.ship3Flame.setAttribute("opacity", (t > 13.0 && t < 14.25 ? 1 - seg(t, 14.05, 14.25) : 0).toFixed(2));
+    E.ship3Flame.setAttribute("ry", (16 * flick).toFixed(1));
+    const pA = eio(seg(t, 13.75, 14.1)), open = t < 13.75 ? 1 : 1 - pA;
+    E.armU.setAttribute("transform", `translate(228 392) rotate(${(-24 * open).toFixed(1)})`);
+    E.armL.setAttribute("transform", `translate(228 399) rotate(${(24 * open).toFixed(1)})`);
+    const pC = seg(t, 14.1, 14.7);
+    E.clunk.setAttribute("r", (6 + 30 * eout(pC)).toFixed(1)); sop(E.clunk, t >= 14.1 ? 0.9 * (1 - pC) : 0);
 
-    // labels under the map
-    fade($("lCenters"), win(t, FLK, STOP + 0.1), rise(t, FLK));
-    fade($("lAir"), win(t, STOP + 0.3, 6.6), rise(t, STOP + 0.3));
-    fade($("lLow"), win(t, 6.8, MAPOUT), rise(t, 6.8));
-    fade($("lHrs"), win(t, 5.0, MAPOUT), rise(t, 5.0));
+    // clock
+    const [ck, tp] = clockText(missionT(t));
+    E.clock.firstChild.nodeValue = ck; E.tplus.textContent = tp;
+    op(E.kicker, 1 - seg(t, 17.4, 17.7)); op(E.clockRow, 1 - seg(t, 17.4, 17.7));
 
-    // cancellations
-    const cxOut = 1 - lin(t, RARE - 0.3, 0.3);
-    $("cx").style.opacity = (lin(t, CX, 0.3) * cxOut).toFixed(3);
-    fade($("cxHead"), ramp(t, CX, 0.4), rise(t, CX));
-    const fk = inout(lin(t, CX + 0.3, 1.6));
-    const fn = Math.round(dotsF.length * fk);
-    dotsF.forEach((c, i) => c.setAttribute("opacity", i < fn ? "1" : "0"));
-    $("nF").textContent = fk >= 1 ? fmt(FRI) + "+" : fmt(Math.round(FRI * fk / 10) * 10);
-    const sk2 = inout(lin(t, CX + 1.6, 1.2));
-    const sn = Math.round(dotsS.length * sk2);
-    dotsS.forEach((c, i) => c.setAttribute("opacity", i < sn ? "1" : "0"));
-    openS.forEach((c, i) => c.setAttribute("opacity", (lin(t, CX + 2.8 + i * 0.03, 0.2) * (0.55 + 0.45 * Math.sin(t * 5 + i))).toFixed(3)));
-    $("nS").textContent = sk2 >= 1 ? fmt(SAT) + "+" : fmt(Math.round(SAT * sk2 / 10) * 10);
-    fade($("gS"), ramp(t, CX + 1.5, 0.3), 0);
-    fade($("legend"), ramp(t, CX + 0.6, 0.4), rise(t, CX + 0.6));
-
-    // rarity line
-    const rOut = 1 - lin(t, CAUSE - 0.3, 0.3);
-    $("rare").style.opacity = (lin(t, RARE, 0.3) * rOut).toFixed(3);
-    $("rareLine").style.transform = `scaleX(${inout(lin(t, RARE + 0.1, 0.7)).toFixed(3)})`;
-    [["tk1", RARE + 0.3], ["tk2", RARE + 0.7], ["tk3", RARE + 1.1]].forEach(([id, a]) => {
-      const k = ramp(t, a, 0.35);
-      $(id).style.opacity = k.toFixed(3);
-      $(id).style.transform = `translateY(${((1 - k) * 10).toFixed(1)}px)`;
-    });
-
-    // cause
-    const cOut = 1 - lin(t, END - 0.3, 0.3);
-    $("cause").style.opacity = (lin(t, CAUSE, 0.3) * cOut).toFixed(3);
-    ["w1", "w2", "w3"].forEach((id, i) => {
-      const fl = Math.sin(t * 9 + i * 2.1) > -0.1 ? 1 : 0.15;
-      $(id).setAttribute("opacity", (ramp(t, CAUSE + 0.15 * i, 0.3) * fl).toFixed(3));
-    });
-    [...$("leds").children].forEach((c, i) => {
-      const blink = Math.sin(t * 7 + i * 1.3) > 0;
-      c.setAttribute("fill", t > CAUSE + 0.5 ? (blink ? "var(--red)" : "#4a2326") : "var(--green)");
-    });
-
-    // end card
-    fade($("end"), ramp(t, END, 0.5), rise(t, END));
-    [...$("sources").querySelectorAll(".s")].forEach((el, i) => { const k = ramp(t, END + 0.4 + i * 0.12, 0.4); fade(el, k, (1 - k) * 6); });
-    $("end").style.pointerEvents = t > END + 0.4 ? "auto" : "none";
+    // payoff
+    const pK = seg(t, 14.25, 14.6);
+    op(E.caught, pK * (1 - seg(t, 17.4, 17.7))); E.caught.style.transform = `scale(${lerp(1.12, 1, eout(pK)).toFixed(3)})`;
+    op(E.caughtSub, fade(t, 14.55, 14.85, 17.4, 17.7));
+    sop(E.dim, Math.max(0.72 * seg(t, 15.3, 15.7), 1.0 * seg(t, 17.4, 17.7)));
+    op(E.tB, fade(t, 15.45, 15.75, 17.4, 17.7)); E.tB.style.transform = `translateY(${(10 * (1 - eout(seg(t, 15.45, 15.75)))).toFixed(1)}px)`;
+    op(E.tS, fade(t, 15.6, 15.9, 17.4, 17.7)); E.tS.style.transform = `translateY(${(10 * (1 - eout(seg(t, 15.6, 15.9)))).toFixed(1)}px)`;
+    const pN = eio(seg(t, 16.05, 16.35));
+    E.nS0.style.transform = `translateY(${(-44 * pN).toFixed(1)}px)`; op(E.nS0, 1 - pN);
+    E.nS1.style.transform = `translateY(${(44 * (1 - pN)).toFixed(1)}px)`; op(E.nS1, pN);
+    op(E.next, fade(t, 16.4, 16.7, 17.4, 17.7));
+    op(E.endCard, seg(t, 17.65, 18.0));
   }
-
-  const stage = $("stage");
-  function fit() { stage.style.transform = `translate(-50%, -50%) scale(${Math.min(innerWidth / 432, innerHeight / 768)})`; }
-  addEventListener("resize", fit); fit();
 
   const replay = $("replay");
-  let t0 = null, playing = true, raf = 0;
-  function tick(now) {
-    if (t0 === null) t0 = now;
-    const t = (now - t0) / 1000;
-    render(Math.min(t, DUR));
-    if (t < DUR && playing) raf = requestAnimationFrame(tick);
-    else { playing = false; replay.hidden = false; }
-  }
+  let raf = 0, t0 = null, playing = false;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick(now) { if (t0 === null) t0 = now; const t = (now - t0) / 1000; render(Math.min(t, DUR));
+    if (t < DUR && playing) raf = requestAnimationFrame(tick); else { playing = false; replay.hidden = false; } }
   function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
   replay.addEventListener("click", play);
   window.__story = { duration: DUR, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, DUR)); }, play };
+
+  function fit() { const s = Math.min(innerWidth / 432, innerHeight / 768); $("stage").style.transform = `translate(-50%, -50%) scale(${s})`; }
+  addEventListener("resize", fit); fit();
   render(0);
   const start = () => { if (reduce) { render(DUR); replay.hidden = false; } else play(); };
-  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
 })();
 </script>
 </body>
