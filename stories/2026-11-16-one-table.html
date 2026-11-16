@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>One Table</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=block">
+<style>
+/* One Table. China's foreign ministry confirmed on Mon Nov 16, 2026 that Xi Jinping, Donald Trump and Vladimir Putin
+   will meet Thursday Nov 19 in Shenzhen, on the sidelines of APEC: the first face-to-face meeting of the three
+   countries' heads of state. Warhead counts are FAS estimates of total inventories, early 2026.
+   Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+:root {
+  --ink: #f1eee7; --muted: #9fa9b8; --bg: #0b1020; --us: #5d9bff; --ru: #ff5d5d; --cn: #ffc93c; --grey: #5b6476;
+  --ok: #7ee0a1; --no: #ff7a6e;
+  --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f1eee7; } }
+:root[data-theme="dark"] { --ink: #f1eee7; }
+html, body { height: 100%; margin: 0; }
+body { background: #05070d; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #05070d; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
+  background: radial-gradient(120% 70% at 50% 48%, #141c34 0%, #0b1020 55%, #070a14 100%); }
+#scene { position: absolute; left: 0; top: 0; width: 432px; height: 768px; }
+.abs { position: absolute; }
+.c { text-align: center; }
+
+#kicker { left: 26px; top: 114px; width: 354px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#title { left: 26px; top: 134px; width: 354px; font: 700 44px/1 var(--serif); letter-spacing: .02em; }
+#names { left: 26px; top: 186px; width: 354px; font: 600 14px/1 var(--sans); letter-spacing: .04em; }
+#names .us { color: var(--us); } #names .cn { color: var(--cn); } #names .ru { color: var(--ru); } #names .s { color: var(--muted); margin: 0 6px; }
+
+.lab { width: 100px; text-align: center; }
+.lab .n { font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+.lab .v { margin-top: 5px; font: 700 21px/1 var(--serif); font-variant-numeric: tabular-nums; }
+#labUS { left: 36px; top: 344px; } #labUS .n, #labUS .v { color: var(--us); }
+#labRU { left: 166px; top: 344px; } #labRU .n, #labRU .v { color: var(--ru); }
+#labCN { left: 280px; top: 344px; } #labCN .n, #labCN .v { color: var(--cn); }
+#legend { left: 26px; top: 410px; width: 354px; font: 500 13px/1 var(--sans); color: var(--muted); }
+#legend i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); margin-right: 6px; vertical-align: 1px; }
+
+.cap { left: 26px; width: 354px; text-align: center; }
+#pct { top: 500px; }
+#pct .big { font: 700 46px/1 var(--serif); }
+#pct .sm { margin-top: 6px; font: 500 14px/1.2 var(--sans); color: var(--muted); }
+#first { top: 496px; }
+#first .row { display: flex; justify-content: center; align-items: center; gap: 12px; height: 52px; }
+#first .lbl { font: 500 14px/1.25 var(--sans); color: var(--muted); text-align: left; width: 150px; }
+#cnt { position: relative; width: 44px; height: 52px; overflow: hidden; }
+#cnt span { position: absolute; left: 0; top: 0; width: 44px; text-align: center; font: 700 50px/52px var(--serif); }
+#first .tag { margin-top: 8px; font: 700 13px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--cn); }
+
+#treaty { left: 116px; top: 488px; width: 174px; height: 62px; border-radius: 6px; background: #e9e4d6; color: #1d2230; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+#treaty .h { margin-top: 12px; font: 700 22px/1 var(--serif); text-align: center; }
+#treaty .p { margin-top: 7px; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; text-align: center; color: #5a6070; }
+#treaty .ln { position: absolute; left: 22px; right: 22px; height: 2px; background: #c9c2b0; }
+#stamp { left: 148px; top: 550px; width: 128px; padding: 6px 0; border: 3px solid #e2483d; border-radius: 6px; color: #e2483d;
+  font: 700 19px/1 var(--mono); letter-spacing: .12em; text-align: center; background: rgba(11,16,32,.9); }
+
+#agenda { top: 494px; }
+#agenda .hd { font: 600 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+#agenda .row { margin-top: 10px; display: flex; justify-content: center; gap: 10px; }
+.pill { display: flex; align-items: center; gap: 6px; padding: 0 12px; height: 34px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.18);
+  font: 600 14px/1 var(--sans); white-space: nowrap; }
+.pill .k { font: 700 15px/1 var(--sans); }
+.pill.y .k { color: var(--ok); } .pill.x { color: var(--muted); } .pill.x .k { color: var(--no); }
+#agenda .note { margin-top: 12px; font: 500 13px/1.2 var(--sans); color: var(--muted); }
+
+#endCard { left: 26px; top: 200px; width: 354px; text-align: center; }
+#endCard h1 { margin: 0; font: 700 40px/1 var(--serif); letter-spacing: .03em; }
+#endCard .d { margin-top: 10px; font: 600 12px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+#sources { margin-top: 26px; font: 500 12px/1.6 var(--sans); color: var(--muted); }
+#sources b { display: block; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); margin-bottom: 8px; }
+#sources a { color: var(--muted); text-decoration: underline; text-decoration-color: rgba(159,169,184,.4); text-underline-offset: 2px; }
+#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 540px; min-height: 52px; min-width: 44px; padding: 0 22px; border: 1.5px solid var(--cn); border-radius: 999px;
+  background: transparent; color: var(--cn); font: 600 15px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay[hidden] { display: none; }
+#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--cn); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage"><div id="scene">
+  <svg id="svg" class="abs" width="432" height="768" viewBox="0 0 432 768" aria-hidden="true">
+    <g id="grid" opacity=".5" stroke="#1d2744" stroke-width="1" fill="none">
+      <ellipse cx="216" cy="372" rx="300" ry="120"/><ellipse cx="216" cy="372" rx="300" ry="60"/>
+      <ellipse cx="216" cy="372" rx="190" ry="250"/><ellipse cx="216" cy="372" rx="90" ry="250"/>
+    </g>
+    <g id="tableG">
+      <circle id="tableGlow" cx="216" cy="372" r="64" fill="#1c2744" opacity="0"/>
+      <circle id="table" cx="216" cy="372" r="40" fill="#2a3556" stroke="#4a5880" stroke-width="1.5" opacity="0"/>
+      <circle id="chUS" cx="162" cy="372" r="9" fill="none" stroke="#4a5880" stroke-width="1.5" opacity="0"/>
+      <circle id="chRU" cx="243" cy="325.2" r="9" fill="none" stroke="#4a5880" stroke-width="1.5" opacity="0"/>
+      <circle id="chCN" cx="243" cy="418.8" r="9" fill="none" stroke="#4a5880" stroke-width="1.5" opacity="0"/>
+    </g>
+    <g id="dots"></g>
+  </svg>
+
+  <div id="kicker" class="abs c">Shenzhen &middot; Thursday, Nov 19</div>
+  <div id="title" class="abs c">One Table</div>
+  <div id="names" class="abs c"><span class="us">Trump</span><span class="s">&middot;</span><span class="cn">Xi</span><span class="s">&middot;</span><span class="ru">Putin</span></div>
+
+  <div id="labUS" class="abs lab"><div class="n">US</div><div class="v" data-to="5042">0</div></div>
+  <div id="labRU" class="abs lab"><div class="n">Russia</div><div class="v" data-to="5420">0</div></div>
+  <div id="labCN" class="abs lab"><div class="n">China</div><div class="v" data-to="620">0</div></div>
+  <div id="legend" class="abs c"><i></i>1 dot = 50 warheads (est.)</div>
+
+  <div id="pct" class="abs cap"><div class="big">~91%</div><div class="sm">of the world's nuclear warheads</div></div>
+
+  <div id="first" class="abs cap">
+    <div class="row"><div class="lbl">Three-way summits between them</div><div id="cnt"><span id="c0">0</span><span id="c1">1</span></div></div>
+    <div class="tag" id="firstTag">First ever</div>
+  </div>
+
+  <div id="treaty" class="abs"><div class="h">New START</div><div class="p">US&ndash;Russia treaty</div>
+    </div>
+  <div id="stamp" class="abs">EXPIRED</div>
+
+  <div id="agenda" class="abs cap">
+    <div class="hd">White House agenda</div>
+    <div class="row">
+      <div class="pill y" id="pA"><svg width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3"><ellipse rx="7" ry="2.6"/><ellipse rx="7" ry="2.6" transform="rotate(60)"/><ellipse rx="7" ry="2.6" transform="rotate(-60)"/></g><circle r="1.6" fill="currentColor"/></svg>Nukes <span class="k">&#10003;</span></div>
+      <div class="pill y" id="pB">Iran <span class="k">&#10003;</span></div>
+      <div class="pill x" id="pC">Ukraine <span class="k">&#10007;</span></div>
+    </div>
+    <div class="note" id="aNote">Beijing has rebuffed nuke talks</div>
+  </div>
+
+  <div id="endCard" class="abs">
+    <h1>One Table</h1>
+    <div class="d">Xi &middot; Trump &middot; Putin &middot; Shenzhen, Nov 19, 2026</div>
+    <div id="sources"><b>Sources</b>
+      China MFA via <a href="https://www.asiaone.com/china/china-says-xi-putin-trump-meeting-has-groundbreaking-significance">Reuters</a> &amp; <a href="https://sg.news.yahoo.com/xi-trump-putin-discuss-world-084022417.html">AFP</a><br>
+      White House via <a href="https://www.cbsnews.com/news/trump-putin-xi-jinping-meeting-china-us-russia-talks/">CBS News</a>, AFP &amp; <a href="https://www.trtworld.com/article/df5f8ca3ecf9">TRT World</a><br>
+      New START expiry: <a href="https://alaskapublic.org/news/national/2026-02-05/for-the-first-time-in-decades-the-u-s-and-russia-have-no-limits-on-nuclear-weapons">NPR, Feb 5, 2026</a><br>
+      Warhead estimates: <a href="https://fas.org/initiative/status-world-nuclear-forces/">FAS, 2026</a>
+    </div>
+  </div>
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div></div></div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const DUR = 19.6;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lerp = (a, b, p) => a + (b - a) * p;
+  const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+  const eio = p => p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+  const eout = p => 1 - Math.pow(1 - p, 3);
+  const fade = (t, a, b, c, d) => Math.min(seg(t, a, b), 1 - seg(t, c, d));
+  const op = (el, v) => { el.style.opacity = v.toFixed(3); el.style.visibility = v < .005 ? "hidden" : "visible"; };
+  const sop = (el, v) => el.setAttribute("opacity", v.toFixed(3));
+
+  // FAS 2026 total inventories: US 5,042, Russia 5,420, China 620; world ~12,187. 1 dot = 50 warheads.
+  const C = { us: "#5d9bff", ru: "#ff5d5d", cn: "#ffc93c", grey: "#5b6476" };
+  const groups = [
+    { key: "us", n: 101, cols: 11, cx: 86, delay: 0 },
+    { key: "ru", n: 108, cols: 12, cx: 216, delay: 0.25 },
+    { key: "cn", n: 12, cols: 4, cx: 330, delay: 0.5 },
+  ];
+  const SP = 7, BOTTOM = 330, TX = 216, TY = 372;
+
+  // ring slots around the table, sorted by angle; contiguous wedges per country
+  const slots = [];
+  [84, 93, 102].forEach(r => { const n = Math.floor(2 * Math.PI * r / 7.4); for (let i = 0; i < n; i++) slots.push({ r, a: i / n * 2 * Math.PI }); });
+  const A0 = 100 * Math.PI / 180;
+  slots.forEach(s => { s.k = ((s.a - A0) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI); });
+  slots.sort((p, q) => p.k - q.k || p.r - q.r);
+  const NEED = 221, step = slots.length / NEED;
+
+  const dotsG = $("dots"), dots = [];
+  let si = 0;
+  groups.forEach(g => {
+    const rows = Math.ceil(g.n / g.cols), w = (g.cols - 1) * SP;
+    for (let i = 0; i < g.n; i++) {
+      const col = i % g.cols, row = Math.floor(i / g.cols);
+      const sx = g.cx - w / 2 + col * SP, sy = BOTTOM - (rows - 1 - row) * SP;
+      const s = slots[Math.floor(si * step)]; si++;
+      const ex = TX + s.r * Math.cos(s.a), ey = TY + s.r * Math.sin(s.a);
+      const el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      el.setAttribute("r", "2.6"); el.setAttribute("fill", C[g.key]);
+      dotsG.appendChild(el);
+      dots.push({ node: el, sx, sy, ex, ey, appear: 1.8 + g.delay + 0.9 * (i / g.n), stag: (i % 17) / 17 * 0.5 + g.delay * 0.6, bend: ((i * 37) % 11 - 5) * 3 });
+    }
+  });
+  // the other ~9%: about 22 grey dots, kept outside the table
+  const greys = [];
+  for (let i = 0; i < 22; i++) {
+    const a = A0 + (i + 0.5) / 22 * 2 * Math.PI, r = 128 + (i % 2) * 8;
+    const el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    el.setAttribute("r", "2.6"); el.setAttribute("fill", C.grey);
+    el.setAttribute("cx", (TX + r * Math.cos(a)).toFixed(1)); el.setAttribute("cy", (TY + r * 0.92 * Math.sin(a)).toFixed(1));
+    dotsG.appendChild(el); greys.push(el);
+  }
+
+  const E = {}; ["grid","tableGlow","table","chUS","chRU","chCN","kicker","title","names","labUS","labRU","labCN","legend","pct","first","c0","c1","firstTag","treaty","stamp","agenda","pA","pB","pC","aNote","endCard","dots"].forEach(k => E[k] = $(k));
+  const labs = [E.labUS, E.labRU, E.labCN];
+  const fmt = n => Math.round(n).toLocaleString("en-US");
+
+  function render(t) {
+    const endDim = seg(t, 17.6, 18.0);
+    // header
+    op(E.kicker, seg(t, 0.2, 0.6) * (1 - endDim));
+    op(E.title, seg(t, 0.4, 0.9) * (1 - endDim)); E.title.style.transform = `translateY(${(8 * (1 - eout(seg(t, 0.4, 0.9)))).toFixed(1)}px)`;
+    op(E.names, seg(t, 1.0, 1.4) * (1 - endDim));
+    sop(E.grid, 0.5 * seg(t, 0, 1) * (1 - endDim));
+
+    // arsenal labels count up, then leave as the dots gather
+    labs.forEach((el, i) => {
+      const g = groups[i], a = 1.8 + g.delay;
+      op(el, fade(t, a, a + 0.3, 6.0, 6.4));
+      const v = el.querySelector(".v"); v.textContent = fmt(+v.dataset.to * eout(seg(t, a, a + 1.0)));
+    });
+    op(E.legend, fade(t, 3.0, 3.4, 6.0, 6.4));
+
+    // dots: appear in their grids, then drift and gather around the table
+    dots.forEach(d => {
+      const a = seg(t, d.appear, d.appear + 0.15);
+      const p = eio(seg(t, 6.2 + d.stag, 8.0 + d.stag));
+      const mx = (d.sx + d.ex) / 2, my = (d.sy + d.ey) / 2 + d.bend;
+      const x = (1 - p) * (1 - p) * d.sx + 2 * (1 - p) * p * mx + p * p * d.ex;
+      const y = (1 - p) * (1 - p) * d.sy + 2 * (1 - p) * p * my + p * p * d.ey;
+      d.node.setAttribute("cx", x.toFixed(1)); d.node.setAttribute("cy", y.toFixed(1));
+      sop(d.node, a);
+    });
+    const tIn = seg(t, 7.2, 7.8);
+    sop(E.table, tIn); sop(E.tableGlow, 0.9 * tIn);
+    [[E.chUS, C.us, 8.6], [E.chCN, C.cn, 8.8], [E.chRU, C.ru, 9.0]].forEach(([el, col, s]) => {
+      sop(el, tIn); const f = seg(t, s, s + 0.25);
+      el.setAttribute("fill", f > 0 ? col : "none"); el.setAttribute("fill-opacity", f.toFixed(2));
+      el.setAttribute("r", (9 + 3 * Math.sin(Math.PI * f)).toFixed(2));
+    });
+    greys.forEach((g, i) => sop(g, 0.9 * seg(t, 9.4 + i * 0.02, 9.7 + i * 0.02)));
+    E.dots.setAttribute("opacity", (1 - endDim).toFixed(2));
+    sop($("tableG"), 1 - endDim);
+
+    // beats in the lower band
+    op(E.pct, fade(t, 9.4, 9.8, 11.4, 11.7)); E.pct.style.transform = `translateY(${(8 * (1 - eout(seg(t, 9.4, 9.8)))).toFixed(1)}px)`;
+    op(E.first, fade(t, 11.7, 12.0, 13.7, 14.0));
+    const pN = eio(seg(t, 12.5, 12.85));
+    E.c0.style.transform = `translateY(${(-52 * pN).toFixed(1)}px)`; op(E.c0, 1 - pN);
+    E.c1.style.transform = `translateY(${(52 * (1 - pN)).toFixed(1)}px)`; op(E.c1, pN);
+    op(E.firstTag, seg(t, 12.9, 13.2));
+    op(E.treaty, fade(t, 14.0, 14.3, 15.7, 16.0));
+    const pS = seg(t, 14.7, 14.95);
+    op(E.stamp, pS * (1 - seg(t, 15.7, 16.0))); E.stamp.style.transform = `rotate(-8deg) scale(${lerp(1.25, 1, eout(pS)).toFixed(3)})`;
+    op(E.agenda, fade(t, 16.0, 16.3, 17.5, 17.8));
+    op(E.pA, seg(t, 16.2, 16.4)); op(E.pB, seg(t, 16.4, 16.6)); op(E.pC, seg(t, 16.6, 16.8)); op(E.aNote, seg(t, 16.85, 17.05));
+
+    op(E.endCard, seg(t, 17.8, 18.2));
+  }
+
+  const replay = $("replay");
+  let raf = 0, t0 = null, playing = false;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick(now) { if (t0 === null) t0 = now; const t = (now - t0) / 1000; render(Math.min(t, DUR));
+    if (t < DUR && playing) raf = requestAnimationFrame(tick); else { playing = false; replay.hidden = false; } }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: DUR, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, DUR)); }, play };
+
+  function fit() { const s = Math.min(innerWidth / 432, innerHeight / 768); $("stage").style.transform = `translate(-50%, -50%) scale(${s})`; }
+  addEventListener("resize", fit); fit();
+  render(0);
+  const start = () => { if (reduce) { render(DUR); replay.hidden = false; } else play(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+</body>
+</html>
