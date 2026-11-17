@@ -2,142 +2,192 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>One Table</title>
+<title>The Gap</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=block">
 <style>
-/* One Table. China's foreign ministry confirmed on Mon Nov 16, 2026 that Xi Jinping, Donald Trump and Vladimir Putin
-   will meet Thursday Nov 19 in Shenzhen, on the sidelines of APEC: the first face-to-face meeting of the three
-   countries' heads of state. Warhead counts are FAS estimates of total inventories, early 2026.
-   Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+/* The Gap. Overnight into Tue Nov 17, 2026, a Ukrainian strike brought down the arch and a span of the ROAD half of the
+   Crimean (Kerch) Bridge, per Ukraine's General Staff; the RAIL half still stands with a damaged arch. Drones hit the bridge
+   a day earlier (Nov 16) and left the arch tilting. Russia suspended road and rail traffic and has not confirmed a collapse.
+   Illustration, not to scale. Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
 :root {
-  --ink: #f1eee7; --muted: #9fa9b8; --bg: #0b1020; --us: #5d9bff; --ru: #ff5d5d; --cn: #ffc93c; --grey: #5b6476;
-  --ok: #7ee0a1; --no: #ff7a6e;
+  --ink: #eef1f5; --muted: #98a6b8; --road: #ffb547; --rail: #8db4ff; --hit: #ff6b5e; --ok: #7ee0a1; --sea: #0d2236;
   --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f1eee7; } }
-:root[data-theme="dark"] { --ink: #f1eee7; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #eef1f5; } }
+:root[data-theme="dark"] { --ink: #eef1f5; }
 html, body { height: 100%; margin: 0; }
-body { background: #05070d; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
-#wrap { position: fixed; inset: 0; overflow: hidden; background: #05070d; }
+body { background: #04070c; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #04070c; }
 #stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
-  background: radial-gradient(120% 70% at 50% 48%, #141c34 0%, #0b1020 55%, #070a14 100%); }
+  background: linear-gradient(180deg, #0a1422 0%, #0b1726 45%, #081220 100%); }
 #scene { position: absolute; left: 0; top: 0; width: 432px; height: 768px; }
 .abs { position: absolute; }
 .c { text-align: center; }
 
 #kicker { left: 26px; top: 114px; width: 354px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-#title { left: 26px; top: 134px; width: 354px; font: 700 44px/1 var(--serif); letter-spacing: .02em; }
-#names { left: 26px; top: 186px; width: 354px; font: 600 14px/1 var(--sans); letter-spacing: .04em; }
-#names .us { color: var(--us); } #names .cn { color: var(--cn); } #names .ru { color: var(--ru); } #names .s { color: var(--muted); margin: 0 6px; }
+#title { left: 26px; top: 132px; width: 354px; font: 700 34px/1 var(--serif); letter-spacing: .02em; }
 
-.lab { width: 100px; text-align: center; }
-.lab .n { font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
-.lab .v { margin-top: 5px; font: 700 21px/1 var(--serif); font-variant-numeric: tabular-nums; }
-#labUS { left: 36px; top: 344px; } #labUS .n, #labUS .v { color: var(--us); }
-#labRU { left: 166px; top: 344px; } #labRU .n, #labRU .v { color: var(--ru); }
-#labCN { left: 280px; top: 344px; } #labCN .n, #labCN .v { color: var(--cn); }
-#legend { left: 26px; top: 410px; width: 354px; font: 500 13px/1 var(--sans); color: var(--muted); }
-#legend i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); margin-right: 6px; vertical-align: 1px; }
+.svgt { font-family: var(--sans); }
+.band { left: 26px; width: 354px; top: 488px; text-align: center; }
 
-.cap { left: 26px; width: 354px; text-align: center; }
-#pct { top: 500px; }
-#pct .big { font: 700 46px/1 var(--serif); }
-#pct .sm { margin-top: 6px; font: 500 14px/1.2 var(--sans); color: var(--muted); }
-#first { top: 496px; }
-#first .row { display: flex; justify-content: center; align-items: center; gap: 12px; height: 52px; }
-#first .lbl { font: 500 14px/1.25 var(--sans); color: var(--muted); text-align: left; width: 150px; }
-#cnt { position: relative; width: 44px; height: 52px; overflow: hidden; }
-#cnt span { position: absolute; left: 0; top: 0; width: 44px; text-align: center; font: 700 50px/52px var(--serif); }
-#first .tag { margin-top: 8px; font: 700 13px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--cn); }
+#cal { display: flex; justify-content: center; align-items: center; gap: 18px; }
+.tile { position: relative; width: 66px; height: 70px; border-radius: 8px; background: #e9edf2; color: #121a26; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.45); }
+.tile .m { height: 20px; background: var(--hit); color: #fff; font: 700 11px/20px var(--sans); letter-spacing: .14em; text-align: center; }
+.tile .d { position: absolute; left: 0; right: 0; top: 20px; height: 50px; text-align: center; font: 700 34px/50px var(--serif); }
+#how { display: flex; align-items: center; gap: 8px; width: 170px; font: 600 17px/1.2 var(--sans); text-align: left; }
+#how .w { position: relative; height: 22px; width: 150px; }
+#how .w span { position: absolute; left: 0; top: 0; white-space: nowrap; }
 
-#treaty { left: 116px; top: 488px; width: 174px; height: 62px; border-radius: 6px; background: #e9e4d6; color: #1d2230; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
-#treaty .h { margin-top: 12px; font: 700 22px/1 var(--serif); text-align: center; }
-#treaty .p { margin-top: 7px; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; text-align: center; color: #5a6070; }
-#treaty .ln { position: absolute; left: 22px; right: 22px; height: 2px; background: #c9c2b0; }
-#stamp { left: 148px; top: 550px; width: 128px; padding: 6px 0; border: 3px solid #e2483d; border-radius: 6px; color: #e2483d;
-  font: 700 19px/1 var(--mono); letter-spacing: .12em; text-align: center; background: rgba(11,16,32,.9); }
+#traffic .row { display: flex; justify-content: center; gap: 12px; }
+.pill { display: flex; align-items: center; gap: 8px; padding: 0 16px; height: 40px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.2);
+  font: 600 16px/1 var(--sans); white-space: nowrap; }
+.pill .k { color: var(--hit); font: 700 17px/1 var(--sans); }
+.pill .k.ok { color: var(--ok); }
+.pill.road { color: var(--road); } .pill.rail { color: var(--rail); }
+#traffic .sub { margin-top: 12px; font: 500 14px/1 var(--sans); color: var(--muted); }
 
-#agenda { top: 494px; }
-#agenda .hd { font: 600 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-#agenda .row { margin-top: 10px; display: flex; justify-content: center; gap: 10px; }
-.pill { display: flex; align-items: center; gap: 6px; padding: 0 12px; height: 34px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.18);
-  font: 600 14px/1 var(--sans); white-space: nowrap; }
-.pill .k { font: 700 15px/1 var(--sans); }
-.pill.y .k { color: var(--ok); } .pill.x { color: var(--muted); } .pill.x .k { color: var(--no); }
-#agenda .note { margin-top: 12px; font: 500 13px/1.2 var(--sans); color: var(--muted); }
+#claims { display: flex; justify-content: center; gap: 12px; }
+.card { width: 170px; height: 96px; border-radius: 10px; padding: 12px 10px 0; box-sizing: border-box; text-align: center; background: rgba(255,255,255,.05); border: 1.5px solid rgba(255,255,255,.14); }
+.card .h { font: 700 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.card .b { margin-top: 10px; font: 600 15px/1.3 var(--sans); }
+#cUA .b { color: var(--ink); } #cRU .b { color: var(--ink); }
 
-#endCard { left: 26px; top: 200px; width: 354px; text-align: center; }
+#hist .hd { font: 600 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+#hist .row { margin-top: 10px; display: flex; justify-content: center; gap: 6px; }
+#hist .col { width: 80px; display: flex; flex-direction: column; align-items: center; }
+#hist .yr { margin-top: 6px; font: 600 14px/1 var(--mono); }
+#hist .mk { margin-top: 6px; height: 20px; font: 700 18px/20px var(--sans); }
+#hist .mk.ok { color: var(--ok); } #hist .mk.q { color: var(--road); font-family: var(--serif); font-size: 20px; }
+#hist .col.now .yr { color: var(--road); }
+
+#legendIll { left: 200px; top: 458px; width: 180px; text-align: right; font: 500 11px/1 var(--sans); color: #6f7d90; letter-spacing: .04em; }
+
+#endCard { left: 26px; top: 186px; width: 354px; text-align: center; }
 #endCard h1 { margin: 0; font: 700 40px/1 var(--serif); letter-spacing: .03em; }
 #endCard .d { margin-top: 10px; font: 600 12px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-#sources { margin-top: 26px; font: 500 12px/1.6 var(--sans); color: var(--muted); }
+#sources { margin-top: 24px; font: 500 12px/1.6 var(--sans); color: var(--muted); }
 #sources b { display: block; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); margin-bottom: 8px; }
-#sources a { color: var(--muted); text-decoration: underline; text-decoration-color: rgba(159,169,184,.4); text-underline-offset: 2px; }
-#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 540px; min-height: 52px; min-width: 44px; padding: 0 22px; border: 1.5px solid var(--cn); border-radius: 999px;
-  background: transparent; color: var(--cn); font: 600 15px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#sources a { color: var(--muted); text-decoration: underline; text-decoration-color: rgba(152,166,184,.45); text-underline-offset: 2px; }
+#sources .n { margin-top: 10px; font-size: 11px; color: #6f7d90; }
+#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 540px; min-height: 52px; min-width: 44px; padding: 0 22px; border: 1.5px solid var(--road); border-radius: 999px;
+  background: transparent; color: var(--road); font: 600 15px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
 #replay[hidden] { display: none; }
-#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--cn); outline-offset: 2px; }
+#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--road); outline-offset: 2px; }
 </style>
 </head>
 <body>
 <div id="wrap"><div id="stage"><div id="scene">
   <svg id="svg" class="abs" width="432" height="768" viewBox="0 0 432 768" aria-hidden="true">
-    <g id="grid" opacity=".5" stroke="#1d2744" stroke-width="1" fill="none">
-      <ellipse cx="216" cy="372" rx="300" ry="120"/><ellipse cx="216" cy="372" rx="300" ry="60"/>
-      <ellipse cx="216" cy="372" rx="190" ry="250"/><ellipse cx="216" cy="372" rx="90" ry="250"/>
+    <defs>
+      <clipPath id="box"><rect x="26" y="108" width="354" height="492"/></clipPath>
+      <clipPath id="aboveR"><rect x="0" y="0" width="432" height="288"/></clipPath>
+      <linearGradient id="seaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#173a5a"/><stop offset="1" stop-color="#0b1a2a" stop-opacity="0"/></linearGradient>
+    </defs>
+
+    <!-- intro: the whole 19 km link -->
+    <g id="whole">
+      <rect x="26" y="306" width="354" height="60" fill="url(#seaG)" opacity=".6"/>
+      <path id="wholeLine" d="M44,300 L362,300" stroke="#c9d3df" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M187,300 Q203,282 219,300" stroke="#c9d3df" stroke-width="2.5" fill="none"/>
+      <g id="wholePiers" stroke="#7f8ea3" stroke-width="1.5"></g>
+      <circle cx="44" cy="300" r="5" fill="#c9d3df"/><circle cx="362" cy="300" r="5" fill="#c9d3df"/>
+      <text class="svgt" x="44" y="276" text-anchor="start" fill="#c9d3df" font-size="14" font-weight="600" data-key>Russia</text>
+      <text class="svgt" x="362" y="276" text-anchor="end" fill="#c9d3df" font-size="14" font-weight="600" data-key>Crimea</text>
+      <text class="svgt" x="203" y="342" text-anchor="middle" fill="#98a6b8" font-size="15" font-weight="600" data-key>19 km</text>
     </g>
-    <g id="tableG">
-      <circle id="tableGlow" cx="216" cy="372" r="64" fill="#1c2744" opacity="0"/>
-      <circle id="table" cx="216" cy="372" r="40" fill="#2a3556" stroke="#4a5880" stroke-width="1.5" opacity="0"/>
-      <circle id="chUS" cx="162" cy="372" r="9" fill="none" stroke="#4a5880" stroke-width="1.5" opacity="0"/>
-      <circle id="chRU" cx="243" cy="325.2" r="9" fill="none" stroke="#4a5880" stroke-width="1.5" opacity="0"/>
-      <circle id="chCN" cx="243" cy="418.8" r="9" fill="none" stroke="#4a5880" stroke-width="1.5" opacity="0"/>
+
+    <!-- detail: two parallel bridges at the shipping-channel arches -->
+    <g id="detail" clip-path="url(#box)">
+      <g id="rowR">
+        <rect x="26" y="286" width="354" height="26" fill="url(#seaG)"/>
+        <g id="seaLinesR" stroke="#2a5578" stroke-width="1" opacity=".7"></g>
+        <g id="piersR" stroke="#5f6f85" stroke-width="3"></g>
+        <path id="deckRL" d="M26,236 L125,236" stroke="var(--road)" stroke-width="5"/>
+        <path id="deckRR" d="M281,236 L380,236" stroke="var(--road)" stroke-width="5"/>
+        <g id="carsR"></g>
+        <g clip-path="url(#aboveR)"><g id="spanR">
+          <path id="archR" d="M125,236 Q203,112 281,236" stroke="var(--road)" stroke-width="5" fill="none"/>
+          <g id="hangR" stroke="var(--road)" stroke-width="1.4" opacity=".75"></g>
+          <path d="M125,236 L281,236" stroke="var(--road)" stroke-width="5"/>
+        </g></g>
+        <g id="ripples" fill="none" stroke="#9cc6ea" stroke-width="1.6"></g>
+        <text id="lRoad" class="svgt" x="30" y="212" fill="var(--road)" font-size="15" font-weight="700" data-key>Road</text>
+        <g id="dim">
+          <path d="M125,256 L281,256 M125,250 L125,262 M281,250 L281,262" stroke="#98a6b8" stroke-width="1.2"/>
+          <rect x="178" y="258" width="50" height="18" fill="#0b1726"/>
+          <text class="svgt" x="203" y="272" text-anchor="middle" fill="#c9d3df" font-size="13" font-weight="600" data-key>227 m</text>
+        </g>
+      </g>
+      <g id="rowL">
+        <rect x="26" y="422" width="354" height="26" fill="url(#seaG)"/>
+        <g id="seaLinesL" stroke="#2a5578" stroke-width="1" opacity=".7"></g>
+        <g id="piersL" stroke="#5f6f85" stroke-width="3"></g>
+        <path d="M26,372 L380,372" stroke="var(--rail)" stroke-width="5"/>
+        <path id="archL" d="M125,372 Q203,248 281,372" stroke="var(--rail)" stroke-width="5" fill="none"/>
+        <g id="hangL" stroke="var(--rail)" stroke-width="1.4" opacity=".75"></g>
+        <g id="train"></g>
+        <path id="crack" d="M224,322 l-6,7 l7,4 l-6,8 l5,4" stroke="var(--hit)" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+        <text id="lRail" class="svgt" x="30" y="348" fill="var(--rail)" font-size="15" font-weight="700" data-key>Rail</text>
+        <text id="lDam" class="svgt" x="236" y="314" fill="var(--hit)" font-size="13" font-weight="700" data-key>Damaged</text>
+        <g id="ferry">
+          <path d="M-18,-4 L18,-4 L13,5 L-13,5 Z" fill="#c9d3df"/><rect x="-8" y="-10" width="14" height="6" rx="1" fill="#c9d3df"/>
+        </g>
+        <text id="lFerry" class="svgt" x="0" y="466" text-anchor="middle" fill="#c9d3df" font-size="13" font-weight="600" data-key>Ferries</text>
+      </g>
+      <g id="weapons"></g>
+      <g id="flashes"></g>
     </g>
-    <g id="dots"></g>
   </svg>
 
-  <div id="kicker" class="abs c">Shenzhen &middot; Thursday, Nov 19</div>
-  <div id="title" class="abs c">One Table</div>
-  <div id="names" class="abs c"><span class="us">Trump</span><span class="s">&middot;</span><span class="cn">Xi</span><span class="s">&middot;</span><span class="ru">Putin</span></div>
+  <div id="kicker" class="abs c">Ukraine hits the Crimean Bridge</div>
+  <div id="title" class="abs c">The Gap</div>
 
-  <div id="labUS" class="abs lab"><div class="n">US</div><div class="v" data-to="5042">0</div></div>
-  <div id="labRU" class="abs lab"><div class="n">Russia</div><div class="v" data-to="5420">0</div></div>
-  <div id="labCN" class="abs lab"><div class="n">China</div><div class="v" data-to="620">0</div></div>
-  <div id="legend" class="abs c"><i></i>1 dot = 50 warheads (est.)</div>
-
-  <div id="pct" class="abs cap"><div class="big">~91%</div><div class="sm">of the world's nuclear warheads</div></div>
-
-  <div id="first" class="abs cap">
-    <div class="row"><div class="lbl">Three-way summits between them</div><div id="cnt"><span id="c0">0</span><span id="c1">1</span></div></div>
-    <div class="tag" id="firstTag">First ever</div>
+  <div id="cal" class="abs band">
+    <div class="tile"><div class="m">NOV</div><div class="d" id="d16">16</div><div class="d" id="d17">17</div></div>
+    <div id="how">
+      <svg id="hIcon" width="26" height="22" viewBox="-13 -11 26 22" aria-hidden="true"><path d="M-11,0 L9,-7 L5,0 L9,7 Z" fill="var(--hit)"/></svg>
+      <div class="w"><span id="w16">Drones</span><span id="w17">Missiles + drones</span></div>
+    </div>
   </div>
 
-  <div id="treaty" class="abs"><div class="h">New START</div><div class="p">US&ndash;Russia treaty</div>
-    </div>
-  <div id="stamp" class="abs">EXPIRED</div>
+  <div id="traffic" class="abs band">
+    <div class="row"><div class="pill road" id="pR">Road <span class="k">&#10007;</span></div><div class="pill rail" id="pL">Rail <span class="k ok">&#10003;</span></div></div>
+    <div class="sub" id="tSub">Trains running again</div>
+  </div>
 
-  <div id="agenda" class="abs cap">
-    <div class="hd">White House agenda</div>
+  <div id="claims" class="abs band">
+    <div class="card" id="cUA"><div class="h">Ukraine</div><div class="b">Span collapsed</div></div>
+    <div class="card" id="cRU"><div class="h">Russia</div><div class="b">Damage, no collapse confirmed</div></div>
+  </div>
+
+  <div id="hist" class="abs band">
+    <div class="hd">Hit before. Reopened.</div>
     <div class="row">
-      <div class="pill y" id="pA"><svg width="16" height="16" viewBox="-8 -8 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3"><ellipse rx="7" ry="2.6"/><ellipse rx="7" ry="2.6" transform="rotate(60)"/><ellipse rx="7" ry="2.6" transform="rotate(-60)"/></g><circle r="1.6" fill="currentColor"/></svg>Nukes <span class="k">&#10003;</span></div>
-      <div class="pill y" id="pB">Iran <span class="k">&#10003;</span></div>
-      <div class="pill x" id="pC">Ukraine <span class="k">&#10007;</span></div>
+      <div class="col" id="h1"><svg width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><rect x="1" y="6" width="17" height="11" rx="1.5" fill="#c9d3df"/><path d="M18,9 h6 l4,4 v4 h-10 Z" fill="#c9d3df"/><circle cx="7" cy="19" r="3" fill="#0b1726" stroke="#c9d3df" stroke-width="1.5"/><circle cx="23" cy="19" r="3" fill="#0b1726" stroke="#c9d3df" stroke-width="1.5"/></svg><div class="yr">2022</div><div class="mk ok">&#10003;</div></div>
+      <div class="col" id="h2"><svg width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M2,14 L26,14 L22,20 L5,20 Z" fill="#c9d3df"/><path d="M8,14 L12,9 L18,9 L20,14" fill="#c9d3df"/><path d="M1,22 q4,-2 8,0 t8,0 t8,0" stroke="#5f8fb8" stroke-width="1.5" fill="none"/></svg><div class="yr">2023</div><div class="mk ok">&#10003;</div></div>
+      <div class="col" id="h3"><svg width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M2,6 q4,-2 8,0 t8,0 t8,0" stroke="#5f8fb8" stroke-width="1.5" fill="none"/><rect x="12" y="8" width="5" height="16" fill="#5f6f85"/><circle cx="21" cy="17" r="4" fill="#c9d3df"/><path d="M21,13 v-3" stroke="#c9d3df" stroke-width="1.5"/></svg><div class="yr">2025</div><div class="mk ok">&#10003;</div></div>
+      <div class="col now" id="h4"><svg width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M3,12 L22,5 L18,12 L22,19 Z" fill="var(--hit)"/></svg><div class="yr">2026</div><div class="mk q" id="hq">?</div></div>
     </div>
-    <div class="note" id="aNote">Beijing has rebuffed nuke talks</div>
   </div>
+
+  <div id="legendIll" class="abs">Illustration, not to scale</div>
 
   <div id="endCard" class="abs">
-    <h1>One Table</h1>
-    <div class="d">Xi &middot; Trump &middot; Putin &middot; Shenzhen, Nov 19, 2026</div>
+    <h1>The Gap</h1>
+    <div class="d">Crimean Bridge &middot; Kerch Strait &middot; Nov 17, 2026</div>
     <div id="sources"><b>Sources</b>
-      China MFA via <a href="https://www.asiaone.com/china/china-says-xi-putin-trump-meeting-has-groundbreaking-significance">Reuters</a> &amp; <a href="https://sg.news.yahoo.com/xi-trump-putin-discuss-world-084022417.html">AFP</a><br>
-      White House via <a href="https://www.cbsnews.com/news/trump-putin-xi-jinping-meeting-china-us-russia-talks/">CBS News</a>, AFP &amp; <a href="https://www.trtworld.com/article/df5f8ca3ecf9">TRT World</a><br>
-      New START expiry: <a href="https://alaskapublic.org/news/national/2026-02-05/for-the-first-time-in-decades-the-u-s-and-russia-have-no-limits-on-nuclear-weapons">NPR, Feb 5, 2026</a><br>
-      Warhead estimates: <a href="https://fas.org/initiative/status-world-nuclear-forces/">FAS, 2026</a>
+      Ukraine General Staff via <a href="https://www.ukrinform.net/rubric-ato/4185542-arch-and-road-span-collapse-general-staff-confirms-results-of-strike-on-crimean-bridge.html">Ukrinform</a><br>
+      Zelensky via <a href="https://www.euronews.com/2026/11/17/how-ukrainian-forces-struck-putins-prized-and-heavily-defended-crimean-bridge">Euronews</a> &amp; <a href="https://www.kyivpost.com/post/90332">Kyiv Post</a><br>
+      Nov 16 tilt: <a href="https://meduza.io/en/feature/2026/11/17/ukraine-strikes-crimea-bridge-for-second-time-in-two-days-sending-an-arch-crashing-into-the-water-and-halting-traffic">Meduza</a><br>
+      Russian Transport Ministry via <a href="https://kyivindependent.com/ukrainian-forces-reportedly-strike-crimean-bridge-after-russian-missiles-hit-kyiv-bridges/">Kyiv Independent</a><br>
+      Ferries: <a href="https://www.themoscowtimes.com/2026/11/17/russia-shuts-crimean-bridge-after-second-attack-in-two-days-a94281">The Moscow Times</a> &middot; Rail resumed: <a href="https://reform.news/en/russia-reports-resumption-of-rail-services-to-crimea/">Reform.news</a><br>
+      Past attacks: <a href="https://en.wikipedia.org/wiki/2022_Crimean_Bridge_explosion">2022</a>, <a href="https://en.wikipedia.org/wiki/2023_Crimean_Bridge_explosion">2023</a> (Wikipedia), <a href="https://twz.com/news-features/ukraine-strikes-at-the-heart-of-russias-highly-defended-kerch-bridge">2025 (TWZ)</a>
+      <div class="n">Illustration, not to scale. Collapse not independently verified.</div>
     </div>
   </div>
   <button id="replay" type="button" hidden>&#8635; Replay</button>
@@ -146,113 +196,151 @@ body { background: #05070d; color: var(--ink); overflow: hidden; -webkit-font-sm
 <script>
 (() => {
   const $ = id => document.getElementById(id);
+  const NS = "http://www.w3.org/2000/svg";
   const DUR = 19.6;
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const lerp = (a, b, p) => a + (b - a) * p;
   const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
   const eio = p => p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
   const eout = p => 1 - Math.pow(1 - p, 3);
+  const ein = p => p * p * p;
   const fade = (t, a, b, c, d) => Math.min(seg(t, a, b), 1 - seg(t, c, d));
   const op = (el, v) => { el.style.opacity = v.toFixed(3); el.style.visibility = v < .005 ? "hidden" : "visible"; };
-  const sop = (el, v) => el.setAttribute("opacity", v.toFixed(3));
+  const sop = (el, v) => { el.setAttribute("opacity", v.toFixed(3)); el.style.visibility = v < .005 ? "hidden" : "visible"; };
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
 
-  // FAS 2026 total inventories: US 5,042, Russia 5,420, China 620; world ~12,187. 1 dot = 50 warheads.
-  const C = { us: "#5d9bff", ru: "#ff5d5d", cn: "#ffc93c", grey: "#5b6476" };
-  const groups = [
-    { key: "us", n: 101, cols: 11, cx: 86, delay: 0 },
-    { key: "ru", n: 108, cols: 12, cx: 216, delay: 0.25 },
-    { key: "cn", n: 12, cols: 4, cx: 330, delay: 0.5 },
-  ];
-  const SP = 7, BOTTOM = 330, TX = 216, TY = 372;
+  const YR = 236, YL = 372, A = 125, B = 281, CX = 203, H = 124; // arch: quadratic, apex 62px above deck
+  const archY = (x, y0) => { const u = (x - A) / (B - A); return y0 - 2 * u * (1 - u) * H; };
 
-  // ring slots around the table, sorted by angle; contiguous wedges per country
-  const slots = [];
-  [84, 93, 102].forEach(r => { const n = Math.floor(2 * Math.PI * r / 7.4); for (let i = 0; i < n; i++) slots.push({ r, a: i / n * 2 * Math.PI }); });
-  const A0 = 100 * Math.PI / 180;
-  slots.forEach(s => { s.k = ((s.a - A0) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI); });
-  slots.sort((p, q) => p.k - q.k || p.r - q.r);
-  const NEED = 221, step = slots.length / NEED;
-
-  const dotsG = $("dots"), dots = [];
-  let si = 0;
-  groups.forEach(g => {
-    const rows = Math.ceil(g.n / g.cols), w = (g.cols - 1) * SP;
-    for (let i = 0; i < g.n; i++) {
-      const col = i % g.cols, row = Math.floor(i / g.cols);
-      const sx = g.cx - w / 2 + col * SP, sy = BOTTOM - (rows - 1 - row) * SP;
-      const s = slots[Math.floor(si * step)]; si++;
-      const ex = TX + s.r * Math.cos(s.a), ey = TY + s.r * Math.sin(s.a);
-      const el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      el.setAttribute("r", "2.6"); el.setAttribute("fill", C[g.key]);
-      dotsG.appendChild(el);
-      dots.push({ node: el, sx, sy, ex, ey, appear: 1.8 + g.delay + 0.9 * (i / g.n), stag: (i % 17) / 17 * 0.5 + g.delay * 0.6, bend: ((i * 37) % 11 - 5) * 3 });
-    }
+  // intro piers on the whole link
+  for (let x = 54; x <= 352; x += 14) if (Math.abs(x - 203) > 18) mk("line", { x1: x, y1: 300, x2: x, y2: 312 }, $("wholePiers"));
+  // detail piers, hangers, sea lines
+  [["piersR", YR, 286], ["piersL", YL, 422]].forEach(([id, y0, y1]) => {
+    for (let x = 47; x <= 380; x += 39) if (x < A - 4 || x > B + 4) mk("line", { x1: x, y1: y0 + 2, x2: x, y2: y1 }, $(id));
+    [A, B].forEach(x => mk("line", { x1: x, y1: y0 + 2, x2: x, y2: y1, "stroke-width": 6 }, $(id)));
   });
-  // the other ~9%: about 22 grey dots, kept outside the table
-  const greys = [];
-  for (let i = 0; i < 22; i++) {
-    const a = A0 + (i + 0.5) / 22 * 2 * Math.PI, r = 128 + (i % 2) * 8;
-    const el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    el.setAttribute("r", "2.6"); el.setAttribute("fill", C.grey);
-    el.setAttribute("cx", (TX + r * Math.cos(a)).toFixed(1)); el.setAttribute("cy", (TY + r * 0.92 * Math.sin(a)).toFixed(1));
-    dotsG.appendChild(el); greys.push(el);
+  for (let x = A + 13; x < B; x += 13) {
+    mk("line", { x1: x, y1: archY(x, YR), x2: x, y2: YR }, $("hangR"));
+    mk("line", { x1: x, y1: archY(x, YL), x2: x, y2: YL }, $("hangL"));
   }
+  [["seaLinesR", 292], ["seaLinesL", 428]].forEach(([id, y]) => { for (let i = 0; i < 3; i++) mk("path", { d: `M26,${y + i * 6} L380,${y + i * 6}`, "stroke-dasharray": `${10 + i * 4} ${14 + i * 3}` }, $(id)); });
 
-  const E = {}; ["grid","tableGlow","table","chUS","chRU","chCN","kicker","title","names","labUS","labRU","labCN","legend","pct","first","c0","c1","firstTag","treaty","stamp","agenda","pA","pB","pC","aNote","endCard","dots"].forEach(k => E[k] = $(k));
-  const labs = [E.labUS, E.labRU, E.labCN];
-  const fmt = n => Math.round(n).toLocaleString("en-US");
+  // cars on the road deck (two lanes, opposite directions)
+  const cars = [];
+  for (let i = 0; i < 12; i++) {
+    const dir = i % 2 ? -1 : 1;
+    const el = mk("rect", { width: 9, height: 4, rx: 1.2, fill: dir > 0 ? "#ffe2ad" : "#ffd08a", y: YR - 7 - (dir > 0 ? 0 : 0) }, $("carsR"));
+    cars.push({ el, dir, base: (i * 61) % 354 });
+  }
+  // train on the rail deck
+  const train = [];
+  for (let i = 0; i < 6; i++) train.push(mk("rect", { width: 20, height: 6, rx: 1.5, y: YL - 9, fill: "#cfe0ff" }, $("train")));
+
+  // weapons: Nov 16 drones, Nov 17 missiles
+  const drones = [0, 1, 2].map(i => mk("path", { d: "M-7,0 L6,-4 L3,0 L6,4 Z", fill: "var(--hit)" }, $("weapons")));
+  const dPath = [[-10, 150, 165, 196], [-10, 190, 200, 182], [-10, 120, 232, 200]];
+  const missiles = [0, 1, 2, 3].map(i => {
+    const g = mk("g", {}, $("weapons"));
+    mk("line", { x1: -26, y1: 0, x2: 0, y2: 0, stroke: "#ffd6cf", "stroke-width": 1.4, opacity: .6 }, g);
+    mk("path", { d: "M-8,-2 L4,0 L-8,2 Z", fill: "#fff" }, g);
+    return g;
+  });
+  const mPath = [[20, 120, 168, 200], [20, 150, 236, 205], [20, 130, 200, 176], [20, 270, 222, 330]];
+  const mT = [6.95, 7.1, 7.22, 7.4];
+  const flashes = [...dPath.map(p => [p[2], p[3]]), ...mPath.map(p => [p[2], p[3]])].map(() => mk("circle", { r: 4, fill: "#ffcf9e" }, $("flashes")));
+  const ripples = [0, 1, 2].map(() => mk("ellipse", { cx: 203, cy: 288, rx: 10, ry: 3 }, $("ripples")));
+
+  const E = {}; ["whole","detail","rowR","rowL","spanR","dim","lRoad","lRail","lDam","crack","ferry","lFerry","kicker","title","cal","d16","d17","w16","w17","hIcon",
+    "traffic","pR","pL","tSub","claims","cUA","cRU","hist","h1","h2","h3","h4","hq","legendIll","endCard"].forEach(k => E[k] = $(k));
 
   function render(t) {
-    const endDim = seg(t, 17.6, 18.0);
+    const endDim = seg(t, 17.5, 17.9);
     // header
-    op(E.kicker, seg(t, 0.2, 0.6) * (1 - endDim));
-    op(E.title, seg(t, 0.4, 0.9) * (1 - endDim)); E.title.style.transform = `translateY(${(8 * (1 - eout(seg(t, 0.4, 0.9)))).toFixed(1)}px)`;
-    op(E.names, seg(t, 1.0, 1.4) * (1 - endDim));
-    sop(E.grid, 0.5 * seg(t, 0, 1) * (1 - endDim));
+    op(E.kicker, seg(t, 0.15, 0.5) * (1 - endDim));
+    op(E.title, seg(t, 0.35, 0.8) * (1 - endDim));
+    E.title.style.transform = `translateY(${(8 * (1 - eout(seg(t, 0.35, 0.8)))).toFixed(1)}px)`;
 
-    // arsenal labels count up, then leave as the dots gather
-    labs.forEach((el, i) => {
-      const g = groups[i], a = 1.8 + g.delay;
-      op(el, fade(t, a, a + 0.3, 6.0, 6.4));
-      const v = el.querySelector(".v"); v.textContent = fmt(+v.dataset.to * eout(seg(t, a, a + 1.0)));
+    // intro: the whole link draws, then zooms into the channel arches
+    const zw = eio(seg(t, 2.3, 3.1));
+    const draw = eout(seg(t, 0.5, 1.6));
+    $("wholeLine").setAttribute("d", `M44,300 L${(44 + 318 * draw).toFixed(1)},300`);
+    sop(E.whole, Math.min(seg(t, 0.4, 0.7), 1 - zw));
+    E.whole.setAttribute("transform", `translate(203 300) scale(${lerp(1, 2.6, zw).toFixed(3)}) translate(-203 -300)`);
+    [...E.whole.querySelectorAll("text")].forEach((el, i) => sop(el, Math.min(seg(t, 1.0 + i * 0.15, 1.3 + i * 0.15), 1 - seg(t, 2.1, 2.35))));
+    const zd = eout(seg(t, 2.5, 3.3));
+    sop(E.detail, zd * (1 - endDim));
+    E.detail.setAttribute("transform", `translate(203 304) scale(${lerp(0.4, 1, zd).toFixed(3)}) translate(-203 -304)`);
+    sop(E.lRoad, seg(t, 3.0, 3.3)); sop(E.lRail, seg(t, 3.15, 3.45));
+    sop(E.dim, fade(t, 3.3, 3.6, 5.0, 5.3));
+
+    // cars: flow, then stop either side of the arch after the Nov 16 hit; those near the arch clear out
+    const te = t < 4.9 ? t : 4.9 + 0.45 * eout(seg(t, 4.9, 5.8));
+    cars.forEach(c => {
+      let x = 26 + ((c.base + c.dir * 38 * te) % 354 + 354) % 354;
+      c.el.setAttribute("x", (x - 4.5).toFixed(1));
+      c.el.setAttribute("y", c.dir > 0 ? YR - 7 : YR - 7);
+      const nearArch = x > A - 10 && x < B + 10;
+      const edge = Math.min(seg(x, 26, 40), 1 - seg(x, 366, 380));
+      const clear = nearArch ? 1 - seg(t, 5.2, 5.8) : 1;
+      sop(c.el, edge * seg(t, 3.2, 3.6) * clear * (1 - 0.55 * seg(t, 9.8, 10.4)));
+      c.el.setAttribute("fill", t > 5.6 ? "#7d8796" : (c.dir > 0 ? "#ffe2ad" : "#ffd08a"));
     });
-    op(E.legend, fade(t, 3.0, 3.4, 6.0, 6.4));
+    // train rolls in on the rail deck and stops short of the arch
+    const d = 7.9 - t, g = d > 0.6 ? d - 0.3 : d > 0 ? d * d / 1.2 : 0;
+    const r = t - 10.5, go = r <= 0 ? 0 : r < 0.8 ? r * r / 1.6 : r - 0.4;
+    const head = 108 - 46 * g + 46 * go;
+    train.forEach((el, i) => { const x = head - 20 - i * 23; el.setAttribute("x", x.toFixed(1)); sop(el, Math.min(seg(x, 20, 34), 1)); });
 
-    // dots: appear in their grids, then drift and gather around the table
-    dots.forEach(d => {
-      const a = seg(t, d.appear, d.appear + 0.15);
-      const p = eio(seg(t, 6.2 + d.stag, 8.0 + d.stag));
-      const mx = (d.sx + d.ex) / 2, my = (d.sy + d.ey) / 2 + d.bend;
-      const x = (1 - p) * (1 - p) * d.sx + 2 * (1 - p) * p * mx + p * p * d.ex;
-      const y = (1 - p) * (1 - p) * d.sy + 2 * (1 - p) * p * my + p * p * d.ey;
-      d.node.setAttribute("cx", x.toFixed(1)); d.node.setAttribute("cy", y.toFixed(1));
-      sop(d.node, a);
+    // Nov 16: drones hit the road arch; it tilts
+    drones.forEach((el, i) => {
+      const [x0, y0, x1, y1] = dPath[i], s = 4.5 + i * 0.12, p = seg(t, s, s + 0.55);
+      el.setAttribute("transform", `translate(${lerp(x0, x1, p).toFixed(1)} ${lerp(y0, y1, p).toFixed(1)})`);
+      sop(el, p > 0 && p < 1 ? 1 : 0);
+      const f = flashes[i], q = seg(t, s + 0.55, s + 0.9);
+      f.setAttribute("cx", x1); f.setAttribute("cy", y1); f.setAttribute("r", (3 + 14 * q).toFixed(1)); sop(f, q > 0 && q < 1 ? 0.9 * (1 - q) : 0);
     });
-    const tIn = seg(t, 7.2, 7.8);
-    sop(E.table, tIn); sop(E.tableGlow, 0.9 * tIn);
-    [[E.chUS, C.us, 8.6], [E.chCN, C.cn, 8.8], [E.chRU, C.ru, 9.0]].forEach(([el, col, s]) => {
-      sop(el, tIn); const f = seg(t, s, s + 0.25);
-      el.setAttribute("fill", f > 0 ? col : "none"); el.setAttribute("fill-opacity", f.toFixed(2));
-      el.setAttribute("r", (9 + 3 * Math.sin(Math.PI * f)).toFixed(2));
+    const tilt = 4 * eout(seg(t, 5.2, 5.9));
+    // Nov 17: missiles; the arch and span drop into the strait
+    missiles.forEach((el, i) => {
+      const [x0, y0, x1, y1] = mPath[i], s = mT[i], p = ein(seg(t, s - 0.35, s));
+      const ang = Math.atan2(y1 - y0, x1 - x0) * 180 / Math.PI;
+      el.setAttribute("transform", `translate(${lerp(x0, x1, p).toFixed(1)} ${lerp(y0, y1, p).toFixed(1)}) rotate(${ang.toFixed(1)})`);
+      sop(el, p > 0 && p < 1 ? 1 : 0);
+      const f = flashes[3 + i], q = seg(t, s, s + 0.4);
+      f.setAttribute("cx", x1); f.setAttribute("cy", y1); f.setAttribute("r", (3 + 18 * q).toFixed(1)); sop(f, q > 0 && q < 1 ? 0.9 * (1 - q) : 0);
     });
-    greys.forEach((g, i) => sop(g, 0.9 * seg(t, 9.4 + i * 0.02, 9.7 + i * 0.02)));
-    E.dots.setAttribute("opacity", (1 - endDim).toFixed(2));
-    sop($("tableG"), 1 - endDim);
+    const fall = ein(seg(t, 7.55, 8.25));
+    const rot = tilt + 9 * fall, dy = 80 * fall;
+    E.spanR.setAttribute("transform", `translate(0 ${dy.toFixed(1)}) rotate(${(-rot).toFixed(2)} ${B} ${YR})`);
+    ripples.forEach((r, i) => { const q = seg(t, 8.15 + i * 0.22, 9.4 + i * 0.22);
+      r.setAttribute("rx", (20 + 110 * eout(q)).toFixed(1)); r.setAttribute("ry", (2 + 7 * eout(q)).toFixed(1)); sop(r, q > 0 && q < 1 ? 0.8 * (1 - q) : 0); });
+    // rail: still standing, arch damaged
+    const cr = seg(t, 7.5, 7.8);
+    $("crack").setAttribute("stroke-dasharray", "60"); $("crack").setAttribute("stroke-dashoffset", (60 * (1 - cr)).toFixed(1));
+    sop(E.crack, cr > 0 ? 1 : 0);
+    sop(E.lDam, fade(t, 8.6, 8.9, 17.3, 17.5));
 
-    // beats in the lower band
-    op(E.pct, fade(t, 9.4, 9.8, 11.4, 11.7)); E.pct.style.transform = `translateY(${(8 * (1 - eout(seg(t, 9.4, 9.8)))).toFixed(1)}px)`;
-    op(E.first, fade(t, 11.7, 12.0, 13.7, 14.0));
-    const pN = eio(seg(t, 12.5, 12.85));
-    E.c0.style.transform = `translateY(${(-52 * pN).toFixed(1)}px)`; op(E.c0, 1 - pN);
-    E.c1.style.transform = `translateY(${(52 * (1 - pN)).toFixed(1)}px)`; op(E.c1, pN);
-    op(E.firstTag, seg(t, 12.9, 13.2));
-    op(E.treaty, fade(t, 14.0, 14.3, 15.7, 16.0));
-    const pS = seg(t, 14.7, 14.95);
-    op(E.stamp, pS * (1 - seg(t, 15.7, 16.0))); E.stamp.style.transform = `rotate(-8deg) scale(${lerp(1.25, 1, eout(pS)).toFixed(3)})`;
-    op(E.agenda, fade(t, 16.0, 16.3, 17.5, 17.8));
-    op(E.pA, seg(t, 16.2, 16.4)); op(E.pB, seg(t, 16.4, 16.6)); op(E.pC, seg(t, 16.6, 16.8)); op(E.aNote, seg(t, 16.85, 17.05));
+    // ferries take the traffic
+    const fp = seg(t, 10.0, 17.4), fx = lerp(56, 150, fp);
+    E.ferry.setAttribute("transform", `translate(${fx.toFixed(1)} 428)`); sop(E.ferry, fade(t, 10.0, 10.4, 17.2, 17.5));
+    E.lFerry.setAttribute("x", fx.toFixed(1)); sop(E.lFerry, fade(t, 10.3, 10.6, 17.2, 17.5));
 
-    op(E.endCard, seg(t, 17.8, 18.2));
+    // lower band
+    op(E.cal, fade(t, 4.3, 4.6, 9.6, 9.9));
+    const flip = eio(seg(t, 6.6, 6.95));
+    E.d16.style.transform = `translateY(${(-50 * flip).toFixed(1)}px)`; op(E.d16, 1 - flip);
+    E.d17.style.transform = `translateY(${(50 * (1 - flip)).toFixed(1)}px)`; op(E.d17, flip);
+    op(E.w16, 1 - seg(t, 6.6, 6.8)); op(E.w17, seg(t, 6.8, 7.0));
+    op(E.traffic, fade(t, 9.9, 10.2, 12.0, 12.3));
+    op(E.pR, seg(t, 10.0, 10.25)); op(E.pL, seg(t, 10.2, 10.45)); op(E.tSub, seg(t, 10.5, 10.8));
+    op(E.claims, fade(t, 12.3, 12.6, 14.6, 14.9));
+    op(E.cUA, seg(t, 12.3, 12.6)); op(E.cRU, seg(t, 12.8, 13.1));
+    op(E.hist, fade(t, 14.9, 15.2, 17.2, 17.5));
+    [E.h1, E.h2, E.h3, E.h4].forEach((el, i) => { const s = 15.1 + i * 0.3; op(el, seg(t, s, s + 0.25)); el.style.transform = `translateY(${(6 * (1 - eout(seg(t, s, s + 0.25)))).toFixed(1)}px)`; });
+    const qp = seg(t, 16.3, 16.8); E.hq.style.transform = `scale(${(1 + 0.35 * Math.sin(Math.PI * qp)).toFixed(3)})`;
+    op(E.legendIll, Math.min(seg(t, 2.8, 3.2), 1 - endDim));
+
+    op(E.endCard, seg(t, 17.7, 18.1));
   }
 
   const replay = $("replay");
