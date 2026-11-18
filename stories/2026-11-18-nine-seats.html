@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nine Seats</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=block">
+<style>
+/* Nine Seats. Democrat Mary Peltola beat Sen. Dan Sullivan in Alaska (AP call Tue Nov 17, 2026), the last Senate race
+   of the Nov 3 midterms to be called. Democrats flipped nine Republican-held seats (IA KS ME MS NC OH SC TX AK); the Senate goes
+   from 53-47 Republican to 56-44 Democratic (independents counted with Democrats). Last time Democrats picked up nine or more
+   Senate seats in a midterm: 1958 (13 Republican-held seats). Fixed 432x768 stage; readable content inside x 26-380 / y 108-600. */
+:root {
+  --ink: #f2efe8; --muted: #9aa0ad; --dem: #4c8dff; --gop: #ef5350; --gopdim: #4a2328; --faint: #232833;
+  --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f2efe8; } }
+:root[data-theme="dark"] { --ink: #f2efe8; }
+html, body { height: 100%; margin: 0; }
+body { background: #07080b; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #07080b; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
+  background: radial-gradient(120% 70% at 50% 35%, #161a24 0%, #0d0f15 60%, #090a0e 100%); }
+.abs { position: absolute; }
+#kicker { left: 26px; top: 112px; width: 354px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: center; }
+#title { left: 26px; top: 128px; width: 354px; font: 700 32px/1 var(--serif); text-align: center; }
+svg text { font-family: var(--sans); }
+.num { font-family: var(--mono); font-weight: 600; }
+#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 540px; min-height: 52px; min-width: 44px; padding: 0 22px;
+  border: 1.5px solid var(--dem); border-radius: 999px; background: rgba(76,141,255,.12); color: var(--ink); font: 600 15px/1 var(--sans);
+  cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay[hidden] { display: none; }
+#replay:focus-visible { outline: 2px solid var(--dem); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="kicker" class="abs">US Senate · 2026 midterms</div>
+  <div id="title" class="abs">Nine seats flip</div>
+  <svg id="svg" class="abs" style="left:0;top:0" width="432" height="768" viewBox="0 0 432 768" aria-label="Animation: the US Senate goes from 53-47 Republican to 56-44 Democratic as nine states flip; Alaska is the last, called Nov 17. Most Democratic midterm Senate pickups since 1958.">
+    <g id="seats"></g>
+    <text id="ctr" x="203" y="294" text-anchor="middle" class="num" font-size="40" fill="#4c8dff">+0</text>
+    <text id="nD" x="66" y="332" text-anchor="middle" class="num" font-size="26" fill="#4c8dff">47</text>
+    <text id="nR" x="340" y="332" text-anchor="middle" class="num" font-size="26" fill="#ef5350">53</text>
+    <text id="lD" x="66" y="347" text-anchor="middle" font-size="11" fill="#9aa0ad" font-weight="600" letter-spacing="1.2">DEM</text>
+    <text id="lR" x="340" y="347" text-anchor="middle" font-size="11" fill="#9aa0ad" font-weight="600" letter-spacing="1.2">GOP</text>
+    <g id="maj" opacity="0">
+      <rect x="118" y="316" width="170" height="26" rx="13" fill="rgba(76,141,255,.16)" stroke="#4c8dff" stroke-width="1.5"/>
+      <text x="203" y="334" text-anchor="middle" font-size="14" font-weight="700" fill="#f2efe8">Democratic majority</text>
+    </g>
+
+    <g id="map"></g>
+    <g id="cal" opacity="0">
+      <rect x="66" y="365" width="50" height="46" rx="7" fill="#ecebe6"/>
+      <rect x="66" y="365" width="50" height="15" rx="7" fill="#ef5350"/><rect x="66" y="373" width="50" height="7" fill="#ef5350"/>
+      <text x="91" y="376.5" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" letter-spacing="1.5">NOV</text>
+      <g id="days"></g>
+    </g>
+    <g id="akcap" opacity="0">
+      <text x="126" y="384" font-size="14" font-weight="700" fill="#f2efe8">Last race called</text>
+      <text x="126" y="404" font-size="12" fill="#c9ccd4">First Alaska Native senator</text>
+    </g>
+
+    <g id="hist" opacity="0">
+      <text x="203" y="392" text-anchor="middle" font-size="22" font-weight="700" fill="#f2efe8" style="font-family:var(--serif)">Most since 1958</text>
+      <g id="h58"></g><g id="h26"></g><g id="ticks"></g>
+      <line x1="40" x2="366" y1="574" y2="574" stroke="#4a4f5c" stroke-width="1.5"/>
+      <text x="68" y="592" text-anchor="middle" font-size="12" class="num" fill="#c9ccd4">1958</text>
+      <text x="338" y="592" text-anchor="middle" font-size="12" class="num" fill="#c9ccd4">2026</text>
+      <text id="n58" x="84" y="410" text-anchor="start" font-size="14" class="num" fill="#4c8dff" opacity="0">13</text>
+      <text id="n26" x="338" y="442" text-anchor="middle"  font-size="14" class="num" fill="#4c8dff" opacity="0">9</text>
+      <g id="thr" opacity="0">
+        <line x1="92" x2="306" y1="458" y2="458" stroke="#7b8190" stroke-width="1.2" stroke-dasharray="4 4"/>
+        <text x="203" y="448" text-anchor="middle" font-size="12" fill="#9aa0ad">no midterm with 9+</text>
+      </g>
+    </g>
+
+    <g id="end" opacity="0">
+      <text x="203" y="428" text-anchor="middle" font-size="30" font-weight="700" fill="#f2efe8" style="font-family:var(--serif)">The Senate flips blue.</text>
+      <text x="203" y="482" text-anchor="middle" font-size="11" fill="#9aa0ad">Sources: AP (via Live 5 News), Alaska Public Media,</text>
+      <text x="203" y="498" text-anchor="middle" font-size="11" fill="#9aa0ad">CBS News, Yahoo News, Al Jazeera, California Today</text>
+    </g>
+  </svg>
+  <button id="replay" type="button" hidden>&#8635; Replay</button>
+</div></div>
+<script>
+(() => {
+  const DUR = 19.6, NS = "http://www.w3.org/2000/svg";
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+  const eio = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+  const eout = x => 1 - Math.pow(1 - x, 3);
+  const fade = (t, a, b, c, d) => Math.min(seg(t, a, b), 1 - seg(t, c, d));
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+  const op = (el, v) => el.setAttribute("opacity", v.toFixed(3));
+  const DEM = [76, 141, 255], GOP = [239, 83, 80];
+  const mix = (a, b, k) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * k)).join(",")})`;
+
+  // Senate hemicycle: 5 rows, 100 seats, sorted left to right.
+  const CX = 203, CY = 300, rows = [[62, 13], [78, 17], [94, 20], [110, 23], [126, 27]];
+  const seatsData = [];
+  rows.forEach(([r, n], ri) => { for (let j = 0; j < n; j++) { const a = Math.PI * (1 - j / (n - 1)); seatsData.push({ a, r, ri, x: CX + r * Math.cos(a), y: CY - r * Math.sin(a) }); } });
+  seatsData.sort((p, q) => q.a - p.a || p.r - q.r);
+  const gSeats = $("seats");
+  const seatEls = seatsData.map(s => mk("circle", { cx: s.x.toFixed(1), cy: s.y.toFixed(1), r: 5 }, gSeats));
+  // flip seats: indices 47..55, in order of the calls
+  const ORDER = ["TX", "SC", "KS", "OH", "NC", "IA", "ME", "MS", "AK"];
+  const FT = [3.2, 3.65, 4.1, 4.55, 5.0, 5.45, 5.9, 7.5, 9.0]; // flip start times
+  const FD = 0.4;
+
+  // Tile-grid US map (col,row)
+  const GRID = { AK:[0,0], ME:[11,0], VT:[10,1], NH:[11,1], WA:[1,2], ID:[2,2], MT:[3,2], ND:[4,2], MN:[5,2], IL:[6,2], WI:[7,2], MI:[8,2], NY:[9,2], RI:[10,2], MA:[11,2],
+    OR:[1,3], NV:[2,3], WY:[3,3], SD:[4,3], IA:[5,3], IN:[6,3], OH:[7,3], PA:[8,3], NJ:[9,3], CT:[10,3],
+    CA:[1,4], UT:[2,4], CO:[3,4], NE:[4,4], MO:[5,4], KY:[6,4], WV:[7,4], VA:[8,4], MD:[9,4], DE:[10,4],
+    AZ:[2,5], NM:[3,5], KS:[4,5], AR:[5,5], TN:[6,5], NC:[7,5], SC:[8,5], OK:[4,6], LA:[5,6], MS:[6,6], AL:[7,6], GA:[8,6], HI:[0,7], TX:[4,7], FL:[9,7] };
+  const P = 29, T = 26, MX = 29, MY = 362;
+  const gMap = $("map"), tiles = {};
+  Object.entries(GRID).forEach(([st, [c, r]]) => {
+    const x = MX + c * P, y = MY + r * P, g = mk("g", { transform: `translate(${x + T / 2},${y + T / 2})` }, gMap);
+    const inner = mk("g", {}, g);
+    const rect = mk("rect", { x: -T / 2, y: -T / 2, width: T, height: T, rx: 4, fill: "#2b313d" }, inner);
+    let label = null;
+    if (ORDER.includes(st)) { label = mk("text", { x: 0, y: 4, "text-anchor": "middle", "font-size": 11, "font-weight": 700, fill: "#ef5350" }, inner); label.textContent = st; }
+    tiles[st] = { g, inner, rect, label, x, y };
+  });
+  const gDays = $("days"), dayEls = ["3", "11", "17"].map(d => { const e = mk("text", { x: 91, y: 404, "text-anchor": "middle", "font-size": 20, "font-weight": 700, fill: "#14161c", class: "num" }, gDays); e.textContent = d; return e; });
+
+  // History columns
+  const h58 = [], h26 = [], ticks = [];
+  for (let i = 0; i < 13; i++) h58.push(mk("circle", { cx: 68, cy: 562 - i * 13, r: 5.5, fill: "#4c8dff" }, $("h58")));
+  for (let i = 0; i < 9; i++) h26.push(mk("circle", { cx: 338, cy: 562 - i * 13, r: 5.5, fill: "#4c8dff" }, $("h26")));
+  for (let i = 0; i < 16; i++) ticks.push(mk("circle", { cx: (98 + i * 14.7).toFixed(1), cy: 574, r: 2.6, fill: "#7b8190" }, $("ticks")));
+
+  const E = { ctr: $("ctr"), nD: $("nD"), nR: $("nR"), maj: $("maj"), cal: $("cal"), akcap: $("akcap"), hist: $("hist"), end: $("end"),
+    map: gMap, thr: $("thr"), n58: $("n58"), n26: $("n26"), lD: $("lD"), lR: $("lR"), kicker: $("kicker"), title: $("title") };
+
+  function render(t) {
+    // header
+    E.kicker.style.opacity = seg(t, 0.1, 0.5); E.title.style.opacity = seg(t, 0.3, 0.8);
+    E.title.style.transform = `translateY(${(8 * (1 - eout(seg(t, 0.3, 0.8)))).toFixed(1)}px)`;
+    // seats appear left to right
+    let flipped = 0;
+    const fk = FT.map(s => eio(seg(t, s + FD * 0.5, s + FD)));
+    FT.forEach((s, i) => { if (t >= s + FD * 0.5) flipped++; });
+    seatEls.forEach((el, i) => {
+      const appear = eout(seg(t, 0.4 + i * 0.014, 0.75 + i * 0.014));
+      let col = i < 47 ? DEM : GOP, k = 0, pulse = 0;
+      if (i >= 47 && i < 56) { const j = i - 47; k = fk[j]; pulse = Math.sin(Math.PI * seg(t, FT[j] + FD * 0.3, FT[j] + FD + 0.25)); }
+      el.setAttribute("fill", i >= 47 && i < 56 ? mix(GOP, DEM, k) : mix(col, col, 0));
+      el.setAttribute("r", (5 * appear * (1 + 0.6 * pulse)).toFixed(2));
+    });
+    E.ctr.textContent = "+" + flipped; op(E.ctr, seg(t, 2.8, 3.2));
+    E.nD.textContent = String(47 + flipped); E.nR.textContent = String(53 - flipped);
+    const numOp = seg(t, 1.6, 2.2); op(E.nD, numOp); op(E.nR, numOp); op(E.lD, numOp); op(E.lR, numOp);
+    op(E.maj, seg(t, 10.2, 10.6));
+
+    // map
+    const mapOp = fade(t, 2.2, 2.8, 10.6, 11.0);
+    op(E.map, mapOp);
+    ORDER.forEach((st, j) => {
+      const tl = tiles[st], p = seg(t, FT[j], FT[j] + FD), sx = Math.abs(Math.cos(Math.PI * p));
+      const after = p >= 0.5;
+      const big = st === "AK" ? 1 + 0.18 * Math.sin(Math.PI * seg(t, FT[j], FT[j] + 1.2)) : 1;
+      tl.inner.setAttribute("transform", `scale(${(sx * big).toFixed(3)},${big.toFixed(3)})`);
+      tl.rect.setAttribute("fill", after ? "#4c8dff" : "#4a2328");
+      tl.rect.setAttribute("stroke", after ? "none" : "#ef5350"); tl.rect.setAttribute("stroke-width", 1.2);
+      tl.label.setAttribute("fill", after ? "#ffffff" : "#ef5350");
+    });
+    // calendar
+    op(E.cal, fade(t, 2.6, 3.0, 10.4, 10.8));
+    const d1 = eio(seg(t, 7.0, 7.3)), d2 = eio(seg(t, 8.5, 8.8));
+    op(dayEls[0], 1 - d1); op(dayEls[1], Math.min(d1, 1 - d2)); op(dayEls[2], d2);
+    dayEls[1].setAttribute("transform", `translate(0,${(8 * (1 - d1)).toFixed(1)})`);
+    dayEls[2].setAttribute("transform", `translate(0,${(8 * (1 - d2)).toFixed(1)})`);
+    op(E.akcap, fade(t, 9.3, 9.7, 10.4, 10.8));
+
+    // history
+    op(E.hist, fade(t, 11.0, 11.4, 15.5, 15.9));
+    h58.forEach((c, i) => c.setAttribute("r", (5.5 * eout(seg(t, 11.5 + i * 0.08, 11.75 + i * 0.08))).toFixed(2)));
+    op(E.n58, seg(t, 12.6, 12.9));
+    ticks.forEach((c, i) => op(c, seg(t, 12.9 + i * 0.04, 13.1 + i * 0.04)));
+    h26.forEach((c, i) => c.setAttribute("r", (5.5 * eout(seg(t, 13.6 + i * 0.08, 13.85 + i * 0.08))).toFixed(2)));
+    op(E.n26, seg(t, 14.4, 14.7));
+    op(E.thr, seg(t, 14.6, 15.0));
+
+    // end card
+    op(E.end, seg(t, 16.0, 16.5));
+  }
+
+  const replay = $("replay");
+  let raf = 0, t0 = null, playing = false;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick(now) { if (t0 === null) t0 = now; const t = (now - t0) / 1000; render(Math.min(t, DUR));
+    if (t < DUR && playing) raf = requestAnimationFrame(tick); else { playing = false; replay.hidden = false; } }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: DUR, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, DUR)); }, play };
+
+  function fit() { const s = Math.min(innerWidth / 432, innerHeight / 768); $("stage").style.transform = `translate(-50%, -50%) scale(${s})`; }
+  addEventListener("resize", fit); fit();
+  render(0);
+  const start = () => { if (reduce) { render(DUR); replay.hidden = false; } else play(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+</body>
+</html>

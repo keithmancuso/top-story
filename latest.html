@@ -2,345 +2,194 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>The Gap</title>
+<title>Nine Seats</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=block">
 <style>
-/* The Gap. Overnight into Tue Nov 17, 2026, a Ukrainian strike brought down the arch and a span of the ROAD half of the
-   Crimean (Kerch) Bridge, per Ukraine's General Staff; the RAIL half still stands with a damaged arch. Drones hit the bridge
-   a day earlier (Nov 16) and left the arch tilting. Russia suspended road and rail traffic and has not confirmed a collapse.
-   Illustration, not to scale. Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+/* Nine Seats. Democrat Mary Peltola beat Sen. Dan Sullivan in Alaska (AP call Tue Nov 17, 2026), the last Senate race
+   of the Nov 3 midterms to be called. Democrats flipped nine Republican-held seats (IA KS ME MS NC OH SC TX AK); the Senate goes
+   from 53-47 Republican to 56-44 Democratic (independents counted with Democrats). Last time Democrats picked up nine or more
+   Senate seats in a midterm: 1958 (13 Republican-held seats). Fixed 432x768 stage; readable content inside x 26-380 / y 108-600. */
 :root {
-  --ink: #eef1f5; --muted: #98a6b8; --road: #ffb547; --rail: #8db4ff; --hit: #ff6b5e; --ok: #7ee0a1; --sea: #0d2236;
+  --ink: #f2efe8; --muted: #9aa0ad; --dem: #4c8dff; --gop: #ef5350; --gopdim: #4a2328; --faint: #232833;
   --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #eef1f5; } }
-:root[data-theme="dark"] { --ink: #eef1f5; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f2efe8; } }
+:root[data-theme="dark"] { --ink: #f2efe8; }
 html, body { height: 100%; margin: 0; }
-body { background: #04070c; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
-#wrap { position: fixed; inset: 0; overflow: hidden; background: #04070c; }
+body { background: #07080b; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #07080b; }
 #stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
-  background: linear-gradient(180deg, #0a1422 0%, #0b1726 45%, #081220 100%); }
-#scene { position: absolute; left: 0; top: 0; width: 432px; height: 768px; }
+  background: radial-gradient(120% 70% at 50% 35%, #161a24 0%, #0d0f15 60%, #090a0e 100%); }
 .abs { position: absolute; }
-.c { text-align: center; }
-
-#kicker { left: 26px; top: 114px; width: 354px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-#title { left: 26px; top: 132px; width: 354px; font: 700 34px/1 var(--serif); letter-spacing: .02em; }
-
-.svgt { font-family: var(--sans); }
-.band { left: 26px; width: 354px; top: 488px; text-align: center; }
-
-#cal { display: flex; justify-content: center; align-items: center; gap: 18px; }
-.tile { position: relative; width: 66px; height: 70px; border-radius: 8px; background: #e9edf2; color: #121a26; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.45); }
-.tile .m { height: 20px; background: var(--hit); color: #fff; font: 700 11px/20px var(--sans); letter-spacing: .14em; text-align: center; }
-.tile .d { position: absolute; left: 0; right: 0; top: 20px; height: 50px; text-align: center; font: 700 34px/50px var(--serif); }
-#how { display: flex; align-items: center; gap: 8px; width: 170px; font: 600 17px/1.2 var(--sans); text-align: left; }
-#how .w { position: relative; height: 22px; width: 150px; }
-#how .w span { position: absolute; left: 0; top: 0; white-space: nowrap; }
-
-#traffic .row { display: flex; justify-content: center; gap: 12px; }
-.pill { display: flex; align-items: center; gap: 8px; padding: 0 16px; height: 40px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.2);
-  font: 600 16px/1 var(--sans); white-space: nowrap; }
-.pill .k { color: var(--hit); font: 700 17px/1 var(--sans); }
-.pill .k.ok { color: var(--ok); }
-.pill.road { color: var(--road); } .pill.rail { color: var(--rail); }
-#traffic .sub { margin-top: 12px; font: 500 14px/1 var(--sans); color: var(--muted); }
-
-#claims { display: flex; justify-content: center; gap: 12px; }
-.card { width: 170px; height: 96px; border-radius: 10px; padding: 12px 10px 0; box-sizing: border-box; text-align: center; background: rgba(255,255,255,.05); border: 1.5px solid rgba(255,255,255,.14); }
-.card .h { font: 700 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-.card .b { margin-top: 10px; font: 600 15px/1.3 var(--sans); }
-#cUA .b { color: var(--ink); } #cRU .b { color: var(--ink); }
-
-#hist .hd { font: 600 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-#hist .row { margin-top: 10px; display: flex; justify-content: center; gap: 6px; }
-#hist .col { width: 80px; display: flex; flex-direction: column; align-items: center; }
-#hist .yr { margin-top: 6px; font: 600 14px/1 var(--mono); }
-#hist .mk { margin-top: 6px; height: 20px; font: 700 18px/20px var(--sans); }
-#hist .mk.ok { color: var(--ok); } #hist .mk.q { color: var(--road); font-family: var(--serif); font-size: 20px; }
-#hist .col.now .yr { color: var(--road); }
-
-#legendIll { left: 200px; top: 458px; width: 180px; text-align: right; font: 500 11px/1 var(--sans); color: #6f7d90; letter-spacing: .04em; }
-
-#endCard { left: 26px; top: 186px; width: 354px; text-align: center; }
-#endCard h1 { margin: 0; font: 700 40px/1 var(--serif); letter-spacing: .03em; }
-#endCard .d { margin-top: 10px; font: 600 12px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-#sources { margin-top: 24px; font: 500 12px/1.6 var(--sans); color: var(--muted); }
-#sources b { display: block; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); margin-bottom: 8px; }
-#sources a { color: var(--muted); text-decoration: underline; text-decoration-color: rgba(152,166,184,.45); text-underline-offset: 2px; }
-#sources .n { margin-top: 10px; font-size: 11px; color: #6f7d90; }
-#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 540px; min-height: 52px; min-width: 44px; padding: 0 22px; border: 1.5px solid var(--road); border-radius: 999px;
-  background: transparent; color: var(--road); font: 600 15px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#kicker { left: 26px; top: 112px; width: 354px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: center; }
+#title { left: 26px; top: 128px; width: 354px; font: 700 32px/1 var(--serif); text-align: center; }
+svg text { font-family: var(--sans); }
+.num { font-family: var(--mono); font-weight: 600; }
+#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 540px; min-height: 52px; min-width: 44px; padding: 0 22px;
+  border: 1.5px solid var(--dem); border-radius: 999px; background: rgba(76,141,255,.12); color: var(--ink); font: 600 15px/1 var(--sans);
+  cursor: pointer; -webkit-tap-highlight-color: transparent; }
 #replay[hidden] { display: none; }
-#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--road); outline-offset: 2px; }
+#replay:focus-visible { outline: 2px solid var(--dem); outline-offset: 2px; }
 </style>
 </head>
 <body>
-<div id="wrap"><div id="stage"><div id="scene">
-  <svg id="svg" class="abs" width="432" height="768" viewBox="0 0 432 768" aria-hidden="true">
-    <defs>
-      <clipPath id="box"><rect x="26" y="108" width="354" height="492"/></clipPath>
-      <clipPath id="aboveR"><rect x="0" y="0" width="432" height="288"/></clipPath>
-      <linearGradient id="seaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#173a5a"/><stop offset="1" stop-color="#0b1a2a" stop-opacity="0"/></linearGradient>
-    </defs>
-
-    <!-- intro: the whole 19 km link -->
-    <g id="whole">
-      <rect x="26" y="306" width="354" height="60" fill="url(#seaG)" opacity=".6"/>
-      <path id="wholeLine" d="M44,300 L362,300" stroke="#c9d3df" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M187,300 Q203,282 219,300" stroke="#c9d3df" stroke-width="2.5" fill="none"/>
-      <g id="wholePiers" stroke="#7f8ea3" stroke-width="1.5"></g>
-      <circle cx="44" cy="300" r="5" fill="#c9d3df"/><circle cx="362" cy="300" r="5" fill="#c9d3df"/>
-      <text class="svgt" x="44" y="276" text-anchor="start" fill="#c9d3df" font-size="14" font-weight="600" data-key>Russia</text>
-      <text class="svgt" x="362" y="276" text-anchor="end" fill="#c9d3df" font-size="14" font-weight="600" data-key>Crimea</text>
-      <text class="svgt" x="203" y="342" text-anchor="middle" fill="#98a6b8" font-size="15" font-weight="600" data-key>19 km</text>
+<div id="wrap"><div id="stage">
+  <div id="kicker" class="abs">US Senate · 2026 midterms</div>
+  <div id="title" class="abs">Nine seats flip</div>
+  <svg id="svg" class="abs" style="left:0;top:0" width="432" height="768" viewBox="0 0 432 768" aria-label="Animation: the US Senate goes from 53-47 Republican to 56-44 Democratic as nine states flip; Alaska is the last, called Nov 17. Most Democratic midterm Senate pickups since 1958.">
+    <g id="seats"></g>
+    <text id="ctr" x="203" y="294" text-anchor="middle" class="num" font-size="40" fill="#4c8dff">+0</text>
+    <text id="nD" x="66" y="332" text-anchor="middle" class="num" font-size="26" fill="#4c8dff">47</text>
+    <text id="nR" x="340" y="332" text-anchor="middle" class="num" font-size="26" fill="#ef5350">53</text>
+    <text id="lD" x="66" y="347" text-anchor="middle" font-size="11" fill="#9aa0ad" font-weight="600" letter-spacing="1.2">DEM</text>
+    <text id="lR" x="340" y="347" text-anchor="middle" font-size="11" fill="#9aa0ad" font-weight="600" letter-spacing="1.2">GOP</text>
+    <g id="maj" opacity="0">
+      <rect x="118" y="316" width="170" height="26" rx="13" fill="rgba(76,141,255,.16)" stroke="#4c8dff" stroke-width="1.5"/>
+      <text x="203" y="334" text-anchor="middle" font-size="14" font-weight="700" fill="#f2efe8">Democratic majority</text>
     </g>
 
-    <!-- detail: two parallel bridges at the shipping-channel arches -->
-    <g id="detail" clip-path="url(#box)">
-      <g id="rowR">
-        <rect x="26" y="286" width="354" height="26" fill="url(#seaG)"/>
-        <g id="seaLinesR" stroke="#2a5578" stroke-width="1" opacity=".7"></g>
-        <g id="piersR" stroke="#5f6f85" stroke-width="3"></g>
-        <path id="deckRL" d="M26,236 L125,236" stroke="var(--road)" stroke-width="5"/>
-        <path id="deckRR" d="M281,236 L380,236" stroke="var(--road)" stroke-width="5"/>
-        <g id="carsR"></g>
-        <g clip-path="url(#aboveR)"><g id="spanR">
-          <path id="archR" d="M125,236 Q203,112 281,236" stroke="var(--road)" stroke-width="5" fill="none"/>
-          <g id="hangR" stroke="var(--road)" stroke-width="1.4" opacity=".75"></g>
-          <path d="M125,236 L281,236" stroke="var(--road)" stroke-width="5"/>
-        </g></g>
-        <g id="ripples" fill="none" stroke="#9cc6ea" stroke-width="1.6"></g>
-        <text id="lRoad" class="svgt" x="30" y="212" fill="var(--road)" font-size="15" font-weight="700" data-key>Road</text>
-        <g id="dim">
-          <path d="M125,256 L281,256 M125,250 L125,262 M281,250 L281,262" stroke="#98a6b8" stroke-width="1.2"/>
-          <rect x="178" y="258" width="50" height="18" fill="#0b1726"/>
-          <text class="svgt" x="203" y="272" text-anchor="middle" fill="#c9d3df" font-size="13" font-weight="600" data-key>227 m</text>
-        </g>
+    <g id="map"></g>
+    <g id="cal" opacity="0">
+      <rect x="66" y="365" width="50" height="46" rx="7" fill="#ecebe6"/>
+      <rect x="66" y="365" width="50" height="15" rx="7" fill="#ef5350"/><rect x="66" y="373" width="50" height="7" fill="#ef5350"/>
+      <text x="91" y="376.5" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" letter-spacing="1.5">NOV</text>
+      <g id="days"></g>
+    </g>
+    <g id="akcap" opacity="0">
+      <text x="126" y="384" font-size="14" font-weight="700" fill="#f2efe8">Last race called</text>
+      <text x="126" y="404" font-size="12" fill="#c9ccd4">First Alaska Native senator</text>
+    </g>
+
+    <g id="hist" opacity="0">
+      <text x="203" y="392" text-anchor="middle" font-size="22" font-weight="700" fill="#f2efe8" style="font-family:var(--serif)">Most since 1958</text>
+      <g id="h58"></g><g id="h26"></g><g id="ticks"></g>
+      <line x1="40" x2="366" y1="574" y2="574" stroke="#4a4f5c" stroke-width="1.5"/>
+      <text x="68" y="592" text-anchor="middle" font-size="12" class="num" fill="#c9ccd4">1958</text>
+      <text x="338" y="592" text-anchor="middle" font-size="12" class="num" fill="#c9ccd4">2026</text>
+      <text id="n58" x="84" y="410" text-anchor="start" font-size="14" class="num" fill="#4c8dff" opacity="0">13</text>
+      <text id="n26" x="338" y="442" text-anchor="middle"  font-size="14" class="num" fill="#4c8dff" opacity="0">9</text>
+      <g id="thr" opacity="0">
+        <line x1="92" x2="306" y1="458" y2="458" stroke="#7b8190" stroke-width="1.2" stroke-dasharray="4 4"/>
+        <text x="203" y="448" text-anchor="middle" font-size="12" fill="#9aa0ad">no midterm with 9+</text>
       </g>
-      <g id="rowL">
-        <rect x="26" y="422" width="354" height="26" fill="url(#seaG)"/>
-        <g id="seaLinesL" stroke="#2a5578" stroke-width="1" opacity=".7"></g>
-        <g id="piersL" stroke="#5f6f85" stroke-width="3"></g>
-        <path d="M26,372 L380,372" stroke="var(--rail)" stroke-width="5"/>
-        <path id="archL" d="M125,372 Q203,248 281,372" stroke="var(--rail)" stroke-width="5" fill="none"/>
-        <g id="hangL" stroke="var(--rail)" stroke-width="1.4" opacity=".75"></g>
-        <g id="train"></g>
-        <path id="crack" d="M224,322 l-6,7 l7,4 l-6,8 l5,4" stroke="var(--hit)" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
-        <text id="lRail" class="svgt" x="30" y="348" fill="var(--rail)" font-size="15" font-weight="700" data-key>Rail</text>
-        <text id="lDam" class="svgt" x="236" y="314" fill="var(--hit)" font-size="13" font-weight="700" data-key>Damaged</text>
-        <g id="ferry">
-          <path d="M-18,-4 L18,-4 L13,5 L-13,5 Z" fill="#c9d3df"/><rect x="-8" y="-10" width="14" height="6" rx="1" fill="#c9d3df"/>
-        </g>
-        <text id="lFerry" class="svgt" x="0" y="466" text-anchor="middle" fill="#c9d3df" font-size="13" font-weight="600" data-key>Ferries</text>
-      </g>
-      <g id="weapons"></g>
-      <g id="flashes"></g>
+    </g>
+
+    <g id="end" opacity="0">
+      <text x="203" y="428" text-anchor="middle" font-size="30" font-weight="700" fill="#f2efe8" style="font-family:var(--serif)">The Senate flips blue.</text>
+      <text x="203" y="482" text-anchor="middle" font-size="11" fill="#9aa0ad">Sources: AP (via Live 5 News), Alaska Public Media,</text>
+      <text x="203" y="498" text-anchor="middle" font-size="11" fill="#9aa0ad">CBS News, Yahoo News, Al Jazeera, California Today</text>
     </g>
   </svg>
-
-  <div id="kicker" class="abs c">Ukraine hits the Crimean Bridge</div>
-  <div id="title" class="abs c">The Gap</div>
-
-  <div id="cal" class="abs band">
-    <div class="tile"><div class="m">NOV</div><div class="d" id="d16">16</div><div class="d" id="d17">17</div></div>
-    <div id="how">
-      <svg id="hIcon" width="26" height="22" viewBox="-13 -11 26 22" aria-hidden="true"><path d="M-11,0 L9,-7 L5,0 L9,7 Z" fill="var(--hit)"/></svg>
-      <div class="w"><span id="w16">Drones</span><span id="w17">Missiles + drones</span></div>
-    </div>
-  </div>
-
-  <div id="traffic" class="abs band">
-    <div class="row"><div class="pill road" id="pR">Road <span class="k">&#10007;</span></div><div class="pill rail" id="pL">Rail <span class="k ok">&#10003;</span></div></div>
-    <div class="sub" id="tSub">Trains running again</div>
-  </div>
-
-  <div id="claims" class="abs band">
-    <div class="card" id="cUA"><div class="h">Ukraine</div><div class="b">Span collapsed</div></div>
-    <div class="card" id="cRU"><div class="h">Russia</div><div class="b">Damage, no collapse confirmed</div></div>
-  </div>
-
-  <div id="hist" class="abs band">
-    <div class="hd">Hit before. Reopened.</div>
-    <div class="row">
-      <div class="col" id="h1"><svg width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><rect x="1" y="6" width="17" height="11" rx="1.5" fill="#c9d3df"/><path d="M18,9 h6 l4,4 v4 h-10 Z" fill="#c9d3df"/><circle cx="7" cy="19" r="3" fill="#0b1726" stroke="#c9d3df" stroke-width="1.5"/><circle cx="23" cy="19" r="3" fill="#0b1726" stroke="#c9d3df" stroke-width="1.5"/></svg><div class="yr">2022</div><div class="mk ok">&#10003;</div></div>
-      <div class="col" id="h2"><svg width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M2,14 L26,14 L22,20 L5,20 Z" fill="#c9d3df"/><path d="M8,14 L12,9 L18,9 L20,14" fill="#c9d3df"/><path d="M1,22 q4,-2 8,0 t8,0 t8,0" stroke="#5f8fb8" stroke-width="1.5" fill="none"/></svg><div class="yr">2023</div><div class="mk ok">&#10003;</div></div>
-      <div class="col" id="h3"><svg width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M2,6 q4,-2 8,0 t8,0 t8,0" stroke="#5f8fb8" stroke-width="1.5" fill="none"/><rect x="12" y="8" width="5" height="16" fill="#5f6f85"/><circle cx="21" cy="17" r="4" fill="#c9d3df"/><path d="M21,13 v-3" stroke="#c9d3df" stroke-width="1.5"/></svg><div class="yr">2025</div><div class="mk ok">&#10003;</div></div>
-      <div class="col now" id="h4"><svg width="30" height="24" viewBox="0 0 30 24" aria-hidden="true"><path d="M3,12 L22,5 L18,12 L22,19 Z" fill="var(--hit)"/></svg><div class="yr">2026</div><div class="mk q" id="hq">?</div></div>
-    </div>
-  </div>
-
-  <div id="legendIll" class="abs">Illustration, not to scale</div>
-
-  <div id="endCard" class="abs">
-    <h1>The Gap</h1>
-    <div class="d">Crimean Bridge &middot; Kerch Strait &middot; Nov 17, 2026</div>
-    <div id="sources"><b>Sources</b>
-      Ukraine General Staff via <a href="https://www.ukrinform.net/rubric-ato/4185542-arch-and-road-span-collapse-general-staff-confirms-results-of-strike-on-crimean-bridge.html">Ukrinform</a><br>
-      Zelensky via <a href="https://www.euronews.com/2026/11/17/how-ukrainian-forces-struck-putins-prized-and-heavily-defended-crimean-bridge">Euronews</a> &amp; <a href="https://www.kyivpost.com/post/90332">Kyiv Post</a><br>
-      Nov 16 tilt: <a href="https://meduza.io/en/feature/2026/11/17/ukraine-strikes-crimea-bridge-for-second-time-in-two-days-sending-an-arch-crashing-into-the-water-and-halting-traffic">Meduza</a><br>
-      Russian Transport Ministry via <a href="https://kyivindependent.com/ukrainian-forces-reportedly-strike-crimean-bridge-after-russian-missiles-hit-kyiv-bridges/">Kyiv Independent</a><br>
-      Ferries: <a href="https://www.themoscowtimes.com/2026/11/17/russia-shuts-crimean-bridge-after-second-attack-in-two-days-a94281">The Moscow Times</a> &middot; Rail resumed: <a href="https://reform.news/en/russia-reports-resumption-of-rail-services-to-crimea/">Reform.news</a><br>
-      Past attacks: <a href="https://en.wikipedia.org/wiki/2022_Crimean_Bridge_explosion">2022</a>, <a href="https://en.wikipedia.org/wiki/2023_Crimean_Bridge_explosion">2023</a> (Wikipedia), <a href="https://twz.com/news-features/ukraine-strikes-at-the-heart-of-russias-highly-defended-kerch-bridge">2025 (TWZ)</a>
-      <div class="n">Illustration, not to scale. Collapse not independently verified.</div>
-    </div>
-  </div>
   <button id="replay" type="button" hidden>&#8635; Replay</button>
-</div></div></div>
-
+</div></div>
 <script>
 (() => {
+  const DUR = 19.6, NS = "http://www.w3.org/2000/svg";
   const $ = id => document.getElementById(id);
-  const NS = "http://www.w3.org/2000/svg";
-  const DUR = 19.6;
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const lerp = (a, b, p) => a + (b - a) * p;
   const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
-  const eio = p => p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-  const eout = p => 1 - Math.pow(1 - p, 3);
-  const ein = p => p * p * p;
+  const eio = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+  const eout = x => 1 - Math.pow(1 - x, 3);
   const fade = (t, a, b, c, d) => Math.min(seg(t, a, b), 1 - seg(t, c, d));
-  const op = (el, v) => { el.style.opacity = v.toFixed(3); el.style.visibility = v < .005 ? "hidden" : "visible"; };
-  const sop = (el, v) => { el.setAttribute("opacity", v.toFixed(3)); el.style.visibility = v < .005 ? "hidden" : "visible"; };
   const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+  const op = (el, v) => el.setAttribute("opacity", v.toFixed(3));
+  const DEM = [76, 141, 255], GOP = [239, 83, 80];
+  const mix = (a, b, k) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * k)).join(",")})`;
 
-  const YR = 236, YL = 372, A = 125, B = 281, CX = 203, H = 124; // arch: quadratic, apex 62px above deck
-  const archY = (x, y0) => { const u = (x - A) / (B - A); return y0 - 2 * u * (1 - u) * H; };
+  // Senate hemicycle: 5 rows, 100 seats, sorted left to right.
+  const CX = 203, CY = 300, rows = [[62, 13], [78, 17], [94, 20], [110, 23], [126, 27]];
+  const seatsData = [];
+  rows.forEach(([r, n], ri) => { for (let j = 0; j < n; j++) { const a = Math.PI * (1 - j / (n - 1)); seatsData.push({ a, r, ri, x: CX + r * Math.cos(a), y: CY - r * Math.sin(a) }); } });
+  seatsData.sort((p, q) => q.a - p.a || p.r - q.r);
+  const gSeats = $("seats");
+  const seatEls = seatsData.map(s => mk("circle", { cx: s.x.toFixed(1), cy: s.y.toFixed(1), r: 5 }, gSeats));
+  // flip seats: indices 47..55, in order of the calls
+  const ORDER = ["TX", "SC", "KS", "OH", "NC", "IA", "ME", "MS", "AK"];
+  const FT = [3.2, 3.65, 4.1, 4.55, 5.0, 5.45, 5.9, 7.5, 9.0]; // flip start times
+  const FD = 0.4;
 
-  // intro piers on the whole link
-  for (let x = 54; x <= 352; x += 14) if (Math.abs(x - 203) > 18) mk("line", { x1: x, y1: 300, x2: x, y2: 312 }, $("wholePiers"));
-  // detail piers, hangers, sea lines
-  [["piersR", YR, 286], ["piersL", YL, 422]].forEach(([id, y0, y1]) => {
-    for (let x = 47; x <= 380; x += 39) if (x < A - 4 || x > B + 4) mk("line", { x1: x, y1: y0 + 2, x2: x, y2: y1 }, $(id));
-    [A, B].forEach(x => mk("line", { x1: x, y1: y0 + 2, x2: x, y2: y1, "stroke-width": 6 }, $(id)));
+  // Tile-grid US map (col,row)
+  const GRID = { AK:[0,0], ME:[11,0], VT:[10,1], NH:[11,1], WA:[1,2], ID:[2,2], MT:[3,2], ND:[4,2], MN:[5,2], IL:[6,2], WI:[7,2], MI:[8,2], NY:[9,2], RI:[10,2], MA:[11,2],
+    OR:[1,3], NV:[2,3], WY:[3,3], SD:[4,3], IA:[5,3], IN:[6,3], OH:[7,3], PA:[8,3], NJ:[9,3], CT:[10,3],
+    CA:[1,4], UT:[2,4], CO:[3,4], NE:[4,4], MO:[5,4], KY:[6,4], WV:[7,4], VA:[8,4], MD:[9,4], DE:[10,4],
+    AZ:[2,5], NM:[3,5], KS:[4,5], AR:[5,5], TN:[6,5], NC:[7,5], SC:[8,5], OK:[4,6], LA:[5,6], MS:[6,6], AL:[7,6], GA:[8,6], HI:[0,7], TX:[4,7], FL:[9,7] };
+  const P = 29, T = 26, MX = 29, MY = 362;
+  const gMap = $("map"), tiles = {};
+  Object.entries(GRID).forEach(([st, [c, r]]) => {
+    const x = MX + c * P, y = MY + r * P, g = mk("g", { transform: `translate(${x + T / 2},${y + T / 2})` }, gMap);
+    const inner = mk("g", {}, g);
+    const rect = mk("rect", { x: -T / 2, y: -T / 2, width: T, height: T, rx: 4, fill: "#2b313d" }, inner);
+    let label = null;
+    if (ORDER.includes(st)) { label = mk("text", { x: 0, y: 4, "text-anchor": "middle", "font-size": 11, "font-weight": 700, fill: "#ef5350" }, inner); label.textContent = st; }
+    tiles[st] = { g, inner, rect, label, x, y };
   });
-  for (let x = A + 13; x < B; x += 13) {
-    mk("line", { x1: x, y1: archY(x, YR), x2: x, y2: YR }, $("hangR"));
-    mk("line", { x1: x, y1: archY(x, YL), x2: x, y2: YL }, $("hangL"));
-  }
-  [["seaLinesR", 292], ["seaLinesL", 428]].forEach(([id, y]) => { for (let i = 0; i < 3; i++) mk("path", { d: `M26,${y + i * 6} L380,${y + i * 6}`, "stroke-dasharray": `${10 + i * 4} ${14 + i * 3}` }, $(id)); });
+  const gDays = $("days"), dayEls = ["3", "11", "17"].map(d => { const e = mk("text", { x: 91, y: 404, "text-anchor": "middle", "font-size": 20, "font-weight": 700, fill: "#14161c", class: "num" }, gDays); e.textContent = d; return e; });
 
-  // cars on the road deck (two lanes, opposite directions)
-  const cars = [];
-  for (let i = 0; i < 12; i++) {
-    const dir = i % 2 ? -1 : 1;
-    const el = mk("rect", { width: 9, height: 4, rx: 1.2, fill: dir > 0 ? "#ffe2ad" : "#ffd08a", y: YR - 7 - (dir > 0 ? 0 : 0) }, $("carsR"));
-    cars.push({ el, dir, base: (i * 61) % 354 });
-  }
-  // train on the rail deck
-  const train = [];
-  for (let i = 0; i < 6; i++) train.push(mk("rect", { width: 20, height: 6, rx: 1.5, y: YL - 9, fill: "#cfe0ff" }, $("train")));
+  // History columns
+  const h58 = [], h26 = [], ticks = [];
+  for (let i = 0; i < 13; i++) h58.push(mk("circle", { cx: 68, cy: 562 - i * 13, r: 5.5, fill: "#4c8dff" }, $("h58")));
+  for (let i = 0; i < 9; i++) h26.push(mk("circle", { cx: 338, cy: 562 - i * 13, r: 5.5, fill: "#4c8dff" }, $("h26")));
+  for (let i = 0; i < 16; i++) ticks.push(mk("circle", { cx: (98 + i * 14.7).toFixed(1), cy: 574, r: 2.6, fill: "#7b8190" }, $("ticks")));
 
-  // weapons: Nov 16 drones, Nov 17 missiles
-  const drones = [0, 1, 2].map(i => mk("path", { d: "M-7,0 L6,-4 L3,0 L6,4 Z", fill: "var(--hit)" }, $("weapons")));
-  const dPath = [[-10, 150, 165, 196], [-10, 190, 200, 182], [-10, 120, 232, 200]];
-  const missiles = [0, 1, 2, 3].map(i => {
-    const g = mk("g", {}, $("weapons"));
-    mk("line", { x1: -26, y1: 0, x2: 0, y2: 0, stroke: "#ffd6cf", "stroke-width": 1.4, opacity: .6 }, g);
-    mk("path", { d: "M-8,-2 L4,0 L-8,2 Z", fill: "#fff" }, g);
-    return g;
-  });
-  const mPath = [[20, 120, 168, 200], [20, 150, 236, 205], [20, 130, 200, 176], [20, 270, 222, 330]];
-  const mT = [6.95, 7.1, 7.22, 7.4];
-  const flashes = [...dPath.map(p => [p[2], p[3]]), ...mPath.map(p => [p[2], p[3]])].map(() => mk("circle", { r: 4, fill: "#ffcf9e" }, $("flashes")));
-  const ripples = [0, 1, 2].map(() => mk("ellipse", { cx: 203, cy: 288, rx: 10, ry: 3 }, $("ripples")));
-
-  const E = {}; ["whole","detail","rowR","rowL","spanR","dim","lRoad","lRail","lDam","crack","ferry","lFerry","kicker","title","cal","d16","d17","w16","w17","hIcon",
-    "traffic","pR","pL","tSub","claims","cUA","cRU","hist","h1","h2","h3","h4","hq","legendIll","endCard"].forEach(k => E[k] = $(k));
+  const E = { ctr: $("ctr"), nD: $("nD"), nR: $("nR"), maj: $("maj"), cal: $("cal"), akcap: $("akcap"), hist: $("hist"), end: $("end"),
+    map: gMap, thr: $("thr"), n58: $("n58"), n26: $("n26"), lD: $("lD"), lR: $("lR"), kicker: $("kicker"), title: $("title") };
 
   function render(t) {
-    const endDim = seg(t, 17.5, 17.9);
     // header
-    op(E.kicker, seg(t, 0.15, 0.5) * (1 - endDim));
-    op(E.title, seg(t, 0.35, 0.8) * (1 - endDim));
-    E.title.style.transform = `translateY(${(8 * (1 - eout(seg(t, 0.35, 0.8)))).toFixed(1)}px)`;
-
-    // intro: the whole link draws, then zooms into the channel arches
-    const zw = eio(seg(t, 2.3, 3.1));
-    const draw = eout(seg(t, 0.5, 1.6));
-    $("wholeLine").setAttribute("d", `M44,300 L${(44 + 318 * draw).toFixed(1)},300`);
-    sop(E.whole, Math.min(seg(t, 0.4, 0.7), 1 - zw));
-    E.whole.setAttribute("transform", `translate(203 300) scale(${lerp(1, 2.6, zw).toFixed(3)}) translate(-203 -300)`);
-    [...E.whole.querySelectorAll("text")].forEach((el, i) => sop(el, Math.min(seg(t, 1.0 + i * 0.15, 1.3 + i * 0.15), 1 - seg(t, 2.1, 2.35))));
-    const zd = eout(seg(t, 2.5, 3.3));
-    sop(E.detail, zd * (1 - endDim));
-    E.detail.setAttribute("transform", `translate(203 304) scale(${lerp(0.4, 1, zd).toFixed(3)}) translate(-203 -304)`);
-    sop(E.lRoad, seg(t, 3.0, 3.3)); sop(E.lRail, seg(t, 3.15, 3.45));
-    sop(E.dim, fade(t, 3.3, 3.6, 5.0, 5.3));
-
-    // cars: flow, then stop either side of the arch after the Nov 16 hit; those near the arch clear out
-    const te = t < 4.9 ? t : 4.9 + 0.45 * eout(seg(t, 4.9, 5.8));
-    cars.forEach(c => {
-      let x = 26 + ((c.base + c.dir * 38 * te) % 354 + 354) % 354;
-      c.el.setAttribute("x", (x - 4.5).toFixed(1));
-      c.el.setAttribute("y", c.dir > 0 ? YR - 7 : YR - 7);
-      const nearArch = x > A - 10 && x < B + 10;
-      const edge = Math.min(seg(x, 26, 40), 1 - seg(x, 366, 380));
-      const clear = nearArch ? 1 - seg(t, 5.2, 5.8) : 1;
-      sop(c.el, edge * seg(t, 3.2, 3.6) * clear * (1 - 0.55 * seg(t, 9.8, 10.4)));
-      c.el.setAttribute("fill", t > 5.6 ? "#7d8796" : (c.dir > 0 ? "#ffe2ad" : "#ffd08a"));
+    E.kicker.style.opacity = seg(t, 0.1, 0.5); E.title.style.opacity = seg(t, 0.3, 0.8);
+    E.title.style.transform = `translateY(${(8 * (1 - eout(seg(t, 0.3, 0.8)))).toFixed(1)}px)`;
+    // seats appear left to right
+    let flipped = 0;
+    const fk = FT.map(s => eio(seg(t, s + FD * 0.5, s + FD)));
+    FT.forEach((s, i) => { if (t >= s + FD * 0.5) flipped++; });
+    seatEls.forEach((el, i) => {
+      const appear = eout(seg(t, 0.4 + i * 0.014, 0.75 + i * 0.014));
+      let col = i < 47 ? DEM : GOP, k = 0, pulse = 0;
+      if (i >= 47 && i < 56) { const j = i - 47; k = fk[j]; pulse = Math.sin(Math.PI * seg(t, FT[j] + FD * 0.3, FT[j] + FD + 0.25)); }
+      el.setAttribute("fill", i >= 47 && i < 56 ? mix(GOP, DEM, k) : mix(col, col, 0));
+      el.setAttribute("r", (5 * appear * (1 + 0.6 * pulse)).toFixed(2));
     });
-    // train rolls in on the rail deck and stops short of the arch
-    const d = 7.9 - t, g = d > 0.6 ? d - 0.3 : d > 0 ? d * d / 1.2 : 0;
-    const r = t - 10.5, go = r <= 0 ? 0 : r < 0.8 ? r * r / 1.6 : r - 0.4;
-    const head = 108 - 46 * g + 46 * go;
-    train.forEach((el, i) => { const x = head - 20 - i * 23; el.setAttribute("x", x.toFixed(1)); sop(el, Math.min(seg(x, 20, 34), 1)); });
+    E.ctr.textContent = "+" + flipped; op(E.ctr, seg(t, 2.8, 3.2));
+    E.nD.textContent = String(47 + flipped); E.nR.textContent = String(53 - flipped);
+    const numOp = seg(t, 1.6, 2.2); op(E.nD, numOp); op(E.nR, numOp); op(E.lD, numOp); op(E.lR, numOp);
+    op(E.maj, seg(t, 10.2, 10.6));
 
-    // Nov 16: drones hit the road arch; it tilts
-    drones.forEach((el, i) => {
-      const [x0, y0, x1, y1] = dPath[i], s = 4.5 + i * 0.12, p = seg(t, s, s + 0.55);
-      el.setAttribute("transform", `translate(${lerp(x0, x1, p).toFixed(1)} ${lerp(y0, y1, p).toFixed(1)})`);
-      sop(el, p > 0 && p < 1 ? 1 : 0);
-      const f = flashes[i], q = seg(t, s + 0.55, s + 0.9);
-      f.setAttribute("cx", x1); f.setAttribute("cy", y1); f.setAttribute("r", (3 + 14 * q).toFixed(1)); sop(f, q > 0 && q < 1 ? 0.9 * (1 - q) : 0);
+    // map
+    const mapOp = fade(t, 2.2, 2.8, 10.6, 11.0);
+    op(E.map, mapOp);
+    ORDER.forEach((st, j) => {
+      const tl = tiles[st], p = seg(t, FT[j], FT[j] + FD), sx = Math.abs(Math.cos(Math.PI * p));
+      const after = p >= 0.5;
+      const big = st === "AK" ? 1 + 0.18 * Math.sin(Math.PI * seg(t, FT[j], FT[j] + 1.2)) : 1;
+      tl.inner.setAttribute("transform", `scale(${(sx * big).toFixed(3)},${big.toFixed(3)})`);
+      tl.rect.setAttribute("fill", after ? "#4c8dff" : "#4a2328");
+      tl.rect.setAttribute("stroke", after ? "none" : "#ef5350"); tl.rect.setAttribute("stroke-width", 1.2);
+      tl.label.setAttribute("fill", after ? "#ffffff" : "#ef5350");
     });
-    const tilt = 4 * eout(seg(t, 5.2, 5.9));
-    // Nov 17: missiles; the arch and span drop into the strait
-    missiles.forEach((el, i) => {
-      const [x0, y0, x1, y1] = mPath[i], s = mT[i], p = ein(seg(t, s - 0.35, s));
-      const ang = Math.atan2(y1 - y0, x1 - x0) * 180 / Math.PI;
-      el.setAttribute("transform", `translate(${lerp(x0, x1, p).toFixed(1)} ${lerp(y0, y1, p).toFixed(1)}) rotate(${ang.toFixed(1)})`);
-      sop(el, p > 0 && p < 1 ? 1 : 0);
-      const f = flashes[3 + i], q = seg(t, s, s + 0.4);
-      f.setAttribute("cx", x1); f.setAttribute("cy", y1); f.setAttribute("r", (3 + 18 * q).toFixed(1)); sop(f, q > 0 && q < 1 ? 0.9 * (1 - q) : 0);
-    });
-    const fall = ein(seg(t, 7.55, 8.25));
-    const rot = tilt + 9 * fall, dy = 80 * fall;
-    E.spanR.setAttribute("transform", `translate(0 ${dy.toFixed(1)}) rotate(${(-rot).toFixed(2)} ${B} ${YR})`);
-    ripples.forEach((r, i) => { const q = seg(t, 8.15 + i * 0.22, 9.4 + i * 0.22);
-      r.setAttribute("rx", (20 + 110 * eout(q)).toFixed(1)); r.setAttribute("ry", (2 + 7 * eout(q)).toFixed(1)); sop(r, q > 0 && q < 1 ? 0.8 * (1 - q) : 0); });
-    // rail: still standing, arch damaged
-    const cr = seg(t, 7.5, 7.8);
-    $("crack").setAttribute("stroke-dasharray", "60"); $("crack").setAttribute("stroke-dashoffset", (60 * (1 - cr)).toFixed(1));
-    sop(E.crack, cr > 0 ? 1 : 0);
-    sop(E.lDam, fade(t, 8.6, 8.9, 17.3, 17.5));
+    // calendar
+    op(E.cal, fade(t, 2.6, 3.0, 10.4, 10.8));
+    const d1 = eio(seg(t, 7.0, 7.3)), d2 = eio(seg(t, 8.5, 8.8));
+    op(dayEls[0], 1 - d1); op(dayEls[1], Math.min(d1, 1 - d2)); op(dayEls[2], d2);
+    dayEls[1].setAttribute("transform", `translate(0,${(8 * (1 - d1)).toFixed(1)})`);
+    dayEls[2].setAttribute("transform", `translate(0,${(8 * (1 - d2)).toFixed(1)})`);
+    op(E.akcap, fade(t, 9.3, 9.7, 10.4, 10.8));
 
-    // ferries take the traffic
-    const fp = seg(t, 10.0, 17.4), fx = lerp(56, 150, fp);
-    E.ferry.setAttribute("transform", `translate(${fx.toFixed(1)} 428)`); sop(E.ferry, fade(t, 10.0, 10.4, 17.2, 17.5));
-    E.lFerry.setAttribute("x", fx.toFixed(1)); sop(E.lFerry, fade(t, 10.3, 10.6, 17.2, 17.5));
+    // history
+    op(E.hist, fade(t, 11.0, 11.4, 15.5, 15.9));
+    h58.forEach((c, i) => c.setAttribute("r", (5.5 * eout(seg(t, 11.5 + i * 0.08, 11.75 + i * 0.08))).toFixed(2)));
+    op(E.n58, seg(t, 12.6, 12.9));
+    ticks.forEach((c, i) => op(c, seg(t, 12.9 + i * 0.04, 13.1 + i * 0.04)));
+    h26.forEach((c, i) => c.setAttribute("r", (5.5 * eout(seg(t, 13.6 + i * 0.08, 13.85 + i * 0.08))).toFixed(2)));
+    op(E.n26, seg(t, 14.4, 14.7));
+    op(E.thr, seg(t, 14.6, 15.0));
 
-    // lower band
-    op(E.cal, fade(t, 4.3, 4.6, 9.6, 9.9));
-    const flip = eio(seg(t, 6.6, 6.95));
-    E.d16.style.transform = `translateY(${(-50 * flip).toFixed(1)}px)`; op(E.d16, 1 - flip);
-    E.d17.style.transform = `translateY(${(50 * (1 - flip)).toFixed(1)}px)`; op(E.d17, flip);
-    op(E.w16, 1 - seg(t, 6.6, 6.8)); op(E.w17, seg(t, 6.8, 7.0));
-    op(E.traffic, fade(t, 9.9, 10.2, 12.0, 12.3));
-    op(E.pR, seg(t, 10.0, 10.25)); op(E.pL, seg(t, 10.2, 10.45)); op(E.tSub, seg(t, 10.5, 10.8));
-    op(E.claims, fade(t, 12.3, 12.6, 14.6, 14.9));
-    op(E.cUA, seg(t, 12.3, 12.6)); op(E.cRU, seg(t, 12.8, 13.1));
-    op(E.hist, fade(t, 14.9, 15.2, 17.2, 17.5));
-    [E.h1, E.h2, E.h3, E.h4].forEach((el, i) => { const s = 15.1 + i * 0.3; op(el, seg(t, s, s + 0.25)); el.style.transform = `translateY(${(6 * (1 - eout(seg(t, s, s + 0.25)))).toFixed(1)}px)`; });
-    const qp = seg(t, 16.3, 16.8); E.hq.style.transform = `scale(${(1 + 0.35 * Math.sin(Math.PI * qp)).toFixed(3)})`;
-    op(E.legendIll, Math.min(seg(t, 2.8, 3.2), 1 - endDim));
-
-    op(E.endCard, seg(t, 17.7, 18.1));
+    // end card
+    op(E.end, seg(t, 16.0, 16.5));
   }
 
   const replay = $("replay");
