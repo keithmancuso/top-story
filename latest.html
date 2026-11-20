@@ -2,252 +2,210 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Four Points</title>
+<title>Against the Tide</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=block">
 <style>
-/* Four Points. Xi Jinping, Donald Trump and Vladimir Putin met in Shenzhen on Thu Nov 19, 2026 (APEC sidelines),
-   their first three-way summit, and agreed a four-point "Declaration toward Peace".
+/* Against the Tide. Anthropic (Nasdaq: ANT) priced its IPO at $83 on Nov 19, 2026, sold 980M shares ($81.3B),
+   opened at $111.50 (+34%) and closed at $97.17 (+17%) while the Dow fell ~1,100 pts (-2.2%), S&P 500 -2%, Nasdaq -2.3%.
    Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
 :root {
-  --ink: #f1eee7; --muted: #9fa9b8; --bg: #0b1020; --us: #5d9bff; --ru: #ff5d5d; --cn: #ffc93c;
-  --paper: #ece6d6; --pink: #1d2230; --pmuted: #6a6f7c; --no: #ff7a6e;
+  --ink: #eef1ec; --muted: #94a0a8; --bg: #0a1114; --up: #3fe0a0; --down: #ff6b5e; --gold: #ffcf5c; --grid: rgba(238,241,236,.12);
   --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f1eee7; } }
-:root[data-theme="dark"] { --ink: #f1eee7; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #eef1ec; } }
+:root[data-theme="dark"] { --ink: #eef1ec; }
 html, body { height: 100%; margin: 0; }
-body { background: #05070d; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
-#wrap { position: fixed; inset: 0; overflow: hidden; background: #05070d; }
+body { background: #04080a; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #04080a; }
 #stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
-  background: radial-gradient(120% 70% at 50% 50%, #141c34 0%, #0b1020 55%, #070a14 100%); }
+  background: radial-gradient(120% 70% at 50% 45%, #13232a 0%, #0a1114 58%, #060b0d 100%); }
 .abs { position: absolute; }
+svg text { font-family: var(--sans); }
 
-#kicker { left: 26px; top: 114px; width: 354px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-#title { left: 26px; top: 134px; width: 354px; font: 700 44px/1 var(--serif); letter-spacing: .02em; }
+#kicker { left: 26px; top: 116px; width: 354px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#title { left: 26px; top: 136px; width: 354px; font: 700 42px/1 var(--serif); }
+#tick { left: 26px; top: 300px; width: 354px; text-align: center; }
+#tick .t { display: inline-block; padding: 10px 22px; border: 2px solid var(--up); border-radius: 10px; font: 600 54px/1 var(--mono); color: var(--up); letter-spacing: .06em; }
+#tick .s { margin-top: 14px; font: 600 13px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 
-#table { left: 0; top: 0; width: 432px; height: 768px; }
-.who { font: 600 13px/1 var(--sans); letter-spacing: .04em; text-align: center; width: 80px; }
-#wUS { left: 34px; top: 456px; color: var(--us); }
-#wCN { left: 163px; top: 222px; color: var(--cn); }
-#wRU { left: 292px; top: 456px; color: var(--ru); }
-#mins { left: 133px; top: 352px; width: 140px; text-align: center; }
-#mins .v { font: 700 38px/1 var(--serif); font-variant-numeric: tabular-nums; }
-#mins .u { margin-top: 4px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-#first { left: 26px; top: 540px; width: 354px; text-align: center; font: 700 13px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--cn); }
+/* Beat 1: price tag x shares */
+#tag { left: 126px; top: 206px; width: 180px; height: 92px; }
+#tagT { left: 126px; top: 206px; width: 180px; text-align: center; }
+#tagT .k { margin-top: 18px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #3a2c08; }
+#tagT .v { margin-top: 6px; font: 700 40px/1 var(--serif); color: #1c1606; }
+#grid { left: 61px; top: 330px; width: 284px; height: 142px; }
+#gridL { left: 26px; top: 486px; width: 354px; text-align: center; font: 600 15px/1 var(--sans); color: var(--muted); }
+#raised { left: 26px; top: 520px; width: 354px; text-align: center; }
+#raised .v { font: 700 46px/1 var(--serif); color: var(--gold); font-variant-numeric: tabular-nums; }
+#raised .u { margin-top: 6px; font: 600 12px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 
-#paper { left: 56px; top: 214px; width: 294px; height: 378px; border-radius: 8px; background: var(--paper); color: var(--pink);
-  box-shadow: 0 10px 30px rgba(0,0,0,.45); transform-origin: 50% 0; overflow: hidden; }
-#paper .hd { position: absolute; left: 0; right: 0; top: 16px; text-align: center; font: 700 19px/1 var(--serif); }
-#paper .rule { position: absolute; left: 28px; right: 28px; top: 46px; height: 2px; background: #cfc7b3; }
-.cell { position: absolute; width: 124px; height: 112px; border-radius: 8px; text-align: center; }
-.cell .num { position: absolute; left: 8px; top: 6px; font: 600 12px/1 var(--mono); color: var(--pmuted); }
-.cell svg { display: block; margin: 12px auto 0; }
-.cell .lb { margin-top: 8px; font: 600 13px/1.2 var(--sans); }
-#c1 { left: 17px; top: 60px; } #c2 { left: 153px; top: 60px; }
-#c3 { left: 17px; top: 180px; } #c4 { left: 153px; top: 180px; }
-#c4 { background: rgba(226,72,61,0); }
-#quote { position: absolute; left: 12px; right: 12px; top: 304px; text-align: center; font: 700 19px/1.25 var(--serif); color: #b8352b; }
+/* Beat 2: chart */
+#chart { left: 0; top: 0; width: 432px; height: 768px; }
+.lab { font: 600 13px/1 var(--sans); }
+.big { font: 700 26px/1 var(--serif); font-variant-numeric: tabular-nums; }
 
-#missing { left: 26px; top: 418px; width: 354px; text-align: center; display: flex; flex-direction: column-reverse; }
-#missing .hd { margin-top: 16px; font: 700 13px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-#missing .row { margin-top: 0; display: flex; justify-content: center; gap: 10px; }
-.chip { position: relative; padding: 0 14px; height: 40px; display: flex; align-items: center; border: 1.5px dashed rgba(241,238,231,.5);
-  border-radius: 8px; font: 600 16px/1 var(--sans); }
-.chip .x { position: absolute; left: 8px; right: 8px; top: 50%; height: 2px; background: var(--no); transform-origin: 0 50%; }
+/* Beat 3: bars */
+#bars { left: 0; top: 0; width: 432px; height: 768px; }
+#why { left: 26px; top: 560px; width: 354px; text-align: center; font: 600 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 
-#next { left: 26px; top: 0; width: 354px; height: 768px; }
-#nextT { left: 26px; top: 520px; width: 354px; text-align: center; }
-#nextT .k { font: 600 12px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-#nextT .v { margin-top: 8px; font: 700 26px/1 var(--serif); }
+#endCard { left: 26px; top: 236px; width: 354px; text-align: center; }
+#endCard h1 { margin: 0; font: 700 40px/1 var(--serif); }
+#endCard .row { margin-top: 26px; display: flex; justify-content: center; gap: 14px; }
+#endCard .pill { padding: 12px 16px; border-radius: 10px; font: 700 22px/1 var(--mono); }
+#endCard .pill small { display: block; margin-bottom: 6px; font: 600 11px/1 var(--sans); letter-spacing: .14em; color: var(--muted); }
+#endCard .p1 { border: 2px solid var(--up); color: var(--up); }
+#endCard .p2 { border: 2px solid var(--down); color: var(--down); }
+#endCard .src { margin-top: 40px; font: 500 11.5px/1.5 var(--sans); color: var(--muted); }
+#endCard .by { margin-top: 10px; font: 500 11px/1.4 var(--sans); color: #6f7b82; }
 
-#endCard { left: 26px; top: 250px; width: 354px; text-align: center; }
-#endCard h1 { margin: 0; font: 700 40px/1 var(--serif); letter-spacing: .03em; }
-#endCard .d { margin-top: 10px; font: 600 12px/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-#sources { margin-top: 26px; font: 500 12px/1.6 var(--sans); color: var(--muted); }
-#sources b { display: block; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); margin-bottom: 8px; }
-#sources a { color: var(--muted); text-decoration: underline; text-decoration-color: rgba(159,169,184,.4); text-underline-offset: 2px; }
-#replay { position: absolute; left: 50%; transform: translateX(-50%); top: 530px; min-height: 52px; min-width: 44px; padding: 0 22px; border: 1.5px solid var(--cn); border-radius: 999px;
-  background: rgba(11,16,32,.9); color: var(--ink); font: 600 15px/1 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay { position: absolute; left: 50%; top: 560px; transform: translateX(-50%); padding: 10px 20px; border-radius: 999px;
+  border: 1.5px solid rgba(238,241,236,.4); background: rgba(10,17,20,.7); color: var(--ink); font: 600 13px/1 var(--sans);
+  letter-spacing: .08em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 #replay[hidden] { display: none; }
-#replay:focus-visible, #sources a:focus-visible { outline: 2px solid var(--cn); outline-offset: 2px; }
 </style>
 </head>
 <body>
-<div id="wrap"><div id="stage" role="img" aria-label="Animated explainer: Trump, Xi and Putin's first three-way summit in Shenzhen produced a four-point declaration on UN reform, refined fuel supply, limits on the International Criminal Court, and a pledge that a nuclear war cannot be won and must never be fought. Ukraine, Iran and Taiwan are not in it.">
+<div id="wrap"><div id="stage">
+  <div id="kicker" class="abs">Nasdaq debut &middot; Nov 19</div>
+  <div id="title" class="abs">Against the Tide</div>
 
-  <div id="kicker" class="abs">Shenzhen &middot; Nov 19</div>
-  <div id="title" class="abs">Four Points</div>
+  <div id="tick" class="abs"><div class="t">ANT</div><div class="s">Anthropic</div></div>
 
-  <!-- Beat 1: the table and the clock -->
-  <svg id="table" class="abs" viewBox="0 0 432 768" aria-hidden="true">
-    <circle cx="203" cy="380" r="124" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="6"/>
-    <circle id="lap1" cx="203" cy="380" r="124" fill="none" stroke="#e9e4d6" stroke-width="6" stroke-linecap="round"
-      transform="rotate(-90 203 380)" stroke-dasharray="0 1000"/>
-    <circle id="lap2" cx="203" cy="380" r="132" fill="none" stroke="#e9e4d6" stroke-width="4" stroke-linecap="round" opacity=".55"
-      transform="rotate(-90 203 380)" stroke-dasharray="0 1000"/>
-    <circle cx="203" cy="380" r="66" fill="#1b2442" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
-    <circle id="sCN" cx="203" cy="290" r="17" fill="none" stroke="#ffc93c" stroke-width="2.5"/>
-    <circle id="sUS" cx="125" cy="425" r="17" fill="none" stroke="#5d9bff" stroke-width="2.5"/>
-    <circle id="sRU" cx="281" cy="425" r="17" fill="none" stroke="#ff5d5d" stroke-width="2.5"/>
-  </svg>
-  <div id="wCN" class="abs who">Xi</div>
-  <div id="wUS" class="abs who">Trump</div>
-  <div id="wRU" class="abs who">Putin</div>
-  <div id="mins" class="abs"><div class="v" id="minV">0</div><div class="u">min</div></div>
-  <div id="first" class="abs">First three-way summit</div>
+  <svg id="tag" class="abs" viewBox="0 0 180 92"><path d="M18 0 H180 V92 H18 L0 46 Z" fill="#ffcf5c"/><circle cx="20" cy="46" r="5" fill="#0a1114"/></svg>
+  <div id="tagT" class="abs"><div class="k">IPO price</div><div class="v">$83</div></div>
+  <svg id="grid" class="abs" viewBox="0 0 284 142"></svg>
+  <div id="gridL" class="abs">980M shares</div>
+  <div id="raised" class="abs"><div class="v" id="raisedV">$0B</div><div class="u">raised</div></div>
 
-  <!-- Beat 2: the declaration -->
-  <div id="paper" class="abs">
-    <div class="hd">Declaration toward Peace</div>
-    <div class="rule"></div>
-    <div id="c1" class="cell"><span class="num">1</span>
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#1d2230" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="24" cy="24" r="12"/><ellipse cx="24" cy="24" rx="5" ry="12"/><path d="M12 24h24"/>
-        <path d="M40 16a18 18 0 0 0-30-5"/><path d="M10 6v5h5"/><path d="M8 32a18 18 0 0 0 30 5"/><path d="M38 42v-5h-5"/>
-      </svg><div class="lb">UN reform</div></div>
-    <div id="c2" class="cell"><span class="num">2</span>
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#1d2230" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 8c6 9 10 15 10 21a10 10 0 0 1-20 0c0-6 4-12 10-21z" fill="#1d2230"/>
-        <path d="M39 30V10"/><path d="M33 16l6-6 6 6"/>
-      </svg><div class="lb">More refined fuel</div></div>
-    <div id="c3" class="cell"><span class="num">3</span>
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#1d2230" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="9" y="12" width="20" height="9" rx="2" transform="rotate(-35 19 16.5)"/>
-        <path d="M22 22l13 13"/><path d="M8 40h20"/>
-        <circle cx="37" cy="12" r="7" stroke="#b8352b"/><path d="M32 17l10-10" stroke="#b8352b"/>
-      </svg><div class="lb">Curb ICC reach</div></div>
-    <div id="c4" class="cell"><span class="num">4</span>
-      <svg width="48" height="48" viewBox="0 0 48 48">
-        <circle cx="24" cy="24" r="21" fill="none" stroke="#1d2230" stroke-width="2.4"/>
-        <circle cx="24" cy="24" r="4" fill="#1d2230"/>
-        <path d="M24 24 L17 11.9 A14 14 0 0 1 31 11.9 Z" fill="#1d2230"/>
-        <path d="M24 24 L38 24 A14 14 0 0 1 31 36.1 Z" fill="#1d2230"/>
-        <path d="M24 24 L17 36.1 A14 14 0 0 1 10 24 Z" fill="#1d2230"/>
-      </svg><div class="lb">Nuclear war</div></div>
-    <div id="quote">Cannot be won.<br>Must never be fought.</div>
-  </div>
-
-  <!-- Beat 3: what isn't in it -->
-  <svg id="mini" class="abs" style="left:150px;top:228px" width="106" height="150" viewBox="0 0 106 150" aria-hidden="true">
-    <rect x="3" y="3" width="100" height="144" rx="6" fill="#ece6d6"/>
-    <rect x="18" y="16" width="70" height="5" rx="2.5" fill="#8a8471"/>
-    <g fill="#1d2230"><circle cx="20" cy="42" r="5"/><circle cx="20" cy="68" r="5"/><circle cx="20" cy="94" r="5"/><circle cx="20" cy="120" r="5" fill="#b8352b"/></g>
-    <g fill="#c9c2b0"><rect x="32" y="39" width="54" height="6" rx="3"/><rect x="32" y="65" width="48" height="6" rx="3"/><rect x="32" y="91" width="56" height="6" rx="3"/><rect x="32" y="117" width="44" height="6" rx="3"/></g>
-  </svg>
-  <div id="missing" class="abs">
-    <div class="hd">Not in it</div>
-    <div class="row">
-      <div class="chip" id="m1">Ukraine<span class="x"></span></div>
-      <div class="chip" id="m2">Iran<span class="x"></span></div>
-      <div class="chip" id="m3">Taiwan<span class="x"></span></div>
-    </div>
-  </div>
-
-  <!-- Beat 4: next -->
-  <svg id="next" class="abs" viewBox="26 0 354 768" aria-hidden="true">
-    <path id="tri" d="M203 268 L118 418 L288 418 Z" fill="none" stroke="rgba(233,228,214,.6)" stroke-width="2" stroke-dasharray="6 6"/>
-    <circle cx="203" cy="268" r="15" fill="#ffc93c"/>
-    <circle cx="118" cy="418" r="15" fill="#5d9bff"/>
-    <circle cx="288" cy="418" r="15" fill="#ff5d5d"/>
-    <g transform="translate(203 372)">
-      <circle r="26" fill="#0b1020" stroke="#e9e4d6" stroke-width="2"/>
-      <circle r="3.5" fill="#e9e4d6"/>
-      <path d="M0 0 L-6 -10.4 A12 12 0 0 1 6 -10.4 Z" fill="#e9e4d6"/>
-      <path d="M0 0 L12 0 A12 12 0 0 1 6 10.4 Z" fill="#e9e4d6"/>
-      <path d="M0 0 L-6 10.4 A12 12 0 0 1 -12 0 Z" fill="#e9e4d6"/>
+  <svg id="chart" class="abs" viewBox="0 0 432 768">
+    <g id="axis">
+      <line x1="46" y1="422" x2="372" y2="422" stroke="#ffcf5c" stroke-width="1.5" stroke-dasharray="5 5"/>
+      <text x="46" y="442" class="lab" fill="#ffcf5c">IPO $83</text>
+      <line x1="46" y1="470" x2="372" y2="470" stroke="rgba(238,241,236,.25)"/>
+      <text x="46" y="490" class="lab" fill="#94a0a8">11:48</text>
+      <text x="372" y="490" class="lab" fill="#94a0a8" text-anchor="end">4:00</text>
+    </g>
+    <path id="line" d="" fill="none" stroke="#3fe0a0" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path id="area" d="" fill="rgba(63,224,160,.12)"/>
+    <g id="openL">
+      <circle cx="64" cy="251" r="6" fill="#3fe0a0"/>
+      <text x="92" y="236" class="lab" fill="#94a0a8">OPEN</text>
+      <text x="92" y="262" class="big" fill="#eef1ec">$111.50</text>
+      <text x="200" y="262" class="big" fill="#3fe0a0">+34%</text>
+    </g>
+    <g id="closeL">
+      <circle cx="366" cy="337" r="6" fill="#3fe0a0"/>
+      <text x="366" y="294" class="lab" fill="#94a0a8" text-anchor="end">CLOSE</text>
+      <text x="366" y="320" class="big" fill="#3fe0a0" text-anchor="end"><tspan fill="#eef1ec">$97.17</tspan> +17%</text>
     </g>
   </svg>
-  <div id="nextT" class="abs"><div class="k">Promised next</div><div class="v">Nuclear risk talks</div></div>
 
-  <!-- End card -->
+  <svg id="bars" class="abs" viewBox="0 0 432 768">
+    <line x1="34" y1="410" x2="374" y2="410" stroke="rgba(238,241,236,.4)" stroke-width="1.5"/>
+    <rect id="bA" x="44" y="410" width="64" height="0" rx="3" fill="#3fe0a0"/>
+    <rect id="b1" x="128" y="410" width="64" height="0" rx="3" fill="#ff6b5e"/>
+    <rect id="b2" x="212" y="410" width="64" height="0" rx="3" fill="#ff6b5e"/>
+    <rect id="b3" x="296" y="410" width="64" height="0" rx="3" fill="#ff6b5e"/>
+    <g id="lA"><text x="76" y="248" class="big" fill="#3fe0a0" text-anchor="middle" id="vA">+17%</text>
+      <text x="76" y="434" class="lab" fill="#eef1ec" text-anchor="middle">ANT</text></g>
+    <g id="l1"><text x="160" y="466" class="big" fill="#ff6b5e" text-anchor="middle">&minus;2.2%</text>
+      <text x="160" y="490" class="lab" fill="#eef1ec" text-anchor="middle">Dow</text>
+      <text x="160" y="510" class="lab" fill="#94a0a8" text-anchor="middle">&minus;1,100 pts</text></g>
+    <g id="l2"><text x="244" y="466" class="big" fill="#ff6b5e" text-anchor="middle">&minus;2%</text>
+      <text x="244" y="490" class="lab" fill="#eef1ec" text-anchor="middle">S&amp;P 500</text></g>
+    <g id="l3"><text x="328" y="466" class="big" fill="#ff6b5e" text-anchor="middle">&minus;2.3%</text>
+      <text x="328" y="490" class="lab" fill="#eef1ec" text-anchor="middle">Nasdaq</text></g>
+  </svg>
+  <div id="why" class="abs">AI jitters &middot; rate fears</div>
+
   <div id="endCard" class="abs">
-    <h1>Four Points</h1>
-    <div class="d">Trump &middot; Xi &middot; Putin &middot; Shenzhen, Nov 19, 2026</div>
-    <div id="sources"><b>Sources</b>
-      <span id="srcList"><a href="https://www.thenationalnews.com/news/mena/2026/11/19/nuclear-war-cannot-be-won-full-text-of-china-russia-and-us-peace-declaration/" target="_blank" rel="noopener">The National (full text, via Xinhua)</a><br>
-      <a href="https://www.cp24.com/news/world/2026/11/19/trump-xi-and-putin-hold-first-ever-three-way-talks-discussing-nuclear-arms-and-the-war-in-ukraine/" target="_blank" rel="noopener">AP via CP24</a> &middot;
-      <a href="https://tass.com/politics/2221489" target="_blank" rel="noopener">TASS</a> &middot;
-      <a href="https://www.dimsumdaily.hk/china-russia-and-us-issue-joint-peace-declaration-after-historic-shenzhen-summit/" target="_blank" rel="noopener">Dimsum Daily</a></span>
+    <h1>Against the Tide</h1>
+    <div class="row">
+      <div class="pill p1"><small>ANT</small>+17%</div>
+      <div class="pill p2"><small>MARKET</small>&minus;2%</div>
     </div>
+    <div class="src">Sources: StockTitan, Yahoo Finance, Reuters, The National (Nov 19&ndash;20, 2026). Line drawn through reported prices, ET.</div>
+    <div class="by">Animated by Claude, which is made by Anthropic.</div>
   </div>
-  <button id="replay" type="button" hidden>&#8635; Replay</button>
+
+  <button id="replay" hidden>&#8635; Replay</button>
 </div></div>
 <script>
 (() => {
-  const DUR = 19.6;
-  const $ = (id) => document.getElementById(id);
+  const DUR = 19.2;
+  const $ = id => document.getElementById(id);
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
   const lerp = (a, b, f) => a + (b - a) * f;
-  const eout = (f) => 1 - Math.pow(1 - f, 3);
-  const eio = (f) => f < .5 ? 4 * f * f * f : 1 - Math.pow(-2 * f + 2, 3) / 2;
+  const eout = f => 1 - Math.pow(1 - f, 3);
+  const eio = f => f < .5 ? 4 * f * f * f : 1 - Math.pow(-2 * f + 2, 3) / 2;
   const fade = (t, a, b, c, d) => Math.min(seg(t, a, b), 1 - seg(t, c, d));
-  const op = (el, v) => { el.style.opacity = v.toFixed(3); el.style.visibility = v <= 0.001 ? "hidden" : "visible"; };
-  const E = {};
-  ["kicker","title","table","wCN","wUS","wRU","mins","minV","first","lap1","lap2","sCN","sUS","sRU","paper","c1","c2","c3","c4","quote",
-   "missing","mini","m1","m2","m3","next","tri","nextT","endCard"].forEach(k => E[k] = $(k));
-  const C1 = 2 * Math.PI * 124, C2 = 2 * Math.PI * 132;
+  const op = (el, v) => { el.style.opacity = v.toFixed(3); };
+  const E = {}; ["kicker","title","tick","tag","tagT","grid","gridL","raised","raisedV","chart","line","area","axis","openL","closeL",
+    "bars","bA","b1","b2","b3","lA","l1","l2","l3","why","endCard"].forEach(k => E[k] = $(k));
+
+  // 98 coins: each one 10M shares
+  const NS = "http://www.w3.org/2000/svg", dots = [];
+  for (let i = 0; i < 98; i++) { const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", 10 + (i % 14) * 20.3); c.setAttribute("cy", 10 + Math.floor(i / 14) * 20.3); c.setAttribute("r", 7.5);
+    c.setAttribute("fill", "#ffcf5c"); E.grid.appendChild(c); dots.push(c); }
+
+  // Intraday path through reported prices: $83 IPO -> $111.50 first trade -> $114.99 high -> $92.72 low 1:18 pm -> $97.17 close.
+  const Y = p => 470 - (p - 75) * 6;
+  // First trade 11:48 ET; StockTitan minute marks. x = 64 + 1.2 px per minute after 11:48.
+  const pts = [[46, 83], [61, 83], [64, 111.5], [65, 114.99], [100, 95.05], [149, 96.66], [171, 92.72], [222, 95.79], [294, 96.35], [366, 97.17]].map(([x, p]) => [x, Y(p)]);
+  const lens = [0]; for (let i = 1; i < pts.length; i++) lens.push(lens[i-1] + Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1]));
+  const TOT = lens[lens.length - 1];
+  function partial(f) { const L = TOT * f, out = [pts[0]];
+    for (let i = 1; i < pts.length; i++) { if (lens[i] <= L) out.push(pts[i]); else {
+      const k = (L - lens[i-1]) / (lens[i] - lens[i-1]); out.push([lerp(pts[i-1][0], pts[i][0], k), lerp(pts[i-1][1], pts[i][1], k)]); break; } }
+    return out; }
 
   function render(t) {
-    // title block stays until the end card
-    const head = fade(t, 0.1, 0.6, 17.6, 17.9);
-    op(E.kicker, head); op(E.title, head);
-    E.title.style.transform = `translateY(${(10 * (1 - eout(seg(t, 0.1, 0.7)))).toFixed(1)}px)`;
+    // Beat 0 (0-2.6): title + ticker
+    const b0 = fade(t, 0, 0.4, 2.3, 2.6);
+    op(E.tick, b0); E.tick.style.transform = `translateY(${(30 * (1 - eout(seg(t, 0.2, 0.9)))).toFixed(1)}px)`;
+    const ttl = 1 - seg(t, 16.8, 17.1);
+    op(E.kicker, Math.min(seg(t, 0, 0.4), ttl)); op(E.title, Math.min(seg(t, 0.1, 0.5), ttl));
 
-    // Beat 1 (0.6-5.6): three seats fill, clock sweeps 0 -> 80 min
-    const b1 = fade(t, 0.6, 1.0, 5.3, 5.7);
-    op(E.table, b1);
-    [[E.sCN, "#ffc93c", E.wCN, 1.0], [E.sUS, "#5d9bff", E.wUS, 1.35], [E.sRU, "#ff5d5d", E.wRU, 1.7]].forEach(([s, col, w, at]) => {
-      const f = seg(t, at, at + 0.3);
-      s.setAttribute("fill", f > 0 ? col : "none"); s.setAttribute("fill-opacity", f.toFixed(2));
-      s.setAttribute("r", (17 + 4 * Math.sin(Math.PI * f)).toFixed(2));
-      op(w, Math.min(f, b1));
-    });
-    const m = 90 * eio(seg(t, 2.1, 4.2));
-    E.lap1.setAttribute("stroke-dasharray", `${(C1 * Math.min(m, 60) / 60).toFixed(1)} 2000`);
-    E.lap2.setAttribute("stroke-dasharray", `${(C2 * Math.max(m - 60, 0) / 60).toFixed(1)} 2000`);
-    E.minV.textContent = m >= 89.5 ? "~90" : String(Math.round(m));
-    op(E.mins, Math.min(seg(t, 2.0, 2.3), b1));
-    op(E.first, Math.min(seg(t, 4.3, 4.6), b1));
+    // Beat 1 (2.6-6.6): $83 x 980M shares = $81.3B
+    const b1 = fade(t, 2.6, 2.9, 6.3, 6.6);
+    const drop = eout(seg(t, 2.6, 3.2));
+    [E.tag, E.tagT].forEach(e => { op(e, b1); e.style.transform = `translateY(${(-60 * (1 - drop)).toFixed(1)}px) rotate(${(-8 * (1 - drop)).toFixed(2)}deg)`; });
+    const fill = seg(t, 3.3, 4.9);
+    dots.forEach((d, i) => { const f = seg(fill * 98 - i, 0, 1); d.setAttribute("opacity", (f * 0.95).toFixed(2));
+      d.setAttribute("r", (7.5 * (0.4 + 0.6 * eout(f))).toFixed(2)); });
+    op(E.grid, b1); op(E.gridL, Math.min(seg(t, 3.4, 3.7), b1));
+    const r = seg(t, 4.9, 5.6); E.raisedV.textContent = "$" + (81.3 * eout(r)).toFixed(1) + "B";
+    op(E.raised, Math.min(seg(t, 4.8, 5.0), b1));
 
-    // Beat 2 (5.6-13.3): the declaration unfolds, four cells, nuclear line
-    const pIn = eout(seg(t, 5.6, 6.2));
-    const pOut = seg(t, 13.0, 13.4);
-    op(E.paper, Math.min(seg(t, 5.6, 5.9), 1 - pOut));
-    E.paper.style.transform = `scaleY(${lerp(0.04, 1, pIn).toFixed(3)})`;
-    [[E.c1, 6.4], [E.c2, 7.6], [E.c3, 8.8], [E.c4, 10.0]].forEach(([c, at]) => {
-      const f = eout(seg(t, at, at + 0.4));
-      op(c, f); c.style.transform = `scale(${lerp(0.8, 1, f).toFixed(3)})`;
-    });
-    const hi = seg(t, 10.9, 11.3);
-    E.c4.style.background = `rgba(226,72,61,${(0.16 * hi).toFixed(3)})`;
-    [E.c1, E.c2, E.c3].forEach(c => { if (t > 10.9) c.style.opacity = (1 - 0.6 * hi).toFixed(3); });
-    op(E.quote, seg(t, 11.1, 11.5));
+    // Beat 2 (6.6-11.8): debut-day line
+    const b2 = fade(t, 6.6, 6.9, 11.5, 11.8);
+    op(E.chart, b2);
+    const lf = eio(seg(t, 7.0, 10.2));
+    const p = partial(lf);
+    const d = p.map((q, i) => (i ? "L" : "M") + q[0].toFixed(1) + " " + q[1].toFixed(1)).join(" ");
+    E.line.setAttribute("d", d);
+    E.area.setAttribute("d", d + ` L${p[p.length-1][0].toFixed(1)} 422 L46 422 Z`);
+    E.openL.style.opacity = p.length > 3 ? "1" : "0";
+    op(E.closeL, seg(t, 10.2, 10.5));
 
-    // Beat 3 (13.4-15.9): Ukraine, Iran, Taiwan not in it
-    const b3 = fade(t, 13.4, 13.7, 15.7, 16.0);
-    op(E.missing, b3); op(E.mini, b3);
-    E.mini.style.transform = `translateY(${(-40 * (1 - eout(seg(t, 13.2, 13.8)))).toFixed(1)}px) scale(${lerp(1.6, 1, eout(seg(t, 13.2, 13.8))).toFixed(3)})`;
-    [[E.m1, 13.7], [E.m2, 13.95], [E.m3, 14.2]].forEach(([c, at]) => {
-      const f = eout(seg(t, at, at + 0.3));
-      c.style.opacity = f.toFixed(3);
-      const bump = Math.sin(Math.PI * seg(t, at + 0.25, at + 0.65));
-      c.style.transform = `translateY(${(14 * (1 - f) - 22 * bump).toFixed(1)}px)`;
-      const x = c.querySelector(".x"); x.style.transform = `scaleX(${eio(seg(t, at + 0.7, at + 1.0)).toFixed(3)})`;
-      if (t > at + 1.0) c.style.opacity = lerp(1, 0.45, seg(t, at + 1.0, at + 1.4)).toFixed(3);
-    });
+    // Beat 3 (11.8-16.9): same day, everything else went down
+    const b3 = fade(t, 11.8, 12.1, 16.6, 16.9);
+    op(E.bars, b3);
+    const up = eout(seg(t, 12.1, 12.9)), h = 150 * up;
+    E.bA.setAttribute("y", (410 - h).toFixed(1)); E.bA.setAttribute("height", h.toFixed(1));
+    op(E.lA, seg(t, 12.6, 12.9));
+    [[E.b1, E.l1, 2.2, 13.5], [E.b2, E.l2, 2.0, 13.8], [E.b3, E.l3, 2.3, 14.1]].forEach(([b, l, v, at]) => {
+      const f = eout(seg(t, at, at + 0.6)); b.setAttribute("height", (8.8 * v * f).toFixed(1)); op(l, seg(t, at + 0.2, at + 0.5)); });
+    op(E.why, Math.min(seg(t, 15.0, 15.4), b3));
 
-    // Beat 4 (16.0-17.8): promised next
-    const b4 = fade(t, 16.0, 16.3, 17.6, 17.9);
-    op(E.next, b4); op(E.nextT, Math.min(seg(t, 16.4, 16.7), b4));
-    E.tri.setAttribute("stroke-dashoffset", (-30 * t).toFixed(1));
-
-    op(E.endCard, seg(t, 17.9, 18.3));
+    op(E.endCard, seg(t, 17.0, 17.4));
   }
 
   const replay = $("replay");
