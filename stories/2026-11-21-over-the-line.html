@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Over the Line</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=block">
+<style>
+/* Over the Line. Overnight into Fri Nov 20, 2026, Russia fired 400+ drones and 110+ missiles at Ukraine (Zelenskyy; 9+ killed per KI, RFE/RL).
+   Two missiles (incl. a Kh-101, ~50 km from the border) and a suspected jet-powered drone (~30 km) came down in SE Poland. No injuries.
+   Tusk: "intentional provocation". NATO's Rutte: "grave violation". Poland has not invoked Article 4.
+   Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+:root {
+  --ink: #eef0f4; --muted: #8f9aae; --bg: #0a0e18; --drone: #ffb84a; --miss: #ff4d4d; --pl: #e8e6ea; --nato: #5aa0ff;
+  --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #eef0f4; } }
+:root[data-theme="dark"] { --ink: #eef0f4; }
+html, body { height: 100%; margin: 0; }
+body { background: #05070d; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #05070d; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
+  background: radial-gradient(120% 70% at 60% 45%, #141b2e 0%, #0a0e18 60%, #06080f 100%); }
+.abs { position: absolute; }
+svg text { font-family: var(--sans); }
+
+#kicker { left: 26px; top: 116px; width: 354px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#title { left: 26px; top: 136px; width: 354px; font: 700 42px/1 var(--serif); }
+#streak { left: 0; top: 0; width: 432px; height: 768px; }
+
+#grid { left: 0; top: 0; width: 432px; height: 768px; }
+.cnt { font: 700 30px/1 var(--serif); font-variant-numeric: tabular-nums; }
+.cnt small { display: block; margin-top: 6px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#cD { left: 38px; top: 444px; width: 160px; color: var(--drone); }
+#cM { left: 222px; top: 444px; width: 146px; text-align: right; color: var(--miss); }
+#killed { left: 26px; top: 532px; width: 354px; text-align: center; font: 600 15px/1 var(--sans); color: var(--ink); }
+#killed b { color: var(--miss); font-weight: 700; }
+
+#map { left: 0; top: 0; width: 432px; height: 768px; }
+.ml { font: 600 12px/1 var(--sans); letter-spacing: .16em; fill: var(--muted); }
+.pl { font: 600 13px/1 var(--sans); fill: var(--ink); }
+.km { font: 600 13px/1 var(--mono); }
+#safe { left: 26px; top: 552px; width: 354px; text-align: center; font: 700 22px/1 var(--serif); color: var(--ink); }
+#note { left: 26px; top: 584px; width: 354px; text-align: center; font: 500 11px/1 var(--sans); color: #66708a; letter-spacing: .08em; }
+
+.card { left: 46px; width: 320px; height: 76px; border-radius: 14px; background: rgba(238,240,244,.05); border: 1px solid rgba(238,240,244,.12); }
+.card .ic { position: absolute; left: 16px; top: 18px; width: 40px; height: 40px; }
+.card .q { position: absolute; left: 72px; top: 16px; font: 700 22px/1 var(--serif); }
+.card .w { position: absolute; left: 72px; top: 47px; font: 600 12px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+#k1 { top: 230px; } #k2 { top: 324px; } #k3 { top: 418px; }
+#k3 .q { color: var(--muted); }
+#k3 .strike { position: absolute; left: 70px; top: 27px; height: 2.5px; background: var(--muted); }
+
+#endCard { left: 26px; top: 220px; width: 354px; text-align: center; }
+#endCard h1 { margin: 0; font: 700 40px/1 var(--serif); }
+#endCard .row { margin-top: 28px; display: flex; justify-content: center; gap: 14px; }
+#endCard .pill { padding: 12px 14px; border-radius: 10px; font: 700 28px/1 var(--serif); }
+#endCard .pill small { display: block; margin-top: 7px; font: 600 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#endCard .p1 { border: 2px solid var(--drone); color: var(--drone); }
+#endCard .p2 { border: 2px solid var(--miss); color: var(--miss); }
+#endCard .src { margin-top: 40px; font: 500 11.5px/1.5 var(--sans); color: var(--muted); }
+#endCard .by { margin-top: 10px; font: 500 11px/1.4 var(--sans); color: #6b7489; }
+
+#replay { position: absolute; left: 50%; top: 560px; transform: translateX(-50%); padding: 10px 20px; border-radius: 999px;
+  border: 1.5px solid rgba(238,240,244,.4); background: rgba(10,14,24,.7); color: var(--ink); font: 600 13px/1 var(--sans);
+  letter-spacing: .08em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay[hidden] { display: none; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <svg id="streak" class="abs" viewBox="0 0 432 768">
+    <defs><linearGradient id="tail" x1="1" x2="0" y1="0" y2="0"><stop offset="0" stop-color="#ff4d4d" stop-opacity="0"/><stop offset="1" stop-color="#ff4d4d"/></linearGradient></defs>
+    <line id="sl" x1="380" y1="300" x2="380" y2="300" stroke="url(#tail)" stroke-width="3" stroke-linecap="round"/>
+    <circle id="sh" cx="380" cy="300" r="4.5" fill="#ff4d4d"/>
+  </svg>
+  <div id="kicker" class="abs">Poland &middot; Nov 20</div>
+  <div id="title" class="abs">Over the Line</div>
+
+  <!-- Beat 1 + 2 share the marks (drawn in #map so they can travel) -->
+  <svg id="map" class="abs" viewBox="0 0 432 768">
+    <g id="land">
+      <rect x="300" y="214" width="80" height="310" fill="#ffb84a" opacity=".06"/>
+      <path id="border" d="M300 214 L306 250 L297 290 L303 330 L296 372 L304 414 L298 458 L305 496 L300 524" fill="none" stroke="#eef0f4" stroke-width="2" stroke-dasharray="5 5" opacity=".55"/>
+      <text class="ml" x="150" y="234" text-anchor="middle">POLAND</text>
+      <text class="ml" x="345" y="234" text-anchor="middle">UKRAINE</text>
+    </g>
+    <g id="drills">
+      <path d="M62 468 V438 L82 444 L62 450" fill="none" stroke="#5aa0ff" stroke-width="2.5" stroke-linejoin="round"/>
+      <text class="pl" x="66" y="490" text-anchor="middle" style="fill:#5aa0ff">Allied drills</text>
+    </g>
+    <g id="kmD">
+      <line x1="238" y1="322" x2="296" y2="322" stroke="#ffb84a" stroke-width="1.5" stroke-dasharray="3 4"/>
+      <text class="km" x="267" y="313" text-anchor="middle" fill="#ffb84a">30 km</text>
+    </g>
+    <g id="kmM">
+      <line x1="192" y1="402" x2="296" y2="402" stroke="#ff4d4d" stroke-width="1.5" stroke-dasharray="3 4"/>
+      <text class="km" x="244" y="393" text-anchor="middle" fill="#ff4d4d">50 km</text>
+    </g>
+    <g id="pins"></g>
+    <g id="marks"></g>
+    <g id="pinL">
+      <text class="pl" x="228" y="340" text-anchor="middle">Drone</text>
+      <text class="pl" x="180" y="420" text-anchor="middle">Kh-101</text>
+      <text class="pl" x="128" y="364" text-anchor="middle">Missile</text>
+    </g>
+  </svg>
+
+  <div id="cD" class="abs cnt"><span id="nD">0</span><small>Drones</small></div>
+  <div id="cM" class="abs cnt"><span id="nM">0</span><small>Missiles</small></div>
+  <div id="killed" class="abs">Ukraine &middot; <b>9+ killed</b></div>
+
+  <div id="safe" class="abs">No injuries</div>
+  <div id="note" class="abs">Schematic, not to scale</div>
+
+  <div id="k1" class="abs card">
+    <svg class="ic" viewBox="0 0 40 40"><rect x="2" y="8" width="36" height="12" fill="#e8e6ea"/><rect x="2" y="20" width="36" height="12" fill="#dc143c"/></svg>
+    <div class="q">&ldquo;Provocation&rdquo;</div><div class="w">Tusk</div>
+  </div>
+  <div id="k2" class="abs card">
+    <svg class="ic" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="#5aa0ff" stroke-width="2"/>
+      <path d="M20 4 L23 17 L36 20 L23 23 L20 36 L17 23 L4 20 L17 17 Z" fill="#5aa0ff"/></svg>
+    <div class="q">&ldquo;Grave violation&rdquo;</div><div class="w">NATO&rsquo;s Rutte</div>
+  </div>
+  <div id="k3" class="abs card">
+    <svg class="ic" viewBox="0 0 40 40"><rect x="8" y="3" width="24" height="34" rx="3" fill="none" stroke="#8f9aae" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="20" y="27" text-anchor="middle" style="font:700 15px var(--serif);fill:#8f9aae">4</text></svg>
+    <div class="q">Article 4</div><div class="strike" id="strike"></div><div class="w">Not invoked &middot; Nov 21</div>
+  </div>
+
+  <div id="endCard" class="abs">
+    <h1>Over the Line</h1>
+    <div class="row">
+      <div class="pill p1">510+<small>Fired at Ukraine</small></div>
+      <div class="pill p2">3<small>Fell in Poland</small></div>
+    </div>
+    <div class="src">Sources: AP via PBS NewsHour &middot; Al Jazeera<br>Kyiv Independent &middot; RFE/RL &middot; Nov 20&ndash;21, 2026</div>
+    <div class="by">Animated by Claude</div>
+  </div>
+
+  <button id="replay" hidden>&#8635; Replay</button>
+</div></div>
+<script>
+(() => {
+  const DUR = 19.4;
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+  const lerp = (a, b, f) => a + (b - a) * f;
+  const eout = f => 1 - Math.pow(1 - f, 3);
+  const eio = f => f < .5 ? 4 * f * f * f : 1 - Math.pow(-2 * f + 2, 3) / 2;
+  const fade = (t, a, b, c, d) => Math.min(seg(t, a, b), 1 - seg(t, c, d));
+  const op = (el, v) => { el.style.opacity = (+v).toFixed(3); };
+  const E = {}; ["kicker","title","streak","sl","sh","map","land","drills","kmD","kmM","pins","marks","pinL","cD","cM","nD","nM","killed",
+    "safe","note","k1","k2","k3","strike","endCard"].forEach(k => E[k] = $(k));
+
+  // 510 marks: 400 drones (amber dots) then 110 missiles (red dashes); 30 cols x 17 rows, 11px cells
+  const NS = "http://www.w3.org/2000/svg", marks = [];
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  // three marks that cross: drone #398, missiles #430 and #505
+  const CROSS = { 398: [228, 322], 430: [180, 402], 505: [128, 380] };
+  for (let i = 0; i < 510; i++) {
+    const isM = i >= 400, gx = 38 + (i % 30) * 11 + 5.5, gy = 236 + Math.floor(i / 30) * 11 + 5.5;
+    const node = document.createElementNS(NS, isM ? "rect" : "circle");
+    if (isM) { node.setAttribute("width", 8); node.setAttribute("height", 3); node.setAttribute("rx", 1.5); node.setAttribute("fill", "#ff4d4d"); }
+    else { node.setAttribute("r", 3.4); node.setAttribute("fill", "#ffb84a"); }
+    E.marks.appendChild(node);
+    marks.push({ node, isM, gx, gy, ux: 312 + rnd() * 58, uy: 252 + rnd() * 262, cross: CROSS[i] || null, d: rnd() });
+  }
+  // impact rings at the three landing points
+  const rings = Object.values(CROSS).map(([x, y], k) => { const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("fill", "none"); c.setAttribute("stroke", k ? "#ff4d4d" : "#ffb84a");
+    c.setAttribute("stroke-width", 2); E.pins.appendChild(c); return c; });
+  function place(m, x, y, s, o) {
+    if (m.isM) { m.node.setAttribute("x", (x - 4 * s).toFixed(1)); m.node.setAttribute("y", (y - 1.5 * s).toFixed(1));
+      m.node.setAttribute("width", (8 * s).toFixed(2)); m.node.setAttribute("height", (3 * s).toFixed(2)); }
+    else { m.node.setAttribute("cx", x.toFixed(1)); m.node.setAttribute("cy", y.toFixed(1)); m.node.setAttribute("r", (3.4 * s).toFixed(2)); }
+    m.node.setAttribute("opacity", o.toFixed(3));
+  }
+
+  function render(t) {
+    // Beat 0 (0-2.4): title + a streak crossing west
+    const ttl = 1 - seg(t, 16.6, 16.9);
+    op(E.kicker, Math.min(seg(t, 0, 0.4), ttl)); op(E.title, Math.min(seg(t, 0.1, 0.5), ttl));
+    const sf = eio(seg(t, 0.4, 2.0)), hx = lerp(380, 40, sf), hy = lerp(330, 380, sf);
+    E.sh.setAttribute("cx", hx.toFixed(1)); E.sh.setAttribute("cy", hy.toFixed(1));
+    E.sl.setAttribute("x1", Math.min(380, hx + 120).toFixed(1)); E.sl.setAttribute("y1", (hy - 120 * 50 / 340).toFixed(1));
+    E.sl.setAttribute("x2", hx.toFixed(1)); E.sl.setAttribute("y2", hy.toFixed(1));
+    op(E.streak, fade(t, 0.3, 0.5, 2.0, 2.4));
+
+    // Beat 1 (2.4-7.4): one night, 510 marks fill the grid
+    const fillF = seg(t, 2.6, 5.0);
+    const b1 = fade(t, 2.4, 2.6, 7.2, 7.5);
+    op(E.cD, Math.min(seg(t, 2.7, 3.0), b1)); op(E.cM, Math.min(seg(t, 4.2, 4.5), b1));
+    E.nD.textContent = Math.round(400 * eout(seg(t, 2.7, 4.3))) + (t >= 4.3 ? "+" : "");
+    E.nM.textContent = Math.round(110 * eout(seg(t, 4.2, 5.1))) + (t >= 5.1 ? "+" : "");
+    op(E.killed, Math.min(seg(t, 5.7, 6.1), b1));
+
+    // Beat 2 (7.4-12.8): marks pile onto Ukraine; three cross the border
+    const mv = eio(seg(t, 7.5, 8.7));
+    const fly = eio(seg(t, 9.1, 10.5));
+    const b2 = fade(t, 7.4, 7.8, 12.5, 12.8);
+    op(E.land, b2);
+    const all = 1 - seg(t, 12.5, 12.8);
+    marks.forEach((m, i) => {
+      const fIn = seg(fillF * 510 - i, 0, 1);
+      let x = lerp(m.gx, m.ux, mv), y = lerp(m.gy, m.uy, mv), s = lerp(0.4 + 0.6 * eout(fIn), 0.7, mv), o = fIn * lerp(0.95, 0.5, mv);
+      if (m.cross) {
+        x = lerp(m.gx, 340, mv); y = lerp(m.gy, m.cross[1], mv);
+        if (fly > 0) { x = lerp(340, m.cross[0], fly); y = m.cross[1]; s = 1.3; o = 1; }
+        else if (mv > 0) { s = lerp(1, 1.3, mv); o = fIn; }
+      }
+      place(m, x, y, s, o * all);
+    });
+    rings.forEach((r, k) => { const f = seg(t, 10.5 + k * 0.08, 11.4 + k * 0.08);
+      r.setAttribute("r", (5 + 22 * eout(f)).toFixed(1)); r.setAttribute("opacity", (f > 0 ? (1 - f) * all : 0).toFixed(3)); });
+    op(E.pinL, Math.min(seg(t, 10.6, 10.9), b2));
+    op(E.kmD, Math.min(seg(t, 10.8, 11.1), b2)); op(E.kmM, Math.min(seg(t, 11.0, 11.3), b2));
+    op(E.drills, Math.min(seg(t, 11.3, 11.6), b2));
+    op(E.safe, fade(t, 11.7, 12.0, 12.5, 12.8)); op(E.note, Math.min(seg(t, 8.0, 8.3), b2));
+
+    // Beat 3 (12.8-16.8): reactions
+    [[E.k1, 13.0], [E.k2, 13.7], [E.k3, 14.4]].forEach(([k, a]) => {
+      const f = eout(seg(t, a, a + 0.5)); op(k, Math.min(f, 1 - seg(t, 16.5, 16.8)));
+      k.style.transform = `translateX(${(-20 * (1 - f)).toFixed(1)}px)`; });
+    E.strike.style.width = (108 * eout(seg(t, 15.3, 15.8))).toFixed(1) + "px";
+
+    // End card (16.9-19.4)
+    op(E.endCard, seg(t, 16.9, 17.3));
+  }
+
+  const replay = $("replay");
+  let raf = 0, t0 = null, playing = false;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick(now) { if (t0 === null) t0 = now; const t = (now - t0) / 1000; render(Math.min(t, DUR));
+    if (t < DUR && playing) raf = requestAnimationFrame(tick); else { playing = false; replay.hidden = false; } }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: DUR, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, DUR)); }, play };
+
+  function fit() { const s = Math.min(innerWidth / 432, innerHeight / 768); $("stage").style.transform = `translate(-50%, -50%) scale(${s})`; }
+  addEventListener("resize", fit); fit();
+  render(0);
+  const start = () => { if (reduce) { render(DUR); replay.hidden = false; } else play(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+</body>
+</html>
