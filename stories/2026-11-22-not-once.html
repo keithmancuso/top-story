@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Not Once</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=block">
+<style>
+/* Not Once. COP31 (Antalya, Turkey, scheduled Nov 9-20, 2026) closed Sun Nov 22 without consensus after 40+ hours of overtime,
+   the longest UN climate conference. Draft 1 (Mon) named fossil fuels six times; draft 2 (Thu) removed every reference and the
+   final text has no mention of fossil fuels. The EU, Panama and the Marshall Islands opposed it; COP31 President Murat Kurum:
+   the decisions were not adopted. Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+:root {
+  --ink: #f3efe8; --muted: #a39a8f; --bg: #120d0a; --coal: #c9c2b8; --oil: #ffb347; --gas: #ff7a3d; --red: #ff4b3e; --eu: #6ea8ff;
+  --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f3efe8; } }
+:root[data-theme="dark"] { --ink: #f3efe8; }
+html, body { height: 100%; margin: 0; }
+body { background: #0a0706; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #0a0706; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
+  background: radial-gradient(110% 70% at 50% 42%, #2a1810 0%, #160e0a 55%, #0a0706 100%); }
+#heat { position: absolute; inset: 0; background: radial-gradient(90% 55% at 50% 100%, rgba(255,90,40,.28), rgba(255,90,40,0) 70%); }
+.abs { position: absolute; }
+#sv { left: 0; top: 0; width: 432px; height: 768px; }
+svg text { font-family: var(--sans); }
+.k { font: 600 12px var(--sans); letter-spacing: .16em; fill: var(--muted); }
+.ttl { font: 700 56px var(--serif); fill: var(--ink); }
+.hd { font: 600 14px var(--mono); fill: var(--ink); }
+.big { font: 700 64px var(--serif); font-variant-numeric: tabular-nums; }
+.lab { font: 600 13px var(--sans); letter-spacing: .14em; fill: var(--muted); }
+.mid { font: 700 22px var(--serif); fill: var(--ink); }
+.chip { font: 700 17px var(--sans); fill: var(--ink); }
+.stamp { font: 800 26px var(--sans); letter-spacing: .06em; fill: var(--red); }
+#endCard { left: 26px; top: 176px; width: 354px; text-align: center; }
+#endCard h1 { margin: 0; font: 700 50px/1 var(--serif); }
+#endCard .row { margin-top: 30px; display: flex; justify-content: center; gap: 14px; }
+#endCard .pill { width: 140px; padding: 14px 0 12px; border-radius: 12px; font: 700 34px/1 var(--serif); }
+#endCard .pill small { display: block; margin-top: 8px; font: 600 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#endCard .p1 { border: 2px solid var(--oil); color: var(--oil); }
+#endCard .p2 { border: 2px solid var(--red); color: var(--red); }
+#endCard .src { margin-top: 44px; font: 500 11.5px/1.55 var(--sans); color: var(--muted); }
+#endCard .by { margin-top: 10px; font: 500 11px/1.4 var(--sans); color: #7d746a; }
+#replay { position: absolute; left: 50%; top: 556px; transform: translateX(-50%); padding: 10px 20px; border-radius: 999px;
+  border: 1.5px solid rgba(243,239,232,.4); background: rgba(18,13,10,.75); color: var(--ink); font: 600 13px/1 var(--sans);
+  letter-spacing: .08em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay[hidden] { display: none; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="heat"></div>
+  <svg id="sv" class="abs" viewBox="0 0 432 768">
+    <defs>
+      <symbol id="coal" viewBox="0 0 24 24"><path d="M4 15 L7 8 L13 5 L19 8 L21 15 L16 20 L8 20 Z" fill="#c9c2b8"/><path d="M7 8 L13 11 L19 8 M13 11 L16 20" stroke="#5c554d" stroke-width="1.3" fill="none"/></symbol>
+      <symbol id="oil" viewBox="0 0 24 24"><path d="M12 2 C12 2 4 11 4 15.5 A8 8 0 0 0 20 15.5 C20 11 12 2 12 2 Z" fill="#ffb347"/><ellipse cx="9" cy="15" rx="1.8" ry="3" fill="#fff3d6" opacity=".55"/></symbol>
+      <symbol id="gas" viewBox="0 0 24 24"><path d="M12 2 C14 7 19 9 19 15 A7 7 0 0 1 5 15 C5 11 8 9 9 6 C10 9 11 10 12 10 C12 7 11 5 12 2 Z" fill="#ff7a3d"/><path d="M12 12 C13 14 15 15 15 17.5 A3 3 0 0 1 9 17.5 C9 15.5 11 14.5 12 12 Z" fill="#ffd166"/></symbol>
+    </defs>
+
+    <!-- Beat 0: title -->
+    <g id="g0">
+      <text class="k" x="216" y="214" text-anchor="middle">COP31 · ANTALYA · NOV 22</text>
+      <g id="trio0" transform="translate(216 300)">
+        <use href="#coal" x="-82" y="-26" width="52" height="52"/>
+        <use href="#oil" x="-26" y="-26" width="52" height="52"/>
+        <use href="#gas" x="30" y="-26" width="52" height="52"/>
+      </g>
+      <text id="ttl" class="ttl" x="216" y="420" text-anchor="middle">Not Once</text>
+    </g>
+
+    <!-- Beat 1 + 3: the document -->
+    <g id="doc">
+      <rect x="86" y="160" width="260" height="290" rx="14" fill="#f3efe8" fill-opacity=".06" stroke="#f3efe8" stroke-opacity=".22"/>
+      <text id="dh1" class="hd" x="108" y="190">DRAFT 1 · MON</text>
+      <text id="dh2" class="hd" x="108" y="190">DRAFT 2 · THU</text>
+      <text id="dh3" class="hd" x="108" y="190">FINAL TEXT</text>
+      <g id="lines" fill="#f3efe8" fill-opacity=".18"></g>
+      <g id="icons"></g>
+      <g id="gavel">
+        <rect x="-10" y="-60" width="20" height="96" rx="6" fill="#b07a4a" transform="rotate(0)"/>
+        <rect x="-38" y="-86" width="76" height="34" rx="8" fill="#d39a62"/>
+      </g>
+      <g id="stampG" transform="translate(216 330) rotate(-9)">
+        <rect x="-104" y="-27" width="208" height="54" rx="8" fill="#120d0a" fill-opacity=".6" stroke="#ff4b3e" stroke-width="4"/>
+        <text class="stamp" x="0" y="9" text-anchor="middle">NOT ADOPTED</text>
+      </g>
+    </g>
+
+    <!-- Beat 1: counter -->
+    <g id="cnt">
+      <text id="cnum" class="big" x="216" y="534" text-anchor="middle" fill="#ffb347">6</text>
+      <text class="lab" x="216" y="566" text-anchor="middle">FOSSIL-FUEL MENTIONS</text>
+    </g>
+
+    <!-- Beat 2: clock -->
+    <g id="clk">
+      <text class="k" x="216" y="150" text-anchor="middle">DUE TO END FRI</text>
+      <circle cx="216" cy="300" r="112" fill="#f3efe8" fill-opacity=".04" stroke="#f3efe8" stroke-opacity=".25" stroke-width="2"/>
+      <g id="ticks"></g>
+      <circle id="ring" cx="216" cy="300" r="122" fill="none" stroke="#ff4b3e" stroke-width="7" stroke-linecap="round" transform="rotate(-90 216 300)"/>
+      <line id="mh" x1="216" y1="300" x2="216" y2="208" stroke="#f3efe8" stroke-opacity=".55" stroke-width="3" stroke-linecap="round"/>
+      <line id="hh" x1="216" y1="300" x2="216" y2="236" stroke="#ff4b3e" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="216" cy="300" r="7" fill="#ff4b3e"/>
+      <text id="hrs" class="big" x="216" y="508" text-anchor="middle" fill="#ff4b3e">+0 hrs</text>
+      <text class="lab" x="216" y="540" text-anchor="middle">OVERTIME</text>
+      <text id="longest" class="mid" x="216" y="584" text-anchor="middle">Longest COP ever</text>
+    </g>
+
+    <!-- Beat 3: who rejected -->
+    <g id="rej">
+      <text class="lab" x="216" y="492" text-anchor="middle">REJECTED BY, AMONG OTHERS</text>
+      <g id="c1" transform="translate(52 510)"><rect width="84" height="44" rx="22" fill="#6ea8ff" fill-opacity=".14" stroke="#6ea8ff" stroke-width="1.5"/><text class="chip" x="42" y="28" text-anchor="middle">EU</text></g>
+      <g id="c2" transform="translate(146 510)"><rect width="104" height="44" rx="22" fill="#f3efe8" fill-opacity=".08" stroke="#f3efe8" stroke-opacity=".5" stroke-width="1.5"/><text class="chip" x="52" y="28" text-anchor="middle">Panama</text></g>
+      <g id="c3" transform="translate(260 510)"><rect width="120" height="44" rx="22" fill="#f3efe8" fill-opacity=".08" stroke="#f3efe8" stroke-opacity=".5" stroke-width="1.5"/><text class="chip" x="60" y="28" text-anchor="middle">Marshall Is.</text></g>
+    </g>
+  </svg>
+
+  <div id="endCard" class="abs">
+    <h1>No deal</h1>
+    <div class="row">
+      <div class="pill p1">0<small>Fossil-fuel mentions</small></div>
+      <div class="pill p2">40+ hrs<small>Overtime</small></div>
+    </div>
+    <div class="src">Sources: Reuters via Al-Monitor &middot; AFP via Inquisitr<br>Irish Times &middot; bluewin &middot; Nov 22, 2026</div>
+    <div class="by">Animated by Claude</div>
+  </div>
+
+  <button id="replay" hidden>&#8635; Replay</button>
+</div></div>
+<script>
+(() => {
+  const DUR = 19.5;
+  const NS = "http://www.w3.org/2000/svg";
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+  const eout = x => 1 - Math.pow(1 - x, 3);
+  const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const op = (el, v) => { el.style.opacity = clamp(v, 0, 1).toFixed(3); };
+
+  // Document lines and the six fossil-fuel icons sitting inside them
+  const lineY = [214, 244, 274, 304, 334, 364, 394, 424];
+  const lineW = [210, 186, 216, 170, 204, 214, 150, 196];
+  const lines = $("lines");
+  lineY.forEach((y, i) => { const r = document.createElementNS(NS, "rect");
+    r.setAttribute("x", 108); r.setAttribute("y", y); r.setAttribute("width", lineW[i]); r.setAttribute("height", 9); r.setAttribute("rx", 4.5); lines.appendChild(r); });
+  const slots = [["coal", 1, 150], ["oil", 2, 262], ["gas", 3, 196], ["coal", 4, 286], ["oil", 5, 132], ["gas", 6, 232]];
+  const icons = slots.map(([k, li, x], i) => {
+    const g = document.createElementNS(NS, "g");
+    const bg = document.createElementNS(NS, "rect");
+    bg.setAttribute("x", -15); bg.setAttribute("y", -15); bg.setAttribute("width", 30); bg.setAttribute("height", 30); bg.setAttribute("rx", 7);
+    bg.setAttribute("fill", "#ffb347"); bg.setAttribute("fill-opacity", ".16"); bg.setAttribute("stroke", "#ffb347"); bg.setAttribute("stroke-opacity", ".6");
+    const u = document.createElementNS(NS, "use");
+    u.setAttribute("href", "#" + k); u.setAttribute("x", -12); u.setAttribute("y", -12); u.setAttribute("width", 24); u.setAttribute("height", 24);
+    g.appendChild(bg); g.appendChild(u); $("icons").appendChild(g);
+    return { g, x, y: lineY[li] + 4.5, d: i };
+  });
+  // Clock ticks
+  for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6, l = document.createElementNS(NS, "line");
+    l.setAttribute("x1", 216 + 98 * Math.sin(a)); l.setAttribute("y1", 300 - 98 * Math.cos(a));
+    l.setAttribute("x2", 216 + 108 * Math.sin(a)); l.setAttribute("y2", 300 - 108 * Math.cos(a));
+    l.setAttribute("stroke", "#f3efe8"); l.setAttribute("stroke-opacity", ".45"); l.setAttribute("stroke-width", i % 3 ? 1.5 : 3); $("ticks").appendChild(l); }
+  const RING = 2 * Math.PI * 122; $("ring").setAttribute("stroke-dasharray", RING.toFixed(1));
+
+  const E = ["g0", "trio0", "ttl", "doc", "dh1", "dh2", "dh3", "gavel", "stampG", "cnt", "cnum", "clk", "ring", "mh", "hh", "hrs", "longest", "rej", "c1", "c2", "c3", "endCard", "heat", "lines"]
+    .reduce((o, id) => (o[id] = $(id), o), {});
+
+  function render(t) {
+    // Beat 0 (0-2.8): title
+    op(E.g0, Math.min(seg(t, 0.1, 0.7), 1 - seg(t, 2.5, 2.9)));
+    const tr = eout(seg(t, 0.3, 1.1));
+    E.trio0.setAttribute("transform", `translate(216 ${(330 - 30 * tr).toFixed(1)})`);
+    op(E.ttl, seg(t, 0.8, 1.4));
+    op(E.heat, 0.35 + 0.65 * seg(t, 7.5, 11.5));
+
+    // Document visible in beat 1 (2.9-7.6) and beat 3 (11.6-15.7)
+    const d1 = Math.min(seg(t, 2.9, 3.3), 1 - seg(t, 7.3, 7.7));
+    const d3 = Math.min(seg(t, 11.6, 12.0), 1 - seg(t, 15.4, 15.8));
+    op(E.doc, Math.max(d1, d3));
+    const flip = seg(t, 5.0, 5.3);
+    op(E.dh1, t < 11 ? 1 - flip : 0);
+    op(E.dh2, t < 11 ? flip : 0);
+    op(E.dh3, t >= 11 ? 1 : 0);
+    // Icons: pop in on draft 1, fall out on draft 2, absent in final text
+    icons.forEach(ic => {
+      const pin = eout(seg(t, 3.3 + ic.d * 0.2, 3.6 + ic.d * 0.2));
+      const fall = seg(t, 5.3 + ic.d * 0.12, 6.3 + ic.d * 0.12);
+      const y = ic.y + 300 * fall * fall, rot = 140 * fall * (ic.d % 2 ? 1 : -1);
+      ic.g.setAttribute("transform", `translate(${ic.x} ${y.toFixed(1)}) rotate(${rot.toFixed(1)}) scale(${(0.4 + 0.6 * pin).toFixed(3)})`);
+      op(ic.g, t < 11 ? Math.min(pin, 1 - seg(t, 5.45 + ic.d * 0.12, 5.95 + ic.d * 0.12)) : 0);
+    });
+    // Counter 6 -> 0
+    op(E.cnt, Math.min(seg(t, 3.4, 3.8), 1 - seg(t, 7.3, 7.7)));
+    const n = t < 5.3 ? Math.round(6 * seg(t, 3.3, 4.6)) : 6 - Math.round(6 * seg(t, 5.3, 6.3));
+    E.cnum.textContent = String(Math.max(0, n));
+    E.cnum.setAttribute("fill", t > 6.3 ? "#ff4b3e" : "#ffb347");
+    E.cnum.style.transformOrigin = "216px 515px";
+    E.cnum.style.transform = `scale(${(1 + 0.18 * Math.sin(Math.PI * seg(t, 6.3, 6.7))).toFixed(3)})`;
+
+    // Beat 2 (7.7-11.5): overtime clock
+    op(E.clk, Math.min(seg(t, 7.7, 8.1), 1 - seg(t, 11.2, 11.6)));
+    const h = 40 * eio(seg(t, 8.3, 10.6));
+    E.hh.setAttribute("transform", `rotate(${(180 + h * 30).toFixed(1)} 216 300)`);
+    E.mh.setAttribute("transform", `rotate(${(h * 360).toFixed(1)} 216 300)`);
+    const lap = (h % 12) / 12;
+    E.ring.setAttribute("stroke-dashoffset", (RING * (1 - (h >= 12 && lap < 0.001 ? 1 : lap))).toFixed(1));
+    E.ring.style.strokeOpacity = (0.35 + 0.65 * Math.min(1, h / 36)).toFixed(3);
+    E.hrs.textContent = t >= 10.6 ? "40+ hrs" : "+" + Math.floor(h) + " hrs";
+    op(E.longest, seg(t, 10.7, 11.0));
+
+    // Beat 3 (11.6-15.7): gavel, stamp, rejecters
+    const up = seg(t, 12.0, 12.5), down = eio(seg(t, 12.5, 12.75));
+    const ang = -35 * up + 35 * down;
+    op(E.gavel, t > 11.9 && t < 13.1 ? Math.min(seg(t, 11.9, 12.1), 1 - seg(t, 12.8, 13.05)) : 0);
+    E.gavel.setAttribute("transform", `translate(${(330 - 60 * down).toFixed(1)} ${(250 + 40 * down).toFixed(1)}) rotate(${(ang - 20).toFixed(1)})`);
+    const st = seg(t, 12.75, 12.95);
+    op(E.stampG, t >= 11 ? st : 0);
+    E.stampG.setAttribute("transform", `translate(216 330) rotate(-9) scale(${(1.6 - 0.6 * eout(st)).toFixed(3)})`);
+    op(E.lines, t >= 11 ? 0.6 : 1);
+    op(E.rej, Math.min(seg(t, 13.3, 13.6), 1 - seg(t, 15.4, 15.8)));
+    [[E.c1, 13.5, 52], [E.c2, 13.9, 146], [E.c3, 14.3, 260]].forEach(([c, a, x]) => { const f = eout(seg(t, a, a + 0.4)); op(c, f);
+      c.setAttribute("transform", `translate(${x} ${(510 + 14 * (1 - f)).toFixed(1)})`); });
+
+    // End card (15.9-19.5)
+    op(E.endCard, seg(t, 15.9, 16.4));
+  }
+
+  const replay = $("replay");
+  let raf = 0, t0 = null, playing = false;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick(now) { if (t0 === null) t0 = now; const t = (now - t0) / 1000; render(Math.min(t, DUR));
+    if (t < DUR && playing) raf = requestAnimationFrame(tick); else { playing = false; replay.hidden = false; } }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: DUR, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, DUR)); }, play };
+
+  function fit() { const s = Math.min(innerWidth / 432, innerHeight / 768); $("stage").style.transform = `translate(-50%, -50%) scale(${s})`; }
+  addEventListener("resize", fit); fit();
+  render(0);
+  const start = () => { if (reduce) { render(DUR); replay.hidden = false; } else play(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+</body>
+</html>
