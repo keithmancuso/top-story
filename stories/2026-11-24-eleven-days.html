@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>11 Days</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=block">
+<style>
+/* 11 Days. Jensen Huang resigned as Nvidia CEO on Nov 12, 2026 (scandal over affairs, one with a woman US intelligence
+   suspected of spying for China; China denies). Board chair said the company did not intend to reinstate him. Trump said
+   he "would not mind seeing that". Mon Nov 23 the board unanimously reinstated him, effective immediately; NVDA closed
+   $165.05, +31.48% (prior close $125.53). Closes (StockAnalysis / S&P Global): Nov 11 173.73, 12 166.19, 13 162.85,
+   16 156.14, 17 155.46, 18 150.96, 19 145.98, 20 125.53, 23 165.05. Nov 11 -> Nov 20 = -27.7%.
+   Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+:root {
+  --ink: #f2f4ef; --muted: #9aa39a; --bg: #0b0d0c; --nv: #76b900; --red: #ff4d43; --gold: #ffd166;
+  --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f2f4ef; } }
+:root[data-theme="dark"] { --ink: #f2f4ef; }
+html, body { height: 100%; margin: 0; }
+body { background: #070908; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #070908; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
+  background: radial-gradient(110% 70% at 50% 40%, #16201a 0%, #0d110f 55%, #070908 100%); }
+#glow { position: absolute; inset: 0; background: radial-gradient(80% 45% at 50% 70%, rgba(118,185,0,.22), rgba(118,185,0,0) 70%); opacity: 0; }
+.abs { position: absolute; }
+#sv { left: 0; top: 0; width: 432px; height: 768px; }
+svg text { font-family: var(--sans); }
+.k { font: 600 13px var(--sans); letter-spacing: .18em; fill: var(--muted); }
+.ttl { font: 700 72px var(--serif); fill: var(--ink); }
+.ax { font: 600 12px var(--mono); fill: var(--muted); letter-spacing: .04em; }
+.px { font: 600 15px var(--mono); fill: var(--ink); }
+.chip { font: 700 16px var(--sans); letter-spacing: .02em; }
+.badge { font: 700 50px var(--serif); font-variant-numeric: tabular-nums; }
+.calm { font: 700 13px var(--sans); letter-spacing: .2em; fill: #fff; }
+.cald { font: 700 54px var(--serif); fill: #141714; font-variant-numeric: tabular-nums; }
+#endCard { left: 26px; top: 150px; width: 354px; text-align: center; opacity: 0; }
+#endCard .jk { display: block; margin: 0 auto 10px; }
+#endCard h1 { margin: 0; font: 700 60px/1 var(--serif); }
+#endCard .row { margin-top: 26px; display: flex; justify-content: center; gap: 14px; }
+#endCard .pill { width: 144px; padding: 14px 0 12px; border-radius: 12px; font: 700 36px/1 var(--serif); }
+#endCard .pill small { display: block; margin-top: 8px; font: 600 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#endCard .p1 { border: 2px solid var(--red); color: var(--red); }
+#endCard .p2 { border: 2px solid var(--nv); color: var(--nv); }
+#endCard .line { margin-top: 22px; font: 600 15px/1.3 var(--sans); letter-spacing: .04em; }
+#endCard .src { margin-top: 30px; font: 500 11.5px/1.55 var(--sans); color: var(--muted); }
+#endCard .by { margin-top: 8px; font: 500 11px/1.4 var(--sans); color: #6f786f; }
+#replay { position: absolute; left: 50%; top: 556px; transform: translateX(-50%); padding: 10px 20px; border-radius: 999px;
+  border: 1.5px solid rgba(242,244,239,.4); background: rgba(11,13,12,.75); color: var(--ink); font: 600 13px/1 var(--sans);
+  letter-spacing: .08em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay[hidden] { display: none; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <div id="glow"></div>
+  <svg id="sv" class="abs" viewBox="0 0 432 768">
+    <defs>
+      <symbol id="jacket" viewBox="0 0 100 90">
+        <path d="M6 14 Q50 -4 94 14 L90 88 L60 88 L50 44 L40 88 L10 88 Z" fill="#141414" stroke="#3a3a3a" stroke-width="1.5"/>
+        <path d="M34 8 L50 44 L42 10 Z M66 8 L50 44 L58 10 Z" fill="#262626" stroke="#4a4a4a" stroke-width="1"/>
+        <path d="M18 22 Q16 50 20 80" stroke="#fff" stroke-opacity=".18" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M80 22 Q83 50 79 80" stroke="#fff" stroke-opacity=".12" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M44 60 L44 84" stroke="#777" stroke-width="1.2" stroke-dasharray="2 2"/>
+      </symbol>
+    </defs>
+
+    <!-- Beat 0: title -->
+    <g id="g0">
+      <text class="k" x="216" y="236" text-anchor="middle">NVIDIA · NOV 2026</text>
+      <use id="jk0" href="#jacket" x="166" y="262" width="100" height="90"/>
+      <text id="ttl" class="ttl" x="216" y="438" text-anchor="middle">11 Days</text>
+    </g>
+
+    <!-- Scene -->
+    <g id="scene">
+      <!-- Chair -->
+      <g id="chair">
+        <rect x="86" y="150" width="88" height="72" rx="16" fill="#2b3134" stroke="#465056" stroke-width="1.5"/>
+        <rect x="76" y="222" width="108" height="16" rx="8" fill="#3c4448"/>
+        <rect x="126" y="238" width="8" height="20" fill="#465056"/>
+        <path d="M88 262 L172 262" stroke="#465056" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="90" cy="268" r="4.5" fill="#465056"/><circle cx="130" cy="268" r="4.5" fill="#465056"/><circle cx="170" cy="268" r="4.5" fill="#465056"/>
+      </g>
+      <use id="jk" href="#jacket" x="80" y="142" width="100" height="90"/>
+
+      <!-- Calendar -->
+      <g id="cal" transform="translate(312 196)">
+        <g id="calPage">
+          <rect x="-48" y="-54" width="96" height="108" rx="10" fill="#f2f4ef"/>
+          <path d="M-48 -44 A10 10 0 0 1 -38 -54 L38 -54 A10 10 0 0 1 48 -44 L48 -24 L-48 -24 Z" fill="#c8312a"/>
+          <text class="calm" x="0" y="-33" text-anchor="middle">NOV</text>
+          <text id="calD" class="cald" x="0" y="36" text-anchor="middle">11</text>
+        </g>
+      </g>
+
+      <!-- Status chips (one slot) -->
+      <g id="chips"></g>
+
+      <!-- Chart -->
+      <g id="chart">
+        <line x1="44" y1="520" x2="370" y2="520" stroke="#f2f4ef" stroke-opacity=".25" stroke-width="1.5"/>
+        <g id="ticks"></g>
+        <text class="ax" x="60" y="544" text-anchor="middle">NOV 11</text>
+        <text class="ax" x="300" y="544" text-anchor="middle">20</text>
+        <text class="ax" x="350" y="544" text-anchor="middle">23</text>
+        <path id="fall" d="" fill="none" stroke="#ff4d43" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <path id="rise" d="" fill="none" stroke="#76b900" stroke-width="5" stroke-linecap="round"/>
+        <circle id="head" r="6" fill="#f2f4ef"/>
+        <text id="px" class="px" text-anchor="middle">$173.73</text>
+        <text id="b1" class="badge" x="160" y="494" text-anchor="middle" fill="#ff4d43">−28%</text>
+        <text id="b2" class="badge" x="160" y="494" text-anchor="middle" fill="#76b900">+31%</text>
+      </g>
+    </g>
+  </svg>
+
+  <div id="endCard" class="abs">
+    <svg class="jk" width="78" height="70" viewBox="0 0 100 90"><use href="#jacket"/></svg>
+    <h1>11 Days</h1>
+    <div class="row">
+      <div class="pill p1">−28%<small>Nov 11–20</small></div>
+      <div class="pill p2">+31%<small>Nov 23</small></div>
+    </div>
+    <div class="line">Out Nov 12 · Back Nov 23</div>
+    <div class="src">NVDA closing prices · Sources: CBS News, ABC News (Australia), Fox Business, Investing.com, StockAnalysis (S&amp;P Global)</div>
+    <div class="by">Animated by Claude</div>
+  </div>
+
+  <button id="replay" hidden>&#8635; Replay</button>
+</div></div>
+<script>
+(() => {
+  const DUR = 19.5;
+  const NS = "http://www.w3.org/2000/svg";
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+  const eout = x => 1 - Math.pow(1 - x, 3);
+  const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const op = (el, v) => { el.style.opacity = clamp(v, 0, 1).toFixed(3); };
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+
+  // Closing prices (StockAnalysis / S&P Global)
+  const P = [[11, 173.73], [12, 166.19], [13, 162.85], [16, 156.14], [17, 155.46], [18, 150.96], [19, 145.98], [20, 125.53], [23, 165.05]];
+  const X = [60, 90, 120, 150, 180, 210, 240, 300, 350].map((x, i) => i < 7 ? 60 + i * 34 : x);
+  X[7] = 300; X[8] = 350;
+  const Y = p => 330 + (180 - p) / 60 * 190;
+  const pts = P.map(([d, p], i) => ({ d, p, x: X[i], y: Y(p) }));
+  pts.forEach(q => mk("line", { x1: q.x, y1: 516, x2: q.x, y2: 524, stroke: "#f2f4ef", "stroke-opacity": ".4", "stroke-width": 1.5 }, $("ticks")));
+
+  // Chips
+  const chipDefs = [["CEO out", "#ff4d43"], ["Board: no return", "#f2f4ef"], ["Trump weighs in", "#ffd166"], ["CEO back", "#76b900"]];
+  const chips = chipDefs.map(([txt, col]) => {
+    const g = mk("g", {}, $("chips"));
+    const w = 30 + txt.length * 9.2;
+    mk("rect", { x: -w / 2, y: -17, width: w, height: 34, rx: 17, fill: col, "fill-opacity": ".14", stroke: col, "stroke-opacity": ".8", "stroke-width": 1.5 }, g);
+    const t = mk("text", { class: "chip", x: 0, y: 6, "text-anchor": "middle", fill: col }, g); t.textContent = txt;
+    return g;
+  });
+
+  const E = ["g0", "jk0", "ttl", "scene", "jk", "chair", "calPage", "calD", "fall", "rise", "head", "px", "b1", "b2", "endCard", "glow"]
+    .reduce((o, id) => (o[id] = $(id), o), {});
+
+  // progress along the line: u in [0, 8] (index space)
+  function lineTo(u) {
+    const i = Math.floor(u), f = u - i;
+    const a = pts[Math.min(i, 8)], b = pts[Math.min(i + 1, 8)];
+    return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f, p: a.p + (b.p - a.p) * f };
+  }
+  function pathUpTo(u, from) {
+    let d = `M${pts[from].x} ${pts[from].y.toFixed(1)}`;
+    for (let i = from + 1; i <= Math.floor(u); i++) d += ` L${pts[i].x} ${pts[i].y.toFixed(1)}`;
+    const h = lineTo(u); d += ` L${h.x.toFixed(1)} ${h.y.toFixed(1)}`; return d;
+  }
+
+  function render(t) {
+    // Beat 0 (0-2.6): title
+    op(E.g0, Math.min(seg(t, 0.1, 0.6), 1 - seg(t, 2.3, 2.7)));
+    E.jk0.setAttribute("y", (282 - 20 * eout(seg(t, 0.2, 1.0))).toFixed(1));
+    op(E.ttl, seg(t, 0.7, 1.3));
+
+    // Scene (2.7-15.6)
+    op(E.scene, Math.min(seg(t, 2.7, 3.1), 1 - seg(t, 15.4, 15.8)));
+
+    // Line progress
+    let u = 0;
+    if (t >= 3.3) u = seg(t, 3.3, 4.0);                         // Nov 11 -> 12
+    if (t >= 4.2) u = 1 + 6 * seg(t, 4.2, 8.6);                 // Nov 12 -> 20
+    if (t < 4.2 && t >= 4.0) u = 1;
+    const r = eio(seg(t, 11.8, 12.8));                          // Nov 20 -> 23
+    const fallU = Math.min(u, 7);
+    E.fall.setAttribute("d", pathUpTo(fallU, 0));
+    E.rise.setAttribute("d", r > 0 ? pathUpTo(7 + r, 7) : "");
+    const h = r > 0 ? lineTo(7 + r) : lineTo(fallU);
+    E.head.setAttribute("cx", h.x.toFixed(1)); E.head.setAttribute("cy", h.y.toFixed(1));
+    E.head.setAttribute("fill", r > 0 ? "#76b900" : (u > 0.05 ? "#ff4d43" : "#f2f4ef"));
+    // show the last real close reached (no interpolated prices)
+    const price = r > 0 ? (r > 0.98 ? 165.05 : 125.53 + (165.05 - 125.53) * r) : pts[Math.floor(fallU + 0.02)].p;
+    E.px.textContent = "$" + price.toFixed(2);
+    const right = h.x <= 310;
+    E.px.setAttribute("text-anchor", right ? "start" : "end");
+    E.px.setAttribute("x", (right ? h.x + 9 : h.x - 12).toFixed(1));
+    E.px.setAttribute("y", (h.y - 12).toFixed(1));
+    E.px.setAttribute("fill", r > 0 ? "#76b900" : "#f2f4ef");
+
+    // Calendar day
+    let day = 11;
+    if (u >= 1) day = pts[Math.min(7, Math.round(u))].d;
+    if (t >= 11.0) day = 23;
+    const prev = E.calD.textContent;
+    E.calD.textContent = String(day);
+    // flip squash right when the day changes (deterministic: based on time since segment boundary)
+    let flip = 0;
+    const boundaries = [3.65]; for (let k = 1; k < 7; k++) boundaries.push(4.2 + (k + 0.5) * (4.4 / 6)); boundaries.push(11.0);
+    boundaries.forEach(b => { const d = t - b; if (d >= 0 && d < 0.22) flip = Math.max(flip, Math.sin(Math.PI * d / 0.22)); });
+    E.calPage.setAttribute("transform", `scale(1 ${(1 - 0.75 * flip).toFixed(3)})`);
+
+    // Jacket: on chair, lifts off at Nov 12, drops back Nov 23
+    const off = eio(seg(t, 3.4, 4.1)), back = eout(seg(t, 11.0, 11.6));
+    const lift = off * (1 - back);
+    E.jk.setAttribute("y", (142 - 60 * lift).toFixed(1));
+    op(E.jk, 1 - lift);
+    E.chair.style.opacity = (1 - 0.45 * lift).toFixed(3);
+
+    // Chips: one at a time, under the chair/calendar
+    const windows = [[3.5, 6.1], [6.3, 9.4], [9.6, 10.9], [11.1, 15.6]];
+    chips.forEach((g, i) => {
+      const [a, b] = windows[i]; const f = eout(seg(t, a, a + 0.3));
+      op(g, Math.min(f, 1 - seg(t, b - 0.2, b)));
+      g.setAttribute("transform", `translate(216 ${(292 + 8 * (1 - f)).toFixed(1)})`);
+    });
+
+    // Badges
+    const b1 = seg(t, 8.7, 9.1);
+    op(E.b1, Math.min(b1, 1 - seg(t, 11.6, 11.9)));
+    const b2 = seg(t, 12.6, 12.9);
+    op(E.b2, b2);
+    const pulse = 1 + 0.16 * Math.sin(Math.PI * seg(t, 12.6, 13.1));
+    E.b2.setAttribute("transform", `translate(160 478) scale(${pulse.toFixed(3)}) translate(-160 -478)`);
+    op(E.glow, 0.9 * seg(t, 12.0, 13.0) * (1 - seg(t, 15.4, 15.8)));
+
+    // End card (15.9-19.5)
+    op(E.endCard, seg(t, 15.9, 16.4));
+  }
+
+  const replay = $("replay");
+  let raf = 0, t0 = null, playing = false;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick(now) { if (t0 === null) t0 = now; const t = (now - t0) / 1000; render(Math.min(t, DUR));
+    if (t < DUR && playing) raf = requestAnimationFrame(tick); else { playing = false; replay.hidden = false; } }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: DUR, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, DUR)); }, play };
+
+  function fit() { const s = Math.min(innerWidth / 432, innerHeight / 768); $("stage").style.transform = `translate(-50%, -50%) scale(${s})`; }
+  addEventListener("resize", fit); fit();
+  render(0);
+  const start = () => { if (reduce) { render(DUR); replay.hidden = false; } else play(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+</body>
+</html>
