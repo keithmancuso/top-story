@@ -2,250 +2,339 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>11 Days</title>
+<title>68 Barrels</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=block">
 <style>
-/* 11 Days. Jensen Huang resigned as Nvidia CEO on Nov 12, 2026 (scandal over affairs, one with a woman US intelligence
-   suspected of spying for China; China denies). Board chair said the company did not intend to reinstate him. Trump said
-   he "would not mind seeing that". Mon Nov 23 the board unanimously reinstated him, effective immediately; NVDA closed
-   $165.05, +31.48% (prior close $125.53). Closes (StockAnalysis / S&P Global): Nov 11 173.73, 12 166.19, 13 162.85,
-   16 156.14, 17 155.46, 18 150.96, 19 145.98, 20 125.53, 23 165.05. Nov 11 -> Nov 20 = -27.7%.
+/* 68 Barrels. Iowa Army Ammunition Plant, Middletown, Iowa. 68 barrels/drums of degraded, crystallized lead azide
+   (Army: "more than 9,700 pounds net explosive weight"), stored in earth-covered bunkers, too sensitive to move or treat.
+   Controlled in-place detonation set for Wed Nov 25 2026 ~9:00 a.m. CT. Originally Fri Nov 20, moved to Mon Nov 23
+   (ahead of a temperature drop), then to Wed (weather, mitigation). Cold/freezing raises the risk (court filings).
+   8th Circuit denied environmental groups' emergency motion Mon Nov 23. Relocation recommended within a five-mile
+   cone southwest of the plant; shelter-in-place alert up to 20 miles away. Sources: Army.mil, AP via PBS, ABC News, CBS News.
    Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
 :root {
-  --ink: #f2f4ef; --muted: #9aa39a; --bg: #0b0d0c; --nv: #76b900; --red: #ff4d43; --gold: #ffd166;
+  --ink: #f1efe6; --muted: #a5a291; --bg: #0d0e0a; --haz: #ffc531; --red: #ff5a3c; --olive: #5b6136; --lead: #8f9499; --ice: #8fd3ff;
   --serif: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f2f4ef; } }
-:root[data-theme="dark"] { --ink: #f2f4ef; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f1efe6; } }
+:root[data-theme="dark"] { --ink: #f1efe6; }
 html, body { height: 100%; margin: 0; }
-body { background: #070908; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
-#wrap { position: fixed; inset: 0; overflow: hidden; background: #070908; }
+body { background: #080906; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #080906; }
 #stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
-  background: radial-gradient(110% 70% at 50% 40%, #16201a 0%, #0d110f 55%, #070908 100%); }
-#glow { position: absolute; inset: 0; background: radial-gradient(80% 45% at 50% 70%, rgba(118,185,0,.22), rgba(118,185,0,0) 70%); opacity: 0; }
+  background: radial-gradient(110% 70% at 50% 40%, #1c1e14 0%, #10110c 55%, #080906 100%); }
 .abs { position: absolute; }
 #sv { left: 0; top: 0; width: 432px; height: 768px; }
 svg text { font-family: var(--sans); }
-.k { font: 600 13px var(--sans); letter-spacing: .18em; fill: var(--muted); }
-.ttl { font: 700 72px var(--serif); fill: var(--ink); }
-.ax { font: 600 12px var(--mono); fill: var(--muted); letter-spacing: .04em; }
-.px { font: 600 15px var(--mono); fill: var(--ink); }
-.chip { font: 700 16px var(--sans); letter-spacing: .02em; }
-.badge { font: 700 50px var(--serif); font-variant-numeric: tabular-nums; }
-.calm { font: 700 13px var(--sans); letter-spacing: .2em; fill: #fff; }
-.cald { font: 700 54px var(--serif); fill: #141714; font-variant-numeric: tabular-nums; }
-#endCard { left: 26px; top: 150px; width: 354px; text-align: center; opacity: 0; }
-#endCard .jk { display: block; margin: 0 auto 10px; }
-#endCard h1 { margin: 0; font: 700 60px/1 var(--serif); }
-#endCard .row { margin-top: 26px; display: flex; justify-content: center; gap: 14px; }
-#endCard .pill { width: 144px; padding: 14px 0 12px; border-radius: 12px; font: 700 36px/1 var(--serif); }
+.k { font: 600 13px var(--sans); letter-spacing: .2em; fill: var(--muted); }
+.ttl { font: 700 70px var(--serif); fill: var(--ink); }
+.chip { font: 700 19px var(--sans); letter-spacing: .01em; fill: var(--ink); }
+.big { font: 700 64px var(--serif); font-variant-numeric: tabular-nums; }
+.lbl { font: 700 14px var(--sans); letter-spacing: .06em; }
+.calm { font: 700 14px var(--sans); letter-spacing: .2em; fill: #fff; }
+.cald { font: 700 62px var(--serif); fill: #15160f; font-variant-numeric: tabular-nums; }
+.stamp { font: 800 17px var(--sans); letter-spacing: .14em; fill: var(--red); }
+#endCard { left: 26px; top: 140px; width: 354px; text-align: center; opacity: 0; }
+#endCard .ic { display: block; margin: 0 auto 10px; }
+#endCard h1 { margin: 0; font: 700 58px/1 var(--serif); }
+#endCard .row { margin-top: 24px; display: flex; justify-content: center; gap: 14px; }
+#endCard .pill { width: 150px; padding: 14px 0 12px; border-radius: 12px; font: 700 32px/1 var(--serif); }
 #endCard .pill small { display: block; margin-top: 8px; font: 600 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-#endCard .p1 { border: 2px solid var(--red); color: var(--red); }
-#endCard .p2 { border: 2px solid var(--nv); color: var(--nv); }
-#endCard .line { margin-top: 22px; font: 600 15px/1.3 var(--sans); letter-spacing: .04em; }
-#endCard .src { margin-top: 30px; font: 500 11.5px/1.55 var(--sans); color: var(--muted); }
-#endCard .by { margin-top: 8px; font: 500 11px/1.4 var(--sans); color: #6f786f; }
+#endCard .p1 { border: 2px solid var(--haz); color: var(--haz); }
+#endCard .p2 { border: 2px solid var(--red); color: var(--red); }
+#endCard .line { margin-top: 22px; font: 600 16px/1.3 var(--sans); letter-spacing: .04em; }
+#endCard .src { margin-top: 28px; font: 500 11.5px/1.55 var(--sans); color: var(--muted); }
+#endCard .by { margin-top: 8px; font: 500 11px/1.4 var(--sans); color: #77746a; }
 #replay { position: absolute; left: 50%; top: 556px; transform: translateX(-50%); padding: 10px 20px; border-radius: 999px;
-  border: 1.5px solid rgba(242,244,239,.4); background: rgba(11,13,12,.75); color: var(--ink); font: 600 13px/1 var(--sans);
+  border: 1.5px solid rgba(241,239,230,.4); background: rgba(13,14,10,.75); color: var(--ink); font: 600 13px/1 var(--sans);
   letter-spacing: .08em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 #replay[hidden] { display: none; }
 </style>
 </head>
 <body>
 <div id="wrap"><div id="stage">
-  <div id="glow"></div>
   <svg id="sv" class="abs" viewBox="0 0 432 768">
     <defs>
-      <symbol id="jacket" viewBox="0 0 100 90">
-        <path d="M6 14 Q50 -4 94 14 L90 88 L60 88 L50 44 L40 88 L10 88 Z" fill="#141414" stroke="#3a3a3a" stroke-width="1.5"/>
-        <path d="M34 8 L50 44 L42 10 Z M66 8 L50 44 L58 10 Z" fill="#262626" stroke="#4a4a4a" stroke-width="1"/>
-        <path d="M18 22 Q16 50 20 80" stroke="#fff" stroke-opacity=".18" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M80 22 Q83 50 79 80" stroke="#fff" stroke-opacity=".12" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path d="M44 60 L44 84" stroke="#777" stroke-width="1.2" stroke-dasharray="2 2"/>
+      <symbol id="barrel" viewBox="0 0 26 32">
+        <rect x="1.5" y="1.5" width="23" height="29" rx="4" fill="#5b6136" stroke="#7d8450" stroke-width="1.4"/>
+        <path d="M1.5 10 H24.5 M1.5 22 H24.5" stroke="#3b3f22" stroke-width="2"/>
+        <ellipse cx="13" cy="3.2" rx="8" ry="1.4" fill="#7d8450"/>
       </symbol>
+      <symbol id="glint" viewBox="-10 -10 20 20">
+        <path d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2 Z" fill="#ffc531"/>
+      </symbol>
+      <radialGradient id="flash" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#fff4c8"/><stop offset=".45" stop-color="#ffc531" stop-opacity=".7"/><stop offset="1" stop-color="#ffc531" stop-opacity="0"/>
+      </radialGradient>
     </defs>
 
     <!-- Beat 0: title -->
     <g id="g0">
-      <text class="k" x="216" y="236" text-anchor="middle">NVIDIA · NOV 2026</text>
-      <use id="jk0" href="#jacket" x="166" y="262" width="100" height="90"/>
-      <text id="ttl" class="ttl" x="216" y="438" text-anchor="middle">11 Days</text>
+      <text class="k" x="216" y="226" text-anchor="middle">IOWA · TODAY</text>
+      <use id="b0" href="#barrel" x="180" y="256" width="72" height="88"/>
+      <use id="gl0" href="#glint" x="236" y="252" width="26" height="26"/>
+      <text id="ttl" class="ttl" x="216" y="440" text-anchor="middle">68 Barrels</text>
     </g>
 
-    <!-- Scene -->
-    <g id="scene">
-      <!-- Chair -->
-      <g id="chair">
-        <rect x="86" y="150" width="88" height="72" rx="16" fill="#2b3134" stroke="#465056" stroke-width="1.5"/>
-        <rect x="76" y="222" width="108" height="16" rx="8" fill="#3c4448"/>
-        <rect x="126" y="238" width="8" height="20" fill="#465056"/>
-        <path d="M88 262 L172 262" stroke="#465056" stroke-width="6" stroke-linecap="round"/>
-        <circle cx="90" cy="268" r="4.5" fill="#465056"/><circle cx="130" cy="268" r="4.5" fill="#465056"/><circle cx="170" cy="268" r="4.5" fill="#465056"/>
-      </g>
-      <use id="jk" href="#jacket" x="80" y="142" width="100" height="90"/>
+    <!-- Beat 1-2: barrel grid -->
+    <g id="grid"></g>
+    <g id="glints"></g>
 
-      <!-- Calendar -->
-      <g id="cal" transform="translate(312 196)">
-        <g id="calPage">
-          <rect x="-48" y="-54" width="96" height="108" rx="10" fill="#f2f4ef"/>
-          <path d="M-48 -44 A10 10 0 0 1 -38 -54 L38 -54 A10 10 0 0 1 48 -44 L48 -24 L-48 -24 Z" fill="#c8312a"/>
-          <text class="calm" x="0" y="-33" text-anchor="middle">NOV</text>
-          <text id="calD" class="cald" x="0" y="36" text-anchor="middle">11</text>
+    <!-- chips -->
+    <g id="chips">
+      <g class="cp"><text class="chip" text-anchor="middle" y="0">~9,700 lb lead azide</text></g>
+      <g class="cp"><text class="chip" text-anchor="middle" y="0" fill="#ffc531" style="fill:#ffc531">Degraded · shock-sensitive</text></g>
+      <g class="cp">
+        <g transform="translate(-96 -26)">
+          <rect x="0" y="8" width="38" height="20" rx="3" fill="#6d7158"/><rect x="38" y="14" width="16" height="14" rx="2" fill="#8b8f73"/>
+          <circle cx="10" cy="30" r="4.5" fill="#cfcab5"/><circle cx="44" cy="30" r="4.5" fill="#cfcab5"/>
+          <path d="M-4 0 L58 38" stroke="#ff5a3c" stroke-width="4" stroke-linecap="round"/>
         </g>
+        <text class="chip" text-anchor="start" x="-26" y="0">Too risky to move</text>
       </g>
+      <g class="cp"><text class="chip" text-anchor="middle" y="0" style="fill:#8fd3ff">Freezing raises the risk</text></g>
+    </g>
 
-      <!-- Status chips (one slot) -->
-      <g id="chips"></g>
-
-      <!-- Chart -->
-      <g id="chart">
-        <line x1="44" y1="520" x2="370" y2="520" stroke="#f2f4ef" stroke-opacity=".25" stroke-width="1.5"/>
-        <g id="ticks"></g>
-        <text class="ax" x="60" y="544" text-anchor="middle">NOV 11</text>
-        <text class="ax" x="300" y="544" text-anchor="middle">20</text>
-        <text class="ax" x="350" y="544" text-anchor="middle">23</text>
-        <path id="fall" d="" fill="none" stroke="#ff4d43" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-        <path id="rise" d="" fill="none" stroke="#76b900" stroke-width="5" stroke-linecap="round"/>
-        <circle id="head" r="6" fill="#f2f4ef"/>
-        <text id="px" class="px" text-anchor="middle">$173.73</text>
-        <text id="b1" class="badge" x="160" y="494" text-anchor="middle" fill="#ff4d43">−28%</text>
-        <text id="b2" class="badge" x="160" y="494" text-anchor="middle" fill="#76b900">+31%</text>
+    <!-- thermometer -->
+    <g id="thermo" transform="translate(216 300)">
+      <rect x="-14" y="-110" width="28" height="170" rx="14" fill="#1b1d16" stroke="#a5a291" stroke-width="2"/>
+      <circle cx="0" cy="74" r="26" fill="#1b1d16" stroke="#a5a291" stroke-width="2"/>
+      <rect id="merc" x="-7" y="-80" width="14" height="150" rx="7" fill="#ff5a3c"/>
+      <circle id="bulb" cx="0" cy="74" r="19" fill="#ff5a3c"/>
+      <path d="M22 -60 H34 M22 -30 H34 M22 0 H34 M22 30 H34" stroke="#a5a291" stroke-width="2"/>
+      <g id="flake" transform="translate(84 -40)" stroke="#8fd3ff" stroke-width="4" stroke-linecap="round">
+        <path d="M0 -26 V26 M-22.5 -13 L22.5 13 M-22.5 13 L22.5 -13"/>
+        <path d="M-7 -20 L0 -13 L7 -20 M-7 20 L0 13 L7 20" fill="none"/>
       </g>
+    </g>
+
+    <!-- calendar -->
+    <g id="cal" transform="translate(216 296)">
+      <g id="calPage">
+        <rect x="-78" y="-90" width="156" height="170" rx="12" fill="#f1efe6"/>
+        <rect x="-78" y="-90" width="156" height="40" rx="12" fill="#ff5a3c"/>
+        <rect x="-78" y="-62" width="156" height="12" fill="#ff5a3c"/>
+        <text id="calM" class="calm" x="0" y="-63" text-anchor="middle">FRI · NOV</text>
+        <text id="calD" class="cald" x="0" y="34" text-anchor="middle">20</text>
+      </g>
+      <g id="st1" transform="translate(0 58) rotate(-8)"><rect x="-74" y="-17" width="148" height="34" rx="4" fill="none" stroke="#ff5a3c" stroke-width="3"/><text class="stamp" x="0" y="6" text-anchor="middle">DELAYED</text></g>
+      <text id="court" class="chip" x="0" y="130" text-anchor="middle" style="fill:#ffc531">Court: go ahead</text>
+      <g id="gavel" transform="translate(78 -90)"><g id="gavelHead"><circle r="26" fill="#ffc531"/><path d="M-12 1 L-3 10 L13 -9" stroke="#15160f" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></g>
+    </g>
+
+    <!-- map -->
+    <g id="map">
+      <circle id="ring20" cx="216" cy="300" r="150" fill="rgba(143,148,153,.07)" stroke="#8f9499" stroke-width="2" stroke-dasharray="6 6"/>
+      <path id="cone" d="" fill="rgba(255,90,60,.38)" stroke="#ff5a3c" stroke-width="2"/>
+      <g id="plume"></g>
+      <g id="plant" transform="translate(216 300)">
+        <circle r="9" fill="#ffc531"/><circle r="15" fill="none" stroke="#ffc531" stroke-width="2"/>
+      </g>
+      <text class="lbl" x="232" y="292" style="fill:#f1efe6">Plant</text>
+      <g id="wind" transform="translate(300 214)">
+        <path d="M0 0 L-46 46" stroke="#f1efe6" stroke-width="3" stroke-linecap="round"/>
+        <path d="M-46 46 L-44 30 M-46 46 L-30 44" stroke="#f1efe6" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <text class="lbl" x="8" y="-4" style="fill:#f1efe6">WIND</text>
+      </g>
+      <g id="lab5"><text class="lbl" x="30" y="440" style="fill:#ff5a3c">5 MI · RELOCATE</text><text class="lbl" x="30" y="458" style="fill:#ff5a3c;font-size:12px">ADVISED</text></g>
+      <g id="lab20"><text class="lbl" x="216" y="482" style="fill:#c7cbcf" text-anchor="middle">UP TO 20 MI · STAY INDOORS</text></g>
+    </g>
+
+    <!-- bunker -->
+    <g id="bunker">
+      <circle id="glow" cx="216" cy="330" r="150" fill="url(#flash)"/>
+      <path d="M100 380 Q216 240 332 380 Z" fill="#3e4228" stroke="#6b7046" stroke-width="2"/>
+      <rect x="186" y="340" width="60" height="40" rx="3" fill="#2a2c1c" stroke="#6b7046" stroke-width="2"/>
+      <g id="tanks">
+        <rect x="74" y="342" width="18" height="38" rx="4" fill="#4f7fa3"/><rect x="340" y="342" width="18" height="38" rx="4" fill="#4f7fa3"/>
+        <rect x="52" y="348" width="18" height="32" rx="4" fill="#3f6a8a"/><rect x="362" y="348" width="18" height="32" rx="4" fill="#3f6a8a"/>
+      </g>
+      <g id="mist"></g>
+      <path d="M34 380 H376" stroke="#6b7046" stroke-width="2"/>
+      <g id="clock" transform="translate(216 180)">
+        <circle r="40" fill="#15160f" stroke="#f1efe6" stroke-width="3"/>
+        <path d="M0 -32 V-26 M32 0 H26 M0 32 V26 M-32 0 H-26" stroke="#a5a291" stroke-width="2"/>
+        <path id="hh" d="M0 0 L0 -20" stroke="#f1efe6" stroke-width="4" stroke-linecap="round"/>
+        <path id="mh" d="M0 0 L0 -30" stroke="#ffc531" stroke-width="3" stroke-linecap="round"/>
+        <circle r="3.5" fill="#f1efe6"/>
+      </g>
+      <text id="tLbl" class="big" x="216" y="470" text-anchor="middle" style="fill:#ffc531;font-size:46px">9 AM CT</text>
+      <text id="tSub" class="chip" x="216" y="510" text-anchor="middle">Blast in place</text>
     </g>
   </svg>
 
   <div id="endCard" class="abs">
-    <svg class="jk" width="78" height="70" viewBox="0 0 100 90"><use href="#jacket"/></svg>
-    <h1>11 Days</h1>
+    <svg class="ic" width="54" height="66" viewBox="0 0 26 32"><use href="#barrel"/></svg>
+    <h1>68 Barrels</h1>
     <div class="row">
-      <div class="pill p1">−28%<small>Nov 11–20</small></div>
-      <div class="pill p2">+31%<small>Nov 23</small></div>
+      <div class="pill p1">~9,700<small>lb lead azide</small></div>
+      <div class="pill p2">5 mi<small>relocation advised</small></div>
     </div>
-    <div class="line">Out Nov 12 · Back Nov 23</div>
-    <div class="src">NVDA closing prices · Sources: CBS News, ABC News (Australia), Fox Business, Investing.com, StockAnalysis (S&amp;P Global)</div>
+    <div class="line">Set for 9 AM CT today</div>
+    <div class="src">Middletown, Iowa · Sources: U.S. Army, AP, PBS NewsHour, ABC News, CBS News</div>
     <div class="by">Animated by Claude</div>
   </div>
 
   <button id="replay" hidden>&#8635; Replay</button>
 </div></div>
+
 <script>
 (() => {
   const DUR = 19.5;
-  const NS = "http://www.w3.org/2000/svg";
   const $ = id => document.getElementById(id);
+  const NS = "http://www.w3.org/2000/svg";
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
   const eout = x => 1 - Math.pow(1 - x, 3);
   const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
   const op = (el, v) => { el.style.opacity = clamp(v, 0, 1).toFixed(3); };
-  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  const E = {};
+  ["g0","b0","gl0","ttl","grid","glints","thermo","merc","bulb","flake","cal","calPage","calM","calD","st1","gavel","gavelHead","court",
+   "map","ring20","cone","plume","plant","wind","lab5","lab20","bunker","glow","tanks","mist","clock","hh","mh","tLbl","tSub","endCard"].forEach(k => E[k] = $(k));
+  const chips = Array.from(document.querySelectorAll("#chips .cp"));
 
-  // Closing prices (StockAnalysis / S&P Global)
-  const P = [[11, 173.73], [12, 166.19], [13, 162.85], [16, 156.14], [17, 155.46], [18, 150.96], [19, 145.98], [20, 125.53], [23, 165.05]];
-  const X = [60, 90, 120, 150, 180, 210, 240, 300, 350].map((x, i) => i < 7 ? 60 + i * 34 : x);
-  X[7] = 300; X[8] = 350;
-  const Y = p => 330 + (180 - p) / 60 * 190;
-  const pts = P.map(([d, p], i) => ({ d, p, x: X[i], y: Y(p) }));
-  pts.forEach(q => mk("line", { x1: q.x, y1: 516, x2: q.x, y2: 524, stroke: "#f2f4ef", "stroke-opacity": ".4", "stroke-width": 1.5 }, $("ticks")));
-
-  // Chips
-  const chipDefs = [["CEO out", "#ff4d43"], ["Board: no return", "#f2f4ef"], ["Trump weighs in", "#ffd166"], ["CEO back", "#76b900"]];
-  const chips = chipDefs.map(([txt, col]) => {
-    const g = mk("g", {}, $("chips"));
-    const w = 30 + txt.length * 9.2;
-    mk("rect", { x: -w / 2, y: -17, width: w, height: 34, rx: 17, fill: col, "fill-opacity": ".14", stroke: col, "stroke-opacity": ".8", "stroke-width": 1.5 }, g);
-    const t = mk("text", { class: "chip", x: 0, y: 6, "text-anchor": "middle", fill: col }, g); t.textContent = txt;
-    return g;
-  });
-
-  const E = ["g0", "jk0", "ttl", "scene", "jk", "chair", "calPage", "calD", "fall", "rise", "head", "px", "b1", "b2", "endCard", "glow"]
-    .reduce((o, id) => (o[id] = $(id), o), {});
-
-  // progress along the line: u in [0, 8] (index space)
-  function lineTo(u) {
-    const i = Math.floor(u), f = u - i;
-    const a = pts[Math.min(i, 8)], b = pts[Math.min(i + 1, 8)];
-    return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f, p: a.p + (b.p - a.p) * f };
+  // 68 barrels: rows of 10,10,10,10,10,10,8
+  const cells = [];
+  for (let i = 0; i < 68; i++) {
+    const r = Math.floor(i / 10), c = i % 10, inRow = r < 6 ? 10 : 8;
+    const x = 216 - (inRow * 31 - 5) / 2 + c * 31, y = 150 + r * 37;
+    const u = document.createElementNS(NS, "use");
+    u.setAttribute("href", "#barrel"); u.setAttribute("x", x); u.setAttribute("y", y); u.setAttribute("width", 26); u.setAttribute("height", 32);
+    E.grid.appendChild(u); cells.push({ el: u, x, y, d: ((i * 37) % 68) / 68 });
   }
-  function pathUpTo(u, from) {
-    let d = `M${pts[from].x} ${pts[from].y.toFixed(1)}`;
-    for (let i = from + 1; i <= Math.floor(u); i++) d += ` L${pts[i].x} ${pts[i].y.toFixed(1)}`;
-    const h = lineTo(u); d += ` L${h.x.toFixed(1)} ${h.y.toFixed(1)}`; return d;
+  // glints on 14 barrels
+  const glints = [];
+  for (let k = 0; k < 14; k++) {
+    const c = cells[(k * 29 + 5) % 68];
+    const g = document.createElementNS(NS, "use");
+    g.setAttribute("href", "#glint"); g.setAttribute("width", 16); g.setAttribute("height", 16);
+    g.setAttribute("x", c.x + 15); g.setAttribute("y", c.y - 4);
+    E.glints.appendChild(g); glints.push({ el: g, ph: k * 0.37 });
+  }
+  // cone: 5 mi from plant toward SW (scale: 20 mi = 150 px, so 5 mi = 37.5 px; drawn to scale)
+  (() => {
+    const R = 37.5 * 1.0, cx = 216, cy = 300, a0 = (135 - 30) * Math.PI / 180, a1 = (135 + 30) * Math.PI / 180;
+    const p = a => `${(cx + R * Math.cos(a)).toFixed(1)} ${(cy + R * Math.sin(a)).toFixed(1)}`;
+    E.cone.setAttribute("d", `M${cx} ${cy} L${p(a0)} A${R} ${R} 0 0 1 ${p(a1)} Z`);
+  })();
+  // leader line for 5 mi label
+  const lead = document.createElementNS(NS, "path");
+  lead.setAttribute("d", "M194 322 L110 426"); lead.setAttribute("stroke", "#ff5a3c"); lead.setAttribute("stroke-width", "1.5");
+  E.lab5.appendChild(lead);
+  // plume dots drifting SW
+  const dots = [];
+  for (let k = 0; k < 16; k++) {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("r", 2 + (k % 3)); c.setAttribute("fill", "#8f9499");
+    E.plume.appendChild(c); dots.push({ el: c, ph: (k * 0.61) % 1, sp: ((k * 7) % 11 - 5) * 0.06 });
+  }
+  // mist droplets
+  const drops = [];
+  for (let k = 0; k < 18; k++) {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("r", 2); c.setAttribute("fill", "#8fd3ff");
+    E.mist.appendChild(c); drops.push({ el: c, side: k % 2, ph: (k * 0.43) % 1, h: (k * 13) % 7 });
   }
 
   function render(t) {
     // Beat 0 (0-2.6): title
     op(E.g0, Math.min(seg(t, 0.1, 0.6), 1 - seg(t, 2.3, 2.7)));
-    E.jk0.setAttribute("y", (282 - 20 * eout(seg(t, 0.2, 1.0))).toFixed(1));
+    E.b0.setAttribute("y", (276 - 20 * eout(seg(t, 0.2, 1.0))).toFixed(1));
+    op(E.gl0, seg(t, 1.0, 1.3) * (0.6 + 0.4 * Math.sin(t * 9)));
     op(E.ttl, seg(t, 0.7, 1.3));
 
-    // Scene (2.7-15.6)
-    op(E.scene, Math.min(seg(t, 2.7, 3.1), 1 - seg(t, 15.4, 15.8)));
-
-    // Line progress
-    let u = 0;
-    if (t >= 3.3) u = seg(t, 3.3, 4.0);                         // Nov 11 -> 12
-    if (t >= 4.2) u = 1 + 6 * seg(t, 4.2, 8.6);                 // Nov 12 -> 20
-    if (t < 4.2 && t >= 4.0) u = 1;
-    const r = eio(seg(t, 11.8, 12.8));                          // Nov 20 -> 23
-    const fallU = Math.min(u, 7);
-    E.fall.setAttribute("d", pathUpTo(fallU, 0));
-    E.rise.setAttribute("d", r > 0 ? pathUpTo(7 + r, 7) : "");
-    const h = r > 0 ? lineTo(7 + r) : lineTo(fallU);
-    E.head.setAttribute("cx", h.x.toFixed(1)); E.head.setAttribute("cy", h.y.toFixed(1));
-    E.head.setAttribute("fill", r > 0 ? "#76b900" : (u > 0.05 ? "#ff4d43" : "#f2f4ef"));
-    // show the last real close reached (no interpolated prices)
-    const price = r > 0 ? (r > 0.98 ? 165.05 : 125.53 + (165.05 - 125.53) * r) : pts[Math.floor(fallU + 0.02)].p;
-    E.px.textContent = "$" + price.toFixed(2);
-    const right = h.x <= 310;
-    E.px.setAttribute("text-anchor", right ? "start" : "end");
-    E.px.setAttribute("x", (right ? h.x + 9 : h.x - 12).toFixed(1));
-    E.px.setAttribute("y", (h.y - 12).toFixed(1));
-    E.px.setAttribute("fill", r > 0 ? "#76b900" : "#f2f4ef");
-
-    // Calendar day
-    let day = 11;
-    if (u >= 1) day = pts[Math.min(7, Math.round(u))].d;
-    if (t >= 11.0) day = 23;
-    const prev = E.calD.textContent;
-    E.calD.textContent = String(day);
-    // flip squash right when the day changes (deterministic: based on time since segment boundary)
-    let flip = 0;
-    const boundaries = [3.65]; for (let k = 1; k < 7; k++) boundaries.push(4.2 + (k + 0.5) * (4.4 / 6)); boundaries.push(11.0);
-    boundaries.forEach(b => { const d = t - b; if (d >= 0 && d < 0.22) flip = Math.max(flip, Math.sin(Math.PI * d / 0.22)); });
-    E.calPage.setAttribute("transform", `scale(1 ${(1 - 0.75 * flip).toFixed(3)})`);
-
-    // Jacket: on chair, lifts off at Nov 12, drops back Nov 23
-    const off = eio(seg(t, 3.4, 4.1)), back = eout(seg(t, 11.0, 11.6));
-    const lift = off * (1 - back);
-    E.jk.setAttribute("y", (142 - 60 * lift).toFixed(1));
-    op(E.jk, 1 - lift);
-    E.chair.style.opacity = (1 - 0.45 * lift).toFixed(3);
-
-    // Chips: one at a time, under the chair/calendar
-    const windows = [[3.5, 6.1], [6.3, 9.4], [9.6, 10.9], [11.1, 15.6]];
-    chips.forEach((g, i) => {
-      const [a, b] = windows[i]; const f = eout(seg(t, a, a + 0.3));
-      op(g, Math.min(f, 1 - seg(t, b - 0.2, b)));
-      g.setAttribute("transform", `translate(216 ${(292 + 8 * (1 - f)).toFixed(1)})`);
+    // Grid (2.7-6.3): barrels pop in, then glint
+    const gridOut = 1 - seg(t, 6.1, 6.5);
+    cells.forEach(c => {
+      const f = eout(seg(t, 2.7 + c.d * 1.0, 2.95 + c.d * 1.0));
+      op(c.el, Math.min(f, gridOut));
+      c.el.setAttribute("y", (c.y + 10 * (1 - f)).toFixed(1));
+    });
+    const gl = seg(t, 3.9, 4.2) * gridOut;
+    glints.forEach(g => {
+      const tw = 0.5 + 0.5 * Math.sin(t * 7 + g.ph * 6);
+      op(g.el, gl * tw);
     });
 
-    // Badges
-    const b1 = seg(t, 8.7, 9.1);
-    op(E.b1, Math.min(b1, 1 - seg(t, 11.6, 11.9)));
-    const b2 = seg(t, 12.6, 12.9);
-    op(E.b2, b2);
-    const pulse = 1 + 0.16 * Math.sin(Math.PI * seg(t, 12.6, 13.1));
-    E.b2.setAttribute("transform", `translate(160 478) scale(${pulse.toFixed(3)}) translate(-160 -478)`);
-    op(E.glow, 0.9 * seg(t, 12.0, 13.0) * (1 - seg(t, 15.4, 15.8)));
+    // Chips (one at a time) at y 470
+    const win = [[3.0, 4.0], [4.1, 5.1], [5.2, 6.4], [6.7, 8.5]];
+    chips.forEach((g, i) => {
+      const [a, b] = win[i]; const f = eout(seg(t, a, a + 0.3));
+      op(g, Math.min(f, 1 - seg(t, b - 0.2, b)));
+      g.setAttribute("transform", `translate(216 ${(i === 3 ? 520 : 470) + 8 * (1 - f)})`);
+    });
 
-    // End card (15.9-19.5)
-    op(E.endCard, seg(t, 15.9, 16.4));
+    // Thermometer (6.5-8.5): mercury falls, snowflake appears
+    op(E.thermo, Math.min(seg(t, 6.5, 6.8), 1 - seg(t, 8.3, 8.6)));
+    const fall = eio(seg(t, 6.8, 7.9));
+    const top = -80 + 110 * fall;
+    E.merc.setAttribute("y", top.toFixed(1)); E.merc.setAttribute("height", (150 - 110 * fall).toFixed(1));
+    const col = fall > 0.55 ? "#8fd3ff" : "#ff5a3c";
+    E.merc.setAttribute("fill", col); E.bulb.setAttribute("fill", col);
+    op(E.flake, seg(t, 7.4, 7.8));
+    E.flake.setAttribute("transform", `translate(84 -40) rotate(${(60 * seg(t, 7.4, 8.6)).toFixed(1)})`);
+
+    // Calendar (8.6-11.4): FRI 20 -> MON 23 -> WED 25, gavel
+    op(E.cal, Math.min(seg(t, 8.6, 8.9), 1 - seg(t, 11.2, 11.5)));
+    let m = "FRI · NOV", d = "20";
+    if (t >= 9.5) { m = "MON · NOV"; d = "23"; }
+    if (t >= 10.2) { m = "WED · NOV"; d = "25"; }
+    E.calM.textContent = m; E.calD.textContent = d;
+    let flip = 0;
+    [9.5, 10.2].forEach(b => { const dd = t - b + 0.11; if (dd >= 0 && dd < 0.22) flip = Math.max(flip, Math.sin(Math.PI * dd / 0.22)); });
+    E.calPage.setAttribute("transform", `scale(1 ${(1 - 0.75 * flip).toFixed(3)})`);
+    // DELAYED stamp shows on Fri and Mon pages just before each flip
+    const s1 = Math.max(seg(t, 9.0, 9.1) * (1 - seg(t, 9.35, 9.45)), seg(t, 9.75, 9.85) * (1 - seg(t, 10.05, 10.15)));
+    op(E.st1, s1);
+    // Gavel swings down on Wed
+    const gv = seg(t, 10.4, 10.65);
+    op(E.gavel, seg(t, 10.3, 10.45));
+    E.gavelHead.setAttribute("transform", `scale(${(0.4 + 0.6 * eout(gv) + 0.15 * Math.sin(Math.PI * gv)).toFixed(3)})`);
+    op(E.court, seg(t, 10.6, 10.9));
+
+    // Map (11.4-15.4)
+    op(E.map, Math.min(seg(t, 11.4, 11.8), 1 - seg(t, 15.2, 15.5)));
+    const rg = eout(seg(t, 11.6, 12.6));
+    E.ring20.setAttribute("r", (150 * rg).toFixed(1));
+    op(E.ring20, rg);
+    op(E.wind, seg(t, 12.2, 12.6));
+    op(E.cone, seg(t, 12.8, 13.2));
+    op(E.lab5, seg(t, 13.0, 13.4));
+    op(E.lab20, seg(t, 12.4, 12.8));
+    const pf = seg(t, 13.2, 13.6) * (1 - seg(t, 15.0, 15.4));
+    dots.forEach(p => {
+      const u = ((t - 13.2) * 0.35 + p.ph) % 1;
+      const dist = 12 + 120 * (u < 0 ? 0 : u);
+      const ang = (135 + p.sp * 40) * Math.PI / 180;
+      p.el.setAttribute("cx", (216 + dist * Math.cos(ang)).toFixed(1));
+      p.el.setAttribute("cy", (300 + dist * Math.sin(ang)).toFixed(1));
+      op(p.el, pf * 0.5 * (1 - u));
+    });
+
+    // Bunker + clock (15.5-17.6)
+    op(E.bunker, Math.min(seg(t, 15.5, 15.8), 1 - seg(t, 17.4, 17.7)));
+    const ck = eio(seg(t, 15.7, 16.7));
+    const mAng = -180 + 180 * ck;          // minute hand sweeps from :30 to :00
+    const hAng = 255 + 15 * ck;            // hour hand eases to 9
+    E.mh.setAttribute("transform", `rotate(${mAng.toFixed(1)})`);
+    E.hh.setAttribute("transform", `rotate(${hAng.toFixed(1)})`);
+    op(E.tLbl, seg(t, 16.3, 16.6)); op(E.tSub, seg(t, 16.6, 16.9));
+    op(E.glow, 0.55 * seg(t, 16.7, 17.0) * (0.75 + 0.25 * Math.sin(t * 6)));
+    drops.forEach(dp => {
+      const u = ((t - 15.5) * 0.9 + dp.ph) % 1;
+      const x0 = dp.side ? 348 : 84, dir = dp.side ? -1 : 1;
+      dp.el.setAttribute("cx", (x0 + dir * 70 * u).toFixed(1));
+      dp.el.setAttribute("cy", (338 - 40 * Math.sin(Math.PI * u) - dp.h).toFixed(1));
+      op(dp.el, seg(t, 15.6, 15.9) * (1 - u));
+    });
+
+    // End card (17.7-19.5)
+    op(E.endCard, seg(t, 17.7, 18.1));
   }
 
   const replay = $("replay");
