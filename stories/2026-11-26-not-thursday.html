@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Not Thursday</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&display=block">
+<style>
+/* Not Thursday. The 100th Macy's Thanksgiving Day Parade (first held 1924; suspended 1942-44 in WWII) was postponed
+   from Thu Nov 26 2026 to Sat Nov 28, 8:30 a.m., because of a coastal storm / nor'easter. Mayor Mamdani: gusts up to
+   65 mph possible, potential flash flooding. City rule: large balloons can't fly if sustained winds exceed 23 mph or
+   gusts exceed 34 mph (tightened after 1997). First postponement in the parade's history; never before for weather.
+   Sources: CBS New York, NBC New York, AccuWeather, AP.
+   Fixed 432x768 stage; readable content inside safe box x 26-380 / y 108-600. */
+:root {
+  --ink: #f4f1e8; --muted: #a9b0bf; --bg: #0b1220; --red: #ff4d3d; --gold: #ffc23d; --sky: #6fb6ff; --ok: #4fd18b;
+  --serif: "Source Serif 4", Georgia, serif; --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #f4f1e8; } }
+:root[data-theme="dark"] { --ink: #f4f1e8; }
+html, body { height: 100%; margin: 0; }
+body { background: #070b14; color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: #070b14; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
+  background: radial-gradient(120% 70% at 50% 35%, #1a2540 0%, #0f1729 55%, #070b14 100%); }
+.abs { position: absolute; }
+#sv { left: 0; top: 0; width: 432px; height: 768px; }
+svg text { font-family: var(--sans); }
+.k { font: 700 13px var(--sans); letter-spacing: .22em; fill: var(--muted); }
+.ttl { font: 700 54px var(--serif); fill: var(--ink); }
+.yr { font: 700 14px var(--sans); letter-spacing: .04em; fill: var(--muted); }
+.cnt { font: 700 76px var(--serif); fill: var(--ink); font-variant-numeric: tabular-nums; }
+.lbl { font: 700 14px var(--sans); letter-spacing: .14em; }
+.read { font: 700 64px var(--serif); font-variant-numeric: tabular-nums; }
+.calm { font: 800 15px var(--sans); letter-spacing: .2em; fill: #fff; }
+.cald { font: 700 74px var(--serif); fill: #121826; font-variant-numeric: tabular-nums; }
+.stamp { font: 800 18px var(--sans); letter-spacing: .14em; fill: var(--red); }
+.time { font: 700 30px var(--sans); letter-spacing: .04em; fill: var(--gold); }
+#endCard { left: 26px; top: 150px; width: 354px; text-align: center; opacity: 0; }
+#endCard .ic { display: block; margin: 0 auto 10px; }
+#endCard h1 { margin: 0; font: 700 54px/1 var(--serif); }
+#endCard .row { margin-top: 24px; display: flex; justify-content: center; gap: 14px; }
+#endCard .pill { width: 150px; padding: 14px 0 12px; border-radius: 12px; font: 700 30px/1 var(--serif); }
+#endCard .pill small { display: block; margin-top: 8px; font: 600 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+#endCard .p1 { border: 2px solid var(--gold); color: var(--gold); }
+#endCard .p2 { border: 2px solid var(--red); color: var(--red); }
+#endCard .line { margin-top: 22px; font: 600 16px/1.3 var(--sans); letter-spacing: .03em; }
+#endCard .src { margin-top: 26px; font: 500 11.5px/1.55 var(--sans); color: var(--muted); }
+#endCard .by { margin-top: 8px; font: 500 11px/1.4 var(--sans); color: #77808f; }
+#replay { position: absolute; left: 50%; top: 556px; transform: translateX(-50%); padding: 10px 20px; border-radius: 999px;
+  border: 1.5px solid rgba(244,241,232,.4); background: rgba(11,18,32,.75); color: var(--ink); font: 600 13px/1 var(--sans);
+  letter-spacing: .08em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay[hidden] { display: none; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <svg id="sv" class="abs" viewBox="0 0 432 768">
+    <defs>
+      <symbol id="bal" viewBox="-60 -70 120 140">
+        <ellipse cx="0" cy="-6" rx="50" ry="58" fill="#ff4d3d"/>
+        <path d="M-17 -62 Q-30 -6 -17 50 M17 -62 Q30 -6 17 50" stroke="#ffc23d" stroke-width="9" fill="none"/>
+        <path d="M-40 -40 Q0 -52 40 -40" stroke="#fff" stroke-opacity=".25" stroke-width="5" fill="none"/>
+        <path d="M-7 50 L0 60 L7 50 Z" fill="#c93a2d"/>
+      </symbol>
+      <linearGradient id="dialG" x1="0" x2="1"><stop offset="0" stop-color="#4fd18b"/><stop offset="1" stop-color="#4fd18b"/></linearGradient>
+    </defs>
+
+    <!-- decoration: skyline + rain (allowed into margins) -->
+    <g id="sky" class="deco">
+      <path d="M-10 768 V610 H30 V560 H70 V600 H96 V520 H140 V585 H170 V545 H210 V600 H250 V530 H300 V575 H330 V500 H372 V560 H400 V590 H442 V768 Z" fill="#0a101c"/>
+    </g>
+    <g id="rain" class="deco"></g>
+
+    <!-- Beat 0: title -->
+    <g id="g0">
+      <text class="k" x="216" y="150" text-anchor="middle">MACY'S PARADE · 100TH</text>
+      <g id="b0">
+        <path id="teth0" d="" stroke="#cfd6e4" stroke-width="1.6" fill="none"/>
+        <use href="#bal" x="146" y="220" width="140" height="163"/>
+        <g id="hands0" fill="#cfd6e4"></g>
+      </g>
+      <text id="ttl" class="ttl" x="216" y="532" text-anchor="middle">Not Thursday</text>
+    </g>
+
+    <!-- Beat 1: century of parades -->
+    <g id="cent">
+      <g id="dots"></g>
+      <text id="y1924" class="yr" x="66" y="150">1924</text>
+      <text id="y2026" class="yr" x="336" y="372" text-anchor="middle" style="fill:#ffc23d">2026</text>
+      <g id="wwii"><circle cx="150" cy="395" r="7" fill="none" stroke="#a9b0bf" stroke-width="1.8" stroke-dasharray="3 3"/><text class="yr" x="164" y="400">1942–44 · WWII</text></g>
+      <text id="cnt" class="cnt" x="216" y="498" text-anchor="middle">0</text>
+      <text id="cntL" class="lbl" x="216" y="528" text-anchor="middle" style="fill:#a9b0bf">PARADES</text>
+    </g>
+
+    <!-- Beat 2: wind dial -->
+    <g id="wind">
+      <g id="bw"><g id="bwIn">
+                <use href="#bal" x="-42" y="-49" width="84" height="98"/>
+      </g></g>
+      <path id="arcOk" d="" stroke="#4fd18b" stroke-width="16" fill="none"/>
+      <path id="arcBad" d="" stroke="#ff4d3d" stroke-width="16" fill="none" stroke-opacity=".9"/>
+      <g id="limit"><path id="limTick" d="" stroke="#f4f1e8" stroke-width="3"/><text id="limN" class="lbl" style="fill:#f4f1e8">34</text></g>
+      <text id="limL" class="lbl" x="66" y="300" style="fill:#4fd18b">BALLOON LIMIT</text>
+      <g id="needle"><path d="M0 -4 L118 0 L0 4 Z" fill="#f4f1e8"/><circle r="10" fill="#f4f1e8"/></g>
+      <text id="read" class="read" x="216" y="530" text-anchor="middle" style="fill:#f4f1e8">0</text>
+      <text id="readL" class="lbl" x="216" y="560" text-anchor="middle" style="fill:#a9b0bf">MPH GUSTS POSSIBLE</text>
+    </g>
+
+    <!-- Beat 3: calendar -->
+    <g id="cal" transform="translate(216 330)">
+      <g id="calPage">
+        <rect x="-88" y="-104" width="176" height="190" rx="14" fill="#f4f1e8"/>
+        <rect x="-88" y="-104" width="176" height="44" rx="14" fill="#ff4d3d"/>
+        <rect x="-88" y="-74" width="176" height="14" fill="#ff4d3d"/>
+        <text id="calM" class="calm" x="0" y="-76" text-anchor="middle">THU · NOV</text>
+        <text id="calD" class="cald" x="0" y="40" text-anchor="middle">26</text>
+      </g>
+      <g id="st1" transform="translate(0 60) rotate(-8)"><rect x="-84" y="-18" width="168" height="36" rx="4" fill="#f4f1e8" stroke="#ff4d3d" stroke-width="3"/><text class="stamp" x="0" y="7" text-anchor="middle">POSTPONED</text></g>
+      <text id="tm" class="time" x="0" y="140" text-anchor="middle">8:30 AM</text>
+      <use id="bc" href="#bal" x="76" y="-170" width="70" height="82"/>
+    </g>
+  </svg>
+
+  <div id="endCard" class="abs">
+    <svg class="ic" width="56" height="65" viewBox="-60 -70 120 140"><use href="#bal" x="-60" y="-70" width="120" height="140"/></svg>
+    <h1>Not Thursday</h1>
+    <div class="row">
+      <div class="pill p1">Sat 28<small>8:30 AM</small></div>
+      <div class="pill p2">Up to 65<small>mph gusts</small></div>
+    </div>
+    <div class="line">First postponement in 100 parades</div>
+    <div class="src">New York City · Sources: Macy's, CBS New York, NBC New York, AccuWeather, AP</div>
+    <div class="by">Animated by Claude</div>
+  </div>
+
+  <button id="replay" hidden>&#8635; Replay</button>
+</div></div>
+
+<script>
+(() => {
+  const DUR = 19.5;
+  const $ = id => document.getElementById(id);
+  const NS = "http://www.w3.org/2000/svg";
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+  const eout = x => 1 - Math.pow(1 - x, 3);
+  const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const op = (el, v) => { el.style.opacity = clamp(v, 0, 1).toFixed(3); };
+  const E = {};
+  ["g0","b0","teth0","hands0","ttl","rain","cent","dots","y1924","y2026","wwii","cnt","cntL","wind","bw","bwIn","arcOk","arcBad","limit","limTick","limN","limL",
+   "needle","read","readL","cal","calPage","calM","calD","st1","tm","bc","endCard"].forEach(k => E[k] = $(k));
+  const mk = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const a in attrs) n.setAttribute(a, attrs[a]); parent.appendChild(n); return n; };
+
+  // Beat 0 handlers: 6 handler dots on the street, tethers to the balloon tie point
+  const handX = [150, 178, 204, 228, 254, 282];
+  handX.forEach(x => mk("circle", { cx: x, cy: 468, r: 4.5 }, E.hands0));
+
+  // Rain streaks (decoration)
+  const drops = [];
+  for (let k = 0; k < 46; k++) {
+    const l = mk("path", { stroke: "#6fb6ff", "stroke-width": 1.6, "stroke-linecap": "round", "stroke-opacity": .55 }, E.rain);
+    drops.push({ el: l, x: (k * 97) % 520 - 40, ph: (k * 0.379) % 1, sp: 0.9 + (k % 5) * 0.12 });
+  }
+
+  // Beat 1: 103 year slots 1924..2026, 13 per row
+  const slots = [];
+  for (let i = 0; i < 103; i++) {
+    const r = Math.floor(i / 13), c = i % 13, x = 72 + c * 24, y = 176 + r * 24, yr = 1924 + i;
+    const gap = yr >= 1942 && yr <= 1944, last = yr === 2026;
+    const n = mk("circle", { cx: x, cy: y, r: gap ? 7 : 8, fill: gap ? "none" : (last ? "#ffc23d" : "#f4f1e8"),
+      stroke: gap ? "#a9b0bf" : "none", "stroke-width": 1.8, "stroke-dasharray": gap ? "3 3" : "none" }, E.dots);
+    slots.push({ node: n, i, x, y, gap, last });
+  }
+  // parade ordinal for each slot
+  let ord = 0; slots.forEach(s => { if (!s.gap) ord++; s.ord = ord; });
+  E.wwii.setAttribute("transform", "translate(0 0)");
+
+  // Beat 2: dial (0..70 mph across a half circle)
+  const CX = 216, CY = 440, R = 128;
+  const pt = (v, r) => { const a = Math.PI - (v / 70) * Math.PI; return [CX + r * Math.cos(a), CY - r * Math.sin(a)]; };
+  const arc = (v0, v1) => { const [x0, y0] = pt(v0, R), [x1, y1] = pt(v1, R); return `M${x0.toFixed(1)} ${y0.toFixed(1)} A${R} ${R} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`; };
+  E.arcOk.setAttribute("d", arc(0, 34)); E.arcBad.setAttribute("d", arc(34, 70));
+  { const [a, b] = pt(34, R - 14), [c, d] = pt(34, R + 18); E.limTick.setAttribute("d", `M${a.toFixed(1)} ${b.toFixed(1)} L${c.toFixed(1)} ${d.toFixed(1)}`);
+    const [lx, ly] = pt(34, R + 32); E.limN.setAttribute("x", lx.toFixed(1)); E.limN.setAttribute("y", (ly + 4).toFixed(1)); E.limN.setAttribute("text-anchor", "middle"); }
+
+  function render(t) {
+    // Rain intensity: light at start, heavy in the wind beat, eases at the end
+    const rainA = 0.25 + 0.75 * seg(t, 7.2, 9.5) * (1 - seg(t, 12.5, 14.0)) + 0.0;
+    const slant = 0.15 + 0.55 * seg(t, 7.2, 10.5) * (1 - seg(t, 12.5, 14.0));
+    drops.forEach(d => {
+      const u = ((t * d.sp * 0.9) + d.ph) % 1, y = -40 + u * 860, x = d.x + slant * (y - 380);
+      d.el.setAttribute("d", `M${x.toFixed(1)} ${y.toFixed(1)} l${(slant * 22).toFixed(1)} 22`);
+      op(d.el, rainA * (t > 15.3 ? 1 - seg(t, 15.3, 16.0) : 1));
+    });
+
+    // Beat 0 (0-2.9): balloon rises over the street, title
+    op(E.g0, Math.min(seg(t, 0.05, 0.5), 1 - seg(t, 2.6, 3.0)));
+    const rise = eout(seg(t, 0.1, 1.6)), bob = 4 * Math.sin(t * 2.2);
+    const by = 60 * (1 - rise) + bob;
+    E.b0.setAttribute("transform", `translate(0 ${by.toFixed(1)})`);
+    E.teth0.setAttribute("d", handX.map(x => `M216 372 L${x} ${(468 - by).toFixed(1)}`).join(" "));
+    E.hands0.setAttribute("transform", `translate(0 ${(-by).toFixed(1)})`);
+    op(E.ttl, seg(t, 0.9, 1.5));
+
+    // Beat 1 (3.0-7.2): 100 parades, gap in WWII
+    op(E.cent, Math.min(seg(t, 3.0, 3.3), 1 - seg(t, 6.9, 7.2)));
+    const fillT = (i) => 3.3 + i * 0.026;     // all slots in by ~6.0
+    let shown = 0;
+    slots.forEach(s => {
+      const f = eout(seg(t, fillT(s.i), fillT(s.i) + 0.18));
+      op(s.node, f * (s.gap ? 0.9 : 1));
+      let r = (s.gap ? 7 : 8) * (0.4 + 0.6 * f);
+      if (s.last) r *= 1 + 0.25 * seg(t, 6.0, 6.2) * (0.6 + 0.4 * Math.sin(t * 8));
+      s.node.setAttribute("r", r.toFixed(2));
+      if (f > 0.5 && !s.gap) shown = s.ord;
+    });
+    E.cnt.textContent = shown;
+    op(E.y1924, seg(t, 3.3, 3.6)); op(E.wwii, seg(t, 3.95, 4.3)); op(E.y2026, seg(t, 5.9, 6.2));
+    op(E.cnt, seg(t, 3.3, 3.6)); op(E.cntL, seg(t, 3.3, 3.6));
+
+    // Beat 2 (7.3-12.0): wind gauge, balloon strains
+    op(E.wind, Math.min(seg(t, 7.3, 7.6), 1 - seg(t, 11.8, 12.1)));
+    const v = 65 * eio(seg(t, 7.9, 10.4)) + (t > 10.4 ? -1.6 * Math.abs(Math.sin((t - 10.4) * 11)) * (1 - seg(t, 11.2, 11.8)) : 0);
+    const ang = -180 + (v / 70) * 180;
+    E.needle.setAttribute("transform", `translate(${CX} ${CY}) rotate(${ang.toFixed(2)})`);
+    E.read.textContent = Math.round(Math.max(0, v));
+    const over = v > 34;
+    E.read.style.fill = over ? "#ff4d3d" : "#f4f1e8";
+    op(E.arcBad, 0.35 + 0.65 * (over ? 0.6 + 0.4 * Math.sin(t * 10) : 0));
+    op(E.limit, seg(t, 7.6, 7.9)); op(E.limL, seg(t, 7.6, 7.9));
+    op(E.readL, seg(t, 8.0, 8.3));
+    // balloon: sways harder with wind, gets pulled down and sideways
+    const w = v / 65;
+    const sway = (6 + 22 * w) * Math.sin(t * (2 + 4 * w));
+    const bx = 216 + 40 * w, byy = 196 + 14 * w;
+    E.bw.setAttribute("transform", `translate(${bx.toFixed(1)} ${byy.toFixed(1)})`);
+    E.bwIn.setAttribute("transform", `rotate(${(sway + 18 * w).toFixed(1)})`);
+
+    // Beat 3 (12.1-15.6): THU 26 -> POSTPONED -> SAT 28 · 8:30 AM
+    op(E.cal, Math.min(seg(t, 12.1, 12.4), 1 - seg(t, 15.4, 15.7)));
+    const sat = t >= 13.9;
+    E.calM.textContent = sat ? "SAT · NOV" : "THU · NOV"; E.calD.textContent = sat ? "28" : "26";
+    const dd = t - 13.9 + 0.13, flip = (dd >= 0 && dd < 0.26) ? Math.sin(Math.PI * dd / 0.26) : 0;
+    E.calPage.setAttribute("transform", `scale(1 ${(1 - 0.8 * flip).toFixed(3)})`);
+    const stIn = eout(seg(t, 12.8, 13.0));
+    op(E.st1, stIn * (1 - seg(t, 13.6, 13.75)));
+    E.st1.setAttribute("transform", `translate(0 60) rotate(-8) scale(${(1.6 - 0.6 * stIn).toFixed(3)})`);
+    op(E.tm, seg(t, 14.2, 14.5));
+    op(E.bc, seg(t, 14.3, 14.7));
+    E.bc.setAttribute("y", (-170 + 4 * Math.sin(t * 2.2) - 16 * eout(seg(t, 14.3, 15.2))).toFixed(1));
+
+    // End card (15.7-19.5)
+    op(E.endCard, seg(t, 15.7, 16.1));
+  }
+
+  const replay = $("replay");
+  let raf = 0, t0 = null, playing = false;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick(now) { if (t0 === null) t0 = now; const t = (now - t0) / 1000; render(Math.min(t, DUR));
+    if (t < DUR && playing) raf = requestAnimationFrame(tick); else { playing = false; replay.hidden = false; } }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: DUR, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, DUR)); }, play };
+
+  function fit() { const s = Math.min(innerWidth / 432, innerHeight / 768); $("stage").style.transform = `translate(-50%, -50%) scale(${s})`; }
+  addEventListener("resize", fit); fit();
+  render(0);
+  const start = () => { if (reduce) { render(DUR); replay.hidden = false; } else play(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+</body>
+</html>
