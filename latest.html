@@ -2,126 +2,127 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Lights Out</title>
+<title>1,246 Overnight</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@500;600;700;800&display=block">
 <style>
-/* Lights Out. Thanksgiving Day storm, Thu Nov 26 2026, Midwest to the Jersey Shore.
-   Outage snapshots (PowerOutage.us): ~550,000 Thursday morning, 10:30 a.m. ET (Yahoo live blog); 724,000+ Thursday midday-ish (CNN, no time given);
-   peak 925,000+ Thursday evening (ABC; AP "nearly 900,000", BBC "close to one million"). Peak by state (ABC):
-   PA 230k+, MD 160k+, NJ ~140k, VA ~139k. Friday morning: "hundreds of thousands" still out (BBC); no national count, so the 35 squares left dark are illustrative.
-   Utilities (Dominion, Ameren, BGE): multi-day restoration.
-   One square = 10,000 customers (homes and businesses). Fixed 432x768 stage; readable content inside x 26-380 / y 108-600. */
+/* 1,246 Overnight. Night of Fri Nov 27 to Sat Nov 28 2026.
+   Russian Defence Ministry: 1,246 Ukrainian fixed-wing drones downed overnight over Moscow region and other regions (Reuters via RTE).
+   Moscow mayor Sobyanin: 462 drones toward the Moscow region (Kyiv Post, censor.net; KI 460) flew toward Moscow (AFP "more than 460"; Reuters "more than 400"), 123 destroyed approaching the city, 23:00-07:00.
+   Flight restrictions at Vnukovo and Domodedovo. Bryansk region (Klimovo): drone hit a bus, 9 wounded (governor). Novoshakhtinsk refinery fire (Rostov region).
+   All counts are Russian claims, not independently verified. Dots are illustrative: one dot = one claimed drone.
+   Fixed 432x768 stage; readable content inside x 26-380 / y 108-600. */
 :root {
-  --ink: #f2efe6; --muted: #9aa5bd; --bg: #080d1a; --lit: #ffcc55; --dark: #1a2236; --edge: #2c3754;
-  --pa: #ff8a5b; --md: #c79bff; --nj: #5cc8f5; --va: #7fdc95;
+  --ink: #f1ede4; --muted: #98a2b8; --bg: #070b14; --amb: #ffb547; --red: #ff5a4e; --cool: #6fb7ff;
   --serif: "DM Serif Display", Georgia, serif; --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   color-scheme: dark;
 }
 html, body { height: 100%; margin: 0; }
 body { background: var(--bg); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
 #wrap { position: fixed; inset: 0; overflow: hidden; background: var(--bg); }
-#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden; background: #0a1020; }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
+  background: radial-gradient(120% 70% at 50% 40%, #111a2e 0%, #070b14 70%); }
 .abs { position: absolute; }
+#cv { left: 0; top: 0; width: 432px; height: 768px; }
 #sv { left: 0; top: 0; width: 432px; height: 768px; }
 svg text { font-family: var(--sans); }
 .k { font: 700 13px var(--sans); letter-spacing: .22em; fill: var(--muted); }
-.ttl { font: 400 62px var(--serif); fill: var(--ink); }
-.chip { font: 800 13px var(--sans); letter-spacing: .16em; fill: var(--ink); }
-.key { font: 600 12px var(--sans); letter-spacing: .04em; fill: var(--muted); }
-.cnt { font: 400 52px var(--serif); fill: var(--ink); font-variant-numeric: tabular-nums; }
-.lbl { font: 700 13px var(--sans); letter-spacing: .18em; fill: var(--muted); }
-.st { font: 800 13px var(--sans); letter-spacing: .06em; }
-.big2 { font: 400 30px var(--serif); fill: var(--ink); }
-#endCard { left: 26px; top: 128px; width: 354px; text-align: center; opacity: 0; }
-#endCard h1 { margin: 0; font: 400 58px/1 var(--serif); }
-#endCard .bulb { display: block; margin: 0 auto 14px; }
-#endCard .row { margin-top: 26px; display: flex; justify-content: center; gap: 14px; }
-#endCard .pill { width: 160px; padding: 14px 0 12px; border-radius: 12px; font: 400 30px/1 var(--serif); }
-#endCard .pill small { display: block; margin-top: 8px; font: 700 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-#endCard .p1 { border: 2px solid var(--lit); color: var(--lit); }
-#endCard .p2 { border: 2px solid var(--nj); color: var(--nj); }
-#endCard .line { margin: 22px auto 0; max-width: 300px; font: 600 16px/1.35 var(--sans); text-wrap: balance; }
-#endCard .src { margin-top: 24px; font: 500 11.5px/1.55 var(--sans); color: var(--muted); }
+.cnt { font: 400 64px var(--serif); fill: var(--ink); font-variant-numeric: tabular-nums; }
+.cnt2 { font: 400 54px var(--serif); font-variant-numeric: tabular-nums; }
+.lbl { font: 700 12px var(--sans); letter-spacing: .16em; fill: var(--muted); }
+.city { font: 800 13px var(--sans); letter-spacing: .24em; fill: var(--ink); }
+.rowB { font: 400 34px var(--serif); fill: var(--ink); }
+.rowS { font: 700 11.5px var(--sans); letter-spacing: .14em; fill: var(--muted); }
+#endCard { left: 26px; top: 150px; width: 354px; text-align: center; opacity: 0; }
+#endCard .k2 { font: 700 12px/1 var(--sans); letter-spacing: .22em; color: var(--muted); }
+#endCard h1 { margin: 12px 0 0; font: 400 92px/1 var(--serif); color: var(--amb); }
+#endCard .sub { margin-top: 6px; font: 700 12px/1 var(--sans); letter-spacing: .16em; color: var(--ink); text-transform: uppercase; }
+#endCard .line { margin: 28px auto 0; max-width: 290px; padding: 12px 14px; border: 1.5px solid rgba(241,237,228,.35); border-radius: 12px;
+  font: 600 15px/1.35 var(--sans); text-wrap: balance; }
+#endCard .src { margin-top: 26px; font: 500 11.5px/1.55 var(--sans); color: var(--muted); }
 #endCard .by { margin-top: 8px; font: 500 11px/1.4 var(--sans); color: #78829a; }
-#replay { position: absolute; left: 50%; top: 560px; transform: translateX(-50%); padding: 10px 20px; border-radius: 999px;
-  border: 1.5px solid rgba(242,239,230,.4); background: rgba(8,13,26,.8); color: var(--ink); font: 600 13px/1 var(--sans);
+#replay { position: absolute; left: 50%; top: 556px; transform: translateX(-50%); padding: 10px 20px; border-radius: 999px;
+  border: 1.5px solid rgba(241,237,228,.4); background: rgba(7,11,20,.85); color: var(--ink); font: 600 13px/1 var(--sans);
   letter-spacing: .08em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 #replay[hidden] { display: none; }
 </style>
 </head>
 <body>
 <div id="wrap"><div id="stage">
+  <canvas id="cv" class="abs" width="1296" height="2304"></canvas>
   <svg id="sv" class="abs" viewBox="0 0 432 768">
-    <defs>
-      <radialGradient id="sunG" cx="50%" cy="100%" r="80%"><stop offset="0" stop-color="#ff9a4a" stop-opacity=".55"/><stop offset=".5" stop-color="#c2507a" stop-opacity=".18"/><stop offset="1" stop-color="#0a1020" stop-opacity="0"/></radialGradient>
-      <radialGradient id="glow"><stop offset="0" stop-color="#ffcc55" stop-opacity=".75"/><stop offset="1" stop-color="#ffcc55" stop-opacity="0"/></radialGradient>
-      <symbol id="storm" viewBox="-40 -40 80 80">
-        <path d="M-26 6 A12 12 0 0 1 -20 -16 A16 16 0 0 1 8 -22 A13 13 0 0 1 28 -6 A11 11 0 0 1 24 10 H-22 A8 8 0 0 1 -26 6 Z" fill="#dfe7ff"/>
-        <path d="M-6 13 L-14 28 H-2 L-10 40" stroke="#ffcc55" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-        <path d="M-22 16 L-26 26 M10 16 L6 26 M22 16 L18 26" stroke="#8fb0ff" stroke-width="3" stroke-linecap="round"/>
-      </symbol>
-      <symbol id="truck" viewBox="0 0 90 46">
-        <rect x="0" y="18" width="58" height="18" rx="3" fill="#ffcc55"/>
-        <path d="M58 22 H74 L84 30 V36 H58 Z" fill="#ffcc55"/>
-        <path d="M64 24 H72 L78 30 H64 Z" fill="#0a1020"/>
-        <path d="M14 18 L30 2 L44 2" stroke="#ffcc55" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <rect x="40" y="-6" width="12" height="9" rx="2" fill="#ffcc55"/>
-        <circle cx="16" cy="38" r="6" fill="#0a1020" stroke="#ffcc55" stroke-width="3"/>
-        <circle cx="70" cy="38" r="6" fill="#0a1020" stroke="#ffcc55" stroke-width="3"/>
-      </symbol>
-    </defs>
-
-    <!-- decoration (may reach margins) -->
-    <g class="deco">
-      <rect id="sun" x="0" y="0" width="432" height="768" fill="url(#sunG)" opacity="0"/>
-      <g id="rain"></g>
+    <!-- Beat 1: the count -->
+    <g id="g1">
+      <text id="kick" class="k" x="203" y="132" text-anchor="middle">OVERNIGHT · NOV 27–28</text>
+      <text id="reg" class="k" x="203" y="132" text-anchor="middle" style="fill:var(--amb)">ACROSS 16 REGIONS</text>
+      <text id="cnt" class="cnt" x="203" y="548" text-anchor="middle">0</text>
+      <text id="cntL" class="lbl" x="203" y="578" text-anchor="middle">DRONES RUSSIA SAYS IT DOWNED</text>
     </g>
 
-    <!-- Beat 0: title -->
-    <g id="g0">
-      <text class="k" x="216" y="250" text-anchor="middle">THANKSGIVING STORM</text>
-      <g id="bulb0" transform="translate(216 352)">
-        <circle id="bulbGlow" r="70" fill="url(#glow)"/>
-        <path d="M-26 8 A34 34 0 1 1 26 8 C18 18 14 24 14 34 H-14 C-14 24 -18 18 -26 8 Z" id="bulbBody" fill="#ffcc55"/>
-        <rect x="-14" y="38" width="28" height="7" rx="2" fill="#9aa5bd"/><rect x="-12" y="48" width="24" height="7" rx="2" fill="#9aa5bd"/>
+    <!-- Beat 2: Moscow -->
+    <g id="g2">
+      <g id="msk" transform="translate(203 300)">
+        <circle r="58" fill="none" stroke="#3a4766" stroke-width="1.5"/>
+        <circle r="38" fill="none" stroke="#4d5b7e" stroke-width="1.5"/>
+        <circle r="20" fill="none" stroke="#6a7aa0" stroke-width="1.5"/>
+        <path d="M0 -9 L2.6 -2.8 L9.3 -2.8 L3.9 1.1 L5.9 7.6 L0 3.6 L-5.9 7.6 L-3.9 1.1 L-9.3 -2.8 L-2.6 -2.8 Z" fill="#ff5a4e"/>
       </g>
-      <text id="ttl" class="ttl" x="216" y="478" text-anchor="middle">Lights Out</text>
+      <text id="mskL" class="city" x="203" y="448" text-anchor="middle">MOSCOW</text>
+      <g id="n462">
+        <text class="cnt2" x="118" y="530" text-anchor="middle" style="fill:var(--amb)">460+</text>
+        <text class="lbl" x="118" y="556" text-anchor="middle">TOWARD</text>
+        <text class="lbl" x="118" y="574" text-anchor="middle">MOSCOW REGION</text>
+      </g>
+      <g id="n123">
+        <text class="cnt2" x="290" y="530" text-anchor="middle" style="fill:var(--red)">123</text>
+        <text class="lbl" x="290" y="556" text-anchor="middle">DOWNED</text>
+        <text class="lbl" x="290" y="574" text-anchor="middle">NEAR THE CITY</text>
+      </g>
     </g>
 
-    <!-- Beat 1-3: grid -->
-    <g id="gridG">
-      <g id="chipG"><rect id="chipR" x="116" y="132" width="200" height="30" rx="15" fill="none" stroke="#9aa5bd" stroke-width="1.5"/>
-        <text id="chip" class="chip" x="216" y="152" text-anchor="middle">THU MORNING</text></g>
-      <g id="cells"></g>
-      <g id="stormG"><use href="#storm" x="-34" y="-34" width="68" height="68"/></g>
-      <g id="keyG"><rect x="98" y="489" width="12" height="12" rx="2" fill="#2b3552" stroke="#8d99b5" stroke-opacity=".55" stroke-width="1.5"/>
-        <text class="key" x="118" y="499">= 10,000 homes &amp; businesses</text></g>
-      <g id="stL">
-        <text class="st" x="56"  y="499" style="fill:var(--pa)">PA 230k</text>
-        <text class="st" x="134" y="499" style="fill:var(--md)">MD 160k</text>
-        <text class="st" x="214" y="499" style="fill:var(--nj)">NJ 140k</text>
-        <text class="st" x="292" y="499" style="fill:var(--va)">VA 139k</text>
+    <!-- Beat 3: on the ground -->
+    <g id="g3">
+      <text class="k" x="203" y="150" text-anchor="middle">ON THE GROUND</text>
+      <g id="r1">
+        <g transform="translate(84 236)">
+          <circle r="34" fill="#111a2e" stroke="#3a4766" stroke-width="1.5"/>
+          <path id="plane" d="M0 -22 C3 -22 3 -18 3 -14 V-4 L20 6 V11 L3 5 V15 L9 20 V24 L0 21 L-9 24 V20 L-3 15 V5 L-20 11 V6 L-3 -4 V-14 C-3 -18 -3 -22 0 -22 Z" fill="#dfe6f5"/>
+          <path id="slash" d="M-24 -24 L24 24" stroke="#ff5a4e" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <text class="rowB" x="140" y="236">2 airports</text>
+        <text class="rowS" x="141" y="258">VNUKOVO · DOMODEDOVO</text>
       </g>
-      <g id="truckG"><use href="#truck" x="0" y="0" width="72" height="37"/></g>
-      <text id="cnt" class="cnt" x="203" y="556" text-anchor="middle">0</text>
-      <text id="cntL" class="lbl" x="203" y="584" text-anchor="middle">WITHOUT POWER</text>
-      <text id="fri" class="big2" x="203" y="552" text-anchor="middle">Hundreds of thousands</text>
-      <text id="friL" class="lbl" x="203" y="584" text-anchor="middle">STILL DARK</text>
+      <g id="r2">
+        <g transform="translate(84 346)">
+          <circle r="34" fill="#111a2e" stroke="#3a4766" stroke-width="1.5"/>
+          <path d="M-20 20 V0 H-12 V-14 H-6 V0 H2 V-6 H8 V0 H20 V20 Z" fill="#5f6d8e"/>
+          <path id="flame" d="M6 -4 C14 -12 8 -20 12 -28 C20 -20 24 -12 18 -2 C22 -6 22 -10 22 -12 C28 -4 26 6 16 8 C8 8 4 2 6 -4 Z" fill="#ffb547"/>
+        </g>
+        <text class="rowB" x="140" y="346">Refinery fire</text>
+        <text class="rowS" x="141" y="368">NOVOSHAKHTINSK</text>
+        <text class="rowS" x="141" y="385" style="fill:#78829a">PER LOCAL REPORTS</text>
+      </g>
+      <g id="r3">
+        <g transform="translate(84 456)">
+          <circle r="34" fill="#111a2e" stroke="#3a4766" stroke-width="1.5"/>
+          <rect x="-22" y="-12" width="44" height="22" rx="4" fill="#dfe6f5"/>
+          <rect x="-18" y="-8" width="9" height="8" rx="1" fill="#111a2e"/><rect x="-6" y="-8" width="9" height="8" rx="1" fill="#111a2e"/><rect x="6" y="-8" width="9" height="8" rx="1" fill="#111a2e"/>
+          <circle cx="-12" cy="11" r="4.5" fill="#111a2e" stroke="#dfe6f5" stroke-width="2"/><circle cx="12" cy="11" r="4.5" fill="#111a2e" stroke="#dfe6f5" stroke-width="2"/>
+        </g>
+        <text class="rowB" x="140" y="456">9 hurt</text>
+        <text class="rowS" x="141" y="478">BUS · BRYANSK REGION</text>
+      </g>
     </g>
   </svg>
 
   <div id="endCard" class="abs">
-    <svg class="bulb" width="44" height="60" viewBox="-36 -36 72 96"><path d="M-26 8 A34 34 0 1 1 26 8 C18 18 14 24 14 34 H-14 C-14 24 -18 18 -26 8 Z" fill="none" stroke="#ffcc55" stroke-width="4"/><rect x="-14" y="40" width="28" height="7" rx="2" fill="#9aa5bd"/><rect x="-12" y="50" width="24" height="7" rx="2" fill="#9aa5bd"/></svg>
-    <h1>Lights Out</h1>
-    <div class="row">
-      <div class="pill p1">925,000+<small>Peak · Thu night</small></div>
-      <div class="pill p2">Multi-day<small>restoration</small></div>
-    </div>
-    <div class="line">Thanksgiving storm, Missouri to the Jersey Shore</div>
-    <div class="src">Outage counts: PowerOutage.us via ABC News, CNN, Yahoo News · Friday: BBC · Restoration: Dominion, Ameren, BGE · Also AP, CBS News</div>
+    <div class="k2">ONE NIGHT · NOV 27–28</div>
+    <h1>1,246</h1>
+    <div class="sub">drones Russia says it downed</div>
+    <div class="line">Russian figures. Not independently verified.</div>
+    <div class="src">Russian Defence Ministry, Moscow Mayor Sobyanin, regional governors via Reuters/RTÉ, AFP/TRT · Kyiv Independent · Kyiv Post · Ukrinform</div>
     <div class="by">Animated by Claude</div>
   </div>
 
@@ -130,117 +131,94 @@ svg text { font-family: var(--sans); }
 
 <script>
 (() => {
-  const DUR = 19.5;
+  const DUR = 19.5, N = 1246;
   const $ = id => document.getElementById(id);
-  const NS = "http://www.w3.org/2000/svg";
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
   const eout = x => 1 - Math.pow(1 - x, 3);
+  const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
   const lerp = (a, b, f) => a + (b - a) * f;
   const op = (el, v) => { el.style.opacity = clamp(v, 0, 1).toFixed(3); };
-  const E = {}; ["g0","bulbBody","bulbGlow","ttl","gridG","chip","chipR","cells","stormG","keyG","stL","truckG","cnt","cntL","fri","friL","endCard","sun","rain"].forEach(k => E[k] = $(k));
+  const E = {}; ["g1","kick","reg","cnt","cntL","g2","msk","mskL","n462","n123","g3","r1","r2","r3","slash","flame","plane","endCard"].forEach(k => E[k] = $(k));
 
-  // deterministic pseudo-random
-  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 
-  // rain streaks (decoration)
-  const drops = [];
-  for (let i = 0; i < 46; i++) { const l = document.createElementNS(NS, "line"); l.setAttribute("stroke", "#6f86b8"); l.setAttribute("stroke-width", "1.3"); l.setAttribute("stroke-linecap", "round");
-    E.rain.appendChild(l); drops.push({ l, x: rnd() * 560 - 60, y0: rnd() * 768, sp: 520 + rnd() * 380, len: 14 + rnd() * 16, a: .18 + rnd() * .3 }); }
-
-  // grid: 10 x 10, pitch 30, cell 22; x 61..353, y 178..470
-  const GX = 61, GY = 178, P = 30, C = 22;
-  const cells = [];
-  for (let r = 0; r < 10; r++) for (let c = 0; c < 10; c++) {
-    const g = document.createElementNS(NS, "g");
-    const slot = document.createElementNS(NS, "rect");
-    const box = document.createElementNS(NS, "rect");
-    [slot, box].forEach(n => { n.setAttribute("x", GX + c * P); n.setAttribute("y", GY + r * P); n.setAttribute("width", C); n.setAttribute("height", C); n.setAttribute("rx", 3); });
-    slot.setAttribute("fill", "none"); slot.setAttribute("stroke", "#1b2338"); slot.setAttribute("stroke-width", "1"); slot.setAttribute("stroke-dasharray", "2 3");
-    g.appendChild(slot); g.appendChild(box); E.cells.appendChild(g);
-    cells.push({ r, c, box, key: c + (9 - r) + rnd() * 2.2 });
+  // grid: 34 cols x 37 rows, pitch 8.6, centred on x 203; y 158..476
+  const COLS = 34, P = 8.6, GX = 203 - (COLS - 1) * P / 2, GY = 162;
+  const MX = 203, MY = 300;
+  const D = [];
+  for (let i = 0; i < N; i++) {
+    const c = i % COLS, r = Math.floor(i / COLS);
+    const gx = GX + c * P, gy = GY + r * P;
+    // fill order: roughly west to east sweep with jitter
+    D.push({ gx, gy, key: c + rnd() * 9, sy: 150 + rnd() * 460, sx: -30 - rnd() * 60 });
   }
-  // order of going dark: sweep from bottom-left to top-right
-  const order = cells.slice().sort((a, b) => a.key - b.key);
-  order.forEach((o, i) => o.rank = i);
-  const N = 93;
-  // time each square goes dark
-  const legs = [[0, 55, 2.7, 4.9], [55, 72, 5.7, 7.3], [72, 93, 8.1, 10.2]];
-  order.forEach((o, i) => { o.tOff = Infinity; for (const [a, b, t0, t1] of legs) if (i >= a && i < b) o.tOff = lerp(t0, t1, (i - a + .5) / (b - a)); });
-  // state colours on the dark squares, by row-major order among dark ones
-  const dark = order.slice(0, N).sort((a, b) => (a.r - b.r) || (a.c - b.c));
-  const ST = [["--pa", 23], ["--md", 16], ["--nj", 14], ["--va", 14]];
-  let k = 0; const css = getComputedStyle(document.documentElement);
-  ST.forEach(([v, n]) => { for (let j = 0; j < n; j++) dark[k++].st = css.getPropertyValue(v).trim(); });
-  // Friday relight: 38 of the dark squares, staggered
-  const relit = order.slice(0, N).map(o => ({ o, z: rnd() })).sort((a, b) => a.z - b.z).slice(0, 58);
-  relit.forEach((x, i) => x.o.tOn = 14.9 + i * 0.03 + x.z * 0.3);
+  const ord = D.slice().sort((a, b) => a.key - b.key);
+  ord.forEach((d, i) => { d.t0 = 0.7 + 3.9 * (i / N) + rnd() * 0.15; });
+  // pick 462 toward Moscow, of which 123 downed near the city
+  const pool = D.map(d => ({ d, z: rnd() })).sort((a, b) => a.z - b.z);
+  pool.slice(0, 462).forEach((p, i) => {
+    const d = p.d; d.m = true; d.mt = 6.3 + (i / 462) * 1.4 + rnd() * 0.2;
+    const ang = rnd() * Math.PI * 2;
+    const inner = i < 123;
+    const rad = inner ? 26 + rnd() * 30 : 66 + rnd() * 56;
+    d.mx = MX + Math.cos(ang) * rad; d.my = MY + Math.sin(ang) * rad * (inner ? 1 : 0.78);
+    if (inner) { d.hit = true; d.ht = 8.9 + (i / 123) * 0.9; d.fall = 14 + rnd() * 22; }
+  });
 
-  function counterAt(t) {
-    // exact snapshot values on holds; linear in between
-    const marks = [[2.7, 0], [4.9, 550000], [5.7, 550000], [7.3, 724000], [8.1, 724000], [10.2, 925000]];
-    if (t <= 2.7) return 0;
-    for (let i = 1; i < marks.length; i++) if (t <= marks[i][0]) { const [ta, va] = marks[i - 1], [tb, vb] = marks[i]; return Math.round(lerp(va, vb, seg(t, ta, tb)) / 1000) * 1000; }
-    return 925000;
+  const cv = $("cv"), cx = cv.getContext("2d"); const S = 3;
+  function drawDots(t) {
+    cx.setTransform(S, 0, 0, S, 0, 0); cx.clearRect(0, 0, 432, 768);
+    const gridFade = 1 - seg(t, 5.9, 6.5);           // non-Moscow dots dim
+    const allOut = 1 - seg(t, 10.2, 10.8);           // everything leaves
+    for (const d of D) {
+      if (t < d.t0) continue;
+      const f = eout(seg(t, d.t0, d.t0 + 0.9));
+      let x = lerp(d.sx, d.gx, f), y = lerp(d.sy, d.gy, f), a = 1, col = "#ffb547", r = 2.5;
+      if (f < 1) { a = 0.35 + 0.65 * f; }
+      if (d.m) {
+        const g = eio(seg(t, d.mt, d.mt + 1.2));
+        x = lerp(x, d.mx, g); y = lerp(y, d.my, g);
+        if (d.hit && t >= d.ht) {
+          const h = seg(t, d.ht, d.ht + 0.7);
+          col = h < 0.25 ? "#fff2d0" : "#ff5a4e"; y += d.fall * h * h; a = 1 - h * 0.85; r = 2.5 + (h < 0.25 ? 1.5 : 0);
+        } else if (!d.hit) { a *= 1 - 0.45 * seg(t, 9.6, 10.0); }
+        a *= allOut;
+      } else {
+        a *= lerp(0.12, 1, gridFade) * allOut;
+      }
+      if (a <= 0.004) continue;
+      cx.globalAlpha = a; cx.fillStyle = col;
+      // small delta-wing drone pointing east
+      cx.beginPath(); cx.moveTo(x + r * 1.2, y); cx.lineTo(x - r, y - r); cx.lineTo(x - r * 0.4, y); cx.lineTo(x - r, y + r); cx.closePath(); cx.fill();
+    }
+    cx.globalAlpha = 1;
   }
   const fmt = n => n.toLocaleString("en-US");
-  // storm path along the diagonal front, bottom-left -> top-right
-  const front = t => { if (t < 2.4) return -1; for (const [a, b, t0, t1] of legs) { if (t < t0) return order[Math.max(0, a - 1)].key; if (t <= t1) return lerp(order[a].key, order[b - 1].key, seg(t, t0, t1)); } return 21; };
 
   function render(t) {
-    // rain (decor), heavy through Thursday, gone by Friday
-    const rainA = 1 - seg(t, 13.8, 15.0);
-    drops.forEach(d => { const y = ((d.y0 + t * d.sp) % 880) - 60, x = d.x + (y + 60) * 0.38;
-      d.l.setAttribute("x1", x.toFixed(1)); d.l.setAttribute("y1", y.toFixed(1)); d.l.setAttribute("x2", (x - d.len * .36).toFixed(1)); d.l.setAttribute("y2", (y - d.len).toFixed(1));
-      d.l.setAttribute("stroke-opacity", (d.a * rainA).toFixed(3)); });
-    op(E.sun, seg(t, 14.0, 15.6) * (1 - seg(t, 17.0, 17.6) * 0.6));
-
-    // Beat 0 (0-2.4): a lit bulb flickers out, title
-    op(E.g0, 1 - seg(t, 2.0, 2.4));
-    const fl = t < 1.0 ? 1 : t < 1.6 ? (Math.sin(t * 60) > 0.2 ? 1 : 0.25) : 0;
-    E.bulbBody.setAttribute("fill", fl > .5 ? "#ffcc55" : "#2a3350"); op(E.bulbGlow, fl);
-    op(E.ttl, seg(t, 0.2, 0.7));
-
-    // Grid beats (2.4-17.1)
-    op(E.gridG, Math.min(seg(t, 2.2, 2.6), 1 - seg(t, 16.9, 17.3)));
-    const chipTxt = t < 5.4 ? "THU MORNING" : t < 7.8 ? "THU MIDDAY" : t < 14.4 ? "THU NIGHT · PEAK" : "FRI MORNING";
-    E.chip.textContent = chipTxt;
-    E.chipR.setAttribute("stroke", t >= 7.8 && t < 14.4 ? "#ff8a5b" : "#9aa5bd");
-    const showState = seg(t, 11.0, 11.5) * (1 - seg(t, 14.0, 14.4));
-    cells.forEach(o => {
-      const b = o.box; const off = t >= o.tOff, on = o.tOn !== undefined && t >= o.tOn;
-      if (!off) { b.setAttribute("fill", "none"); b.setAttribute("stroke", "none"); return; }
-      const since = t - o.tOff;
-      if (on) { const f = seg(t, o.tOn, o.tOn + 0.35); b.setAttribute("fill", mix("#2b3552", "#ffcc55", f)); b.setAttribute("fill-opacity", "1"); b.setAttribute("stroke", "none"); return; }
-      if (since < 0.3) { b.setAttribute("fill", mix("#fff2c4", "#2b3552", seg(since, 0, 0.3))); b.setAttribute("fill-opacity", "1"); b.setAttribute("stroke", "none"); return; }
-      b.setAttribute("fill-opacity", "1");
-      b.setAttribute("fill", showState > 0 && o.st ? mix("#2b3552", o.st, showState * .85) : "#2b3552");
-      b.setAttribute("stroke", showState > 0 && o.st ? o.st : "#8d99b5"); b.setAttribute("stroke-width", "1.5");
-      b.setAttribute("stroke-opacity", showState > 0 && o.st ? "1" : ".55");
-    });
-    // storm icon rides the front
-    const f = front(t), u = clamp(f / 20, 0, 1);
-    const sx = lerp(50, 360, u), sy = lerp(470, 175, u);
-    E.stormG.setAttribute("transform", `translate(${sx.toFixed(1)} ${sy.toFixed(1)}) rotate(${(4 * Math.sin(t * 3)).toFixed(1)})`);
-    op(E.stormG, seg(t, 2.4, 2.7) * (1 - seg(t, 10.3, 10.8)));
-    op(E.keyG, seg(t, 2.8, 3.2) * (1 - seg(t, 10.8, 11.1)));
-    op(E.stL, showState);
-    // counter
-    const showCnt = seg(t, 2.6, 2.9) * (1 - seg(t, 14.3, 14.6));
-    op(E.cnt, showCnt); op(E.cntL, showCnt);
-    const v = counterAt(t); E.cnt.textContent = fmt(v) + (t >= 10.2 ? "+" : "");
-    E.cnt.style.fill = t >= 10.2 ? "#ff8a5b" : "#f2efe6";
-    // Friday
-    op(E.fri, seg(t, 14.6, 15.0)); op(E.friL, seg(t, 14.6, 15.0));
-    const tr = seg(t, 14.4, 17.0);
-    E.truckG.setAttribute("transform", `translate(${lerp(-10, 330, tr).toFixed(1)} 478)`);
-    op(E.truckG, seg(t, 14.4, 14.6) * (1 - seg(t, 16.6, 16.9)));
-
-    // End card (17.1-19.5)
-    op(E.endCard, seg(t, 17.2, 17.6));
+    drawDots(t);
+    // Beat 1 (0-6): count
+    op(E.g1, 1 - seg(t, 5.8, 6.2));
+    op(E.kick, seg(t, 0.1, 0.5) * (1 - seg(t, 3.0, 3.3)));
+    op(E.reg, seg(t, 3.4, 3.8));
+    const arrived = D.reduce((s, d) => s + (t >= d.t0 + 0.55 ? 1 : 0), 0);
+    E.cnt.textContent = fmt(t >= 5.2 ? N : arrived);
+    E.cnt.style.fill = t >= 5.2 ? "#ffb547" : "#f1ede4";
+    op(E.cnt, seg(t, 0.5, 0.8)); op(E.cntL, seg(t, 0.8, 1.2));
+    // Beat 2 (6.2-10.6): Moscow
+    op(E.g2, seg(t, 6.0, 6.4) * (1 - seg(t, 10.3, 10.7)));
+    op(E.n462, seg(t, 7.4, 7.8)); op(E.n123, seg(t, 9.0, 9.4));
+    E.msk.setAttribute("transform", `translate(${MX} ${MY}) scale(${lerp(0.6, 1, eout(seg(t, 6.0, 6.6))).toFixed(3)})`);
+    // Beat 3 (10.8-15.8): on the ground
+    op(E.g3, seg(t, 10.7, 11.0) * (1 - seg(t, 15.6, 16.0)));
+    op(E.r1, seg(t, 10.9, 11.3)); op(E.r2, seg(t, 12.1, 12.5)); op(E.r3, seg(t, 13.3, 13.7));
+    const sl = eout(seg(t, 11.3, 11.8)); E.slash.setAttribute("stroke-dasharray", `${(68 * sl).toFixed(1)} 100`);
+    const fl = 1 + 0.08 * Math.sin(t * 17) + 0.05 * Math.sin(t * 29);
+    E.flame.setAttribute("transform", `translate(12 -2) scale(${(fl * lerp(0.3, 1, eout(seg(t, 12.3, 12.9)))).toFixed(3)}) translate(-12 2)`);
+    // End card (16-19.5)
+    op(E.endCard, seg(t, 16.0, 16.5));
   }
-  function mix(a, b, f) { const p = s => [1, 3, 5].map(i => parseInt(s.slice(i, i + 2), 16)); const A = p(a), B = p(b);
-    return "#" + A.map((x, i) => Math.round(lerp(x, B[i], f)).toString(16).padStart(2, "0")).join(""); }
 
   const replay = $("replay");
   let raf = 0, t0 = null, playing = false;

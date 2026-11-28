@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>1,246 Overnight</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@500;600;700;800&display=block">
+<style>
+/* 1,246 Overnight. Night of Fri Nov 27 to Sat Nov 28 2026.
+   Russian Defence Ministry: 1,246 Ukrainian fixed-wing drones downed overnight over Moscow region and other regions (Reuters via RTE).
+   Moscow mayor Sobyanin: 462 drones toward the Moscow region (Kyiv Post, censor.net; KI 460) flew toward Moscow (AFP "more than 460"; Reuters "more than 400"), 123 destroyed approaching the city, 23:00-07:00.
+   Flight restrictions at Vnukovo and Domodedovo. Bryansk region (Klimovo): drone hit a bus, 9 wounded (governor). Novoshakhtinsk refinery fire (Rostov region).
+   All counts are Russian claims, not independently verified. Dots are illustrative: one dot = one claimed drone.
+   Fixed 432x768 stage; readable content inside x 26-380 / y 108-600. */
+:root {
+  --ink: #f1ede4; --muted: #98a2b8; --bg: #070b14; --amb: #ffb547; --red: #ff5a4e; --cool: #6fb7ff;
+  --serif: "DM Serif Display", Georgia, serif; --sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  color-scheme: dark;
+}
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; }
+#wrap { position: fixed; inset: 0; overflow: hidden; background: var(--bg); }
+#stage { position: absolute; left: 50%; top: 50%; width: 432px; height: 768px; transform: translate(-50%, -50%); overflow: hidden;
+  background: radial-gradient(120% 70% at 50% 40%, #111a2e 0%, #070b14 70%); }
+.abs { position: absolute; }
+#cv { left: 0; top: 0; width: 432px; height: 768px; }
+#sv { left: 0; top: 0; width: 432px; height: 768px; }
+svg text { font-family: var(--sans); }
+.k { font: 700 13px var(--sans); letter-spacing: .22em; fill: var(--muted); }
+.cnt { font: 400 64px var(--serif); fill: var(--ink); font-variant-numeric: tabular-nums; }
+.cnt2 { font: 400 54px var(--serif); font-variant-numeric: tabular-nums; }
+.lbl { font: 700 12px var(--sans); letter-spacing: .16em; fill: var(--muted); }
+.city { font: 800 13px var(--sans); letter-spacing: .24em; fill: var(--ink); }
+.rowB { font: 400 34px var(--serif); fill: var(--ink); }
+.rowS { font: 700 11.5px var(--sans); letter-spacing: .14em; fill: var(--muted); }
+#endCard { left: 26px; top: 150px; width: 354px; text-align: center; opacity: 0; }
+#endCard .k2 { font: 700 12px/1 var(--sans); letter-spacing: .22em; color: var(--muted); }
+#endCard h1 { margin: 12px 0 0; font: 400 92px/1 var(--serif); color: var(--amb); }
+#endCard .sub { margin-top: 6px; font: 700 12px/1 var(--sans); letter-spacing: .16em; color: var(--ink); text-transform: uppercase; }
+#endCard .line { margin: 28px auto 0; max-width: 290px; padding: 12px 14px; border: 1.5px solid rgba(241,237,228,.35); border-radius: 12px;
+  font: 600 15px/1.35 var(--sans); text-wrap: balance; }
+#endCard .src { margin-top: 26px; font: 500 11.5px/1.55 var(--sans); color: var(--muted); }
+#endCard .by { margin-top: 8px; font: 500 11px/1.4 var(--sans); color: #78829a; }
+#replay { position: absolute; left: 50%; top: 556px; transform: translateX(-50%); padding: 10px 20px; border-radius: 999px;
+  border: 1.5px solid rgba(241,237,228,.4); background: rgba(7,11,20,.85); color: var(--ink); font: 600 13px/1 var(--sans);
+  letter-spacing: .08em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+#replay[hidden] { display: none; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+  <canvas id="cv" class="abs" width="1296" height="2304"></canvas>
+  <svg id="sv" class="abs" viewBox="0 0 432 768">
+    <!-- Beat 1: the count -->
+    <g id="g1">
+      <text id="kick" class="k" x="203" y="132" text-anchor="middle">OVERNIGHT · NOV 27–28</text>
+      <text id="reg" class="k" x="203" y="132" text-anchor="middle" style="fill:var(--amb)">ACROSS 16 REGIONS</text>
+      <text id="cnt" class="cnt" x="203" y="548" text-anchor="middle">0</text>
+      <text id="cntL" class="lbl" x="203" y="578" text-anchor="middle">DRONES RUSSIA SAYS IT DOWNED</text>
+    </g>
+
+    <!-- Beat 2: Moscow -->
+    <g id="g2">
+      <g id="msk" transform="translate(203 300)">
+        <circle r="58" fill="none" stroke="#3a4766" stroke-width="1.5"/>
+        <circle r="38" fill="none" stroke="#4d5b7e" stroke-width="1.5"/>
+        <circle r="20" fill="none" stroke="#6a7aa0" stroke-width="1.5"/>
+        <path d="M0 -9 L2.6 -2.8 L9.3 -2.8 L3.9 1.1 L5.9 7.6 L0 3.6 L-5.9 7.6 L-3.9 1.1 L-9.3 -2.8 L-2.6 -2.8 Z" fill="#ff5a4e"/>
+      </g>
+      <text id="mskL" class="city" x="203" y="448" text-anchor="middle">MOSCOW</text>
+      <g id="n462">
+        <text class="cnt2" x="118" y="530" text-anchor="middle" style="fill:var(--amb)">460+</text>
+        <text class="lbl" x="118" y="556" text-anchor="middle">TOWARD</text>
+        <text class="lbl" x="118" y="574" text-anchor="middle">MOSCOW REGION</text>
+      </g>
+      <g id="n123">
+        <text class="cnt2" x="290" y="530" text-anchor="middle" style="fill:var(--red)">123</text>
+        <text class="lbl" x="290" y="556" text-anchor="middle">DOWNED</text>
+        <text class="lbl" x="290" y="574" text-anchor="middle">NEAR THE CITY</text>
+      </g>
+    </g>
+
+    <!-- Beat 3: on the ground -->
+    <g id="g3">
+      <text class="k" x="203" y="150" text-anchor="middle">ON THE GROUND</text>
+      <g id="r1">
+        <g transform="translate(84 236)">
+          <circle r="34" fill="#111a2e" stroke="#3a4766" stroke-width="1.5"/>
+          <path id="plane" d="M0 -22 C3 -22 3 -18 3 -14 V-4 L20 6 V11 L3 5 V15 L9 20 V24 L0 21 L-9 24 V20 L-3 15 V5 L-20 11 V6 L-3 -4 V-14 C-3 -18 -3 -22 0 -22 Z" fill="#dfe6f5"/>
+          <path id="slash" d="M-24 -24 L24 24" stroke="#ff5a4e" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <text class="rowB" x="140" y="236">2 airports</text>
+        <text class="rowS" x="141" y="258">VNUKOVO · DOMODEDOVO</text>
+      </g>
+      <g id="r2">
+        <g transform="translate(84 346)">
+          <circle r="34" fill="#111a2e" stroke="#3a4766" stroke-width="1.5"/>
+          <path d="M-20 20 V0 H-12 V-14 H-6 V0 H2 V-6 H8 V0 H20 V20 Z" fill="#5f6d8e"/>
+          <path id="flame" d="M6 -4 C14 -12 8 -20 12 -28 C20 -20 24 -12 18 -2 C22 -6 22 -10 22 -12 C28 -4 26 6 16 8 C8 8 4 2 6 -4 Z" fill="#ffb547"/>
+        </g>
+        <text class="rowB" x="140" y="346">Refinery fire</text>
+        <text class="rowS" x="141" y="368">NOVOSHAKHTINSK</text>
+        <text class="rowS" x="141" y="385" style="fill:#78829a">PER LOCAL REPORTS</text>
+      </g>
+      <g id="r3">
+        <g transform="translate(84 456)">
+          <circle r="34" fill="#111a2e" stroke="#3a4766" stroke-width="1.5"/>
+          <rect x="-22" y="-12" width="44" height="22" rx="4" fill="#dfe6f5"/>
+          <rect x="-18" y="-8" width="9" height="8" rx="1" fill="#111a2e"/><rect x="-6" y="-8" width="9" height="8" rx="1" fill="#111a2e"/><rect x="6" y="-8" width="9" height="8" rx="1" fill="#111a2e"/>
+          <circle cx="-12" cy="11" r="4.5" fill="#111a2e" stroke="#dfe6f5" stroke-width="2"/><circle cx="12" cy="11" r="4.5" fill="#111a2e" stroke="#dfe6f5" stroke-width="2"/>
+        </g>
+        <text class="rowB" x="140" y="456">9 hurt</text>
+        <text class="rowS" x="141" y="478">BUS · BRYANSK REGION</text>
+      </g>
+    </g>
+  </svg>
+
+  <div id="endCard" class="abs">
+    <div class="k2">ONE NIGHT · NOV 27–28</div>
+    <h1>1,246</h1>
+    <div class="sub">drones Russia says it downed</div>
+    <div class="line">Russian figures. Not independently verified.</div>
+    <div class="src">Russian Defence Ministry, Moscow Mayor Sobyanin, regional governors via Reuters/RTÉ, AFP/TRT · Kyiv Independent · Kyiv Post · Ukrinform</div>
+    <div class="by">Animated by Claude</div>
+  </div>
+
+  <button id="replay" hidden>&#8635; Replay</button>
+</div></div>
+
+<script>
+(() => {
+  const DUR = 19.5, N = 1246;
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+  const eout = x => 1 - Math.pow(1 - x, 3);
+  const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const lerp = (a, b, f) => a + (b - a) * f;
+  const op = (el, v) => { el.style.opacity = clamp(v, 0, 1).toFixed(3); };
+  const E = {}; ["g1","kick","reg","cnt","cntL","g2","msk","mskL","n462","n123","g3","r1","r2","r3","slash","flame","plane","endCard"].forEach(k => E[k] = $(k));
+
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+  // grid: 34 cols x 37 rows, pitch 8.6, centred on x 203; y 158..476
+  const COLS = 34, P = 8.6, GX = 203 - (COLS - 1) * P / 2, GY = 162;
+  const MX = 203, MY = 300;
+  const D = [];
+  for (let i = 0; i < N; i++) {
+    const c = i % COLS, r = Math.floor(i / COLS);
+    const gx = GX + c * P, gy = GY + r * P;
+    // fill order: roughly west to east sweep with jitter
+    D.push({ gx, gy, key: c + rnd() * 9, sy: 150 + rnd() * 460, sx: -30 - rnd() * 60 });
+  }
+  const ord = D.slice().sort((a, b) => a.key - b.key);
+  ord.forEach((d, i) => { d.t0 = 0.7 + 3.9 * (i / N) + rnd() * 0.15; });
+  // pick 462 toward Moscow, of which 123 downed near the city
+  const pool = D.map(d => ({ d, z: rnd() })).sort((a, b) => a.z - b.z);
+  pool.slice(0, 462).forEach((p, i) => {
+    const d = p.d; d.m = true; d.mt = 6.3 + (i / 462) * 1.4 + rnd() * 0.2;
+    const ang = rnd() * Math.PI * 2;
+    const inner = i < 123;
+    const rad = inner ? 26 + rnd() * 30 : 66 + rnd() * 56;
+    d.mx = MX + Math.cos(ang) * rad; d.my = MY + Math.sin(ang) * rad * (inner ? 1 : 0.78);
+    if (inner) { d.hit = true; d.ht = 8.9 + (i / 123) * 0.9; d.fall = 14 + rnd() * 22; }
+  });
+
+  const cv = $("cv"), cx = cv.getContext("2d"); const S = 3;
+  function drawDots(t) {
+    cx.setTransform(S, 0, 0, S, 0, 0); cx.clearRect(0, 0, 432, 768);
+    const gridFade = 1 - seg(t, 5.9, 6.5);           // non-Moscow dots dim
+    const allOut = 1 - seg(t, 10.2, 10.8);           // everything leaves
+    for (const d of D) {
+      if (t < d.t0) continue;
+      const f = eout(seg(t, d.t0, d.t0 + 0.9));
+      let x = lerp(d.sx, d.gx, f), y = lerp(d.sy, d.gy, f), a = 1, col = "#ffb547", r = 2.5;
+      if (f < 1) { a = 0.35 + 0.65 * f; }
+      if (d.m) {
+        const g = eio(seg(t, d.mt, d.mt + 1.2));
+        x = lerp(x, d.mx, g); y = lerp(y, d.my, g);
+        if (d.hit && t >= d.ht) {
+          const h = seg(t, d.ht, d.ht + 0.7);
+          col = h < 0.25 ? "#fff2d0" : "#ff5a4e"; y += d.fall * h * h; a = 1 - h * 0.85; r = 2.5 + (h < 0.25 ? 1.5 : 0);
+        } else if (!d.hit) { a *= 1 - 0.45 * seg(t, 9.6, 10.0); }
+        a *= allOut;
+      } else {
+        a *= lerp(0.12, 1, gridFade) * allOut;
+      }
+      if (a <= 0.004) continue;
+      cx.globalAlpha = a; cx.fillStyle = col;
+      // small delta-wing drone pointing east
+      cx.beginPath(); cx.moveTo(x + r * 1.2, y); cx.lineTo(x - r, y - r); cx.lineTo(x - r * 0.4, y); cx.lineTo(x - r, y + r); cx.closePath(); cx.fill();
+    }
+    cx.globalAlpha = 1;
+  }
+  const fmt = n => n.toLocaleString("en-US");
+
+  function render(t) {
+    drawDots(t);
+    // Beat 1 (0-6): count
+    op(E.g1, 1 - seg(t, 5.8, 6.2));
+    op(E.kick, seg(t, 0.1, 0.5) * (1 - seg(t, 3.0, 3.3)));
+    op(E.reg, seg(t, 3.4, 3.8));
+    const arrived = D.reduce((s, d) => s + (t >= d.t0 + 0.55 ? 1 : 0), 0);
+    E.cnt.textContent = fmt(t >= 5.2 ? N : arrived);
+    E.cnt.style.fill = t >= 5.2 ? "#ffb547" : "#f1ede4";
+    op(E.cnt, seg(t, 0.5, 0.8)); op(E.cntL, seg(t, 0.8, 1.2));
+    // Beat 2 (6.2-10.6): Moscow
+    op(E.g2, seg(t, 6.0, 6.4) * (1 - seg(t, 10.3, 10.7)));
+    op(E.n462, seg(t, 7.4, 7.8)); op(E.n123, seg(t, 9.0, 9.4));
+    E.msk.setAttribute("transform", `translate(${MX} ${MY}) scale(${lerp(0.6, 1, eout(seg(t, 6.0, 6.6))).toFixed(3)})`);
+    // Beat 3 (10.8-15.8): on the ground
+    op(E.g3, seg(t, 10.7, 11.0) * (1 - seg(t, 15.6, 16.0)));
+    op(E.r1, seg(t, 10.9, 11.3)); op(E.r2, seg(t, 12.1, 12.5)); op(E.r3, seg(t, 13.3, 13.7));
+    const sl = eout(seg(t, 11.3, 11.8)); E.slash.setAttribute("stroke-dasharray", `${(68 * sl).toFixed(1)} 100`);
+    const fl = 1 + 0.08 * Math.sin(t * 17) + 0.05 * Math.sin(t * 29);
+    E.flame.setAttribute("transform", `translate(12 -2) scale(${(fl * lerp(0.3, 1, eout(seg(t, 12.3, 12.9)))).toFixed(3)}) translate(-12 2)`);
+    // End card (16-19.5)
+    op(E.endCard, seg(t, 16.0, 16.5));
+  }
+
+  const replay = $("replay");
+  let raf = 0, t0 = null, playing = false;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function tick(now) { if (t0 === null) t0 = now; const t = (now - t0) / 1000; render(Math.min(t, DUR));
+    if (t < DUR && playing) raf = requestAnimationFrame(tick); else { playing = false; replay.hidden = false; } }
+  function play() { cancelAnimationFrame(raf); t0 = null; playing = true; replay.hidden = true; raf = requestAnimationFrame(tick); }
+  replay.addEventListener("click", play);
+  window.__story = { duration: DUR, seek(t) { playing = false; cancelAnimationFrame(raf); replay.hidden = true; render(clamp(t, 0, DUR)); }, play };
+
+  function fit() { const s = Math.min(innerWidth / 432, innerHeight / 768); $("stage").style.transform = `translate(-50%, -50%) scale(${s})`; }
+  addEventListener("resize", fit); fit();
+  render(0);
+  const start = () => { if (reduce) { render(DUR); replay.hidden = false; } else play(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+</body>
+</html>
